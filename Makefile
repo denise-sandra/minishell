@@ -8,7 +8,7 @@ RESET = \033[0m
 
 NAME	:= minishell
 
-SRCS	:= ${addprefix src/, main.c env.c\
+SRCS	:= ${addprefix src/, main.c env.c init_minishell.c lexer.c\
 		utils/ft_error.c utils/ft_split_1st_token.c}
 OBJS     = $(SRCS:.c=.o)
 
