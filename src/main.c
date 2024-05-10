@@ -15,10 +15,11 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_environement env;
 
 	if (argc != 1 || argv[1])//condiciones dummy para testear el makefile
 		return (0);
-	env_fill_structure(envp);
+	env = env_fill_structure(envp);
 	while (1)
 	{
 		input = readline("minishell$ ");//displays prompt

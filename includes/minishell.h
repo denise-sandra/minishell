@@ -31,7 +31,8 @@
 # include "../libft/Includes/libft_extended.h"
 
 //src
-void   env_fill_structure(char **envp);
+t_environement   env_fill_structure(char **envp);
+char    *get_env_value(t_environement env, char *name);
 
 //utils
 void ft_error(char *msg);

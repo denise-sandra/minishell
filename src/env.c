@@ -15,18 +15,20 @@
 char    *get_env_value(t_environement env, char *name)
 {
      int  i;
+     int  len;
 
+     len = ft_strlen(name);
      i = 0;
      while (i < env.count)
      {
-          if (ft_strcmp(env.vars[i].name) == 0)
-               return (env->vars[i].value);
+          if (ft_strncmp(env.vars[i].name, name, len) == 0)
+               return (env.vars[i].value);
           i++;
      }
      return (NULL);
 }
 
-void   env_fill_structure(char **envp)
+t_environement   env_fill_structure(char **envp)
 {
      t_environement   env;
      char           **split_envp;
@@ -41,4 +43,5 @@ void   env_fill_structure(char **envp)
           env.vars[env.count].value = split_envp[1];
           env.count++;
      }
+     return(env);
 }
