@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/09 18:01:48 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/10 16:35:46 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,29 @@
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
 
+
+typedef struct s_minishell
+{
+	t_environement	env;
+	t_token			*tokens;
+	int				token_count;
+	int				last_exit_status;
+	int				redirect_in;
+	int				redirect_out;
+	char			*input_file;
+	char			*output_file;
+}	t_minishell;
+
 //src
+tokenize
+void    env_fill_structure(char **envp);
+=======
 t_environement   env_fill_structure(char **envp);
 char    *get_env_value(t_environement env, char *name);
+main
 
 //utils
-void ft_error(char *msg);
-char	**ft_split_1st_token(char const *s, char c);
+void    ft_error(char *msg);
+char    **ft_split_1st_token(char const *s, char c);
+
 #endif
