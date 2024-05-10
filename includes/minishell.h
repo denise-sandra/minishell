@@ -44,7 +44,12 @@ typedef struct s_minishell
 }	t_minishell;
 
 //src
+tokenize
 void    env_fill_structure(char **envp);
+=======
+t_environement   env_fill_structure(char **envp);
+char    *get_env_value(t_environement env, char *name);
+main
 
 //utils
 void    ft_error(char *msg);
