@@ -30,4 +30,10 @@
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
 
+//src
+void   env_fill_structure(char **envp);
+
+//utils
+void ft_error(char *msg);
+char	**ft_split_1st_token(char const *s, char c);
 #endif

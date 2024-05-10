@@ -13,25 +13,25 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-typedef struct
+typedef struct s_env_var
 {
      char *name;
      char *value;
-}EnvVar;
+}t_env_var;
 
-typedef struct
+typedef struct s_environement
 {
-     EnvVar    vars[100];
+     t_env_var    vars[100];
      int       count;
-}Environement;
+}t_environement;
 
 typedef enum e_tokentype
 {
 	TOKEN_COMMAND,
 	TOKEN_ARG,
-	TOKEN_PIPE,
-	TOKEN_REDIRECT_IN,
-	TOKEN_REDIRECT_OUT,
+	TOKEN_OPS,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
 	TOKEN_END
 }	t_tokentype;
 

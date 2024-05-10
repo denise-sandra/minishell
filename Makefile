@@ -8,8 +8,8 @@ RESET = \033[0m
 
 NAME	:= minishell
 
-SRCS	:= ${addprefix src/, main.c}
-
+SRCS	:= ${addprefix src/, main.c env.c\
+		utils/ft_error.c utils/ft_split_1st_token.c}
 OBJS     = $(SRCS:.c=.o)
 
 LIBFT := libft/libft3.a

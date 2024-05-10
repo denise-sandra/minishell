@@ -12,15 +12,33 @@
 
 #include "minishell.h"
 
-Environement   init_env(char **envp)
+char    *get_env_value(t_environement env, char *name)
 {
-     Environement   env;
-     int            i;
+     int  i;
+
+     i = 0;
+     while (i < env.count)
+     {
+          if (ft_strcmp(env.vars[i].name) == 0)
+               return (env->vars[i].value);
+          i++;
+     }
+     return (NULL);
+}
+
+void   env_fill_structure(char **envp)
+{
+     t_environement   env;
+     char           **split_envp;
      
      env.count = 0;
-     i = 0;
-     while (envp[i] && env.count < 100)
+     while (envp[env.count] && env.count < 100)
      {
-          //split hasta = y poner en nombre y el resto en valor.
+          split_envp = ft_split_1st_token(envp[env.count], '=');            
+          if (split_envp == NULL)
+               ft_error("Malloc error in split");
+          env.vars[env.count].name = split_envp[0];
+          env.vars[env.count].value = split_envp[1];
+          env.count++;
      }
 }
