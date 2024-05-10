@@ -33,7 +33,8 @@ typedef enum e_tokentype
 	TOKEN_OPS,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
-	TOKEN_END
+	TOKEN_END,
+	LALA
 }	t_tokentype;
 
 typedef struct s_token
