@@ -12,6 +12,29 @@
 
 #include "minishell.h"
 
+void	tag_token(t_minishell *minishell)
+{
+	int	i;
+	t_token	**token;
+
+	i = 0;
+	token = minishell->token;
+	while (i < minishell->token_count)
+	{
+		if (ft_strncmp(token[i]->value, "|", ft_strlen(token[i]->value)) == 0)
+			token[i]->type = TOKEN_OPS;
+		if (ft_strncmp(token[i]->value, ">", ft_strlen(token[i]->value)) == 0)
+			token[i]->type = TOKEN_REDIR_OUT;
+		if (ft_strncmp(token[i]->value, "<", ft_strlen(token[i]->value)) == 0)
+			token[i]->type = TOKEN_REDIR_IN;
+		if (ft_strncmp(token[i]->value, "EOF", ft_strlen(token[i]->value)) == 0)
+			token[i]->type = TOKEN_END;
+		else
+			token[i]->type = LALA;
+		i++;
+	}
+}
+
 void init_token(t_minishell *minishell)
 {
 	int i;
@@ -40,18 +63,18 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		ft_error("Malloc split_input", minishell);
 	i = 0;
 	while (split_input[i])
-	{
-		printf("split: %s\n", split_input[i]);
 		i++;
-	}
 	minishell->token_count = i;
 	init_token(minishell);
-	printf("test\n");
 	i = 0;
 	while (i < minishell->token_count)
 	{
 		minishell->token[i]->value = split_input[i];
 		minishell->token[i]->order = i;
+		printf("minishel value: %s   order: %i\n", minishell->token[i]->value, minishell->token[i]->order);
 		i++;
 	}
+	tag_token(minishell);
+	for (int j = 0; j < minishell->token_count; j++)
+		printf("tags: %u\n", minishell->token[j]->type);
 }
