@@ -12,26 +12,34 @@
 
 #include "minishell.h"
 
-int	is_command(t_minishell *minishell)
+int	is_command(t_minishell *minishell, t_token *token)
 {
 	char **paths;
-	char	*path_join;
+	char	*path_join_1;
+	char	*path_join_2;
 	int	i;
 
 	paths = pars_path(minishell);
 	i = 0;
 	while (paths[i])
 	{
-		path_join = ft_strjoin(paths[i], "/");
-		printf("%s\n", path_join);
-		if (path_join == NULL)
+		path_join_1 = ft_strjoin(paths[i], "/");
+		if (path_join_1 == NULL)
 			ft_error("Malloc in is_command", minishell);
-		if (access(path_join, X_OK) == 0)
+		path_join_2 = ft_strjoin(path_join_1, token->value);
+		if (path_join_2 == NULL)
 		{
-			free(path_join);
+			free(path_join_1);
+			ft_error("Malloc in is_command", minishell);
+		}	
+		if (access(path_join_2, F_OK) == 0)
+		{
+			free(path_join_1);
+			free(path_join_2);
 			return (1);
 		}	
-		free(path_join);
+		free(path_join_1);
+		free(path_join_2);
 		i++;
 	}
 	return (0);
@@ -56,7 +64,7 @@ void	tag_token(t_minishell *minishell)
 			token[i]->type = TOKEN_REDIR_IN;
 		else if (ft_strncmp(token[i]->value, "EOF", len) == 0)
 			token[i]->type = TOKEN_END;
-		else if (is_command(minishell) == 1)
+		else if (is_command(minishell, token[i]) == 1)
 			token[i]->type = TOKEN_COMMAND;
 		else
 			token[i]->type = LALA;
@@ -74,7 +82,7 @@ void init_token(t_minishell *minishell)
 	i = 0;
 	while (i < minishell->token_count)
 	{
-		minishell->token[i] = malloc(sizeof(t_token *));
+		minishell->token[i] = malloc(sizeof(t_token));
 		if (minishell->token[i] == NULL)
 			ft_error("Malloc for minishell->token[i]", minishell);
 		ft_bzero(minishell->token[i], sizeof(t_token));
@@ -98,9 +106,11 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	i = 0;
 	while (i < minishell->token_count)
 	{
+		minishell->token[i]->value = malloc(((ft_strlen(split_input[i]) + 1) * sizeof(char)));
+		if ((minishell->token[i]->value) == NULL)
+			ft_error("Malloc error in tekenize_input", minishell);
 		minishell->token[i]->value = split_input[i];
 		minishell->token[i]->order = i;
-		printf("minishel value: %s   order: %i\n", minishell->token[i]->value, minishell->token[i]->order);
 		i++;
 	}
 	tag_token(minishell);

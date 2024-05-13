@@ -35,7 +35,7 @@ static unsigned int	ft_countwords(char *s, char **ce)
 	i = 0;
 	while (s[i + 1])
 	{
-		if (strchr(ce[1], s[i]) != NULL)
+		if (ft_strchr(ce[1], s[i]) != NULL)
 			quotes = -1;
 		if (s[i] == ce[0][0] && !quotes && s[i + 1] != ce[0][0])
 			mots++;
