@@ -57,8 +57,8 @@ int		ft_tolower(int c);
 int		ft_atoi(const char *str);
 int		ft_atoi_err(const char *str, int *error);
 char	*ft_itoa(int n);
-char	**ft_split(char const *s, char c);
-char	**split_quotes(char const *s, char c);
+char	**ft_split(char *s, char c, char *special_c);
+char	*ft_copylettres(char **tableau, int mot, char *s, char **ce);
 
 /*mem alloc and str initialisation*/
 void	*ft_memset(void *str, int c, size_t n);

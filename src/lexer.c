@@ -12,23 +12,52 @@
 
 #include "minishell.h"
 
+int	is_command(t_minishell *minishell)
+{
+	char **paths;
+	char	*path_join;
+	int	i;
+
+	paths = pars_path(minishell);
+	i = 0;
+	while (paths[i])
+	{
+		path_join = ft_strjoin(paths[i], "/");
+		printf("%s\n", path_join);
+		if (path_join == NULL)
+			ft_error("Malloc in is_command", minishell);
+		if (access(path_join, X_OK) == 0)
+		{
+			free(path_join);
+			return (1);
+		}	
+		free(path_join);
+		i++;
+	}
+	return (0);
+}
+
 void	tag_token(t_minishell *minishell)
 {
 	int	i;
+	int	len;
 	t_token	**token;
 
 	i = 0;
 	token = minishell->token;
 	while (i < minishell->token_count)
 	{
-		if (ft_strncmp(token[i]->value, "|", ft_strlen(token[i]->value)) == 0)
+		len = ft_strlen(token[i]->value);
+		if (ft_strncmp(token[i]->value, "|", len) == 0)
 			token[i]->type = TOKEN_OPS;
-		if (ft_strncmp(token[i]->value, ">", ft_strlen(token[i]->value)) == 0)
+		else if (ft_strncmp(token[i]->value, ">", len) == 0)
 			token[i]->type = TOKEN_REDIR_OUT;
-		if (ft_strncmp(token[i]->value, "<", ft_strlen(token[i]->value)) == 0)
+		else if (ft_strncmp(token[i]->value, "<", len) == 0)
 			token[i]->type = TOKEN_REDIR_IN;
-		if (ft_strncmp(token[i]->value, "EOF", ft_strlen(token[i]->value)) == 0)
+		else if (ft_strncmp(token[i]->value, "EOF", len) == 0)
 			token[i]->type = TOKEN_END;
+		else if (is_command(minishell) == 1)
+			token[i]->type = TOKEN_COMMAND;
 		else
 			token[i]->type = LALA;
 		i++;
@@ -58,7 +87,7 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	char **split_input;
 	int  i;
 
-	split_input = split_quotes(input, ' ');
+	split_input = ft_split(input, ' ', NULL);
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);
 	i = 0;

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_utils.c                                   :+:      :+:    :+:   */
+/*   string_to_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 10:51:33 by derjavec          #+#    #+#             */
-/*   Updated: 2024/01/19 10:51:36 by derjavec         ###   ########.fr       */
+/*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
+/*   Updated: 2024/03/15 11:13:44 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include"../push_swap.h"
+#include "libftv3.h"
 
-char	*ft_copylettres_reduc(char **tableau, int mot, int lettres, char *s)
+static char	*ft_copylettres_reduc(char **tableau, int mot, int lettres, char *s)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ char	*ft_copylettres_reduc(char **tableau, int mot, int lettres, char *s)
 	return (tableau[mot]);
 }
 
-int	no_quotes(int quotes, int lettres, char **ce, char *s)
+static int	no_quotes(int quotes, int lettres, char **ce, char *s)
 {
 	if (quotes == 0)
 	{
