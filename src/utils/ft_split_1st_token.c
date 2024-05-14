@@ -12,16 +12,6 @@
 
 #include "minishell.h"
 
-static unsigned int	erase_extra_tokens(char const *s, char c)
-{
-	int	start;
-
-	start = 0;
-	while (s[start] && s[start] == c)
-		start++;
-	return (start);
-}
-
 static char	*copy_letters_until_end(char **tab, char const *s)
 {
 	int	i;
@@ -72,12 +62,14 @@ static char	**fill_tab(char **tab, char const *s, char c)
 {
 	int	len;
 
+	tab = malloc(3 * sizeof(char *));
+	if (tab == NULL)
+		return (NULL);
 	tab[0] = copy_letters_until_c(tab, s, c);
 	if (tab[0] == NULL)
 		return (NULL);
 	len = ft_strlen(tab[0]);
 	s = s + len;
-	s = s + erase_extra_tokens(s, c);
 	tab[1] = copy_letters_until_end(tab, s);
 	tab[2] = NULL;
 	return (tab);
@@ -89,8 +81,7 @@ char	**ft_split_1st_token(char const *s, char c)
 
 	if (s == NULL )
 		return (NULL);
-	tab = malloc(3 * sizeof(char));
-	s = s + erase_extra_tokens(s, c);
+	tab = NULL;
 	tab = fill_tab(tab, s, c);
 	return (tab);
 }

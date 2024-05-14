@@ -42,5 +42,6 @@ void	tokenize_input(char *input, t_minishell *minishell);
 //utils
 void    ft_error(char *msg, t_minishell *minishell);
 char    **ft_split_1st_token(char const *s, char c);
+char	**pars_path(t_minishell *minishell);
 
 #endif
