@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/10 15:45:26 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:16:06 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,49 @@
 
 int	is_command(t_minishell *minishell, t_token *token)
 {
-	char **paths;
+	char	**paths;
 	char	*path_join_1;
 	char	*path_join_2;
-	int	i;
+	int		i;
 
 	paths = pars_path(minishell);
+	if (!paths)
+		ft_error("path spliting error", minishell);
 	i = 0;
 	while (paths[i])
 	{
 		path_join_1 = ft_strjoin(paths[i], "/");
 		if (path_join_1 == NULL)
+		{
+			free_tab(paths);
 			ft_error("Malloc in is_command", minishell);
+		}
 		path_join_2 = ft_strjoin(path_join_1, token->value);
 		if (path_join_2 == NULL)
 		{
 			free(path_join_1);
+			free_tab(paths);
 			ft_error("Malloc in is_command", minishell);
 		}	
-		if (access(path_join_2, F_OK) == 0)
+		if (access(path_join_2, X_OK) == 0 && access(path_join_2, F_OK) == 0)
 		{
 			free(path_join_1);
 			free(path_join_2);
+			free_tab(paths);
 			return (1);
 		}	
 		free(path_join_1);
 		free(path_join_2);
 		i++;
 	}
+	free_tab(paths);
 	return (0);
 }
 
 void	tag_token(t_minishell *minishell)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	t_token	**token;
 
 	i = 0;
@@ -72,9 +80,9 @@ void	tag_token(t_minishell *minishell)
 	}
 }
 
-void init_token(t_minishell *minishell)
+void	init_token(t_minishell *minishell)
 {
-	int i;
+	int	i;
 
 	minishell->token = malloc((minishell->token_count) * sizeof(t_token *));
 	if (minishell->token == NULL)
@@ -105,19 +113,23 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	i = 0;
 	while (split_input[i])
 		i++;
-	printf("%d\n", i);
+	// printf("%d\n", i);
 	minishell->token_count = i;
 	init_token(minishell);
 	i = 0;
 	while (i < minishell->token_count)
 	{
-		minishell->token[i]->value = malloc(((ft_strlen(split_input[i]) + 1) * sizeof(char)));
+		minishell->token[i]->value = malloc(((ft_strlen(split_input[i]) + 1)));
 		if ((minishell->token[i]->value) == NULL)
-			ft_error("Malloc error in tekenize_input", minishell);
-		minishell->token[i]->value = split_input[i];
+		{
+			free_tab(split_input);
+			ft_error("Malloc error in tokenize_input", minishell);
+		}
+		ft_strlcpy(minishell->token[i]->value, split_input[i], ft_strlen(split_input[i]) + 1);
 		minishell->token[i]->order = i;
 		i++;
 	}
+	free_tab(split_input);
 	tag_token(minishell);
 	for (int j = 0; j < minishell->token_count; j++)
 		printf("tags: %u\n", minishell->token[j]->type);

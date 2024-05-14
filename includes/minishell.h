@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/10 16:35:46 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/14 19:42:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@
 //src
 t_minishell *init_minishell(char **envp);
 t_environement   env_fill_structure(char **envp, t_minishell *minishell);
-char    *get_env_value(t_environement env, char *name);
+char    *get_env_value(t_environement *env, char *name);
 void	tokenize_input(char *input, t_minishell *minishell);
 
 //utils
 void    ft_error(char *msg, t_minishell *minishell);
 char    **ft_split_1st_token(char const *s, char c);
 char	**pars_path(t_minishell *minishell);
+void	clean_token(t_minishell *minishell);
+void	clean_minishell(t_minishell *minishell);
 
 #endif

@@ -3,6 +3,8 @@
         "minishell.h": "c",
         "fcntl.h": "c",
         "types.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "typeinfo": "c",
+        "type_traits": "c"
     }
 }
