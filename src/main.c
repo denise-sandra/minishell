@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/14 20:09:31 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:34:28 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-	t_minishell *minishell;
+	char		*input;
+	t_minishell	*minishell;
 
 	if (argc != 1 || argv[1])
 		return (0);

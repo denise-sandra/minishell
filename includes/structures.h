@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/14 20:09:30 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:31:14 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ typedef struct s_env_var
 {
 	char	*name;
 	char	*value;
-}t_env_var;
+}	t_env_var;
 
 typedef struct s_environement
 {
 	t_env_var	*vars;
 	int			count;
-}t_environement;
+}	t_environement;
 
 typedef enum e_tokentype
 {
