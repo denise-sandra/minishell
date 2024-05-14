@@ -11,9 +11,14 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-void ft_error(char *msg, t_minishell *minishell)
+void free_all(t_minishell *minishell)
 {
-     ft_putstr_fd(msg, 2);
-     free_all(minishell);
+     
+     if (minishell->token)
+          free(minishell->token);
+     if (minishell->output_file)
+          free(minishell->output_file);
+     if (minishell->input_file)
+          free(minishell->input_file);
+     free(minishell);
 }
-

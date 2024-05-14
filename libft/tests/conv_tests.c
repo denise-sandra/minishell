@@ -4,7 +4,7 @@
 
 int	main(void)
 {
-//toupper
+/*//toupper
 	printf("toupper: %d\n", toupper('c'));
 	printf("ft_toupper: %d\n", ft_toupper('c'));
 	printf("\n");
@@ -25,32 +25,20 @@ int	main(void)
 	char	*test_itoa = ft_itoa(0);
 	printf("ft_itoa: %s\n", test_itoa);
 	free (test_itoa);
-	printf("\n");
+	printf("\n");*/
 
 //splits
-	char *s1 = "grep	And";
-	char *s2 = "sed    's/And/But/'";
-	char **split;
-	char **split_q;
-
-	printf("Single string to be copied: |%s|\n", s1);
-	split = ft_split(s1, ' ');
-	for (int i = 0; split[i]; i++)
+	char special_c[2];
+	special_c[0] = '\'';
+	special_c[1] = '\"';
+	special_c[2] = '\0';
+	char **split = ft_split("'pepe coco lala'", ' ', special_c);
+	int	i;
+	i = 0;
+	while (split[i])
 	{
-		printf("String %d: |%s|\n", i, split[i]);
-		free (split[i]);
-		printf("\n");
+		ft_printf("%s\n", split[i]);
+		i++;
 	}
-	free (split);
-	printf("Complex string to be copied: |%s|\n", s2);
-	split_q = split_quotes((char const *)s2, ' ');
-	for (int i = 0; split_q[i]; i++)
-	{
-		printf("String %d: |%s|\n", i, split_q[i]);
-		free (split_q[i]);
-	}
-	free (split_q);
-	printf("\n");
-
 return (0);
 }

@@ -45,6 +45,24 @@ int	is_command(t_minishell *minishell, t_token *token)
 	return (0);
 }
 
+static unsigned int	ft_countwords(char *s)
+{
+	int	i;
+	int	words;
+
+	if (s[0] == '\0')
+		return (0);
+	words = 1;
+	i = 0;
+	while (s[i + 1])
+	{
+		if (s[i] == 32 && s[i + 1] != 32)
+			words++;
+		i++;
+	}
+	return (words);
+}
+
 void	tag_token(t_minishell *minishell)
 {
 	int	i;
@@ -56,7 +74,9 @@ void	tag_token(t_minishell *minishell)
 	while (i < minishell->token_count)
 	{
 		len = ft_strlen(token[i]->value);
-		if (ft_strncmp(token[i]->value, "|", len) == 0)
+		if ( ft_countwords(token[i]->value) != 1)
+			token[i]->type = TOKEN_WITH_QUOTES;
+		else if (ft_strncmp(token[i]->value, "|", len) == 0)
 			token[i]->type = TOKEN_OPS;
 		else if (ft_strncmp(token[i]->value, ">", len) == 0)
 			token[i]->type = TOKEN_REDIR_OUT;
@@ -93,14 +113,19 @@ void init_token(t_minishell *minishell)
 void	tokenize_input(char *input, t_minishell *minishell)
 {
 	char **split_input;
+	char	special_c[3];
 	int  i;
 
-	split_input = ft_split(input, ' ', NULL);
+	special_c[0] = '\'';
+	special_c[1] = '\"';
+	special_c[2] = '\0';
+	split_input = ft_split(input, 32, special_c);
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);
 	i = 0;
 	while (split_input[i])
 		i++;
+	printf("%d\n", i);
 	minishell->token_count = i;
 	init_token(minishell);
 	i = 0;
