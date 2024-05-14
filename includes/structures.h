@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/10 16:31:05 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/14 20:31:14 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 
 typedef struct s_env_var
 {
-     char *name;
-     char *value;
-}t_env_var;
+	char	*name;
+	char	*value;
+}	t_env_var;
 
 typedef struct s_environement
 {
-     t_env_var    *vars;
-     int       count;
-}t_environement;
+	t_env_var	*vars;
+	int			count;
+}	t_environement;
 
 typedef enum e_tokentype
 {
@@ -41,12 +41,12 @@ typedef struct s_token
 {
 	t_tokentype	type;
 	char		*value;
-	int		order;
+	int			order;
 }	t_token;
 
 typedef struct s_minishell
 {
-	t_environement	env;
+	t_environement	*env;
 	t_token			**token;
 	int				token_count;
 	int				last_exit_status;
@@ -55,4 +55,5 @@ typedef struct s_minishell
 	char			*input_file;
 	char			*output_file;
 }	t_minishell;
+
 #endif
