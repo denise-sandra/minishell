@@ -45,24 +45,6 @@ int	is_command(t_minishell *minishell, t_token *token)
 	return (0);
 }
 
-static unsigned int	ft_countwords(char *s)
-{
-	int	i;
-	int	words;
-
-	if (s[0] == '\0')
-		return (0);
-	words = 1;
-	i = 0;
-	while (s[i + 1])
-	{
-		if (s[i] == 32 && s[i + 1] != 32)
-			words++;
-		i++;
-	}
-	return (words);
-}
-
 void	tag_token(t_minishell *minishell)
 {
 	int	i;
@@ -74,9 +56,7 @@ void	tag_token(t_minishell *minishell)
 	while (i < minishell->token_count)
 	{
 		len = ft_strlen(token[i]->value);
-		if ( ft_countwords(token[i]->value) != 1)
-			token[i]->type = TOKEN_WITH_QUOTES;
-		else if (ft_strncmp(token[i]->value, "|", len) == 0)
+		if (ft_strncmp(token[i]->value, "|", len) == 0)
 			token[i]->type = TOKEN_OPS;
 		else if (ft_strncmp(token[i]->value, ">", len) == 0)
 			token[i]->type = TOKEN_REDIR_OUT;
@@ -87,7 +67,7 @@ void	tag_token(t_minishell *minishell)
 		else if (is_command(minishell, token[i]) == 1)
 			token[i]->type = TOKEN_COMMAND;
 		else
-			token[i]->type = LALA;
+			token[i]->type = TOKEN_ARG;
 		i++;
 	}
 }

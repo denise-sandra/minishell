@@ -29,13 +29,12 @@ typedef struct s_environement
 typedef enum e_tokentype
 {
 	TOKEN_COMMAND,
-	TOKEN_ARG,
-	TOKEN_WITH_QUOTES,
 	TOKEN_OPS,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_END,
-	LALA
+	TOKEN_ARG
+
 }	t_tokentype;
 
 typedef struct s_token

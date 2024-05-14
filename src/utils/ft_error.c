@@ -14,6 +14,6 @@
 void ft_error(char *msg, t_minishell *minishell)
 {
      ft_putstr_fd(msg, 2);
-     free_all(minishell);
+     free(minishell);
 }
 
