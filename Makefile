@@ -9,7 +9,9 @@ RESET = \033[0m
 NAME	:= minishell
 
 SRCS	:= ${addprefix src/, main.c env.c init_minishell.c lexer.c\
-		utils/ft_error.c utils/ft_split_1st_token.c utils/pars_path.c utils/clean_minishell.c}
+		exec/execution.c exec/execute_special_command.c \
+		functions/export.c functions/env_command.c\
+		utils/ft_error.c utils/ft_split_1st_token.c utils/pars_path.c utils/clean_minishell.c utils/create_list.c}
 OBJS     = $(SRCS:.c=.o)
 
 LIBFT := libft/libft3.a

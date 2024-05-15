@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_1st_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 09:16:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/14 19:12:15 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 14:49:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*copy_letters_until_end(char **tab, char const *s)
 	tab[1][i] = '\0';
 	return (tab[1]);
 }
-
 
 static char	*copy_letters_until_c(char **tab, char const *s, char c)
 {
@@ -66,7 +65,7 @@ static char	**fill_tab(char **tab, char const *s, char c)
 	if (!tab[0])
 		return (free(tab), NULL);
 	len = ft_strlen(tab[0]);
-	s = s + len;
+	s = s + len + 1;
 	tab[1] = copy_letters_until_end(tab, s);
 	if (!tab[1])
 		return (free_tab(tab), NULL);

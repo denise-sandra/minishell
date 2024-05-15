@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/14 20:29:54 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 13:54:22 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,17 @@
 
 void	clean_env(t_minishell *minishell)
 {
-	int	i;
+	t_lst_env	*temp;
 
-	i = 0;
-	if (minishell->env->vars)
+	while (minishell->env)
 	{
-		while (i < minishell->env->count)
-		{
-			if (minishell->env->vars[i].name)
-				free(minishell->env->vars[i].name);
-			if (minishell->env->vars[i].value)
-				free(minishell->env->vars[i].value);
-			i++;
-		}
-		free(minishell->env->vars);
+		temp = minishell->env->next;
+		free(minishell->env->name);
+		free(minishell->env->value);
+		minishell->env = temp;
 	}
 	free(minishell->env);
+	minishell->env = NULL;
 }
 
 void	clean_token(t_minishell *minishell)

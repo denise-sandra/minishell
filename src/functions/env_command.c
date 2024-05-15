@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_path.c                                        :+:      :+:    :+:   */
+/*   env_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 11:31:52 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/15 15:08:39 by derjavec         ###   ########.fr       */
+/*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
+/*   Updated: 2024/05/15 14:56:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**pars_path(t_minishell *minishell)
+void env_command(t_minishell *minishell)
 {
-	char	*path;
-	char	**split_paths;
-	char	special_c[2];
-
-	special_c[0] = '\'';
-	special_c[1] = '\0';
-	path = get_env_value(minishell->env, "PATH");
-	//printf("path: %s\n", path);
-	if (!path)
-	{
-		printf("PATH environment variable not found\n");
-		return (NULL);
-	}
-	split_paths = ft_split(path, ':', special_c);
-	if (!split_paths)
-		return (NULL);
-	return (split_paths);
+     t_lst_env*temp;
+     
+     temp = minishell->env;
+     while(temp)
+     {
+          printf("%s=%s\n", temp->name, temp->value);
+          temp = temp->next;
+     }
 }

@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			tokenize_input(input, minishell);
+			execution(minishell);
 		}
 		else if (*input && ft_strncmp(input, "exit", ft_strlen(input)) == 0)
 		{
