@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/15 13:54:22 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:12:51 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 void	clean_env(t_minishell *minishell)
 {
-	t_lst_env	*temp;
+	t_lst_env	*current;
+	t_lst_env	*next;
 
-	while (minishell->env)
+	current = minishell->env;
+	while (current)
 	{
-		temp = minishell->env->next;
-		free(minishell->env->name);
-		free(minishell->env->value);
-		minishell->env = temp;
+		next = current->next;
+		free(current->name);
+		free(current->value);
+		free(current);
+		current = next;
 	}
-	free(minishell->env);
 	minishell->env = NULL;
 }
 
