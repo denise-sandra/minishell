@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -IIncludes
 
 CHECK_FILES = $(addprefix libft_src/ft_checks/, basic_checks.c cmp_checks.c other_checks.c)
-CONV_FILES = $(addprefix libft_src/ft_conversions/, chars_conversion.c ints_and_chars.c string_to_tab.c string_to_tab_utils.c)
+CONV_FILES = $(addprefix libft_src/ft_conversions/, chars_conversion.c ints_and_chars.c ft_atoll.c string_to_tab.c string_to_tab_utils.c)
 LIST_FILES = $(addprefix libft_src/ft_lists/, lst_clean.c lst_content_ops.c lst_node_ops.c lst_search.c)
 MEASURE_FILES = $(addprefix libft_src/ft_measures/, measures_basics.c measures_parse.c)
 STRING_FILES = $(addprefix libft_src/ft_strings/, mem_ops.c put_fd.c str_clean.c\

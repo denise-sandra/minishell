@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_to_tab.c                                    :+:      :+:    :+:   */
+/*   string_to_tab_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/03/15 11:13:44 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 23:22:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libftv3.h"
 
 static char	*ft_copylettres_reduc(char **tableau, int mot, int lettres, char *s)
@@ -25,7 +26,7 @@ static char	*ft_copylettres_reduc(char **tableau, int mot, int lettres, char *s)
 	}
 	i = 0;
 	while (s[i] && i < lettres)
-	{	
+	{
 		tableau[mot][i] = s[i];
 		i++;
 	}
