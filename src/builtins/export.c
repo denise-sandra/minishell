@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 20:22:34 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 20:27:52 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 //export con una variable (sin valor, solo nombre) se registra y se muestra cuando se llama a export solo
 // pero no se muestra cuando se llama a env. Env solo muestra las variables que contienen algun valor
+//Corregir: cuando envias "e" o " ' " en la linea de comando la funcion los trata como si fueran "export"
 
 void	export_command(t_minishell *minishell)
 {
@@ -54,5 +55,6 @@ void	export_command(t_minishell *minishell)
 	}
 	else if (res == 2)
 		printf("bash: export: `=': not a valid identifier\n");
-	free_tab(split_new_envp);
+	if (split_new_envp)
+		free_tab(split_new_envp);
 }
