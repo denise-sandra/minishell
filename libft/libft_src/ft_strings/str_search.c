@@ -27,6 +27,19 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	return (NULL);
 }
 
+int	ft_strchr_int(const char *str, int c)
+{
+	while (*str)
+	{
+		if (*str == (char)c)
+			return (1);
+		str++;
+	}
+	if (str[0] == (char)c)
+		return (2);
+	return (0);
+}
+
 char	*ft_strchr(const char *str, int c)
 {
 	while (*str)

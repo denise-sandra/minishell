@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/14 20:16:06 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 15:07:15 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,21 @@ int	is_command(t_minishell *minishell, t_token *token)
 	return (0);
 }
 
+int	is_special_command(t_minishell *minishell, t_token *token)
+{
+	int	i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (ft_strncmp(token->value, minishell->special_commands[i], ft_strlen(token->value)) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
 void	tag_token(t_minishell *minishell)
 {
 	int		i;
@@ -64,7 +79,11 @@ void	tag_token(t_minishell *minishell)
 	while (i < minishell->token_count)
 	{
 		len = ft_strlen(token[i]->value);
-		if (ft_strncmp(token[i]->value, "|", len) == 0)
+		if (token[i]->value[0] == '$')
+			token[i]->type = TOKEN_ENV;
+		else if (is_special_command(minishell, token[i]) == 1)
+			token[i]->type = TOKEN_SPECIAL_COMMAND;
+		else if (ft_strncmp(token[i]->value, "|", len) == 0)
 			token[i]->type = TOKEN_OPS;
 		else if (ft_strncmp(token[i]->value, ">", len) == 0)
 			token[i]->type = TOKEN_REDIR_OUT;
@@ -78,6 +97,7 @@ void	tag_token(t_minishell *minishell)
 			token[i]->type = TOKEN_ARG;
 		i++;
 	}
+	
 }
 
 void	init_token(t_minishell *minishell)
@@ -113,7 +133,6 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	i = 0;
 	while (split_input[i])
 		i++;
-	// printf("%d\n", i);
 	minishell->token_count = i;
 	init_token(minishell);
 	i = 0;
@@ -129,8 +148,7 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		minishell->token[i]->order = i;
 		i++;
 	}
+	minishell->token[i] = NULL;
 	free_tab(split_input);
 	tag_token(minishell);
-	for (int j = 0; j < minishell->token_count; j++)
-		printf("tags: %u\n", minishell->token[j]->type);
 }
