@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 12:48:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/15 19:10:14 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct s_lst_env
 {
-	char	*name;
-	char	*value;
-	struct s_lst_env *next;
+	char				*name;
+	char				*value;
+	struct s_lst_env	*next;
 }	t_lst_env;
 
 typedef enum e_tokentype
@@ -44,14 +44,14 @@ typedef struct s_token
 typedef struct s_minishell
 {
 	t_lst_env	*env;
-	t_token			**token;
-	int				token_count;
-	int				last_exit_status;
-	int				redirect_in;
-	int				redirect_out;
-	char			*special_commands[2];     //build_in
-	char			*input_file;
-	char			*output_file;
+	t_token		**token;
+	int			token_count;
+	int			last_exit_status;
+	int			redirect_in;
+	int			redirect_out;
+	char		*special_commands[2];     //builtin
+	char		*input_file;
+	char		*output_file;
 }	t_minishell;
 
 #endif

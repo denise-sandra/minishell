@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 14:49:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:12:52 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_env_value(t_lst_env *env, char *name)
 	t_lst_env	*temp;
 
 	temp = env;
-	while(temp)
+	while (temp)
 	{
 		if (ft_strncmp(temp->name, name, ft_strlen(temp->name)) == 0)
 			return (temp->value);
@@ -28,10 +28,10 @@ char	*get_env_value(t_lst_env *env, char *name)
 
 t_lst_env	*env_fill_structure(char **envp, t_minishell *minishell)
 {
-	char			**split_envp;
+	char		**split_envp;
 	t_lst_env	*lst_env;
 	t_lst_env	*new_node;
-	int	i;
+	int			i;
 
 	lst_env = NULL;
 	i = 0;
@@ -47,8 +47,6 @@ t_lst_env	*env_fill_structure(char **envp, t_minishell *minishell)
 		free_tab(split_envp);
 		i++;
 	}
-	t_lst_env *temp;
-	temp = lst_env;
 	return (lst_env);
 }
 

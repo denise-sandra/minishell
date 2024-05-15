@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 15:07:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:52:06 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,13 @@ void	tag_token(t_minishell *minishell)
 			token[i]->type = TOKEN_ARG;
 		i++;
 	}
-	
 }
 
 void	init_token(t_minishell *minishell)
 {
 	int	i;
 
-	minishell->token = malloc((minishell->token_count) * sizeof(t_token *));
+	minishell->token = malloc((minishell->token_count + 1) * sizeof(t_token *));
 	if (minishell->token == NULL)
 		ft_error("Malloc for minishell->token", minishell);
 	i = 0;
@@ -120,9 +119,9 @@ void	init_token(t_minishell *minishell)
 
 void	tokenize_input(char *input, t_minishell *minishell)
 {
-	char **split_input;
+	char	**split_input;
 	char	special_c[3];
-	int  i;
+	int		i;
 
 	special_c[0] = '\'';
 	special_c[1] = '\"';
@@ -148,7 +147,7 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		minishell->token[i]->order = i;
 		i++;
 	}
-	minishell->token[i] = NULL;
+	minishell->token[minishell->token_count] = NULL;
 	free_tab(split_input);
 	tag_token(minishell);
 }
