@@ -5,6 +5,7 @@
         "types.h": "c",
         "readline.h": "c",
         "typeinfo": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "sstream": "c"
     }
 }

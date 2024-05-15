@@ -3,72 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 21:43:12 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/15 23:24:25 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static long long	ft_atoll(const char *str, int *err)
+static	int	verify_spaces(t_minishell *minishell, char *input)
 {
-	long long	result;
-	int			sign;
-	int			i;
+	int	i;
 
-	result = 0;
-	sign = 1;
 	i = 0;
-	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+	while (input[i] == ' ')
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if (input[i] == '\0')
 	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
+		minishell->last_exit_status = 0;
+		return (0);
 	}
-	while (ft_isdigit(str[i]))
-	{
-		if (result > (LLONG_MAX - (str[i] - '0')) / 10)
-		{
-			*err = 1;
-			if (sign == 1)
-				return (LLONG_MAX);
-			else
-				return (LLONG_MIN);
-		}
-		result = result * 10 + (str[i] - '0');
-		i++;
-	}
-	return (result * sign);
+	return (i);
 }
-
 
 static void	is_arg_valid(t_minishell *minishell, char *exit_arg, int sign)
 {
-	int			i;
 	long long	arg;
 	int			err;
 
-	i = 0;
 	err = 0;
-	while (exit_arg[i])
-	{
-		if (ft_isdigit(exit_arg[i]))
-			i++;
-		else
-		{
-			minishell->last_exit_status = 2;
-			write (2, "Wrong arguments\n", 17);
-			return ;
-		}
-	}
 	arg = ft_atoll(exit_arg, &err) * sign;
 	if (err || arg < LLONG_MIN + 1 || arg > LLONG_MAX)
 	{
-		minishell->last_exit_status = 2;
+		minishell->last_exit_status = 255;
 		write(2, "Wrong arguments\n", 17);
 		return ;
 	}
@@ -108,12 +76,12 @@ void	exit_cmd(t_minishell *minishell, char *input)
 	int	sign;
 
 	printf("exit\n");
-	i = 0;
 	sign = 1;
+	i = verify_spaces(minishell, input);
+	if (i == 0)
+		return ;
 	while (input[i])
 	{
-		while (input[i] == ' ')
-			i++;
 		if (input[i] == '-')
 			sign = -1;
 		if (input[i] == '-' || input[i] == '+')
@@ -124,7 +92,7 @@ void	exit_cmd(t_minishell *minishell, char *input)
 			return (is_arg_valid(minishell, input + i, sign));
 		else
 		{
-			minishell->last_exit_status = 2;
+			minishell->last_exit_status = 255;
 			write (2, "minishell: wrong argument\n", 27);
 			return ;
 		}
