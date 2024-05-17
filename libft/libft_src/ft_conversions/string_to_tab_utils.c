@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 09:06:22 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:15:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,45 +34,49 @@ static char	*ft_copyletters_utils(char **tab, int word, int letters, char *s)
 	return (tab[word]);
 }
 
-static int	no_quotes(int quotes, int letters, char **ce, char *s)
+static int	count_letters(int inside_q, char *s, int quotes)
 {
-	if (quotes == 0)
+	int	i;
+	int	q_type;
+	
+	i = 0;
+	q_type = s[i];
+	if (inside_q == 0)
 	{
-		while (s[letters] && s[letters] != ce[0][0])
-			letters++;
+		while (s[i] && s[i] != 32)
+			i++;
 	}
-	return (letters);
+	else
+	{
+		while (s[i] && quotes > 0)
+		{
+			if (s[i] == q_type)
+				quotes--;
+			i++;
+		}
+	}
+	return (i);
 }
 
-char	*ft_copyletters(char **tab, int word, char *s, char **ce)
+char	*ft_copyletters(char **tab, int word, char *s, int *quotes)
 {
 	int	letters;
-	int	quotes;
-	int	i;
+	int	inside_q;
+	int	q;
+	int	s_d;
 
 	letters = 0;
-	quotes = 0;
-	i = 0;
-	while (ce[1][i])
+	inside_q = 0;
+	if (s[letters] == 39 || s[letters] == 34)
 	{
-		if (s[letters] == ce[1][i++])
-		{
-			quotes = !quotes;
-			letters++;
-			break ;
-		}
-	}
-	letters = no_quotes(quotes, letters, ce, s);
-	if (quotes == 1)
-	{
-		while (s[letters] && s[letters] != ce[1][i - 1])
-		{
-			letters++;
-		}
-		if (s[letters] == ce[1][i - 1])
-			letters = letters - 1;
-		s = s + 1;
-	}
+		if (s[letters] == 39)
+			s_d == 0;
+		else
+			s_d == 1;
+		q++;
+		inside_q = !inside_q;
+	}	
+	letters = count_letters(inside_q, s, quotes[s_d]);
 	tab[word] = ft_copyletters_utils(tab, word, letters, s);
 	return (tab[word]);
 }

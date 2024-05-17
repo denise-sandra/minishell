@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 11:36:26 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:17:58 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ void	init_token(t_minishell *minishell)
 void	tokenize_input(char *input, t_minishell *minishell)
 {
 	char	**split_input;
-	char	special_c[3];
 	int		i;
+	int		*quotes;
 
-	special_c[0] = '\'';
-	special_c[1] = '\"';
-	special_c[2] = '\0';
-	if (check_if_closed_quotes(input) == 0)
+	quotes = check_if_closed_quotes(input);
+	if ( quotes == NULL)
 		return ;
-	split_input = ft_split(input, 32, special_c);
+	split_input = ft_split(input, 32);
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);
 	/*i = 0;

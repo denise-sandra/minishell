@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 11:35:54 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:01:22 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			ft_add_back(t_lst_env **lst, t_lst_env *new);
 
 //lexer
 void			tokenize_input(char *input, t_minishell *minishell);
-int	          check_if_closed_quotes(char *input);
+int	          *check_if_closed_quotes(char *input);
 int	          is_normal_command(t_minishell *minishell, t_token *token);
 int	          is_special_command(t_minishell *minishell, t_token *token);
 
