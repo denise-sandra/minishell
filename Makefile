@@ -38,7 +38,7 @@ fclean: clean
 	@make --no-print-directory -C $(LIBFT_DIR) fclean
 	@echo "all clean! 🧹"
 
-re: clean all
+re: fclean all
 
 .PHONY: all clean fclean re
 

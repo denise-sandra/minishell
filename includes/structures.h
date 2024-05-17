@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 19:10:14 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/17 09:20:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef enum e_tokentype
 	TOKEN_OPS,
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
+	TOKEN_OPEN_QUOTES,
 	TOKEN_END,
 	TOKEN_HEREDOC,
 	TOKEN_ARG

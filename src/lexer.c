@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 16:52:06 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/17 09:21:54 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_command(t_minishell *minishell, t_token *token)
 			free(path_join_1);
 			free_tab(paths);
 			ft_error("Malloc in is_command", minishell);
-		}	
+		}
 		if (access(path_join_2, X_OK) == 0 && access(path_join_2, F_OK) == 0)
 		{
 			free(path_join_1);
@@ -117,6 +117,33 @@ void	init_token(t_minishell *minishell)
 	}
 }
 
+static int	check_if_closed_quotes(char *input)
+{
+	int	i;
+	int	quote;
+
+	i = 0;
+	quote = 0;
+	while (input[i])
+	{
+		if (input[i] == 34)
+			quote++;
+		i++;
+	}
+	if (quote % 2 != 0)
+		return (0);
+	i = 0;
+	quote = 0;
+	while (input[i])
+	{
+		if (input[i] == 39)
+			quote++;
+		i++;
+	}
+	if (quote % 2 != 0)
+		return (0);
+	return (1);
+}
 void	tokenize_input(char *input, t_minishell *minishell)
 {
 	char	**split_input;
@@ -126,6 +153,8 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	special_c[0] = '\'';
 	special_c[1] = '\"';
 	special_c[2] = '\0';
+	if (check_if_closed_quotes(input) == 0)
+		return ;
 	split_input = ft_split(input, 32, special_c);
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 11:31:52 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/15 15:08:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/17 08:45:34 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	**pars_path(t_minishell *minishell)
 	special_c[0] = '\'';
 	special_c[1] = '\0';
 	path = get_env_value(minishell->env, "PATH");
-	//printf("path: %s\n", path);
 	if (!path)
 	{
 		printf("PATH environment variable not found\n");

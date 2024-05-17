@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   string_to_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/03/15 11:13:44 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/17 09:07:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftv3.h"
+#include <stdio.h>
 
-static unsigned int	ft_effc(char *s, char c)
+static unsigned int	erase_c(char *s, char c)
 {
 	int	start;
 
@@ -25,68 +26,74 @@ static unsigned int	ft_effc(char *s, char c)
 static unsigned int	ft_countwords(char *s, char **ce)
 {
 	int	i;
-	int	mots;
+	int	words;
 	int	quotes;
 
 	if (s[0] == '\0')
 		return (0);
-	mots = 1;
+	words = 1;
 	quotes = 0;
 	i = 0;
 	while (s[i + 1])
 	{
 		if (ft_strchr(ce[1], s[i]) != NULL)
-			quotes = -1;
+			quotes = !quotes;
 		if (s[i] == ce[0][0] && !quotes && s[i + 1] != ce[0][0])
-			mots++;
+			words++;
 		i++;
 	}
-	return (mots);
+	return (words);
 }
 
-static char	**reduc(char **tableau, int mots, char *s, char **ce)
+static char	**fill_tab(char **tab, int words, char *s, char **ce)
 {
-	int	j;
-	int	lenmot;
+	int	i;
+	int	len;
+	int	q;
 
-	j = 0;
-	while (mots > j)
+	i = 0;
+	while (i < words)
 	{
-		tableau[j] = ft_copylettres(tableau, j, s, ce);
-		if (tableau[j] == NULL)
+		q = 0;
+		if (s[0] == ce[1][0] || s[0] == ce[1][1])
+			q = 2;
+		tab[i] = ft_copyletters(tab, i, s, ce);
+		if (tab[i] == NULL)
 			return (NULL);
-		lenmot = ft_strlen(tableau[j]);
-		j++;
-		if (j < mots)
+		if (tab[i] == NULL)
+			return (NULL);
+		len = ft_strlen(tab[i]);
+		i++;
+		if (i < words)
 		{
-			s = s + lenmot;
-			s = s + ft_effc(s, ce[0][0]);
+			s = s + len + q;
+			s = s + erase_c(s, ce[0][0]);
 		}
 	}
-	return (tableau);
+	return (tab);
 }
 
 char	**ft_split(char *s, char c, char *special_c)
 {
-	int		mots;
-	char	**tableau;
+	int		words;
+	char	**tab;
 	char	*ce[2];
 
 	ce[0] = &c;
 	ce[1] = special_c;
 	if (s == NULL )
 		return (NULL);
-	s = s + ft_effc(s, c);
-	mots = ft_countwords(s, ce);
-	tableau = (char **) malloc((mots + 1) * sizeof (char *));
-	if (tableau == NULL)
+	s = s + erase_c(s, c);
+	words = ft_countwords(s, ce);
+	tab = (char **) malloc((words + 1) * sizeof (char *));
+	if (tab == NULL)
 		return (NULL);
-	tableau[mots] = NULL;
-	tableau = reduc(tableau, mots, s, ce);
-	if (tableau == NULL)
+	tab[words] = NULL;
+	tab = fill_tab(tab, words, s, ce);
+	if (tab == NULL)
 	{
-		free(tableau);
+		free(tab);
 		return (NULL);
 	}
-	return (tableau);
+	return (tab);
 }
