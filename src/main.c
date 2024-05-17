@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 08:34:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/17 09:42:34 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(input);
 			tokenize_input(input, minishell);
+			parser(minishell);
 			execution(minishell);
 		}
 		else if (*input && ft_strncmp(input, "exit", 4) == 0)
