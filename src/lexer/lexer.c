@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 15:41:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:55:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	int		i;
 	int		*quotes;
 
-	quotes = check_if_closed_quotes(input);
+	quotes = check_quotes(input);
 	if ( quotes == NULL)
 		return ;
 	split_input = ft_split_quotes(input, 32, quotes);
@@ -77,6 +77,9 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		free(quotes);
 		ft_error("Malloc split_input", minishell);
 	}
+	i = 0;
+	while (split_input[i])
+		printf("split %s\n", split_input[i++]);
 	free(quotes);
 	i = 0;
 	if (split_input[i] == NULL)

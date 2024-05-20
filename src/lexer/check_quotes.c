@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:45:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:14:08 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	check_single_quotes(char *input)
 	return (quote);
 }
 
-int	*check_if_closed_quotes(char *input)
+int	*check_quotes(char *input)
 {
 	int	single_quotes;
 	int	double_quotes;

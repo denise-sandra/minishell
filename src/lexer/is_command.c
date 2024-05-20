@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 10:37:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:12:14 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,31 @@ static char *join_path(t_minishell *minishell, t_token *token, char **paths, int
 {
      char	*join_slash;
 	char	*join_token;
-     
+	char	*tmp_value;
+
+	join_token = NULL;
+	tmp_value = malloc(ft_strlen(token->value) * sizeof(char));
+	if (tmp_value == NULL)
+		ft_error("Malloc in join_path", minishell);	
      join_slash = ft_strjoin(paths[i], "/");
+	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value));
 	if (join_slash == NULL)
 	{
 		free_tab(paths);
 		ft_error("Malloc in is_command", minishell);
 	}
-	join_token = ft_strjoin(join_slash, token->value);
+	tmp_value = erase_outer_quotes(tmp_value);
+	if (token->value == NULL)
+		ft_error("Malloc in join_path", minishell);
+	join_token = ft_strjoin(join_slash, tmp_value);
 	if (join_token == NULL)
 	{
 		free(join_slash);
 		free_tab(paths);
 		ft_error("Malloc in is_command", minishell);
 	}
-     free(join_slash);
+     free (join_slash);
+	free(tmp_value);
      return (join_token);
 }
 

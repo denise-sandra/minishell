@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 12:01:22 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:37:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void           parser(t_minishell *minishell);
 void			ft_error(char *msg, t_minishell *minishell);
 char			**ft_split_1st_token(char const *s, char c);
 char			**pars_path(t_minishell *minishell);
+char	          *erase_all_quotes(char *word);
+char	          *erase_outer_quotes(char *word);
 void			clean_token(t_minishell *minishell);
 void			clean_minishell(t_minishell *minishell);
 t_lst_env		*ft_new_node(char *name, char *value);
@@ -51,7 +53,7 @@ void			ft_add_back(t_lst_env **lst, t_lst_env *new);
 
 //lexer
 void			tokenize_input(char *input, t_minishell *minishell);
-int	          *check_if_closed_quotes(char *input);
+int	          *check_quotes(char *input);
 int	          is_normal_command(t_minishell *minishell, t_token *token);
 int	          is_special_command(t_minishell *minishell, t_token *token);
 
