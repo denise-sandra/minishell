@@ -6,13 +6,13 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:38:09 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:04:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftv3.h"
-#include<stdio.h>
-static char	*ft_copyletters_utils(char **tab, int word, int letters, char *s)
+
+static char	*ft_cl_utils(char **tab, int word, int letters, char *s)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static int	count_letters(int inside_q, char *s, int quotes)
 {
 	int	i;
 	int	q_type;
-	
+
 	i = 0;
 	q_type = s[i];
 	if (inside_q == 0)
@@ -78,6 +78,6 @@ char	*ft_copyletters(char **tab, int word, char *s, int *quotes)
 		inside_q = !inside_q;
 	}
 	letters = count_letters(inside_q, s, quotes[s_d]);
-	tab[word] = ft_copyletters_utils(tab, word, letters, s);
+	tab[word] = ft_cl_utils(tab, word, letters, s);
 	return (tab[word]);
 }

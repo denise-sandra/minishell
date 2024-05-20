@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:35:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:03:41 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static unsigned int	ft_countwords(char *s, int *quotes)
 	int	q;
 	int	inside_q;
 
-	if (s[0] == '\0')
-		return (0);
 	words = 1;
 	q = 0;
 	i = 0;
@@ -85,7 +83,8 @@ char	**ft_split_quotes(char *s, char c, int *quotes)
 	if (s == NULL )
 		return (NULL);
 	s = s + erase_c(s, c);
-	words = ft_countwords(s, quotes);
+	if (s[0])
+		words = ft_countwords(s, quotes);
 	tab = (char **) malloc((words + 1) * sizeof (char *));
 	if (tab == NULL)
 	{

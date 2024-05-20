@@ -6,15 +6,15 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:37:44 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:45:25 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int   check_double_quotes(char *input)
+static int	check_double_quotes(char *input)
 {
-     int	i;
+	int	i;
 	int	quote;
 
 	i = 0;
@@ -27,12 +27,12 @@ static int   check_double_quotes(char *input)
 	}
 	if (quote % 2 != 0)
 		return (-1);
-     return (quote);
+	return (quote);
 }
 
-static int   check_single_quotes(char *input)
+static int	check_single_quotes(char *input)
 {
-     int	i;
+	int	i;
 	int	quote;
 
 	i = 0;
@@ -45,7 +45,7 @@ static int   check_single_quotes(char *input)
 	}
 	if (quote % 2 != 0)
 		return (-1);
-     return (quote);
+	return (quote);
 }
 
 int	*check_if_closed_quotes(char *input)
@@ -53,7 +53,7 @@ int	*check_if_closed_quotes(char *input)
 	int	single_quotes;
 	int	double_quotes;
 	int	*quotes;
-	
+
 	quotes = malloc(3 * sizeof(int));
 	if (quotes == NULL)
 		return (NULL);

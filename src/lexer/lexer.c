@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:40:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:43:54 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);
 	free(quotes);
-	/*i = 0;
-	while (split_input[i])
-		printf("split %s\n", split_input[i++]);*/
 	i = 0;
 	while (split_input[i])
 		i++;
@@ -92,7 +89,8 @@ void	tokenize_input(char *input, t_minishell *minishell)
 			free_tab(split_input);
 			ft_error("Malloc error in tokenize_input", minishell);
 		}
-		ft_strlcpy(minishell->token[i]->value, split_input[i], ft_strlen(split_input[i]) + 1);
+		ft_strlcpy(minishell->token[i]->value, split_input[i], \
+		ft_strlen(split_input[i]) + 1);
 		minishell->token[i]->order = i;
 		i++;
 	}
