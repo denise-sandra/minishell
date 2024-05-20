@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 13:43:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:45:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	parser(t_minishell *minishell)
 	i = 0;
 	while (i < minishell->token_count)
 	{
-		token[i]->value = erase_special_c(token[i]->value);
+		if (token[i]->value[0] == 39)
+			token[i]->value = erase_special_c(token[i]->value);
 		printf("parser : %s\n",token[i]->value);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/03/15 11:12:41 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/20 15:38:43 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ char	*ft_empty(void)
 		return (NULL);
 	str[0] = '\0';
 	return (str);
+}
+
+char	**ft_empty_tab(void)
+{
+	char	**tab;
+
+	tab = malloc(sizeof(char *));
+	if (tab == NULL)
+		return (NULL);
+	tab[0] = NULL;
+	return (tab);
 }
 
 void	free_tab(char **tab)

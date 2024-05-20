@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 14:03:41 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:39:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ static char	**fill_tab(char **tab, int words, char *s, int *quotes)
 	{
 		tab[i] = ft_copyletters(tab, i, s, quotes);
 		if (tab[i] == NULL)
-		{
-			free(quotes);
 			return (NULL);
-		}	
 		len = ft_strlen(tab[i]);
 		i++;
 		if (i < words)
@@ -80,23 +77,21 @@ char	**ft_split_quotes(char *s, char c, int *quotes)
 	int		words;
 	char	**tab;
 
-	if (s == NULL )
-		return (NULL);
 	s = s + erase_c(s, c);
-	if (s[0])
-		words = ft_countwords(s, quotes);
-	tab = (char **) malloc((words + 1) * sizeof (char *));
-	if (tab == NULL)
+	if (s[0] == 0)
 	{
-		free(quotes);
-		return (NULL);
+		tab = ft_empty_tab();
+		if (tab == NULL)
+			return (NULL);
+		return (tab);
 	}
+	words = ft_countwords(s, quotes);
+	tab = malloc((words + 1) * sizeof (char *));
+	if (tab == NULL)
+		return (NULL);
 	tab[words] = NULL;
 	tab = fill_tab(tab, words, s, quotes);
 	if (tab == NULL)
-	{
-		free(tab);
-		return (NULL);
-	}
+		return (free(tab), NULL);
 	return (tab);
 }

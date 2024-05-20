@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 12:10:19 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:34:23 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
 
 /*clean*/
 char		*ft_empty(void);
+char		**ft_empty_tab(void);
 void		free_tab(char **tab);
 char		**free_split(char **split, int h);
 void		free_list(t_list **lst);
