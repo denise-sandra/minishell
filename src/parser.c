@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 12:56:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:16:59 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ void	parser(t_minishell *minishell)
 	t_token **token;
 	int	i;
 	
-	printf("tokens: %d\n",minishell->token_count );
 	token = minishell->token;
 	i = 0;
 	while (i < minishell->token_count)
 	{
-		printf("parser : %s\n",token[i]->value);
 		token[i]->value = erase_special_c(token[i]->value);
 		printf("parser : %s\n",token[i]->value);
 		i++;
