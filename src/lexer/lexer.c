@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 15:17:58 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:33:22 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	tag_token(t_minishell *minishell)
 			token[i]->type = TOKEN_COMMAND;
 		else
 			token[i]->type = TOKEN_ARG;
+		printf("value %s type %u\n", token[i]->value, token[i]->type);
 		i++;
 	}
 }
@@ -70,12 +71,12 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	quotes = check_if_closed_quotes(input);
 	if ( quotes == NULL)
 		return ;
-	split_input = ft_split(input, 32);
+	split_input = ft_split_quotes(input, 32, quotes);
 	if (split_input == NULL)
 		ft_error("Malloc split_input", minishell);
-	/*i = 0;
+	i = 0;
 	while (split_input[i])
-		printf("split %s\n", split_input[i++]);*/
+		printf("split %s\n", split_input[i++]);
 	i = 0;
 	while (split_input[i])
 		i++;

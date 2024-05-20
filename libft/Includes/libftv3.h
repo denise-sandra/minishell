@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 15:23:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:10:19 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ int			ft_toupper(int c);
 int			ft_tolower(int c);
 int			ft_atoi(const char *str);
 int			ft_atoi_err(const char *str, int *error);
-char		*ft_itoa(int n);
-char	**ft_split(char *s, char c, int *quotes);
-char	*ft_copyletters(char **tab, int word, char *s, int *quotes);
-long long	ft_atoll(const char *str, int *err);
+char			*ft_itoa(int n);
+char			**ft_split_quotes(char *s, char c, int *quotes);
+char			*ft_copyletters(char **tab, int word, char *s, int *quotes);
+char			**ft_split(char const *s, char c);
+long long		ft_atoll(const char *str, int *err);
 
 /*mem alloc and str initialisation*/
 void		*ft_memset(void *str, int c, size_t n);

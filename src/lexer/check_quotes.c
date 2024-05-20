@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 15:20:02 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:40:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int   check_double_quotes(char *input)
 		i++;
 	}
 	if (quote % 2 != 0)
-		return (0);
+		return (-1);
      return (quote);
 }
 
@@ -44,7 +44,7 @@ static int   check_single_quotes(char *input)
 		i++;
 	}
 	if (quote % 2 != 0)
-		return (0);
+		return (-1);
      return (quote);
 }
 
@@ -54,14 +54,19 @@ int	*check_if_closed_quotes(char *input)
 	int	double_quotes;
 	int	*quotes;
 	
-	quotes = NULL;
+	quotes = malloc(3 * sizeof(int));
+	if (quotes == NULL)
+		return (NULL);
 	double_quotes = check_double_quotes(input);
-	if (double_quotes == 0)
+	if (double_quotes == -1)
 		return (NULL);
 	single_quotes = check_single_quotes(input);
-	if (single_quotes == 0)
+	if (single_quotes == -1)
 		return (NULL);
 	quotes[0] = single_quotes;
+	printf("single quotes: %d\n", quotes[0]);
 	quotes[1] = double_quotes;
+	printf("doue quotes: %d\n", quotes[1]);
+	quotes[3] = -1;
 	return (quotes);
 }

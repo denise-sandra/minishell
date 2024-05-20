@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 15:22:21 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:50:54 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static unsigned int	ft_countwords(char *s, int *quotes)
 				inside_q = !inside_q;
 		}
 		if (s[i] == 32 && inside_q == 0 && s[i + 1] != 32)
+		{
+			printf("%c\n", s[i]);
 			words++;
+		}
 		i++;
 	}
 	return (words);
@@ -60,6 +63,7 @@ static char	**fill_tab(char **tab, int words, char *s, int *quotes)
 	int	q;
 
 	i = 0;
+	q = 0;
 	while (i < words)
 	{
 		q = 0;
@@ -81,7 +85,7 @@ static char	**fill_tab(char **tab, int words, char *s, int *quotes)
 	return (tab);
 }
 
-char	**ft_split(char *s, char c, int *quotes)
+char	**ft_split_quotes(char *s, char c, int *quotes)
 {
 	int		words;
 	char	**tab;
