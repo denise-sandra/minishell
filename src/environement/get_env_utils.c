@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 20:09:49 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/21 22:00:05 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,6 @@ int		calcule_new_size(t_minishell *minishell, char *token, int old_size)
 	value_len = ft_strlen(value);
 	new_size = old_size - (name_len + 1) + value_len;
 	return (new_size);
-}
-
-static char    *fill_new_token_utils(t_minishell *minishell, int size, \
-        char *token, char *new_token)
-{
-    
-}
-
-char	*fill_new_token(t_minishell *minishell, char *token, int size)
-{
-    char    *new_token;
-    char    **env_vars;
-    int     count_env;
-	int		i;
-	
-    count_env = count_env_var(minishell, token);
-    env_vars = malloc ((count_env + 1) * sizeof(char*));
-    if (env_vars == NULL)
-        ft_error("Malloc in fill_new_token", minishell);
-    new_token = malloc(size * sizeof(char));
-    if (new_token == NULL)
-        ft_error("Malloc in fill_new_token", minishell);
-	i = 0;
-	while (i < count_env)
-	{       
-		fill_new_token_utils(minishell, size, token, new_token);
-		i++;
-	}
-    printf("new token POSTA:%s\n", new_token);
-    return (new_token);
 }
 
 int	env_name_len(char *token)
