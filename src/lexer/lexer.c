@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 16:55:32 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:49:25 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		free(quotes);
 		ft_error("Malloc split_input", minishell);
 	}
-	i = 0;
-	while (split_input[i])
-		printf("split %s\n", split_input[i++]);
 	free(quotes);
 	i = 0;
 	if (split_input[i] == NULL)
@@ -107,5 +104,5 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	}
 	minishell->token[minishell->token_count] = NULL;
 	free_tab(split_input);
-	tag_token(minishell);
+	//tag_token(minishell);
 }

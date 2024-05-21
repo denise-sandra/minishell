@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   measures_basics.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 20:51:10 by skanna            #+#    #+#             */
-/*   Updated: 2024/03/15 11:11:25 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/21 13:18:52 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,20 @@ int	arg_count(char const *s, char c)
 	if (args == 0)
 		return (0);
 	return (args);
+}
+
+int	count_character(char *str, char c)
+{
+	int	i;
+	int count;
+	
+	i = 0;
+	count = 0;
+	while(str[i])
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 09:20:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:10:34 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_minishell
 	int			last_exit_status;
 	int			redirect_in;
 	int			redirect_out;
-	char		*special_commands[2];     //builtin
+	char		*special_commands[6];     //builtin
 	char		*input_file;
 	char		*output_file;
 }	t_minishell;

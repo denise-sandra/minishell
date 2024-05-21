@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env_fill_structure.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 20:12:52 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/21 15:26:25 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_env_value(t_lst_env *env, char *name)
-{
-	t_lst_env	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		if (ft_strncmp(temp->name, name, ft_strlen(temp->name)) == 0)
-			return (temp->value);
-		temp = temp->next;
-	}
-	return (NULL);
-}
 
 t_lst_env	*env_fill_structure(char **envp, t_minishell *minishell)
 {
@@ -49,4 +35,3 @@ t_lst_env	*env_fill_structure(char **envp, t_minishell *minishell)
 	}
 	return (lst_env);
 }
-

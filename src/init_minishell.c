@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:57 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/15 12:34:22 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:23:52 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 static void init_special_commands(t_minishell *minishell)
 {
-	minishell->special_commands[0] = "export";
-	minishell->special_commands[1] = "env";
+	minishell->special_commands[0] = "echo";
+	minishell->special_commands[1] = "cd";
+	minishell->special_commands[2] = "pwd";
+	minishell->special_commands[3] = "export";
+	minishell->special_commands[4] = "unset";
+	minishell->special_commands[5] = "env";	
 }
 
 t_minishell	*init_minishell(char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 17:12:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:40:55 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char *join_path(t_minishell *minishell, t_token *token, char **paths, int
 	if (tmp_value == NULL)
 		ft_error("Malloc in join_path", minishell);	
      join_slash = ft_strjoin(paths[i], "/");
-	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value));
+	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value) + 1);
 	if (join_slash == NULL)
 	{
 		free_tab(paths);

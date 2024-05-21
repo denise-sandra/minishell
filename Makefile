@@ -8,10 +8,11 @@ RESET = \033[0m
 
 NAME	:= minishell
 
-SRCS	:= ${addprefix src/, main.c get_env.c init_minishell.c  parser.c \
+SRCS	:= ${addprefix src/, main.c init_minishell.c  parser.c \
+		${addprefix environement/, env_fill_structure.c get_env.c get_env_utils.c} \
 		${addprefix lexer/, lexer.c check_quotes.c is_command.c} \
 		${addprefix exec/, execution.c execute_special_command.c} \
-		${addprefix builtins/, export.c env.c exit.c pwd.c cd.c} \
+		${addprefix builtins/, export.c env.c exit.c pwd.c cd.c echo.c} \
 		${addprefix utils/, ft_error.c ft_split_1st_token.c pars_path.c clean_minishell.c create_list.c erase_quotes.c}}
 OBJS     = $(SRCS:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftv3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 15:34:23 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:19:13 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			int_length(long int n);
 int			arg_count(char const *s, char c);
 int			arg_len_quotes(char const *str, char c);
 int			arg_count_quotes(char const *s, char c, int q);
+int			count_character(char *str, char c);
 
 /*conversions*/
 int			ft_toupper(int c);
