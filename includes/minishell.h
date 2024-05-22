@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 14:55:47 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:53:03 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ t_lst_env		*fill_env_struct(char **envp, t_minishell *minishell);
 char			*get_env_value(t_lst_env *env, char *name);
 int	is_env_value(t_minishell *minishell, int i);
 char	        *replace_env_value(t_minishell *minishell, char *token, int env_var);
-int         	count_env_var(t_minishell *minishell, char *token);
-int	            is_env_name(t_minishell *minishell, char *token, int i);
+int         	count_env_var(char *token);
 int         	env_name_len(char *token);
 char	        *return_env_str(char *token);
 int	            check_quotes_for_env(char *token);

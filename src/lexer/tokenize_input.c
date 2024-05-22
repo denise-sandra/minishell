@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 14:18:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:03:30 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	init_token(t_minishell *minishell)
 		ft_bzero(minishell->token[i], sizeof(t_token));
 		i++;
 	}
+	minishell->token[i] = NULL;
 }
 
 static int	tokens_count(char **split_input)
@@ -63,7 +64,6 @@ static void	fill_token_struct(t_minishell *minishell, char **split_input)
 		minishell->token[i]->order = i;
 		i++;
 	}
-	minishell->token[minishell->token_count] = NULL;
 }
 
 void	tokenize_input(char *input, t_minishell *minishell)

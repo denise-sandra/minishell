@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_new_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 13:42:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:54:42 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*fill_new_token_utils(t_minishell *minishell, char *token, \
 	k = 0;
 	while (j < size)
 	{
-		if (is_env_name(minishell, token, i) == 1)
+		if (token[i] == '$' && token[i+ 1])
 		{
 			j = replace_name_with_value(env_vars[k], new_token, j);
 			i = i + env_name_len(token + i) + 1;
@@ -71,7 +71,7 @@ static char	**fill_env_vars(t_minishell *minishell, char **env_vars, \
 	{
 		while (token[i])
 		{
-			if (is_env_name(minishell, token, i) == 1)
+			if (token[i] == '$' && token[i+ 1])
 			{
 				env_name = return_env_str(token + i);
 				if (env_name == NULL)
@@ -96,7 +96,7 @@ char	*fill_new_token(t_minishell *minishell, char *token, int size)
 	char	**env_vars;
 	int		count_env;
 
-	count_env = count_env_var(minishell, token);
+	count_env = count_env_var(token);
 	env_vars = malloc ((count_env + 1) * sizeof(char *));
 	if (env_vars == NULL)
 		ft_error("Malloc in fill_new_token", minishell);
