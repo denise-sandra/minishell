@@ -3,35 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   is_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 10:40:55 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/22 14:48:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *join_path(t_minishell *minishell, t_token *token, char **paths, int i)
+static char	*ft_join_slash(t_minishell *minishell, char **paths, int i)
 {
-     char	*join_slash;
-	char	*join_token;
-	char	*tmp_value;
+	char	*join_slash;
 
-	join_token = NULL;
-	tmp_value = malloc(ft_strlen(token->value) * sizeof(char));
-	if (tmp_value == NULL)
-		ft_error("Malloc in join_path", minishell);	
-     join_slash = ft_strjoin(paths[i], "/");
-	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value) + 1);
+	join_slash = ft_strjoin(paths[i], "/");
 	if (join_slash == NULL)
 	{
 		free_tab(paths);
 		ft_error("Malloc in is_command", minishell);
 	}
-	tmp_value = erase_outer_quotes(tmp_value);
-	if (token->value == NULL)
+	return (join_slash);
+}
+
+static char	*join_path(t_minishell *minishell, t_token *token, \
+	char **paths, int i)
+{
+	char	*join_slash;	
+	char	*join_token;
+	char	*tmp_value;
+
+	tmp_value = malloc((ft_strlen(token->value) + 1) * sizeof(char));
+	if (tmp_value == NULL)
 		ft_error("Malloc in join_path", minishell);
+	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value) + 1);
+	tmp_value = erase_outer_quotes(tmp_value);
+	if (tmp_value == NULL)
+		ft_error("Malloc in join_path", minishell);
+	join_slash = ft_join_slash(minishell, paths, i);
 	join_token = ft_strjoin(join_slash, tmp_value);
 	if (join_token == NULL)
 	{
@@ -39,9 +47,9 @@ static char *join_path(t_minishell *minishell, t_token *token, char **paths, int
 		free_tab(paths);
 		ft_error("Malloc in is_command", minishell);
 	}
-     free (join_slash);
+	free (join_slash);
 	free(tmp_value);
-     return (join_token);
+	return (join_token);
 }
 
 int	is_normal_command(t_minishell *minishell, t_token *token)
@@ -57,7 +65,8 @@ int	is_normal_command(t_minishell *minishell, t_token *token)
 	while (paths[i])
 	{
 		path_with_token = join_path(minishell, token, paths, i);
-		if (access(path_with_token, X_OK) == 0 && access(path_with_token, F_OK) == 0)
+		if (access(path_with_token, X_OK) == 0 && \
+			access(path_with_token, F_OK) == 0)
 		{
 			free(path_with_token);
 			free_tab(paths);
@@ -75,9 +84,10 @@ int	is_special_command(t_minishell *minishell, t_token *token)
 	int	i;
 
 	i = 0;
-	while (i < 2)
+	while (i < 5)
 	{
-		if (ft_strncmp(token->value, minishell->special_commands[i], ft_strlen(token->value)) == 0)
+		if (ft_strncmp(token->value, minishell->special_commands[i], \
+			ft_strlen(token->value)) == 0)
 			return (1);
 		i++;
 	}

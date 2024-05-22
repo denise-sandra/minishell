@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/17 09:22:06 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:03:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ void	execution(t_minishell *minishell)
 {
 	if (minishell->token && minishell->token[0])
 	{
-		if (minishell->token[0]->type == TOKEN_SPECIAL_COMMAND)
+		if (ft_strlen(minishell->token[0]->value) == 0)
+			return ;
+		else if (minishell->token[0]->type == TOKEN_ENV)
+			printf("%s: command not found\n", minishell->token[0]->value);
+		else if (minishell->token[0]->type == TOKEN_SPECIAL_COMMAND)
 			execute_special_command(minishell, minishell->token[0]->value);
 		else if (minishell->token[0]->type == TOKEN_COMMAND)
 			printf("not so special command\n");
 		else
-			printf("first token is not a command\n");
+			printf("%s: command not found\n", minishell->token[0]->value);
 	}
 }

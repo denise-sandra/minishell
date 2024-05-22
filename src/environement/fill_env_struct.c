@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_fill_structure.c                               :+:      :+:    :+:   */
+/*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 15:26:25 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/22 12:22:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lst_env	*env_fill_structure(char **envp, t_minishell *minishell)
+t_lst_env	*fill_env_struct(char **envp, t_minishell *minishell)
 {
 	char		**split_envp;
 	t_lst_env	*lst_env;

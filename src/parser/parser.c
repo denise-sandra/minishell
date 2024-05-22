@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 16:34:49 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/22 15:22:58 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ void	parser(t_minishell *minishell)
 	{
 		quotes = check_quotes(token[i]->value);
 		env_var = count_env_var(minishell, token[i]->value);
-		printf("env cuenta : %d\n", env_var);
+		printf("env_var: %d %s\n", env_var,token[i]->value );
 		if ( env_var > 0)
 		{
-			token[i]->value = replace_env_value(minishell, token[i]->value, env_var);
-			printf("env final : %s\n", token[i]->value);
+			token[i]->value = replace_env_value(minishell, \
+			token[i]->value, env_var);
 		}		
 		else if (quotes[0] == 0 || quotes[1] == 0)
 			token[i]->value = erase_all_quotes(token[i]->value);
-		else if(quotes[0] > 0 && quotes[1] > 0)
+		else if (quotes[0] > 0 && quotes[1] > 0)
 			token[i]->value = erase_outer_quotes(token[i]->value);
-		printf("parser : %s\n",token[i]->value);
 		free(quotes);
+		printf("parser: %s\n",minishell->token[i]->value );
 		i++;
 	}
 	tag_token(minishell);

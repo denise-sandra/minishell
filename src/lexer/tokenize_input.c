@@ -1,50 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 10:49:25 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/22 14:18:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tag_token(t_minishell *minishell)
-{
-	int		i;
-	int		len;
-	t_token	**token;
-
-	i = 0;
-	token = minishell->token;
-	while (i < minishell->token_count)
-	{
-		len = ft_strlen(token[i]->value);
-		if (token[i]->value[0] == '$')
-			token[i]->type = TOKEN_ENV;
-		else if (is_special_command(minishell, token[i]) == 1)
-			token[i]->type = TOKEN_SPECIAL_COMMAND;
-		else if (ft_strncmp(token[i]->value, "|", len) == 0)
-			token[i]->type = TOKEN_OPS;
-		else if (ft_strncmp(token[i]->value, ">", len) == 0)
-			token[i]->type = TOKEN_REDIR_OUT;
-		else if (ft_strncmp(token[i]->value, "<", len) == 0)
-			token[i]->type = TOKEN_REDIR_IN;
-		else if (ft_strncmp(token[i]->value, "EOF", len) == 0)
-			token[i]->type = TOKEN_END;
-		else if (is_normal_command(minishell, token[i]) == 1)
-			token[i]->type = TOKEN_COMMAND;
-		else
-			token[i]->type = TOKEN_ARG;
-		printf("value %s type %u\n", token[i]->value, token[i]->type);
-		i++;
-	}
-}
-
-void	init_token(t_minishell *minishell)
+static void	init_token(t_minishell *minishell)
 {
 	int	i;
 
@@ -62,32 +30,25 @@ void	init_token(t_minishell *minishell)
 	}
 }
 
-void	tokenize_input(char *input, t_minishell *minishell)
+static int	tokens_count(char **split_input)
 {
-	char	**split_input;
-	int		i;
-	int		*quotes;
+	int	i;
 
-	quotes = check_quotes(input);
-	if ( quotes == NULL)
-		return ;
-	split_input = ft_split_quotes(input, 32, quotes);
-	if (split_input == NULL)
-	{
-		free(quotes);
-		ft_error("Malloc split_input", minishell);
-	}
-	free(quotes);
 	i = 0;
 	if (split_input[i] == NULL)
 	{
 		free_tab(split_input);
-		return ;
+		return (-1);
 	}
 	while (split_input[i])
 		i++;
-	minishell->token_count = i;
-	init_token(minishell);
+	return (i);
+}
+
+static void	fill_token_struct(t_minishell *minishell, char **split_input)
+{
+	int	i;
+
 	i = 0;
 	while (i < minishell->token_count)
 	{
@@ -103,6 +64,29 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		i++;
 	}
 	minishell->token[minishell->token_count] = NULL;
+}
+
+void	tokenize_input(char *input, t_minishell *minishell)
+{
+	char	**split_input;
+	int		*quotes;
+
+	quotes = check_quotes(input);
+	if (quotes == NULL)
+		ft_error("Malloc in check_quotes", minishell);
+	if (quotes[0] % 2 != 0 || quotes[1] % 2 != 0)
+		return;
+	split_input = ft_split_quotes(input, 32, quotes);
+	if (split_input == NULL)
+	{
+		free(quotes);
+		ft_error("Malloc split_input", minishell);
+	}
+	free(quotes);
+	minishell->token_count = tokens_count(split_input);
+	if (minishell->token_count == -1)
+		return ;
+	init_token(minishell);
+	fill_token_struct(minishell, split_input);
 	free_tab(split_input);
-	//tag_token(minishell);
 }

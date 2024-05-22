@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 16:57:52 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/22 14:55:47 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 //src
 t_minishell		*init_minishell(char **envp);
-void           parser(t_minishell *minishell);
+
 
 //utils
 void			ft_error(char *msg, t_minishell *minishell);
@@ -50,13 +50,14 @@ t_lst_env		*ft_last(t_lst_env *lst);
 void			ft_add_back(t_lst_env **lst, t_lst_env *new);
 
 //environement
-t_lst_env		*env_fill_structure(char **envp, t_minishell *minishell);
+t_lst_env		*fill_env_struct(char **envp, t_minishell *minishell);
 char			*get_env_value(t_lst_env *env, char *name);
+int	is_env_value(t_minishell *minishell, int i);
 char	        *replace_env_value(t_minishell *minishell, char *token, int env_var);
 int         	count_env_var(t_minishell *minishell, char *token);
-int	            is_env_var(t_minishell *minishell, char *token, int i);
+int	            is_env_name(t_minishell *minishell, char *token, int i);
 int         	env_name_len(char *token);
-char	        *return_env_str(t_minishell *minishell, char *token);
+char	        *return_env_str(char *token);
 int	            check_quotes_for_env(char *token);
 int		        calcule_new_size(t_minishell *minishell, char *token, int old_size);
 char	        *fill_new_token(t_minishell *minishell, char *token, int size);
@@ -64,10 +65,13 @@ char	        *fill_new_token(t_minishell *minishell, char *token, int size);
 
 //lexer
 void			tokenize_input(char *input, t_minishell *minishell);
-void	        tag_token(t_minishell *minishell);
 int	            *check_quotes(char *input);
 int	            is_normal_command(t_minishell *minishell, t_token *token);
 int	            is_special_command(t_minishell *minishell, t_token *token);
+
+//parser
+void           parser(t_minishell *minishell);
+void	        tag_token(t_minishell *minishell);
 
 //exec
 void			execution(t_minishell *minishell);
