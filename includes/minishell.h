@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 22:53:03 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/23 16:14:53 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_minishell		*init_minishell(char **envp);
 void			ft_error(char *msg, t_minishell *minishell);
 char			**ft_split_1st_token(char const *s, char c);
 char			**pars_path(t_minishell *minishell);
+void	          erase_quotes(t_minishell *minishell, int i);
 char	          *erase_all_quotes(char *word);
 char	          *erase_outer_quotes(char *word);
 void			clean_token(t_minishell *minishell);

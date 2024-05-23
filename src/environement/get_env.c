@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 22:52:46 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/23 16:20:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,30 @@ int	count_env_var(char *token)
 {
 	int	i;
 	int	env;
-	
+	int	single_q;
+
 	i = 0;
 	env = 0;
-	while (token[i])
+	single_q = 0;
+	if (token[0] == 39)
 	{
-		if (token[i] == '$' && token[i + 1])
-			env++;
-		i++;
+		while (token[i])
+		{
+			if (token [i] == 39)
+				single_q++;
+			if (token[i] == '$' && token[i + 1] && single_q % 2 == 0)
+				env++;
+			i++;
+		}
+	}
+	else
+	{
+		while (token[i])
+		{
+			if (token[i] == '$' && token[i + 1])
+				env++;
+			i++;
+		}
 	}
 	return (env);
 }

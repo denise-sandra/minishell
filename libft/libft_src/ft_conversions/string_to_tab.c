@@ -6,11 +6,12 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 15:39:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:33:01 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftv3.h"
+#include <stdio.h>
 
 static unsigned int	erase_c(char *s, char c)
 {
@@ -38,9 +39,9 @@ static unsigned int	ft_countwords(char *s, int *quotes)
 		if (s[i] == 34 || s[i] == 39)
 		{
 			q++;
-			if (s[i] == 39 && (q == 1 || q == quotes[0]))
+			if (s[i] == 39 && (q == 1 || s[i + 1] == 32 || q == quotes[0]))
 				inside_q = !inside_q;
-			if (s[i] == 34 && (q == 1 || q == quotes[1]))
+			if (s[i] == 34 && (q == 1 || s[i + 1] == 32|| q == quotes[1]))
 				inside_q = !inside_q;
 		}
 		if (s[i] == 32 && inside_q == 0 && s[i + 1] != 32)
@@ -86,6 +87,7 @@ char	**ft_split_quotes(char *s, char c, int *quotes)
 		return (tab);
 	}
 	words = ft_countwords(s, quotes);
+	printf("%d\n", words);
 	tab = malloc((words + 1) * sizeof (char *));
 	if (tab == NULL)
 		return (NULL);

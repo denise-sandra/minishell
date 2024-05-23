@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 22:03:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/23 13:35:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		free(quotes);
 		ft_error("Malloc split_input", minishell);
 	}
+	int i = 0;
+	while (split_input[i])
+		printf("split : %s\n", split_input[i++]);
 	free(quotes);
 	minishell->token_count = tokens_count(split_input);
 	if (minishell->token_count == -1)

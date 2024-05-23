@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 14:58:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:12:37 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	env_name_len(char *token)
 	return (i - 1);
 }
 
-int	check_quotes_for_env(char *token)
+/*int	check_quotes_for_env(char *token)
 {
 	int	*quotes;
 
@@ -57,7 +57,7 @@ int	check_quotes_for_env(char *token)
 		return (free(quotes), 0);
 	free(quotes);
 	return (0);
-}
+}*/
 
 int	is_env_value(t_minishell *minishell, int i)
 {
@@ -66,12 +66,6 @@ int	is_env_value(t_minishell *minishell, int i)
 	char	*value;
 
 	value = minishell->token[i]->value;
-	if (value == NULL)
-		return (0);
-	minishell->token[i]->value = erase_outer_quotes(value);
-	value = minishell->token[i]->value;
-	if (value == NULL)
-		ft_error("Malloc in erase_outer_quotes", minishell);
 	temp = minishell->env;
 	while (temp)
 	{
@@ -82,8 +76,3 @@ int	is_env_value(t_minishell *minishell, int i)
 	}
 	return (0);
 }
-
-/*void	execute_env_value(t_minishell *minishell, char *name)
-{
-	
-}*/

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 14:04:26 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:02:06 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ static int	count_letters(int inside_q, char *s, int quotes)
 	}
 	else
 	{
-		while (s[i] && quotes > 0)
+		while (s[i] || quotes > 0)
 		{
 			if (s[i] == q_type)
 				quotes--;
+			if (s[i + 1] && i != 0 && s[i] == q_type && s[i + 1] == 32)
+				break ;
 			i++;
 		}
 	}

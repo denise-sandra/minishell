@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 15:05:44 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:15:52 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	tag_token(t_minishell *minishell)
 	while (i < minishell->token_count)
 	{
 		len = ft_strlen(token[i]->value);
+		printf("avant value: %s", token[i]->value);
+		erase_quotes(minishell, i);
 		if (len == 0)
 			return ;
 		else if (is_env_value(minishell, i) == 1)
@@ -41,7 +43,7 @@ void	tag_token(t_minishell *minishell)
 			token[i]->type = TOKEN_COMMAND;
 		else
 			token[i]->type = TOKEN_ARG;
-		printf("value: %s type: %u\n", token[i]->value, token[i]->type);
+		printf("apres value: %s type: %u\n", token[i]->value, token[i]->type);
 		i++;
 	}
 }
