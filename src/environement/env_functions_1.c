@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   env_functions_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 16:20:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:17:15 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,52 +46,37 @@ char	*return_env_str(char *token)
 	return (env);
 }
 
-char	*replace_env_value(t_minishell *minishell, char *token, int env_var)
+int	count_env_var_utils(char *token)
 {
-	char	*new_token;
-	int		size;
-	int		i;
-	int		name_len;
-
+	int	single_q;
+	int	i;
+	int	env;
+	
 	i = 0;
-	name_len = 0;
-	size = ft_strlen(token);
-	while (i < env_var)
+	single_q = 0;
+	env = 0;
+	while (token[i])
 	{
-		if (token[name_len] == '$' && token[name_len + 1])
-		{
-			size = calcule_new_size(minishell, token + name_len, size);
-			i++;
-		}
-		name_len++;
+		if (token [i] == 39)
+			single_q++;
+		if (token[i] == '$' && token[i + 1] && single_q % 2 == 0)
+			env++;
+		i++;
 	}
-	new_token = fill_new_token(minishell, token, size);
-	free(token);
-	return (new_token);
+	return (env);
 }
 
 int	count_env_var(char *token)
 {
 	int	i;
 	int	env;
-	int	single_q;
-
+	
 	i = 0;
-	env = 0;
-	single_q = 0;
-	if (token[0] == 39)
-	{
-		while (token[i])
-		{
-			if (token [i] == 39)
-				single_q++;
-			if (token[i] == '$' && token[i + 1] && single_q % 2 == 0)
-				env++;
-			i++;
-		}
-	}
+	if (ft_strchr_order(token, 39, 34) == 1)
+		env = count_env_var_utils(token);
 	else
 	{
+		env = 0;
 		while (token[i])
 		{
 			if (token[i] == '$' && token[i + 1])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 13:35:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:34:15 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,36 @@ static void	init_token(t_minishell *minishell)
 	minishell->token[i] = NULL;
 }
 
-static int	tokens_count(char **split_input)
+static int	token_count(char **tokens)
 {
 	int	i;
 
 	i = 0;
-	if (split_input[i] == NULL)
+	if (tokens[i] == NULL)
 	{
-		free_tab(split_input);
+		free_tab(tokens);
 		return (-1);
 	}
-	while (split_input[i])
+	while (tokens[i])
 		i++;
 	return (i);
 }
 
-static void	fill_token_struct(t_minishell *minishell, char **split_input)
+static void	fill_token_struct(t_minishell *minishell, char **tokens)
 {
 	int	i;
 
 	i = 0;
 	while (i < minishell->token_count)
 	{
-		minishell->token[i]->value = malloc(((ft_strlen(split_input[i]) + 1)));
+		minishell->token[i]->value = malloc(((ft_strlen(tokens[i]) + 1)));
 		if ((minishell->token[i]->value) == NULL)
 		{
-			free_tab(split_input);
+			free_tab(tokens);
 			ft_error("Malloc error in tokenize_input", minishell);
 		}
-		ft_strlcpy(minishell->token[i]->value, split_input[i], \
-		ft_strlen(split_input[i]) + 1);
+		ft_strlcpy(minishell->token[i]->value, tokens[i], \
+		ft_strlen(tokens[i]) + 1);
 		minishell->token[i]->order = i;
 		i++;
 	}
@@ -68,7 +68,7 @@ static void	fill_token_struct(t_minishell *minishell, char **split_input)
 
 void	tokenize_input(char *input, t_minishell *minishell)
 {
-	char	**split_input;
+	char	**tokens;
 	int		*quotes;
 
 	quotes = check_quotes(input);
@@ -76,20 +76,20 @@ void	tokenize_input(char *input, t_minishell *minishell)
 		ft_error("Malloc in check_quotes", minishell);
 	if (quotes[0] % 2 != 0 || quotes[1] % 2 != 0)
 		return;
-	split_input = ft_split_quotes(input, 32, quotes);
-	if (split_input == NULL)
+	tokens = ft_split_quotes(input, 32, quotes);
+	if (tokens == NULL)
 	{
 		free(quotes);
 		ft_error("Malloc split_input", minishell);
 	}
 	int i = 0;
-	while (split_input[i])
-		printf("split : %s\n", split_input[i++]);
+	while (tokens[i])
+		printf("split : %s\n", tokens[i++]);
 	free(quotes);
-	minishell->token_count = tokens_count(split_input);
+	minishell->token_count = token_count(tokens);
 	if (minishell->token_count == -1)
 		return ;
 	init_token(minishell);
-	fill_token_struct(minishell, split_input);
-	free_tab(split_input);
+	fill_token_struct(minishell, tokens);
+	free_tab(tokens);
 }

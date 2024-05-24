@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 16:12:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:52:37 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,6 @@ int	env_name_len(char *token)
 		i++;
 	return (i - 1);
 }
-
-/*int	check_quotes_for_env(char *token)
-{
-	int	*quotes;
-
-	quotes = check_quotes(token);
-	if (quotes[0] == 0 && quotes[1] == 0)
-		return (free(quotes), 1);
-	if (token[ft_strlen(token) - 1] == 34)
-		return (free(quotes), 1);
-	if (token[ft_strlen(token) - 1] == 39)
-		return (free(quotes), 0);
-	free(quotes);
-	return (0);
-}*/
 
 int	is_env_value(t_minishell *minishell, int i)
 {

@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 13:18:35 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/24 10:56:53 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,24 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 		i++;
 	}
 	return (str);
+}
+
+int	ft_strchr_order(const char *str, int c, int d)
+{
+	int	count_d;
+	
+	count_d = 0;
+	while (*str)
+	{
+		if (*str == (char)d)
+			count_d++;
+		if (*str == (char)c && count_d % 2 == 0)
+			return (1);
+		str++;
+	}
+	if (str[0] == (char)c)
+		return (2);
+	return (0);
 }
 
 

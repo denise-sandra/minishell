@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_to_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 16:33:01 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:29:51 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**ft_split_quotes(char *s, char c, int *quotes)
 		return (tab);
 	}
 	words = ft_countwords(s, quotes);
-	printf("%d\n", words);
+	printf("words: %d\n", words);
 	tab = malloc((words + 1) * sizeof (char *));
 	if (tab == NULL)
 		return (NULL);

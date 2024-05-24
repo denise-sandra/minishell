@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_to_tab_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 18:02:06 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/24 08:32:13 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,19 @@ static int	count_letters(int inside_q, char *s, int quotes)
 
 	i = 0;
 	q_type = s[i];
-	if (inside_q == 0)
+	if (inside_q == 1)
 	{
-		while (s[i] && s[i] != 32)
-			i++;
-	}
-	else
-	{
-		while (s[i] || quotes > 0)
+		while (s[i + 1] && quotes > 0)
 		{
 			if (s[i] == q_type)
 				quotes--;
-			if (s[i + 1] && i != 0 && s[i] == q_type && s[i + 1] == 32)
+			if (s[i] == q_type && s[i + 1] == 32 && quotes % 2 == 0)
 				break ;
 			i++;
 		}
 	}
+	while (s[i] && s[i] != 32)
+			i++;
 	return (i);
 }
 

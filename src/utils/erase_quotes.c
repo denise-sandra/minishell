@@ -3,115 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   erase_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 16:21:42 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:07:04 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*erase_all_quotes_utils(char *word, char *new_word)
+static char	*erase_all_quotes_utils(char *str, char *new_str)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (word[j])
+	while (str[j])
 	{
-		if (word[j] != 34 && word[j] != 39)
+		if (str[j] != 34 && str[j] != 39)
 		{
-			new_word[i] = word[j];
+			new_str[i] = str[j];
 			i++;
 		}
 		j++;
 	}
-	new_word[i] = '\0';
-	return (new_word);
+	new_str[i] = '\0';
+	return (new_str);
 }
 
-char	*erase_all_quotes(char *word)
+char	*erase_all_quotes(char *str)
 {
-	char	*new_word;
+	char	*new_str;
 	int		i;
-	int		q;
+	int		quotes;
 
 	i = 0;
-	q = 0;
-	while (word[i])
+	quotes = 0;
+	while (str[i])
 	{
-		if (word[i] == 34 || word[i] == 39)
-			q++;		
+		if (str[i] == 34 || str[i] == 39)
+			quotes++;		
 		i++;
 	}
-	if (q == 0)
-		return (word);
-	new_word = malloc((ft_strlen(word) - q + 1) * sizeof(char));
-	if (new_word == NULL)
+	if (quotes == 0)
+		return (str);
+	new_str = malloc((ft_strlen(str) - quotes + 1) * sizeof(char));
+	if (new_str == NULL)
 		return (NULL);
-	new_word = erase_all_quotes_utils(word, new_word);
-	free(word);
-	return (new_word);
+	new_str = erase_all_quotes_utils(str, new_str);
+	free(str);
+	return (new_str);
 }
 
-static char	*erase_outer_quotes_utils(char *word, char *new_word, int q_type)
+char	*erase_outer_quotes(char *str)
 {
-	int	i;
-	int	j;
-	int	q;
-
-	i = 0;
-	j = 0;
-	q = 0;
-	while (word[i])
-	{
-		if (word[i] != q_type)
-			new_word[j++] = word[i];
-		i++;
-	}
-	new_word[j] = '\0';
-	return (new_word);
-}
-
-char	*erase_outer_quotes(char *word)
-{
-	char	*new_word;
-	int		q_type;
-	int		r;
-	int		l;
-
-	if (word[0] != 34 && word[0] != 39)
-		return (word);
-	q_type = word[0];
-	r = 0;
-	while (word[r] == q_type)
-		r++;
-	l = ft_strlen(word);
-	while (word[l - 1] == q_type)
-		l--;
-	new_word = malloc((l - r + 1) * sizeof(char));
-	if (new_word == NULL)
+	char	*new_str;
+	int		new_size;
+	
+	if (str[0] != 34 && str[0] != 39)
+		return (str);
+	new_size = ft_strlen(str) - 2 + 1;
+	new_str = malloc(new_size * sizeof(char));
+	if (new_str == NULL)
 		return (NULL);
-	new_word = erase_outer_quotes_utils(word, new_word, q_type);
-	free(word);
-	return (new_word);
+	ft_strlcpy(new_str, str + 1, new_size);
+	free(str);
+	return (new_str);
 }
 
 void	erase_quotes(t_minishell *minishell, int i)
 {
 	int *quotes;
-	char	*value;
+	char	*str;
 
-	value = minishell->token[i]->value;
-	quotes = check_quotes(value);
+	str = minishell->token[i]->value;
+	quotes = check_quotes(str);
 	if (quotes == NULL)
 		ft_error("malloc in check_quotes", minishell);
 	if (quotes[0] == 0 || quotes[1] == 0)
-		minishell->token[i]->value = erase_all_quotes(value);
+		minishell->token[i]->value = erase_all_quotes(str);
 	else if (quotes[0] > 0 && quotes[1] > 0)
-		minishell->token[i]->value = erase_outer_quotes(value);
+		minishell->token[i]->value = erase_outer_quotes(str);
 	if (minishell->token[i]->value == NULL)
 	{
 		free(quotes);
