@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   replace_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 15:03:09 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 18:48:55 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  replace_env_utils(t_minishell *minishell, t_lst_token **split_token, int env, int size)
+/*static int  replace_env_utils(t_minishell *minishell, t_lst_token **split_token, int env, int size)
 {
 	t_lst_token *tmp;
     int i;
@@ -40,9 +40,9 @@ static int  replace_env_utils(t_minishell *minishell, t_lst_token **split_token,
 		tmp = tmp->next;
 	}
 	return (size);
-}
+}*/
 
-char	*replace_env_value(t_minishell *minishell, t_lst_token **split_token, int env)
+/*char	*replace_env_value(t_minishell *minishell, t_lst_token **split_token, int env)
 {
 	char	*new_token;
 	int		size;
@@ -50,7 +50,7 @@ char	*replace_env_value(t_minishell *minishell, t_lst_token **split_token, int e
 	size = ft_lst_len(split_token);
 	size = replace_env_utils(minishell, split_token, env, size);
 	printf("new size: %d  token: %s\n", size, *(split_token)->value);
-	new_token = return_new_token(minishell, split_token, size);
+	new_token = return_new_token(minishell, split_token);
 	free(token);
 	return (new_token);
-}
+}*/

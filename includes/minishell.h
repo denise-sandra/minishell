@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 14:23:44 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 18:33:18 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int         	env_name_len(char *token);
 char	        *return_env_str(char *token);
 int	            check_quotes_for_env(char *token);
 int		        calcule_new_size(t_minishell *minishell, char *token, int old_size);
-char	        *return_new_token(t_minishell *minishell, char *token, int size);
+char	*return_new_token(t_minishell *minishell, t_lst_token **split_token);
 
 
 //lexer

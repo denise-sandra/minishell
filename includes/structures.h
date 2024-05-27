@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 14:32:59 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 18:24:08 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ typedef struct s_lst_env
 	char				*value;
 	struct s_lst_env	*next;
 }	t_lst_env;
-
-typedef struct s_lst_token
-{
-	t_quotetype			type;
-	char				*value;
-	struct s_lst_token	*next;
-	//struct s_lst_token	*prev;
-}	t_lst_token;
 
 typedef enum e_quotetype
 {
@@ -41,6 +33,14 @@ typedef enum e_quotetype
 	ENV,
 	OTHER
 }	t_quotetype;
+
+typedef struct s_lst_token
+{
+	t_quotetype			type;
+	char				*value;
+	struct s_lst_token	*next;
+	//struct s_lst_token	*prev;
+}	t_lst_token;
 
 typedef enum e_tokentype
 {
