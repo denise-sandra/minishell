@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 12:51:32 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:23:44 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_lst_env		*fill_env_struct(char **envp, t_minishell *minishell);
 char			*get_env_value(t_lst_env *env, char *name);
 int	is_env_value(t_minishell *minishell, int i);
 char	        *replace_env_value(t_minishell *minishell, char *token, int env_var);
-int         	count_env_var(char *token);
+int             count_env_var(t_lst_token **split_token);
 int         	env_name_len(char *token);
 char	        *return_env_str(char *token);
 int	            check_quotes_for_env(char *token);
@@ -71,8 +71,14 @@ int	            is_special_command(t_minishell *minishell, t_token *token);
 
 //parser
 void           parser(t_minishell *minishell);
-char	        *erase_extra_quotes(char *str);
+char	        *erase_extra_quotes(char *str, int len);
 void	        tag_token(t_minishell *minishell);
+t_lst_token     *ft_lstnew_t(void *content);
+void	        ft_lstadd_back_t(t_lst_token **lst, t_lst_token *new);
+int		        ft_lst_len(t_lst_token **lst);
+void	        ft_lstdelone_t(t_lst_token *lst, void (*del)(void *));
+void	        ft_lstclear_t(t_lst_token **lst, void (*del)(void *));
+t_lst_token    **split_token_in_nodes(t_minishell *minishell, char *str, int len);
 
 //exec
 void			execution(t_minishell *minishell);

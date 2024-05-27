@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 14:34:15 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 10:39:07 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	quotes = check_quotes(input);
 	if (quotes == NULL)
 		ft_error("Malloc in check_quotes", minishell);
-	if (quotes[0] % 2 != 0 || quotes[1] % 2 != 0)
-		return;
 	tokens = ft_split_quotes(input, 32, quotes);
 	if (tokens == NULL)
 	{

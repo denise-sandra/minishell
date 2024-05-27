@@ -6,31 +6,54 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 15:12:21 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 15:25:35 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	replace_name_with_value(char *env_var, char *new_token, int j)
+void	replace_name_with_value(char *env_var, char *replaced, int j)
 {
 	int	i;
+	int	j;
 
+	replaced = malloc(ft_strlen(env_var) * sizeof(char));
+	if (replaced == NULL)
+		return (NULL);
 	i = 0;
 	while (env_var[i])
 	{
-		new_token[j] = env_var[i];
+		replaced[j] = env_var[i];
 		i++;
 		j++;
 	}
-	return (j);
+	replaced[j] = '\0';;
 }
 
 
 
-static char	*fill_new_token(t_minishell *minishell, char *token, \
-	int size, char **env_vars)
+static t_lst_token **fill_new_token(t_minishell *minishell, t_lst_token **split_token, char **env_vars)
 {
+	t_lst_token *tmp;
+	int	i;
+	
+	i = 0;
+	while (*split_token)
+	{
+		if (*split_token->type == ENV)
+		{
+			*split_token->value = replace_name_with_value(env_vars[i], tmp->value);
+		}
+		tmp = tmp->next;
+	}
+
+
+
+
+	
+
+
+
 	char	*new_token;
 	int		i;
 	int		j;
@@ -64,66 +87,66 @@ static char	*fill_new_token(t_minishell *minishell, char *token, \
 	return (new_token);
 }
 
-static	int	fill_vars_utils(t_minishell *minishell, char *token, char **env_vars, int j)
+static	int	fill_vars_utils(t_minishell *minishell, t_lst_token **split_token,\
+	 char **env_vars, int j)
 {
+	t_lst_token *tmp;
 	char	*env_name;
-	int		s_q;
-	int		d_q;
 	int		i;
 	
-	s_q = 0;
-	d_q = 0;
-	i = 0;
-	while (token[i])
+	while (tmp)
 	{
-		if (token[i] == 34)
-			d_q++;
-		if (token[i] == 39)
-			s_q++;
-		if (token[i] == '$' && token[i + 1] && (s_q % 2 == 0 || d_q % 2 != 0))
+		i = 0;
+		if (tmp->type == ENV)
 		{
-			env_name = return_env_str(token + i);
-			if (env_name == NULL)
+			while (tmp->value[i])
 			{
-				free(env_vars);
-				ft_error("Malloc in return_env_value", minishell);
+				if (tmp->value[i] == '$')
+				{
+					env_name = return_env_str(tmp->value[i] + i);
+					if (env_name == NULL)
+					{
+						free(env_vars);
+						ft_error("Malloc in return_env_value", minishell);
+					}
+					env_vars[j++] = get_env_value(minishell->env, env_name);
+					free(env_name);
+				}		
+				i++;
 			}
-			env_vars[j++] = get_env_value(minishell->env, env_name);
-			free(env_name);
-			i++;
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	return (j);
 }
 
-static char	**fill_vars(t_minishell *minishell, char **env_vars, char *token, int env)
+static char	**fill_vars(t_minishell *minishell, char **env_vars, t_lst_token **split_token, int env)
 {
 	int		i;
 	
 	i = 0;
 	while (i < env)
-		i = fill_vars_utils(minishell, token, env_vars, i);
+		i = fill_vars_utils(minishell, split_token, env_vars, i);
 	printf("j: %d\n", i);
 	env_vars[i] = NULL;
 	return (env_vars);
 }
 
-char	*return_new_token(t_minishell *minishell, char *token, int size)
+char	*return_new_token(t_minishell *minishell, t_lst_token **split_token)
 {
 	char	*new_token;
 	char	**env_vars;
 	int		env;
 
-	env = count_env_var(token);
+	env = count_env_var(split_token);
 	env_vars = malloc ((env + 1) * sizeof(char *));
 	if (env_vars == NULL)
 		ft_error("Malloc in fill_new_token", minishell);
-	env_vars = fill_vars(minishell, env_vars, token, env);
+	env_vars = fill_vars(minishell, env_vars, split_token, env);
 	int	i = 0;
 	while(env_vars[i])
 		printf("env vars %s\n", env_vars[i++]);
-	new_token = fill_new_token(minishell, token, size, env_vars);
+	new_token = fill_new_token(minishell, split_token, env_vars);
 	free(env_vars);
 	return (new_token);
 }

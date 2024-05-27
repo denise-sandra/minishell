@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 10:10:34 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:32:59 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,28 @@ typedef struct s_lst_env
 	char				*value;
 	struct s_lst_env	*next;
 }	t_lst_env;
+
+typedef struct s_lst_token
+{
+	t_quotetype			type;
+	char				*value;
+	struct s_lst_token	*next;
+	//struct s_lst_token	*prev;
+}	t_lst_token;
+
+typedef enum e_quotetype
+{
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	OPEN_S_QUOTES,
+	CLOSE_S_QUOTES,
+	OPEN_D_QUOTES,
+	CLOSE_D_QUOTES,
+	TEXT,
+	ENV,
+	OTHER
+}	t_quotetype;
 
 typedef enum e_tokentype
 {

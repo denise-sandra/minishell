@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 15:17:15 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 14:07:46 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,28 @@ int	count_env_var_utils(char *token)
 	return (env);
 }
 
-int	count_env_var(char *token)
+int	count_env_var(t_lst_token **split_token)
 {
+	t_lst_token *tmp;
 	int	i;
 	int	env;
 	
-	i = 0;
-	if (ft_strchr_order(token, 39, 34) == 1)
-		env = count_env_var_utils(token);
-	else
+	tmp = *split_token;
+	while (tmp)
 	{
-		env = 0;
-		while (token[i])
+		i = 0;
+		if (ft_strchr_int(tmp->value, '$') == 1 \
+			&& ft_strchr_order(tmp->value, 39, 34) == 1)
+			env = count_env_var_utils(tmp->value);
+		else
 		{
-			if (token[i] == '$' && token[i + 1])
-				env++;
-			i++;
+			env = 0;
+			while (tmp->value[i])
+			{
+				if (tmp->value[i] == '$' && tmp->value[i + 1])
+					env++;
+				i++;
+			}
 		}
 	}
 	return (env);

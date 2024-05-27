@@ -6,45 +6,51 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 23:29:44 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/27 15:03:09 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  replace_env_utils(t_minishell *minishell, char *token, int env, int size)
+static int  replace_env_utils(t_minishell *minishell, t_lst_token **split_token, int env, int size)
 {
+	t_lst_token *tmp;
     int i;
     int j;
     int single_q;
     
-    while (i < env)
+	tmp = *split_token;
+	j = 0;
+	single_q = 0;
+	while (tmp && j < env)
 	{
-		while (token[j])
+		i = 0;
+		if (tmp->type == ENV)
 		{
-            if (token[j] == 34)
-                single_q = 0;
-			if (token[j] == 39)
-				single_q++;
-			if (token[j] == '$' && token[j + 1] && single_q % 2 == 0)
+			while (tmp->value[i])
 			{
-				size = calcule_new_size(minishell, token + j, size);
-				i++;
+				if (tmp->value[i] == '$')
+				{
+					size = calcule_new_size(minishell, tmp->value + i, size);
+					j++;
+				}
+			i++;
 			}
-			j++;
-		}	
+		}
+		tmp = tmp->next;
 	}
+	return (size);
 }
 
-char	*replace_env_value(t_minishell *minishell, char *token, int env)
+char	*replace_env_value(t_minishell *minishell, t_lst_token **split_token, int env)
 {
 	char	*new_token;
 	int		size;
 
-	size = ft_strlen(token);
-	size = replace_env_utils(minishell, token, env, size);
-	printf("new size: %d  token: %s\n", size, token);
-	new_token = return_new_token(minishell, token, size);
+	size = ft_lst_len(split_token);
+	size = replace_env_utils(minishell, split_token, env, size);
+	printf("new size: %d  token: %s\n", size, *(split_token)->value);
+	new_token = return_new_token(minishell, split_token, size);
 	free(token);
 	return (new_token);
 }
