@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 18:33:18 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:16:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,27 @@ void			clean_minishell(t_minishell *minishell);
 t_lst_env		*ft_new_node(char *name, char *value);
 t_lst_env		*ft_last(t_lst_env *lst);
 void			ft_add_back(t_lst_env **lst, t_lst_env *new);
+     //subtoken
+t_lst_token     *ft_lstnew_st(void *content);
+void	        ft_lstadd_back_st(t_lst_token **lst, t_lst_token *new);
+int		        ft_lst_len_st(t_lst_token **lst);
+void	        ft_lstdelone_st(t_lst_token *lst, void (*del)(void *));
+void	        ft_lstclear_st(t_lst_token **lst, void (*del)(void *));
+t_lst_token	*ft_lstlast_st(t_lst_token *lst);
+     //token
+t_token     *ft_lstnew_t(void *content);
+void	        ft_lstadd_back_t(t_token **lst, t_token *new);
+int		        ft_lst_len_t(t_token **lst);
+void	        ft_lstdelone_t(t_token *lst, void (*del)(void *));
+void	        ft_lstclear_t(t_token **lst, void (*del)(void *));
+t_token	*ft_lstlast_t(t_token *lst);
 
 //environement
 t_lst_env		*fill_env_struct(char **envp, t_minishell *minishell);
 char			*get_env_value(t_lst_env *env, char *name);
-int	is_env_value(t_minishell *minishell, int i);
+int	     is_env_value(t_minishell *minishell, char *value);
 char	        *replace_env_value(t_minishell *minishell, char *token, int env_var);
-int             count_env_var(t_lst_token **split_token);
+int             count_env_var(t_lst_token **sub_token);
 int         	env_name_len(char *token);
 char	        *return_env_str(char *token);
 int	            check_quotes_for_env(char *token);
@@ -67,22 +81,17 @@ char	*return_new_token(t_minishell *minishell, t_lst_token **split_token);
 void			tokenize_input(char *input, t_minishell *minishell);
 int	            *check_quotes(char *input);
 int	            is_normal_command(t_minishell *minishell, t_token *token);
-int	            is_special_command(t_minishell *minishell, t_token *token);
+int	            is_builtin(t_minishell *minishell, t_token *token);
 
 //parser
 void           parser(t_minishell *minishell);
 char	        *erase_extra_quotes(char *str, int len);
 void	        tag_token(t_minishell *minishell);
-t_lst_token     *ft_lstnew_t(void *content);
-void	        ft_lstadd_back_t(t_lst_token **lst, t_lst_token *new);
-int		        ft_lst_len(t_lst_token **lst);
-void	        ft_lstdelone_t(t_lst_token *lst, void (*del)(void *));
-void	        ft_lstclear_t(t_lst_token **lst, void (*del)(void *));
-t_lst_token    **split_token_in_nodes(t_minishell *minishell, char *str, int len);
+t_lst_token    **sub_token_in_nodes(t_minishell *minishell, char *str);
 
 //exec
 void			execution(t_minishell *minishell);
-void			execute_special_command(t_minishell *minishell, char *command);
+void			execute_builtin(t_minishell *minishell, char *command);
 
 //builtin fucntions
 void            echo_command(t_minishell *minishell);

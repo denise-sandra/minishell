@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 14:07:46 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/28 11:15:19 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	count_env_var(t_lst_token **split_token)
 				i++;
 			}
 		}
+		tmp = tmp->next;
 	}
 	return (env);
 }

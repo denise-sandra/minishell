@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 18:24:08 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:40:15 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ typedef struct s_lst_env
 	struct s_lst_env	*next;
 }	t_lst_env;
 
-typedef enum e_quotetype
+typedef enum e_subtype
 {
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
+	SYMBOL,
 	OPEN_S_QUOTES,
 	CLOSE_S_QUOTES,
 	OPEN_D_QUOTES,
@@ -32,47 +30,47 @@ typedef enum e_quotetype
 	TEXT,
 	ENV,
 	OTHER
-}	t_quotetype;
+}	t_subtype;
 
 typedef struct s_lst_token
 {
-	t_quotetype			type;
+	t_subtype			type;
 	char				*value;
 	struct s_lst_token	*next;
 	//struct s_lst_token	*prev;
 }	t_lst_token;
 
-typedef enum e_tokentype
+typedef enum e_type
 {
-	TOKEN_ENV,
-	TOKEN_COMMAND,
-	TOKEN_SPECIAL_COMMAND,
-	TOKEN_OPS,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_OPEN_QUOTES,
-	TOKEN_END,
-	TOKEN_HEREDOC,
-	TOKEN_ARG
+	VAR,
+	COMMAND,
+	SPECIAL_COMMAND,
+	OPS,
+	REDIR_IN,
+	REDIR_OUT,
+	END,
+	HEREDOC,
+	ARG
 
-}	t_tokentype;
+}	t_type;
 
 typedef struct s_token
 {
-	t_tokentype	type;
-	char		*value;
-	int			order;
+	char			*value;
+	t_type		type;
+	t_lst_token	*sub_token;
+	struct s_token	*next;
 }	t_token;
 
 typedef struct s_minishell
 {
 	t_lst_env	*env;
-	t_token		**token;
+	t_token		*token;
 	int			token_count;
 	int			last_exit_status;
 	int			redirect_in;
 	int			redirect_out;
-	char		*special_commands[6];     //builtin
+	char		*builtin[6];     //builtin
 	char		*input_file;
 	char		*output_file;
 }	t_minishell;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_utils.c                                    :+:      :+:    :+:   */
+/*   env_functions_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/23 23:52:37 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/28 14:58:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ int	env_name_len(char *token)
 	return (i - 1);
 }
 
-int	is_env_value(t_minishell *minishell, int i)
+int	is_env_value(t_minishell *minishell, char *value)
 {
 	t_lst_env	*temp;
 	char	*str;
-	char	*value;
 
-	value = minishell->token[i]->value;
 	temp = minishell->env;
 	while (temp)
 	{

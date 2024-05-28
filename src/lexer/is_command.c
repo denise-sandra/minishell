@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/22 14:48:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:01:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ int	is_normal_command(t_minishell *minishell, t_token *token)
 	return (0);
 }
 
-int	is_special_command(t_minishell *minishell, t_token *token)
+int	is_builtin(t_minishell *minishell, t_token *token)
 {
 	int	i;
 
 	i = 0;
 	while (i < 5)
 	{
-		if (ft_strncmp(token->value, minishell->special_commands[i], \
+		if (ft_strncmp(token->value, minishell->builtin[i], \
 			ft_strlen(token->value)) == 0)
 			return (1);
 		i++;

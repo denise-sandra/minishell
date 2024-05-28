@@ -3,35 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 10:39:07 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/28 14:43:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_token(t_minishell *minishell)
+/*static void	init_token(t_minishell *minishell)
 {
-	int	i;
-
-	minishell->token = malloc((minishell->token_count + 1) * sizeof(t_token *));
+	minishell->token = malloc(sizeof(t_token));
 	if (minishell->token == NULL)
 		ft_error("Malloc for minishell->token", minishell);
-	i = 0;
-	while (i < minishell->token_count)
-	{
-		minishell->token[i] = malloc(sizeof(t_token));
-		if (minishell->token[i] == NULL)
-			ft_error("Malloc for minishell->token[i]", minishell);
-		ft_bzero(minishell->token[i], sizeof(t_token));
-		i++;
-	}
-	minishell->token[i] = NULL;
-}
+	*(minishell->token) = NULL;
+}*/
 
-static int	token_count(char **tokens)
+/*static int	token_count(char **tokens)
 {
 	int	i;
 
@@ -44,26 +33,28 @@ static int	token_count(char **tokens)
 	while (tokens[i])
 		i++;
 	return (i);
-}
+}*/
 
-static void	fill_token_struct(t_minishell *minishell, char **tokens)
+
+static t_token	*fill_token_struct(t_minishell *minishell, char **tokens)
 {
+	t_token	*new_node;
+	t_token	*lst_token;
 	int	i;
 
 	i = 0;
-	while (i < minishell->token_count)
+	lst_token = NULL;
+	while (tokens[i])
 	{
-		minishell->token[i]->value = malloc(((ft_strlen(tokens[i]) + 1)));
-		if ((minishell->token[i]->value) == NULL)
+		new_node = ft_lstnew_t(tokens[i]);
+		if (new_node == NULL)
 		{
 			free_tab(tokens);
-			ft_error("Malloc error in tokenize_input", minishell);
+			ft_error("Malloc in fill_new_structure", minishell);
 		}
-		ft_strlcpy(minishell->token[i]->value, tokens[i], \
-		ft_strlen(tokens[i]) + 1);
-		minishell->token[i]->order = i;
-		i++;
+		ft_lstadd_back_t(&lst_token, new_node);
 	}
+	return (lst_token);
 }
 
 void	tokenize_input(char *input, t_minishell *minishell)
@@ -84,10 +75,10 @@ void	tokenize_input(char *input, t_minishell *minishell)
 	while (tokens[i])
 		printf("split : %s\n", tokens[i++]);
 	free(quotes);
-	minishell->token_count = token_count(tokens);
+	/*minishell->token_count = token_count(tokens);
 	if (minishell->token_count == -1)
-		return ;
-	init_token(minishell);
-	fill_token_struct(minishell, tokens);
+		return ;*/
+	//init_token(minishell);
+	minishell->token = fill_token_struct(minishell, tokens);
 	free_tab(tokens);
 }
