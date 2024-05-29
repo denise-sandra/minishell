@@ -17,33 +17,32 @@ static void analyse_node(t_lst_token *node, int len)
 	static int sq = 0;
 	static int dq = 0;
 	// revisar los pipe y dir
-	//printf("%u %d\n", prev_type, ft_strchr_int(node->value, '$'));
-	if (sq % 2 != 0 && ft_strchr_int(node->value, '$') == 1)
-		node->type = ENV;
-	else if (dq % 2 != 0 || sq % 2 != 0)
-		node->type = TEXT;
-	else if (len == 2 && node->value[0] == 39)
+	if (sq % 2 == 0 && ft_strchr_int(node->value, '$') == 1)
+		node->sub_type = ENV;
+	else if (len == 1 && node->value[0] == 39)
 	{
-		node->type = OPEN_S_QUOTES;
+		node->sub_type = OPEN_S_QUOTES;
 		sq++;
 	}		
-	else if (len == 2 && node->value[0] == 34)
+	else if (len == 1 && node->value[0] == 34)
 	{
-		node->type = OPEN_D_QUOTES;
+		node->sub_type = OPEN_D_QUOTES;
 		dq++;
 	}	
 	else if (dq % 2 != 0 && len == 2 && node->value[0] == 34)
 	{
-		node->type = CLOSE_D_QUOTES;
+		node->sub_type = CLOSE_D_QUOTES;
 		dq++;
 	}	
 	else if (sq % 2 != 0 && len == 2 && node->value[0] == 39)
 	{
-		node->type = CLOSE_S_QUOTES;
+		node->sub_type = CLOSE_S_QUOTES;
 		sq++;
 	}	
-	else if (len == 2 && (node->value[0] == '|'|| node->value[0] == '>' || node->value[0] == '<'))
-		node->type = SYMBOL;
+	else if (len == 1 && (node->value[0] == '|'|| node->value[0] == '>' || node->value[0] == '<'))
+		node->sub_type = SYMBOL;
+	else if ((dq !=0 && dq % 2 != 0) || (sq != 0 && sq % 2 != 0))
+		node->sub_type = TEXT;
 }
 
 static t_lst_token **create_node(t_minishell *minishell, char *str, \
@@ -65,13 +64,14 @@ static t_lst_token **create_node(t_minishell *minishell, char *str, \
 		ft_lstclear_st(sub_token, free);
 		ft_error("Malloc in create_node", minishell);
 	}
+	free(split_str);
 	analyse_node(node, ft_strlen(node->value));
-	printf("sub_token value: %s type: %u\n", node->value, node->type);
+	printf("sub_token value: %s sub_type: %u\n", node->value, node->sub_type);
 	ft_lstadd_back_st(sub_token, node);
-	printf("apunta a: %s\n", (*sub_token)->value);
 	return (sub_token);
 }
 
+// no estamos tratando las opciones todavia
 t_lst_token    **sub_token_in_nodes(t_minishell *minishell, char *str)
 {
 	t_lst_token    **sub_token;
@@ -91,7 +91,7 @@ t_lst_token    **sub_token_in_nodes(t_minishell *minishell, char *str)
 				i++;
 		}
 		else if(str[i] == '$')
-			i = env_name_len(str) + 1;
+			i = env_name_len(str) + 1;		
 		else
 		{
 			while (str[i] && str[i] != 39 && str

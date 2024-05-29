@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/15 20:27:52 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/29 09:10:00 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void	export_command(t_minishell *minishell)
 	char		**split_new_envp;
 	t_lst_env	*new_node;
 	t_lst_env	*temp;
+	char	*new_var;
 
 	new_node = NULL;
 	temp = NULL;
 	res = 0;
 	split_new_envp = NULL;
-	if (minishell->token[1])
-		res = ft_strchr_int(minishell->token[1]->value, '=');
+	new_var = minishell->token->next->value;
+	if (new_var)
+		res = ft_strchr_int(new_var, '=');
 	else
 	{
 		temp = minishell->env;
@@ -42,16 +44,16 @@ void	export_command(t_minishell *minishell)
 	}
 	if (res == 1)
 	{
-		split_new_envp = ft_split_1st_token(minishell->token[1]->value, '=');
+		split_new_envp = ft_split_1st_token(new_var, '=');
 		if (split_new_envp == NULL)
 			ft_error("Malloc in export function", minishell);
-		new_node = ft_new_node(split_new_envp[0], split_new_envp[1]);
+		new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);
 		if (new_node == NULL)
 		{
 			free_tab(split_new_envp);
 			ft_error("Malloc in export function", minishell);
 		}
-		ft_add_back(&minishell->env, new_node);
+		ft_lstadd_back_env(&minishell->env, new_node);
 	}
 	else if (res == 2)
 		printf("bash: export: `=': not a valid identifier\n");

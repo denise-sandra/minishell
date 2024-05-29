@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/28 11:15:19 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:32:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,50 +46,50 @@ char	*return_env_str(char *token)
 	return (env);
 }
 
-int	count_env_var_utils(char *token)
+int	calcule_new_size(t_minishell *minishell, char *token, int old_size)
 {
-	int	single_q;
-	int	i;
-	int	env;
-	
-	i = 0;
-	single_q = 0;
-	env = 0;
-	while (token[i])
-	{
-		if (token [i] == 39)
-			single_q++;
-		if (token[i] == '$' && token[i + 1] && single_q % 2 == 0)
-			env++;
-		i++;
-	}
-	return (env);
+	int		new_size;
+	char	*name;
+	char	*value;
+	int		value_len;
+
+	old_size = old_size - (env_name_len(token) + 1);
+	name = return_env_str(token);
+	if (name == NULL)
+		ft_error("Malloc in return_env_value", minishell);
+	value = get_env_value(minishell->env, name);
+	if (value == NULL)
+		value_len = 0;
+	else
+		value_len = ft_strlen(value);
+	new_size = old_size + value_len;
+	free(name);
+	return (new_size);
 }
 
-int	count_env_var(t_lst_token **split_token)
+int	env_name_len(char *token)
 {
-	t_lst_token *tmp;
 	int	i;
-	int	env;
-	
-	tmp = *split_token;
-	while (tmp)
+
+	i = 1;
+	while (token[i] && token[i] != 32 && token[i] != 34 \
+			&& token[i] != 39 && token[i] != '$')
+		i++;
+	return (i - 1);
+}
+
+int	is_env_value(t_minishell *minishell, char *value)
+{
+	t_lst_env	*temp;
+	char	*str;
+
+	temp = minishell->env;
+	while (temp)
 	{
-		i = 0;
-		if (ft_strchr_int(tmp->value, '$') == 1 \
-			&& ft_strchr_order(tmp->value, 39, 34) == 1)
-			env = count_env_var_utils(tmp->value);
-		else
-		{
-			env = 0;
-			while (tmp->value[i])
-			{
-				if (tmp->value[i] == '$' && tmp->value[i + 1])
-					env++;
-				i++;
-			}
-		}
-		tmp = tmp->next;
+		str = ft_strnstr(value, temp->value, ft_strlen(value));
+		if (str && ft_strncmp(str, temp->value, ft_strlen(str)) == 0)
+			return (1);
+		temp = temp->next;
 	}
-	return (env);
+	return (0);
 }

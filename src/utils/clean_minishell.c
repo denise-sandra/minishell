@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/15 20:12:51 by skanna           ###   ########.fr       */
+/*   Updated: 2024/05/29 09:54:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,18 @@ void	clean_env(t_minishell *minishell)
 
 void	clean_token(t_minishell *minishell)
 {
-	int	i;
-
-	i = 0;
 	if (minishell->token == NULL)
 		return ;
-	while (i < minishell->token_count)
+	if (minishell->token->sub_token)
 	{
-		if (minishell->token[i])
-		{
-			if (minishell->token[i]->value)
-			{
-				free(minishell->token[i]->value);
-				minishell->token[i]->value = NULL;
-			}
-			free(minishell->token[i]);
-			minishell->token[i] = NULL;
-		}
-		i++;
+		ft_lstclear_st(&(minishell->token->sub_token), free);
+		free (minishell->token->sub_token);
+		minishell->token->sub_token = NULL;
 	}
+	ft_lstclear_t(&minishell->token, free);
 	free (minishell->token);
 	minishell->token = NULL;
-	minishell->token_count = 0;
 }
-
 
 void	clean_minishell(t_minishell *minishell)
 {

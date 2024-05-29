@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/28 14:40:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:24:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_subtype
 
 typedef struct s_lst_token
 {
-	t_subtype			type;
+	t_subtype			sub_type;
 	char				*value;
 	struct s_lst_token	*next;
 	//struct s_lst_token	*prev;
@@ -50,7 +50,8 @@ typedef enum e_type
 	REDIR_OUT,
 	END,
 	HEREDOC,
-	ARG
+	ARG,
+	INIT
 
 }	t_type;
 

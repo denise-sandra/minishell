@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_list_subtoken.c                             :+:      :+:    :+:   */
+/*   create_list_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/28 15:09:42 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:37:05 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lst_token *ft_lstnew_st(void *content)
+t_token *ft_lstnew_t(void *content)
 {
-	t_lst_token	*new;
+	t_token	*new;
 
-	new = malloc(sizeof(t_lst_token **));
+	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->value = ft_strdup((char *)content);
-	if (new->value == NULL)
+	if (!new->value)
 		return (NULL);
-	new->subtype = OTHER;
+	new->type = INIT;
+	new->sub_token = NULL;
 	new->next = NULL;
 	return (new);
 }
 
-void	ft_lstadd_back_st(t_lst_token **lst, t_lst_token *new)
+void	ft_lstadd_back_t(t_token **lst, t_token *new)
 {
-	t_lst_token *temp;
+	t_token *temp;
 
 	if (*lst == NULL)
 		*lst = new;
@@ -40,9 +41,9 @@ void	ft_lstadd_back_st(t_lst_token **lst, t_lst_token *new)
 	}
 }
 
-int		ft_lst_len_st(t_lst_token **lst)
+int		ft_lst_len_t(t_token **lst)
 {
-	t_lst_token *tmp;
+	t_token *tmp;
 	int len;
 
     tmp = *lst;
@@ -55,9 +56,9 @@ int		ft_lst_len_st(t_lst_token **lst)
     return (len);
 }
 
-void	ft_lstdelone_st(t_lst_token *lst, void (*del)(void *))
+void	ft_lstdelone_t(t_token *lst, void (*del)(void *))
 {
-	t_lst_token *temp;
+	t_token *temp;
 
 	if (!lst)
 		return ;
@@ -69,9 +70,9 @@ void	ft_lstdelone_st(t_lst_token *lst, void (*del)(void *))
 	lst = temp;
 }
 
-void	ft_lstclear_st(t_lst_token **lst, void (*del)(void *))
+void	ft_lstclear_t(t_token **lst, void (*del)(void *))
 {
-	t_lst_token *temp;
+	t_token *temp;
 
 	if (!lst)
 		return ;
@@ -86,9 +87,9 @@ void	ft_lstclear_st(t_lst_token **lst, void (*del)(void *))
 	*lst = NULL;
 }
 
-t_lst_token	*ft_lstlast_st(t_lst_token *lst)
+t_token	*ft_lstlast_t(t_token *lst)
 {
-	t_lst_token	*current;
+	t_token	*current;
 
 	if (!lst)
 		return (NULL);

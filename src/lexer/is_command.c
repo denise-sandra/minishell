@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/28 15:01:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:04:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static char	*join_path(t_minishell *minishell, t_token *token, \
 	if (tmp_value == NULL)
 		ft_error("Malloc in join_path", minishell);
 	ft_strlcpy(tmp_value, token->value, ft_strlen(token->value) + 1);
-	tmp_value = erase_outer_quotes(tmp_value);
+	/*tmp_value = erase_outer_quotes(tmp_value);
 	if (tmp_value == NULL)
-		ft_error("Malloc in join_path", minishell);
+		ft_error("Malloc in join_path", minishell);*/
 	join_slash = ft_join_slash(minishell, paths, i);
 	join_token = ft_strjoin(join_slash, tmp_value);
 	if (join_token == NULL)

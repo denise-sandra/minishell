@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 11:19:57 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/29 09:00:34 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 void    echo_command(t_minishell *minishell)
 {
-    int i;
-    t_token **token;
+	int i;
+	t_token *tmp;
 
-    i = 0;
-    token = minishell->token;
-    while (token[i])
-    {
-        if (token[i + 1] && ft_strncmp(token[i]->value, "echo", ft_strlen(token[i]->value)) == 0)
-        {
-            printf("%s\n", token[i + 1]->value);
-            break ;
-        }   
-        else if (ft_strncmp(token[i]->value, "echo", ft_strlen(token[i]->value)) == 0)
-        {
-             printf("\n");
-             break;
-        }     
-         i++;   
-    }
+	i = 0;
+	tmp = minishell->token;
+	while (tmp)
+	{
+		if (tmp->next && ft_strncmp(tmp->value, "echo", ft_strlen(tmp->value)) == 0)
+		{
+			printf("%s\n", tmp->next->value);
+			break ;
+		}   
+		else if (ft_strncmp(tmp->value, "echo", ft_strlen(tmp->value)) == 0)
+		{
+			 printf("\n");
+			 break;
+		}     
+		 i++;   
+	}
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_lst_env	*ft_new_node(char *name, char *value)
+t_lst_env	*ft_lstnew_env(char *name, char *value)
 {
 	t_lst_env	*new;
 
@@ -31,7 +31,7 @@ t_lst_env	*ft_new_node(char *name, char *value)
 	return (new);
 }
 
-t_lst_env	*ft_last(t_lst_env *lst)
+t_lst_env	*ft_lstlast_env(t_lst_env *lst)
 {
 	t_lst_env	*current;
 
@@ -43,7 +43,7 @@ t_lst_env	*ft_last(t_lst_env *lst)
 	return (current);
 }
 
-void	ft_add_back(t_lst_env **lst, t_lst_env *new)
+void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
 {
 	t_lst_env	*current;
 

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/28 15:16:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:31:05 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ t_minishell		*init_minishell(char **envp);
 void			ft_error(char *msg, t_minishell *minishell);
 char			**ft_split_1st_token(char const *s, char c);
 char			**pars_path(t_minishell *minishell);
-void	          erase_quotes(t_minishell *minishell, int i);
-char	          *erase_all_quotes(char *word);
-char	          *erase_outer_quotes(char *word);
+//void	          erase_quotes(t_minishell *minishell, int i);
+//char	          *erase_all_quotes(char *word);
+//char	          *erase_outer_quotes(char *word);
 void			clean_token(t_minishell *minishell);
 void			clean_minishell(t_minishell *minishell);
-t_lst_env		*ft_new_node(char *name, char *value);
-t_lst_env		*ft_last(t_lst_env *lst);
-void			ft_add_back(t_lst_env **lst, t_lst_env *new);
+     //lists
+     //env
+t_lst_env	     *ft_lstnew_env(char *name, char *value);
+t_lst_env	     *ft_lstlast_env(t_lst_env *lst);
+void	     ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
      //subtoken
 t_lst_token     *ft_lstnew_st(void *content);
 void	        ft_lstadd_back_st(t_lst_token **lst, t_lst_token *new);
@@ -68,13 +70,9 @@ t_token	*ft_lstlast_t(t_token *lst);
 t_lst_env		*fill_env_struct(char **envp, t_minishell *minishell);
 char			*get_env_value(t_lst_env *env, char *name);
 int	     is_env_value(t_minishell *minishell, char *value);
-char	        *replace_env_value(t_minishell *minishell, char *token, int env_var);
-int             count_env_var(t_lst_token **sub_token);
 int         	env_name_len(char *token);
 char	        *return_env_str(char *token);
-int	            check_quotes_for_env(char *token);
 int		        calcule_new_size(t_minishell *minishell, char *token, int old_size);
-char	*return_new_token(t_minishell *minishell, t_lst_token **split_token);
 
 
 //lexer
