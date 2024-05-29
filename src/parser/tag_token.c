@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/28 15:23:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:10:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	tag_token_utils(t_minishell *minishell, t_token	*token, int len)
 {	
 	if (is_env_value(minishell, token->value) == 1)
-		token->type = VAR;
+		token->type = ENV;
 	else if (is_builtin(minishell, token) == 1)
-		token->type = SPECIAL_COMMAND;
+		token->type = BUILTIN;
 	else if (ft_strncmp(token->value, "|", len) == 0)
 		token->type = OPS;
 	else if (ft_strncmp(token->value, ">", len) == 0)

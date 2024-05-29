@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 10:31:05 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:06:23 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_lst_env	     *ft_lstnew_env(char *name, char *value);
 t_lst_env	     *ft_lstlast_env(t_lst_env *lst);
 void	     ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
      //subtoken
-t_lst_token     *ft_lstnew_st(void *content);
+/*t_lst_token     *ft_lstnew_st(void *content);
 void	        ft_lstadd_back_st(t_lst_token **lst, t_lst_token *new);
 int		        ft_lst_len_st(t_lst_token **lst);
 void	        ft_lstdelone_st(t_lst_token *lst, void (*del)(void *));
 void	        ft_lstclear_st(t_lst_token **lst, void (*del)(void *));
-t_lst_token	*ft_lstlast_st(t_lst_token *lst);
+t_lst_token	*ft_lstlast_st(t_lst_token *lst);*/
      //token
 t_token     *ft_lstnew_t(void *content);
 void	        ft_lstadd_back_t(t_token **lst, t_token *new);
@@ -76,7 +76,7 @@ int		        calcule_new_size(t_minishell *minishell, char *token, int old_size)
 
 
 //lexer
-void			tokenize_input(char *input, t_minishell *minishell);
+void			split_input(char *input, t_minishell *minishell);
 int	            *check_quotes(char *input);
 int	            is_normal_command(t_minishell *minishell, t_token *token);
 int	            is_builtin(t_minishell *minishell, t_token *token);
@@ -85,7 +85,7 @@ int	            is_builtin(t_minishell *minishell, t_token *token);
 void           parser(t_minishell *minishell);
 char	        *erase_extra_quotes(char *str, int len);
 void	        tag_token(t_minishell *minishell);
-t_lst_token    **sub_token_in_nodes(t_minishell *minishell, char *str);
+t_token    **sub_token_in_nodes(t_minishell *minishell, char *str);
 
 //exec
 void			execution(t_minishell *minishell);

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 09:24:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:59:52 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_lst_env
 	struct s_lst_env	*next;
 }	t_lst_env;
 
-typedef enum e_subtype
+/*typedef enum e_subtype
 {
 	SYMBOL,
 	OPEN_S_QUOTES,
@@ -38,28 +38,34 @@ typedef struct s_lst_token
 	char				*value;
 	struct s_lst_token	*next;
 	//struct s_lst_token	*prev;
-}	t_lst_token;
+}	t_lst_token;*/
 
 typedef enum e_type
 {
-	VAR,
+	SYMBOL,
+	OPEN_S_QUOTES,
+	CLOSE_S_QUOTES,
+	OPEN_D_QUOTES,
+	CLOSE_D_QUOTES,
+	TEXT,
+	ENV,
 	COMMAND,
-	SPECIAL_COMMAND,
+	BUILTIN,
 	OPS,
 	REDIR_IN,
 	REDIR_OUT,
 	END,
 	HEREDOC,
+	APPEND,
 	ARG,
-	INIT
-
+	OTHER
 }	t_type;
 
 typedef struct s_token
 {
 	char			*value;
 	t_type		type;
-	t_lst_token	*sub_token;
+	struct s_token	*sub_token;
 	struct s_token	*next;
 }	t_token;
 

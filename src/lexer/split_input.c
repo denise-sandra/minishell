@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 09:45:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:34:19 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_token	*fill_token_struct(t_minishell *minishell, char **tokens)
 	return (lst_token);
 }
 
-void	tokenize_input(char *input, t_minishell *minishell)
+void	split_input(char *input, t_minishell *minishell)
 {
 	char	**tokens;
 	int		*quotes;

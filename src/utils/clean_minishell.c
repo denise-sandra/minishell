@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/29 09:54:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:11:41 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ void	clean_token(t_minishell *minishell)
 {
 	if (minishell->token == NULL)
 		return ;
-	if (minishell->token->sub_token)
-	{
-		ft_lstclear_st(&(minishell->token->sub_token), free);
-		free (minishell->token->sub_token);
-		minishell->token->sub_token = NULL;
-	}
 	ft_lstclear_t(&minishell->token, free);
 	free (minishell->token);
 	minishell->token = NULL;

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/29 09:37:05 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:33:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token *ft_lstnew_t(void *content)
 	new->value = ft_strdup((char *)content);
 	if (!new->value)
 		return (NULL);
-	new->type = INIT;
+	new->type = OTHER;
 	new->sub_token = NULL;
 	new->next = NULL;
 	return (new);
@@ -43,8 +43,8 @@ void	ft_lstadd_back_t(t_token **lst, t_token *new)
 
 int		ft_lst_len_t(t_token **lst)
 {
-	t_token *tmp;
-	int len;
+	t_token	*tmp;
+	int		len;
 
     tmp = *lst;
     len = 0;
@@ -66,6 +66,11 @@ void	ft_lstdelone_t(t_token *lst, void (*del)(void *))
 	if (!del)
 		return ;
 	del(lst->value);
+	if (lst->sub_token)
+	{
+		ft_lstclear_t(&lst->sub_token, free);
+		lst->sub_token = NULL;
+	}
 	free(lst);
 	lst = temp;
 }

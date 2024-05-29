@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 09:16:13 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:34:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static	void	ft_minishell_utils(t_minishell *minishell, char *input)
 {
 	add_history(input);
-	tokenize_input(input, minishell);
+	split_input(input, minishell);
 	parser(minishell);
 	execution(minishell);
 }
