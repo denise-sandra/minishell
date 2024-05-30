@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tag_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 12:10:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:41:04 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	tag_token(t_minishell *minishell)
 	tmp = minishell->token;
 	while (tmp)
 	{
-		printf("avant value: %s\n", tmp->value);
+		// printf("avant value: %s\n", tmp->value);
 		//minishell->token[i]->value = copy_inside_q(minishell->token[i]->value);
 		//erase_quotes(minishell, i);
 		len = ft_strlen(tmp->value);
 		if (len == 0)
 			return ;
 		tag_token_utils(minishell, tmp, len);
-		printf("apres value: %s type: %u\n", tmp->value, tmp->type);
+		// printf("apres value: %s type: %u\n", tmp->value, tmp->type);
 		tmp = tmp->next;
 	}
 }

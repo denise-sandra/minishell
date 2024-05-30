@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 09:00:34 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:06:09 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void    echo_command(t_minishell *minishell)
 {
-	int i;
+	// int i;
 	t_token *tmp;
 
-	i = 0;
+	// i = 0;
 	tmp = minishell->token;
 	while (tmp)
 	{
@@ -30,7 +30,8 @@ void    echo_command(t_minishell *minishell)
 		{
 			 printf("\n");
 			 break;
-		}     
-		 i++;   
+		}    
+		tmp = tmp->next; 
+		// i++;   
 	}
 }

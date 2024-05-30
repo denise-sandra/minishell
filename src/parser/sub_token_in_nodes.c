@@ -45,12 +45,12 @@ static void analyse_node(t_token *node, int len)
 		node->type = TEXT;
 }
 
-static t_token **create_node(t_minishell *minishell, char *str, \
+static t_token	**create_node(t_minishell *minishell, char *str, \
 	int i, t_token **sub_token)
 {
 	char    *split_str;
 	t_token *node;
-	
+
 	split_str = malloc((i + 1) * sizeof(char));
 	if (split_str == NULL)
 	{
@@ -66,18 +66,18 @@ static t_token **create_node(t_minishell *minishell, char *str, \
 	}
 	free(split_str);
 	analyse_node(node, ft_strlen(node->value));
-	printf("sub_token value: %s type: %u\n", node->value, node->type);
+	// printf("sub_token value: %s type: %u\n", node->value, node->type);
 	ft_lstadd_back_t(sub_token, node);
 	return (sub_token);
 }
 
 // no estamos tratando las opciones todavia
-t_token    **sub_token_in_nodes(t_minishell *minishell, char *str)
+t_token	**sub_token_in_nodes(t_minishell *minishell, char *str)
 {
-	t_token    **sub_token;
-	int i;
-	
-	sub_token = malloc(sizeof(t_token*));
+	t_token	**sub_token;
+	int		i;
+
+	sub_token = malloc(sizeof(t_token *));
 	if (sub_token == NULL)
 		ft_error("Malloc in sub_token_in_nodes", minishell);
 	*sub_token = NULL;
@@ -90,12 +90,12 @@ t_token    **sub_token_in_nodes(t_minishell *minishell, char *str)
 			while (str[i] == str[0])
 				i++;
 		}
-		else if(str[i] == '$')
-			i = env_name_len(str) + 1;		
+		else if (str[i] == '$')
+			i = env_name_len(str) + 1;
 		else
 		{
 			while (str[i] && str[i] != 39 && str
-			[i] != 34 && str[i] != '|' \
+				[i] != 34 && str[i] != '|' \
 				&& str[i] != '>' && str[i] != '<' && str[i] != '$')
 				i++;
 		}

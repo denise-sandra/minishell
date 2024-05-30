@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   erase_extra_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/27 10:51:07 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/30 12:42:02 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	char	*erase_left_quotes(char *str, int q_type_l, int len)
 		res = 0;
 	else
 		res = 1;
-	printf("len: %d i: %d res: %d\n", len, i, res);
+	// printf("len: %d i: %d res: %d\n", len, i, res);
 	new_str = malloc((i + 2 + res) * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
@@ -58,16 +58,16 @@ static char	*copy_new_str(char *str, int q_type_r, int q_type_l, int len)
 	char	*new_str;
 
 	new_str = str;
-	printf("r: %d l: %d\n", q_type_r, q_type_l);
+	// printf("r: %d l: %d\n", q_type_r, q_type_l);
 	if (q_type_r != 0)
 	{
 		new_str = erase_right_quotes(new_str, q_type_r, len);
-		printf("righ q %s\n", new_str);
+		// printf("righ q %s\n", new_str);
 	}
 	if (q_type_l != 0)
 	{
 		new_str = erase_left_quotes(new_str, q_type_l, len);
-		printf("left q %s\n", new_str);
+		// printf("left q %s\n", new_str);
 	}
 	return (new_str);
 }
