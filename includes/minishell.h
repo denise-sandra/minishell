@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 12:06:23 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:19:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char			**pars_path(t_minishell *minishell);
 //char	          *erase_outer_quotes(char *word);
 void			clean_token(t_minishell *minishell);
 void			clean_minishell(t_minishell *minishell);
+char	     *ft_strjoin_free(char *s1, char *s2);
      //lists
      //env
 t_lst_env	     *ft_lstnew_env(char *name, char *value);
@@ -84,6 +85,7 @@ int	            is_builtin(t_minishell *minishell, t_token *token);
 //parser
 void           parser(t_minishell *minishell);
 char	        *erase_extra_quotes(char *str, int len);
+void          expand_env(t_minishell *minishell, t_token **sub_token);
 void	        tag_token(t_minishell *minishell);
 t_token    **sub_token_in_nodes(t_minishell *minishell, char *str);
 

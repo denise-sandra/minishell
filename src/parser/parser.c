@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 13:03:11 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:55:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_token *new_token_list(t_minishell *minishell)
+/*static t_token *new_token_list(t_minishell *minishell)
 {
 	t_token	*new_list;
 	t_token	*last_token;
@@ -69,7 +69,7 @@ static t_token *new_token_list(t_minishell *minishell)
 		tmp = tmp->next;
 	}
 	return (new_list);
-}
+}*/
 
 
 // static t_token	*tokenize(t_minishell *mini)
@@ -143,30 +143,21 @@ static t_token *new_token_list(t_minishell *minishell)
 // 	return (token);
 // }
 
-static t_token	**fill_new_token(t_minishell *minishell, t_token **sub_token)
+static t_token *new_token_list(t_minishell *minishell)
 {
-	t_token	*tmp;
-	char	*env_value;
+	t_token *tmp;
+	t_token *new_list;
 
-	tmp = *sub_token;
-	env_value = NULL;
+	tmp = minishell->token;
+	new_list = NULL;
 	while (tmp)
 	{
-		if (tmp->type == ENV)
+		while (tmp->sub_token)
 		{
-			env_value = get_env_value(minishell->env, tmp->value + 1);
-			if (env_value)
-			{
-				printf("ENV: name: %s value: %s\n", tmp->value + 1, env_value);
-				free(tmp->value);
-				tmp->value = ft_strdup(env_value);
-				if (!tmp->value)
-					ft_error("can't duplicate env value\n", minishell);
-			}
+			new_token = tmp->sub_token;
 		}
 		tmp = tmp->next;
 	}
-	return (sub_token);
 }
 
 void	parser(t_minishell *minishell)
@@ -178,13 +169,25 @@ void	parser(t_minishell *minishell)
 	while (tmp)
 	{
 		tmp->value = erase_extra_quotes(tmp->value, ft_strlen(tmp->value));
-		// printf("erase_extra_quotes: %s\n", tmp->value);
-		sub_token = *sub_token_in_nodes(minishell, tmp->value);
 		if (tmp->value == NULL)
 			ft_error("Malloc in erase_extra_quotes", minishell);
-		fill_new_token(minishell, &sub_token);
-		tmp->sub_token = sub_token;
-		printf("parser subtoken: %s\n", tmp->value);
+		// printf("erase_extra_quotes: %s\n", tmp->value);
+		sub_token = *sub_token_in_nodes(minishell, tmp->value);
+		t_token *lale= sub_token;
+		while (lale)
+		{
+			printf("parser subtoken 1: %s\n", lale->value);
+			lale = lale->next;
+		}
+		expand_env(minishell, &sub_token);
+		minishell->token->sub_token = sub_token;
+		t_token *lala= minishell->token->sub_token;
+		while (lala)
+		{
+			printf("parser subtoken 2: %s\n", lala->value);
+			lala = lala->next;
+		}
+		
 		// t_token    *pnt;
 		// pnt = tmp->sub_token;
 		// while (pnt)
@@ -192,15 +195,16 @@ void	parser(t_minishell *minishell)
 		// 	printf("list st: %s  subtype: %u\n", pnt->value, pnt->type);
 		// 	pnt = pnt->next;
 		// }
+		//tmp = new_token_list(tmp);
 		tmp = tmp->next;
 	}
-	minishell->token = new_token_list(minishell);
+	
 	t_token *print = minishell->token;
 	while (print)
 	{
 		printf("new token value: %s, type: %d\n", print->value, print->type);
 		print = print->next;
 	}
-	// tokenize(minishell);
+	new_token_list(minishell);
 	tag_token(minishell);
 }

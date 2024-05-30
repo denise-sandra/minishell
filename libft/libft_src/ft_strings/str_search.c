@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:03 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 09:58:03 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/30 14:08:07 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@ void	*ft_memchr(const void *s, int c, size_t n)
 
 int	ft_strchr_int(const char *str, int c)
 {
-	while (*str)
+	int	i;
+
+	i = 0;
+	while (str[i + 1])
 	{
-		if (*str == (char)c)
-			return (1);
-		str++;
+		if (str[i] == (char)c)
+			return (i);
+		i++;
 	}
-	if (str[0] == (char)c)
-		return (2);
-	return (0);
+	return (-1);
 }
 
 char	*ft_strchr(const char *str, int c)

@@ -17,7 +17,7 @@ static void analyse_node(t_token *node, int len)
 	static int sq = 0;
 	static int dq = 0;
 	// revisar los pipe y dir
-	if (sq % 2 == 0 && ft_strchr_int(node->value, '$') == 1)
+	if (sq % 2 == 0 && ft_strchr_int(node->value, '$') >= 0)
 		node->type = ENV;
 	else if (len == 1 && node->value[0] == 39)
 	{
@@ -90,13 +90,11 @@ t_token	**sub_token_in_nodes(t_minishell *minishell, char *str)
 			while (str[i] == str[0])
 				i++;
 		}
-		else if (str[i] == '$')
-			i = env_name_len(str) + 1;
 		else
 		{
 			while (str[i] && str[i] != 39 && str
 				[i] != 34 && str[i] != '|' \
-				&& str[i] != '>' && str[i] != '<' && str[i] != '$')
+				&& str[i] != '>' && str[i] != '<')
 				i++;
 		}
 		sub_token = create_node(minishell, str, i, sub_token);
