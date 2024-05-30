@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/29 12:11:41 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:57:21 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	clean_env(t_minishell *minishell)
 	minishell->env = NULL;
 }
 
-void	clean_token(t_minishell *minishell)
+void	clean_token(t_token *token)
 {
-	if (minishell->token == NULL)
+	if (token == NULL)
 		return ;
-	ft_lstclear_t(&minishell->token, free);
-	free (minishell->token);
-	minishell->token = NULL;
+	ft_lstclear_t(&token, free);
+	free (token);
+	token = NULL;
 }
 
 void	clean_minishell(t_minishell *minishell)
@@ -43,7 +43,7 @@ void	clean_minishell(t_minishell *minishell)
 	if (minishell->env)
 		clean_env(minishell);
 	if (minishell->token)
-		clean_token(minishell);
+		clean_token(minishell->token);
 	if (minishell->output_file)
 		free(minishell->output_file);
 	if (minishell->input_file)
