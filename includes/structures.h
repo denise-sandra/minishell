@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 12:00:10 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:21:36 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef enum e_type
 typedef struct s_token
 {
 	char			*value;
-	t_type		type;
+	t_type			type;
 	struct s_token	*sub_token;
 	struct s_token	*next;
 }	t_token;

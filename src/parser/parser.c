@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 15:08:48 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:23:05 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*create_token(char *value, t_type type, t_minishell *minishell)
 
 	new_token = ft_lstnew_t(value);
 	if (new_token == NULL)
-		ft_error("Malloc in create_new_token", minishell);
+		ft_error("cant malloc when creating new token", minishell);
 	new_token->type = type;
 	new_token->sub_token = NULL;
 	new_token->next = NULL;
@@ -41,14 +41,14 @@ char	*join_subtokens(t_token *sub, t_minishell *minishell)
 
 	join = ft_strdup("");
 	if (join == NULL)
-		ft_error("Malloc in concatenate_subtokens", minishell);
+		ft_error("cant malloc when duplicating sub tokens", minishell);
 	while (sub && (sub->type == TEXT || sub->type == ENV))
 	{
 		temp = ft_strjoin(join, sub->value);
 		if (temp == NULL)
 		{
 			free(join);
-			ft_error("Malloc in concatenate_subtokens", minishell);
+			ft_error("cant malloc when joining sub tokens", minishell);
 		}
 		free(join);
 		join = temp;
