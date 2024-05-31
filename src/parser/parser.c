@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 00:21:42 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/31 09:21:40 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,19 @@ static t_token *new_token_list(t_minishell *minishell)
 				new_list = new_list->next;
 				clean_token(tmp->sub_token);
 				i++;
-			}	
+			}
 			tmp->sub_token = tmp->sub_token->next;	
 		}
-		clean_token(tmp);
+		printf("new token value1: %s, type: %d\n", tmp->value, tmp->type);
 		tmp = tmp->next;
 	}
-	t_token *print = first;
-	while (print)
-	{
-		printf("new token value: %s, type: %d\n", print->value, print->type);
-		print = print->next;
-	}
+	clean_token(tmp);
+	// t_token *print = first;
+	// while (print)
+	// {
+	// 	printf("new token value1: %s, type: %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	return (first);
 }
 
@@ -87,7 +88,7 @@ void	parser(t_minishell *minishell)
 	t_token *print = minishell->token;
 	while (print)
 	{
-		printf("new token value: %s, type: %d\n", print->value, print->type);
+		printf("new token value2: %s, type: %d\n", print->value, print->type);
 		print = print->next;
 	}
 	tag_token(minishell);
