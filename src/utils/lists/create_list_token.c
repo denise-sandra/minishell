@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/29 12:33:35 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:08:30 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,51 +46,53 @@ int		ft_lst_len_t(t_token **lst)
 	t_token	*tmp;
 	int		len;
 
-    tmp = *lst;
-    len = 0;
-    while (tmp)
-    {
-        len += ft_strlen(tmp->value);
-        tmp = tmp->next;
-    }
-    return (len);
-}
-
-void	ft_lstdelone_t(t_token *lst, void (*del)(void *))
-{
-	t_token *temp;
-
-	if (!lst)
-		return ;
-	temp = lst->next;
-	if (!del)
-		return ;
-	del(lst->value);
-	if (lst->sub_token)
+	tmp = *lst;
+	len = 0;
+	while (tmp)
 	{
-		ft_lstclear_t(&lst->sub_token, free);
-		lst->sub_token = NULL;
+		len += ft_strlen(tmp->value);
+		tmp = tmp->next;
 	}
-	free(lst);
-	lst = temp;
+	return (len);
 }
 
-void	ft_lstclear_t(t_token **lst, void (*del)(void *))
-{
-	t_token *temp;
+// void	ft_lstdelone_t(t_token *lst, void (*del)(void *))
+// {
+// 	t_token *temp;
 
-	if (!lst)
-		return ;
-	while (*lst)
-	{
-		temp = (*lst)->next;
-		if (del)
-			del((*lst)->value);
-		free(*lst);
-		*lst = temp;
-	}
-	*lst = NULL;
-}
+// 	if (!lst)
+// 		return ;
+// 	temp = lst->next;
+// 	if (!del)
+// 		return ;
+// 	del(lst->value);
+// 	if (lst->sub_token)
+// 	{
+// 		clean_token_list(&lst->sub_token);
+// 		lst->sub_token = NULL;
+// 	}
+// 	free(lst);
+// 	lst = temp;
+// }
+
+// void	ft_lstclear_t(t_token **lst)
+// {
+// 	t_token	*temp;
+
+// 	if (!lst)
+// 		return ;
+// 	while (*lst)
+// 	{
+// 		temp = (*lst)->next;
+// 		if ((*lst)->value)
+// 			free((*lst)->value);
+// 		if ((*lst)->sub_token)
+// 			clean_subtokens((*lst)->sub_token);
+// 		free(*lst);
+// 		*lst = temp;
+// 	}
+// 	*lst = NULL;
+// }
 
 t_token	*ft_lstlast_t(t_token *lst)
 {

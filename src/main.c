@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 23:57:50 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/31 15:07:54 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static	void	ft_minishell(t_minishell *minishell)
 			free(input);
 			break ;
 		}
-		clean_token(minishell->token);
+		clean_token_list(minishell->token);
 		free(input);
 	}
 }

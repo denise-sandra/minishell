@@ -20,6 +20,20 @@
         "unordered_map": "c",
         "vector": "c",
         "random": "c",
-        "format": "c"
+        "format": "c",
+        "chrono": "c",
+        "complex": "c",
+        "__locale": "c",
+        "__bit_reference": "c",
+        "__node_handle": "c",
+        "__memory": "c",
+        "limits": "c",
+        "optional": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "tuple": "c",
+        "charconv": "c",
+        "functional": "c",
+        "utility": "c"
     }
 }

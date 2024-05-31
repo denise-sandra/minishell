@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/31 09:20:12 by sandra           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:07:21 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,36 @@ void	clean_env(t_minishell *minishell)
 	minishell->env = NULL;
 }
 
-void	clean_token(t_token *token)
+void	clean_subtokens(t_token *sub_token)
 {
+	t_token	*temp;
+
+	while (sub_token)
+	{
+		temp = sub_token;
+		sub_token = sub_token->next;
+		if (temp->value)
+			free(temp->value);
+		free(temp);
+	}
+}
+
+void	clean_token_list(t_token *token)
+{
+	t_token	*temp;
+
 	if (token == NULL)
 		return ;
-	ft_lstclear_t(&token, free);
-	free (token);
-	token = NULL;
+	while (token)
+	{
+		temp = token->next;
+		if (token->value)
+			free(token->value);
+		if (token->sub_token)
+			clean_subtokens(token->sub_token);
+		free(token);
+		token = temp;
+	}
 }
 
 void	clean_minishell(t_minishell *minishell)
@@ -43,7 +66,7 @@ void	clean_minishell(t_minishell *minishell)
 	if (minishell->env)
 		clean_env(minishell);
 	if (minishell->token)
-		clean_token(minishell->token);
+		clean_token_list(minishell->token);
 	if (minishell->output_file)
 		free(minishell->output_file);
 	if (minishell->input_file)
