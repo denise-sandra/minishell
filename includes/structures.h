@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 11:59:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:00:10 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef struct s_lst_token
 typedef enum e_type
 {
 	SYMBOL,
-	OPEN_S_QUOTES,
-	CLOSE_S_QUOTES,
-	OPEN_D_QUOTES,
-	CLOSE_D_QUOTES,
+	OPEN_S_Q,
+	CLOSE_S_Q,
+	OPEN_D_Q,
+	CLOSE_D_Q,
 	TEXT,
 	ENV,
 	COMMAND,
