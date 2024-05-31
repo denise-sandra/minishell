@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_to_tab.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 10:00:47 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/31 10:19:27 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static unsigned int	ft_countwords(char *s)
 			if (s[i] == 34)
 				d_q++;
 		}
-		printf("comilla :%c espacio: %c s_q %d d_q %d\n", s[i], s[i + 1], s_q, d_q);
-		if (s[i] == 32 && s_q % 2 == 0 && d_q % 2 == 0 && d_q && s[i + 1] != 32)
+		// printf("comilla :%c espacio: %c s_q %d d_q %d\n", s[i], s[i + 1], s_q, d_q);
+		if (s[i] == 32 && s_q % 2 == 0 && d_q % 2 == 0 && s[i + 1] != 32)
 			words++;
 		i++;
 	}
