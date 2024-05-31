@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 08:29:51 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/05/31 10:00:47 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,28 @@ static unsigned int	erase_c(char *s, char c)
 	return (start);
 }
 
-static unsigned int	ft_countwords(char *s, int *quotes)
+static unsigned int	ft_countwords(char *s)
 {
 	int	i;
 	int	words;
-	int	q;
-	int	inside_q;
+	int	s_q;
+	int	d_q;
 
 	words = 1;
-	q = 0;
+	s_q = 0;
+	d_q = 0;
 	i = 0;
-	inside_q = 0;
 	while (s[i + 1])
 	{
 		if (s[i] == 34 || s[i] == 39)
 		{
-			q++;
-			if (s[i] == 39 && (q == 1 || s[i + 1] == 32 || q == quotes[0]))
-				inside_q = !inside_q;
-			if (s[i] == 34 && (q == 1 || s[i + 1] == 32|| q == quotes[1]))
-				inside_q = !inside_q;
+			if (s[i] == 39)
+				s_q++;
+			if (s[i] == 34)
+				d_q++;
 		}
-		if (s[i] == 32 && inside_q == 0 && s[i + 1] != 32)
+		printf("comilla :%c espacio: %c s_q %d d_q %d\n", s[i], s[i + 1], s_q, d_q);
+		if (s[i] == 32 && s_q % 2 == 0 && d_q % 2 == 0 && d_q && s[i + 1] != 32)
 			words++;
 		i++;
 	}
@@ -86,7 +86,7 @@ char	**ft_split_quotes(char *s, char c, int *quotes)
 			return (NULL);
 		return (tab);
 	}
-	words = ft_countwords(s, quotes);
+	words = ft_countwords(s);
 	printf("words: %d\n", words);
 	tab = malloc((words + 1) * sizeof (char *));
 	if (tab == NULL)
