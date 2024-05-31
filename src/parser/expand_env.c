@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 17:51:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:46:53 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *return_first_env(t_minishell *minishell, char *sub_token)
+static char	*return_first_env(t_minishell *minishell, char *sub_token)
 {
 	int		letters;
 	char	*env_name;
@@ -30,13 +30,13 @@ static char *return_first_env(t_minishell *minishell, char *sub_token)
 	return (env_value);
 }
 
-static char *expand_env_utils(t_minishell *minishell, char *sub_token)
+static char	*expand_env_utils(t_minishell *minishell, char *sub_token)
 {
-	int	i;
-	char *env_value;
-	char *res;
+	int		i;
+	char	*env_value;
+	char	*res;
 	char	*tmp;
-	
+
 	res = NULL;
 	env_value = NULL;
 	tmp = sub_token;
@@ -45,16 +45,18 @@ static char *expand_env_utils(t_minishell *minishell, char *sub_token)
 		i = ft_strchr_int(tmp, '$');
 		if (i == 0)
 		{
+			// printf("entra con: %s\n", tmp);
 			env_value = return_first_env(minishell, tmp);
+			// printf("env value: %s\n", tmp);
 			i = env_name_len(tmp) + 1;
-		}	
+		}
 		else
 		{
 			res = ft_substr(tmp, 0, i);
 			if (res == NULL)
 				ft_error("Malloc in substr", minishell);
 		}
-		printf("env %s\n",env_value);
+		// printf("env %s\n",env_value);
 		res = ft_strjoin_free(res, env_value);
 		printf("res %s\n",res);
 		if (res == NULL)
@@ -64,13 +66,13 @@ static char *expand_env_utils(t_minishell *minishell, char *sub_token)
 			ft_error("3Malloc in parser", minishell);
 		}
 		tmp = tmp + i;
-		printf("%s\n", tmp);
+		printf("nuevo env: %s\n", tmp);
 	}
 	free(sub_token);
 	return (res);
 }
 
-void expand_env(t_minishell *minishell, t_token **sub_token)
+void	expand_env(t_minishell *minishell, t_token **sub_token)
 {
 	t_token	*tmp;
 
@@ -78,7 +80,7 @@ void expand_env(t_minishell *minishell, t_token **sub_token)
 	while (tmp)
 	{
 		if (tmp->type == ENV)
-               tmp->value = expand_env_utils(minishell, tmp->value);
+			tmp->value = expand_env_utils(minishell, tmp->value);
 		tmp = tmp->next;
 	}
 }

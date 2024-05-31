@@ -21,22 +21,22 @@ static void analyse_node(t_token *node, int len)
 		node->type = ENV;
 	else if (len == 1 && node->value[0] == 39)
 	{
-		node->type = OPEN_S_QUOTES;
+		node->type = OPEN_S_Q;
 		sq++;
 	}		
 	else if (len == 1 && node->value[0] == 34)
 	{
-		node->type = OPEN_D_QUOTES;
+		node->type = OPEN_D_Q;
 		dq++;
 	}	
 	else if (dq % 2 != 0 && len == 2 && node->value[0] == 34)
 	{
-		node->type = CLOSE_D_QUOTES;
+		node->type = CLOSE_D_Q;
 		dq++;
 	}	
 	else if (sq % 2 != 0 && len == 2 && node->value[0] == 39)
 	{
-		node->type = CLOSE_S_QUOTES;
+		node->type = CLOSE_S_Q;
 		sq++;
 	}	
 	else if (len == 1 && (node->value[0] == '|'|| node->value[0] == '>' || node->value[0] == '<'))
@@ -54,14 +54,14 @@ static t_token	**create_node(t_minishell *minishell, char *str, \
 	split_str = malloc((i + 1) * sizeof(char));
 	if (split_str == NULL)
 	{
-		ft_lstclear_t(sub_token, free);
+		clean_token_list(*sub_token);
 		ft_error("Malloc in create_node", minishell);
 	}
 	ft_strlcpy(split_str, str, i + 1);
 	node = ft_lstnew_t(split_str);
 	if (node == NULL)
 	{
-		ft_lstclear_t(sub_token, free);
+		clean_token_list(*sub_token);
 		ft_error("Malloc in create_node", minishell);
 	}
 	free(split_str);

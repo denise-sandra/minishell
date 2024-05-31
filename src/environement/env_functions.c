@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 16:07:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:34:01 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_env_value(t_lst_env *env, char *name)
 {
 	t_lst_env	*temp;
-	char	*empty;
+	char		*empty;
 
 	if (name == NULL || env == NULL)
 		return (NULL);
@@ -81,7 +81,7 @@ int	env_name_len(char *token)
 int	is_env_value(t_minishell *minishell, char *value)
 {
 	t_lst_env	*temp;
-	char	*str;
+	char		*str;
 
 	temp = minishell->env;
 	while (temp)
