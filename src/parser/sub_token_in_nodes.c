@@ -41,7 +41,7 @@ static void analyse_node(t_token *node, int len)
 	}	
 	else if (len == 1 && (node->value[0] == '|'|| node->value[0] == '>' || node->value[0] == '<'))
 		node->type = SYMBOL;
-	else if ((dq !=0 && dq % 2 != 0) || (sq != 0 && sq % 2 != 0))
+	else if ((dq != 0 && dq % 2 != 0) || (sq != 0 && sq % 2 != 0))
 		node->type = TEXT;
 }
 

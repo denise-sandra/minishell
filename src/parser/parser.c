@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/03 14:04:08 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:01:01 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ static t_token	*new_token_list(t_minishell *minishell)
 	new_list = NULL;
 	while (tmp)
 	{
+		printf("tmp : %s\n", tmp->value);
 		process_subtokens(tmp->sub_token, &new_list, minishell);
 		tmp = tmp->next;
 	}
@@ -108,17 +109,16 @@ void	parser(t_minishell *minishell)
 		tmp->value = erase_extra_quotes(tmp->value, ft_strlen(tmp->value));
 		if (tmp->value == NULL)
 			ft_error("Malloc in erase_extra_quotes", minishell);
-		// printf("erase_extra_quotes: %s\n", tmp->value);
+		printf("erase_extra_quotes: %s\n", tmp->value);
 		sub_token = sub_token_in_nodes(minishell, tmp->value);
 		expand_env(minishell, &sub_token);
-		// minishell->token->sub_token = sub_token;
 		tmp->sub_token = sub_token;
-		// t_token *print = minishell->token->sub_token;
-		// while (print)
-		// {
-		// 	printf("parser subtoken2: %s  sub->type: %i\n", print->value, print->type);
-		// 	print = print->next;
-		// }
+		t_token *print = tmp->sub_token;
+		while (print)
+		{
+			printf("parser subtoken2: %s  sub->type: %i\n", print->value, print->type);
+			print = print->next;
+		}
 		tmp = tmp->next;
 	}
 	minishell->token = new_token_list(minishell);

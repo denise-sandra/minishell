@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 15:21:36 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:35:58 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,6 @@ typedef struct s_lst_env
 	char				*value;
 	struct s_lst_env	*next;
 }	t_lst_env;
-
-/*typedef enum e_subtype
-{
-	SYMBOL,
-	OPEN_S_QUOTES,
-	CLOSE_S_QUOTES,
-	OPEN_D_QUOTES,
-	CLOSE_D_QUOTES,
-	TEXT,
-	ENV,
-	OTHER
-}	t_subtype;
-
-typedef struct s_lst_token
-{
-	t_subtype			sub_type;
-	char				*value;
-	struct s_lst_token	*next;
-	//struct s_lst_token	*prev;
-}	t_lst_token;*/
 
 typedef enum e_type
 {
