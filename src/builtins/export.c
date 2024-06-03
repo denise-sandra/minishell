@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 09:10:00 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:15:36 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,18 @@ void	export_command(t_minishell *minishell)
 	char		**split_new_envp;
 	t_lst_env	*new_node;
 	t_lst_env	*temp;
-	char	*new_var;
+//	char		*new_var;
 
 	new_node = NULL;
 	temp = NULL;
 	res = 0;
 	split_new_envp = NULL;
-	new_var = minishell->token->next->value;
+	/*printf("cur: %s\n", minishell->token->value);
+	if (minishell->token->next)
+	{
+		printf("next: %s\n", minishell->token->next->value);
+		new_var = minishell->token->next->value;
+	}*/
 	if (new_var)
 		res = ft_strchr_int(new_var, '=');
 	else

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/03 12:41:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:04:08 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ void	parser(t_minishell *minishell)
 		printf("new token value: %s, type: %d\n", print->value, print->type);
 		print = print->next;
 	}
-	//tag_token(minishell);
+	tag_token(minishell);
 }
