@@ -19,14 +19,12 @@ t_lst_env	*ft_lstnew_env(char *name, char *value)
 	new = malloc(sizeof(t_lst_env));
 	if (!new)
 		return (NULL);
-	new->name = malloc((ft_strlen(name) + 1) * sizeof(char));
+	new->name = ft_strdup(name);
 	if (new->name == NULL)
 		return (NULL);
-	new->value = malloc((ft_strlen(value) + 1) * sizeof(char));
+	new->value = ft_strdup(value);
 	if (new->value == NULL)
 		return (NULL);
-	ft_strlcpy(new->name, name, ft_strlen(name) + 1);
-	ft_strlcpy(new->value, value, ft_strlen(value) + 1);
 	new->next = NULL;
 	return (new);
 }

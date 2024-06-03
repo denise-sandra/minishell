@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 15:14:28 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:18:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_minishell	*init_minishell(char **envp);
 void			ft_error(char *msg, t_minishell *minishell);
 char			**ft_split_1st_token(char const *s, char c);
 char			**pars_path(t_minishell *minishell);
+void	     clean_subtokens(t_token *sub_token);
 void			clean_token_list(t_token *token);
 void			clean_minishell(t_minishell *minishell);
 char	      	*ft_strjoin_free(char *s1, char *s2);
@@ -74,7 +75,7 @@ void			parser(t_minishell *minishell);
 char			*erase_extra_quotes(char *str, int len);
 void			expand_env(t_minishell *minishell, t_token **sub_token);
 void			tag_token(t_minishell *minishell);
-t_token		**sub_token_in_nodes(t_minishell *minishell, char *str);
+t_token		*sub_token_in_nodes(t_minishell *minishell, char *str);
 
 //exec
 void			execution(t_minishell *minishell);

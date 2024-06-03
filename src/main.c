@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 15:07:54 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:18:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static	void	ft_minishell(t_minishell *minishell)
 		if (!input)
 			break ;
 		if (*input && ft_strncmp(input, "exit", 4) != 0)
-		ft_minishell_utils(minishell, input);
+			ft_minishell_utils(minishell, input);
 		else if (*input && ft_strncmp(input, "exit", 4) == 0)
 		{
 			exit_cmd(minishell, input + 4);
@@ -38,6 +38,7 @@ static	void	ft_minishell(t_minishell *minishell)
 			break ;
 		}
 		clean_token_list(minishell->token);
+		minishell->token = NULL;
 		free(input);
 	}
 }

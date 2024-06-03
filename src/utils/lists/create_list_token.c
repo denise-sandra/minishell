@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_token.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/05/31 15:08:30 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 11:31:14 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ t_token *ft_lstnew_t(void *content)
 	new->sub_token = NULL;
 	new->next = NULL;
 	return (new);
+}
+
+t_token	*ft_lstlast_t(t_token *lst)
+{
+	t_token	*current;
+
+	if (!lst)
+		return (NULL);
+	current = lst;
+	while (current->next != NULL)
+		current = current->next;
+	return (current);
 }
 
 void	ft_lstadd_back_t(t_token **lst, t_token *new)
@@ -94,14 +106,3 @@ int		ft_lst_len_t(t_token **lst)
 // 	*lst = NULL;
 // }
 
-t_token	*ft_lstlast_t(t_token *lst)
-{
-	t_token	*current;
-
-	if (!lst)
-		return (NULL);
-	current = lst;
-	while (current->next != NULL)
-		current = current->next;
-	return (current);
-}
