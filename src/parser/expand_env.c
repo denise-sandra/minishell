@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 14:46:53 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:42:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static char	*return_first_env(t_minishell *minishell, char *sub_token)
 		ft_error("malloc in get_env_value", minishell);
 	ft_strlcpy(env_name, sub_token + 1, letters + 1);
 	env_value = get_env_value(minishell->env, env_name);
+	if (env_value == NULL)
+		ft_error("Malloc in ft_strdup", minishell);
 	free(env_name);
 	if (env_value == NULL)
 		ft_error("malloc in get_env_value", minishell);
@@ -58,7 +60,7 @@ static char	*expand_env_utils(t_minishell *minishell, char *sub_token)
 		}
 		// printf("env %s\n",env_value);
 		res = ft_strjoin_free(res, env_value);
-		printf("res %s\n",res);
+	//printf("res %s\n",res);
 		if (res == NULL)
 		{
 			if (env_value)

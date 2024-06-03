@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/03 12:02:01 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:42:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	clean_env(t_minishell *minishell)
 		next = current->next;
 		free(current->name);
 		free(current->value);
+		current->name = NULL;
+		current->value = NULL;
 		free(current);
 		current = next;
 	}
@@ -41,8 +43,7 @@ void	clean_subtokens(t_token *sub_token)
 		{
 			free(temp->value);
 			temp->value = NULL;
-		}
-			
+		}	
 		free(temp);
 	}
 }

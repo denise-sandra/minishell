@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 14:34:01 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:38:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*get_env_value(t_lst_env *env, char *name)
 {
 	t_lst_env	*temp;
 	char		*empty;
+	char		*dup;
 
 	if (name == NULL || env == NULL)
 		return (NULL);
@@ -23,7 +24,10 @@ char	*get_env_value(t_lst_env *env, char *name)
 	while (temp)
 	{
 		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
-			return (temp->value);
+		{
+			dup = ft_strdup(temp->value);
+			return (dup);
+		}
 		temp = temp->next;
 	}
 	empty = malloc(sizeof(char));

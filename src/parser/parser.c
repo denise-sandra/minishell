@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/03 12:15:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:41:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ void	process_subtokens(t_token *sub, t_token **list, t_minishell *mini)
 				new_token = create_token(join, TEXT, mini);
 				ft_lstadd_back_t(list, new_token);
 			}
-			else
-				free(join);
+			free(join);
 			while (sub && (sub->type == TEXT || sub->type == ENV))
 				sub = sub->next;
 		}
