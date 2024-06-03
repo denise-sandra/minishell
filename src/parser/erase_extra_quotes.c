@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   erase_extra_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 12:42:02 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/03 10:25:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 #include "minishell.h"
 
@@ -19,12 +21,9 @@ static	char	*erase_left_quotes(char *str, int q_type_l, int len)
 	char	*new_str;
 	
 	i = len - 1;
-	while (str[i] == q_type_l)
+	while (i > 0 && str[i] == q_type_l)
 		i--;
-	if ((len - 1 - i) % 2 == 0)
-		res = 0;
-	else
-		res = 1;
+	res = (len - 1 - i) % 2;
 	// printf("len: %d i: %d res: %d\n", len, i, res);
 	new_str = malloc((i + 2 + res) * sizeof(char));
 	if (new_str == NULL)
@@ -40,12 +39,9 @@ static	char	*erase_right_quotes(char *str, int q_type_r, int len)
 	char	*new_str;
 	
 	i = 0;
-	while (str[i] == q_type_r)
+	while (i < len && str[i] == q_type_r)
 		i++;
-	if (i % 2 == 0)
-		res = 0;
-	else
-		res = 1;
+	res = i % 2;
 	new_str = malloc((len - i + res + 1) * sizeof(char));
 	if (new_str == NULL)
 		return (NULL);
@@ -56,18 +52,24 @@ static	char	*erase_right_quotes(char *str, int q_type_r, int len)
 static char	*copy_new_str(char *str, int q_type_r, int q_type_l, int len)
 {
 	char	*new_str;
+	char	*temp;
 
 	new_str = str;
 	// printf("r: %d l: %d\n", q_type_r, q_type_l);
 	if (q_type_r != 0)
 	{
-		new_str = erase_right_quotes(new_str, q_type_r, len);
-		// printf("righ q %s\n", new_str);
+		temp = erase_right_quotes(new_str, q_type_r, len);
+		if (new_str != str)
+			free(new_str);
+		new_str = temp;
+		len = ft_strlen(new_str);
 	}
 	if (q_type_l != 0)
 	{
 		new_str = erase_left_quotes(new_str, q_type_l, len);
-		// printf("left q %s\n", new_str);
+		if (new_str != str && new_str != temp)
+			free(new_str);
+		new_str = temp;
 	}
 	return (new_str);
 }
