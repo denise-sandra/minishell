@@ -127,3 +127,8 @@ Aca las 4 primeras sq se eliminan, las 4 siguientes dq se eliminan también y de
 
 bash-3.2$ ''''""""'''"""$USER"""'''""""''''
 bash: """$USER""": command not found
+
+En este caso, las comillas no se imprimen, pero los tokens tienen que estar taggeados como simples caracteres (| es caracter y no pipe) o strings y se convierten en el argumento del comando "echo":
+skanna@k1r2p7:~$ echo "bla" "|" grep b
+bla | grep b
+

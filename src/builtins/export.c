@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/03 14:20:13 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:12:30 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	export_command(t_minishell *minishell)
 	}
 	if (res == 1)
 	{
-		split_new_envp = ft_split_1st_token(new_var, '=');
+		split_new_envp = split_env_vars(new_var, '=');
 		if (split_new_envp == NULL)
 			ft_error("Malloc in export function", minishell);
 		new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);

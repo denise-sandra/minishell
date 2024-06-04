@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_1st_token.c                               :+:      :+:    :+:   */
+/*   split_env_vars.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -73,7 +73,7 @@ static char	**fill_tab(char **tab, char const *s, char c)
 	return (tab);
 }
 
-char	**ft_split_1st_token(char const *s, char c)
+char	**split_env_vars(char const *s, char c)
 {
 	char	**tab;
 

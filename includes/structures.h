@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/03 14:35:58 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:02:04 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,36 @@ typedef struct s_lst_env
 
 typedef enum e_type
 {
-	SYMBOL,
+	WHITE,
+	D_Q,
+	S_Q,
+	EXP,
+	IN,
+	OUT,
+	OPT,
+	PIPE,
+	CHAR,
+	EMPTY,
 	OPEN_S_Q,
 	CLOSE_S_Q,
 	OPEN_D_Q,
 	CLOSE_D_Q,
-	TEXT,
 	ENV,
 	COMMAND,
 	BUILTIN,
-	OPS,
-	REDIR_IN,
-	REDIR_OUT,
 	END,
 	HEREDOC,
 	APPEND,
 	ARG,
 	OTHER
 }	t_type;
+
+typedef struct s_pretok
+{
+	char			c;
+	t_type			type;
+	struct s_pretok	*next;
+}	t_pretok;
 
 typedef struct s_token
 {
@@ -53,11 +65,12 @@ typedef struct s_minishell
 {
 	t_lst_env	*env;
 	t_token		*token;
+	t_pretok	*pretok;
 	int			token_count;
 	int			last_exit_status;
 	int			redirect_in;
 	int			redirect_out;
-	char		*builtin[6];     //builtin
+	char		*builtin[7];     //builtin
 	char		*input_file;
 	char		*output_file;
 }	t_minishell;

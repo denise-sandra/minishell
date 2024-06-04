@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/03 15:27:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:36:48 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ void	clean_env(t_minishell *minishell)
 		current = next;
 	}
 	minishell->env = NULL;
+}
+
+void	clean_pretokens(t_minishell *minishell)
+{
+	t_pretok	*temp;
+
+	printf("entereing clean pretok\n");
+	if (minishell->pretok == NULL)
+		return ;
+	temp = minishell->pretok;
+	while (minishell->pretok)
+	{
+		printf("pretok val: %c\n", temp->c);
+		temp = minishell->pretok->next;
+		free(minishell->pretok);
+		minishell->pretok = temp;
+	}
+	minishell->pretok = NULL;
 }
 
 void	clean_subtokens(t_token *sub_token)
@@ -76,6 +94,8 @@ void	clean_minishell(t_minishell *minishell)
 {
 	if (minishell->env)
 		clean_env(minishell);
+	if (minishell->pretok)
+		clean_pretokens(minishell);
 	if (minishell->token)
 		clean_token_list(minishell->token);
 	if (minishell->output_file)

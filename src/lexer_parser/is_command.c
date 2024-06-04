@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_command.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 15:00:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:49:15 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,28 @@ static char	*join_path(t_minishell *minishell, t_token *token, \
 	return (join_token);
 }
 
+static char	**parse_path(t_minishell *minishell)
+{
+	char	*path;
+	char	**split_paths;
+
+	path = get_env_value(minishell->env, "PATH");
+	if (!path)
+		ft_error("Malloc in ft_strdup", minishell);
+	split_paths = ft_split(path, ':');
+	if (!split_paths)
+		return (NULL);
+	free(path);
+	return (split_paths);
+}
+
 int	is_normal_command(t_minishell *minishell, t_token *token)
 {
 	char	**paths;
 	char	*path_with_token;
 	int		i;
 
-	paths = pars_path(minishell);
+	paths = parse_path(minishell);
 	if (!paths)
 		ft_error("path spliting error", minishell);
 	i = 0;

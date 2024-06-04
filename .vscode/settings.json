@@ -34,6 +34,8 @@
         "tuple": "c",
         "charconv": "c",
         "functional": "c",
-        "utility": "c"
+        "utility": "c",
+        "structures.h": "c",
+        "libft_extended.h": "c"
     }
 }

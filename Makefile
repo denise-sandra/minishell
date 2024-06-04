@@ -8,14 +8,14 @@ RESET = \033[0m
 
 NAME	:= minishell
 
-SRCS	:= ${addprefix src/, main.c init_minishell.c \
-		${addprefix environement/, fill_env_struct.c env_functions.c} \
-		${addprefix lexer/, split_input.c check_quotes.c is_command.c} \
+SRCS	:= ${addprefix src/, minishell.c \
+		${addprefix environement/, split_env_vars.c fill_env_struct.c env_helpers.c } \
+		${addprefix lexer_parser/, lexer.c pretok_list.c token_list.c check_quotes.c is_command.c} \
 		${addprefix parser/, parser.c erase_extra_quotes.c expand_env.c tag_token.c sub_token_in_nodes.c} \
 		${addprefix exec/, execution.c execute_builtin.c} \
-		${addprefix builtins/, export.c env.c exit.c pwd.c cd.c echo.c} \
-		${addprefix utils/, ft_error.c ft_split_1st_token.c pars_path.c clean_minishell.c ft_strjoin_free.c} \
-		${addprefix utils/lists/, create_list_env.c create_list_token.c}}
+		${addprefix builtins/, export.c env.c exit.c pwd.c cd.c echo.c utils/init_builtins.c} \
+		${addprefix utils/, ft_error.c  clean_minishell.c ft_strjoin_free.c}}
+
 OBJS     = $(SRCS:.c=.o)
 
 LIBFT := libft/libft3.a
