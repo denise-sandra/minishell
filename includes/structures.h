@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/04 18:02:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 03:23:56 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ typedef enum e_type
 	PIPE,
 	CHAR,
 	EMPTY,
-	OPEN_S_Q,
-	CLOSE_S_Q,
-	OPEN_D_Q,
-	CLOSE_D_Q,
 	ENV,
 	COMMAND,
 	BUILTIN,
@@ -70,7 +66,7 @@ typedef struct s_minishell
 	int			last_exit_status;
 	int			redirect_in;
 	int			redirect_out;
-	char		*builtin[7];     //builtin
+	char		*builtin[7];
 	char		*input_file;
 	char		*output_file;
 }	t_minishell;
