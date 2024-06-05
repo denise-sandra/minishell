@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/04 15:43:10 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 01:36:52 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 // t_token	*create_token(char *value, t_type type, t_minishell *minishell)
 // {
 // 	t_token	*new_token;
-	
+
 // 	new_token = tok_new_node(value);
 // 	if (new_token == NULL)
 // 		ft_error("cant malloc when creating new token", minishell);

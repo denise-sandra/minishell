@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/29 12:12:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/05 03:28:11 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	execution(t_minishell *minishell)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = minishell->token;
-	
 	if (tmp && tmp->value)
 	{
 		if (ft_strlen(tmp->value) == 0)

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/04 12:12:30 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 03:30:35 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
-//export con una variable (sin valor, solo nombre) se registra y se muestra cuando se llama a export solo
-// pero no se muestra cuando se llama a env. Env solo muestra las variables que contienen algun valor
-//Corregir: cuando envias "e" o " ' " en la linea de comando la funcion los trata como si fueran "export"
 
 void	export_command(t_minishell *minishell)
 {

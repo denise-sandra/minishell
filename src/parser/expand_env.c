@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/04 15:43:03 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 00:03:55 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@
 // 	letters = env_name_len(sub_token);
 // 	env_name = malloc((letters + 1) * sizeof(char));
 // 	if (env_name == NULL)
-// 		ft_error("malloc in get_env_value", minishell);
+// 		ft_error("malloc in get_env_value");
 // 	ft_strlcpy(env_name, sub_token + 1, letters + 1);
 // 	env_value = get_env_value(minishell->env, env_name);
 // 	if (env_value == NULL)
-// 		ft_error("Malloc in ft_strdup", minishell);
+// 		ft_error("Malloc in ft_strdup");
 // 	free(env_name);
 // 	if (env_value == NULL)
-// 		ft_error("malloc in get_env_value", minishell);
+// 		ft_error("malloc in get_env_value");
 // 	return (env_value);
 // }
 
@@ -56,7 +56,7 @@
 // 		{
 // 			res = ft_substr(tmp, 0, i);
 // 			if (res == NULL)
-// 				ft_error("Malloc in substr", minishell);
+// 				ft_error("Malloc in substr");
 // 		}
 // 		// printf("env %s\n",env_value);
 // 		res = ft_strjoin_free(res, env_value);
@@ -65,7 +65,7 @@
 // 		{
 // 			if (env_value)
 // 				free(env_value);
-// 			ft_error("3Malloc in parser", minishell);
+// 			ft_error("3Malloc in parser");
 // 		}
 // 		tmp = tmp + i;
 // 		printf("nuevo env: %s\n", tmp);

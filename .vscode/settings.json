@@ -36,6 +36,7 @@
         "functional": "c",
         "utility": "c",
         "structures.h": "c",
-        "libft_extended.h": "c"
+        "libft_extended.h": "c",
+        "errno.h": "c"
     }
 }
