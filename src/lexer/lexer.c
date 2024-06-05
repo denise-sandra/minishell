@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:26:00 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/05 11:38:34 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	pre_tag(char c)
 		return (WHITE);
 	if (c == 34)
 		return (D_Q);
-	if (c == 36)
+	if (c == 36 || c == 61)
 		return (EXP);
 	if (c == 39)
 		return (S_Q);
@@ -51,6 +51,8 @@ static int	pre_tag(char c)
 		return (OUT);
 	if (c == 124)
 		return (PIPE);
+	if (c == 38 || c == 40 || c == 41)
+		return (ERROR);
 	return (CHAR);
 }
 
@@ -85,16 +87,22 @@ int	lexer(char *input, t_minishell *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
 	{
-		ft_error("Mallor error", mini);
+		ft_error("Malloc error", mini);
 		return (1);
+	}
+	t_pretok *print = mini->pretok;
+	while (print)
+	{
+		printf("before pretok val: %c  type: %i\n", print->c, print->type);
+		print = print->next;
 	}
 	parse_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
-	t_pretok *print = mini->pretok;
+	print = mini->pretok;
 	while (print)
 	{
-		printf("pretok val: %c  type: %i\n", print->c, print->type);
+		printf("after pretok val: %c  type: %i\n", print->c, print->type);
 		print = print->next;
 	}
 	return (0);

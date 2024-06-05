@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/05 01:04:22 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/05 11:46:13 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token	*tok_new_node(char *content)
 	new->value = ft_strdup(content);
 	if (!new->value)
 		return (NULL);
-	new->type = OTHER;
+	new->type = EMPTY;
 	new->sub_token = NULL;
 	new->next = NULL;
 	return (new);
