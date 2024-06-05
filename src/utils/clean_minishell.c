@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/04 17:36:48 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 03:19:47 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	clean_pretokens(t_minishell *minishell)
 {
 	t_pretok	*temp;
 
-	printf("entereing clean pretok\n");
+	// printf("entereing clean pretok\n");
 	if (minishell->pretok == NULL)
 		return ;
 	temp = minishell->pretok;
 	while (minishell->pretok)
 	{
-		printf("pretok val: %c\n", temp->c);
+		// printf("pretok val: %c\n", temp->c);
 		temp = minishell->pretok->next;
 		free(minishell->pretok);
 		minishell->pretok = temp;
@@ -61,7 +61,7 @@ void	clean_subtokens(t_token *sub_token)
 		{
 			free(temp->value);
 			temp->value = NULL;
-		}	
+		}
 		free(temp);
 	}
 }
@@ -79,12 +79,12 @@ void	clean_token_list(t_token *token)
 		{
 			free(token->value);
 			token->value = NULL;
-		}	
+		}
 		if (token->sub_token)
 		{
 			clean_subtokens(token->sub_token);
 			token->sub_token = NULL;
-		}	
+		}
 		free(token);
 		token = temp;
 	}
