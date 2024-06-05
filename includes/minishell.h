@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 13:26:41 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:16:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void		remove_spaces(t_minishell *mini);
 //parser2
 t_token		*tok_new_node(char *content);
 void		tok_addback(t_token **lst, t_token *new);
+int	     check_syntax_errors(t_minishell *mini);
+void	     parser(t_minishell *mini);
 // int			parser(t_minishell *mini);
 // void		expand_env(t_minishell *minishell, t_token **sub_token);
 // int			is_normal_command(t_minishell *minishell, t_token *token);
