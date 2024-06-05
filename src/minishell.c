@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:24:41 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:32:05 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static	void	minishell(t_minishell *mini)
 				break ;
 			}
 			clean_pretokens(mini);
-			// parser(mini);
+			// if (parser(mini) != 0)
+			// 	break ;
 			//execution(mini);
 		}
 		else if (*input && ft_strncmp(input, mini->builtin[6], 4) == 0)

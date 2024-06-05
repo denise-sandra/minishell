@@ -6,20 +6,35 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 12:18:07 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:33:32 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_errors(t_pretok *pretoken)
+static int	check_errors(t_minishell *mini)
 {
-	while (pretoken)
+	t_pretok	*list1;
+	t_pretok	*list2;
+
+	list1 = mini->pretok; 
+	list2 = mini->pretok;
+	while (list1)
 	{
-		if (pretoken->type == ERROR)
+		if (list1->type == ERROR)
 			return (1);
-		pretoken = pretoken->next;
+		list1 = list1->next;
 	}
+	// while (list2)
+	// {
+	// 	if (list2->type != PIPE)
+	// 		list2 = list2->next;
+	// 	else
+	// 	{
+	// 		if (list2->next && list2->next->type == PIPE)
+	// 			return (1);
+	// 	}
+	// }
 	return (0);
 }
 
@@ -110,7 +125,7 @@ int	lexer(char *input, t_minishell *mini)
 	parse_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
-	if (check_errors(mini->pretok) != 0)
+	if (check_errors(mini) != 0)
 	{
 		ft_error("Syntaxis error: invalid character", mini);
 		return (1);

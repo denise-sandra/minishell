@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 12:21:00 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:26:41 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void		remove_spaces(t_minishell *mini);
 //parser2
 t_token		*tok_new_node(char *content);
 void		tok_addback(t_token **lst, t_token *new);
-// void		parser(t_minishell *mini);
+// int			parser(t_minishell *mini);
+// void		expand_env(t_minishell *minishell, t_token **sub_token);
+// int			is_normal_command(t_minishell *minishell, t_token *token);
+// int			is_builtin(t_minishell *minishell, t_token *token);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_minishell *minishell);
@@ -64,19 +67,6 @@ int			is_env_value(t_minishell *minishell, char *value);
 int			env_name_len(char *token);
 char		*return_env_str(char *token);
 int			calcule_new_size(t_minishell *minishell, char *token, int old_size);
-
-//lexer
-// void		split_input(char *input, t_minishell *minishell);
-// int			*check_quotes(char *input);
-// int			is_normal_command(t_minishell *minishell, t_token *token);
-// int			is_builtin(t_minishell *minishell, t_token *token);
-
-//parser old
-// void		parser(t_minishell *minishell);
-// char		*erase_extra_quotes(char *str, int len);
-// void		expand_env(t_minishell *minishell, t_token **sub_token);
-// void		tag_token(t_minishell *minishell);
-// t_token		*sub_token_in_nodes(t_minishell *minishell, char *str);
 
 //exec
 void		execution(t_minishell *minishell);
