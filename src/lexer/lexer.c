@@ -6,11 +6,22 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 11:38:34 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/05 12:18:07 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	check_errors(t_pretok *pretoken)
+{
+	while (pretoken)
+	{
+		if (pretoken->type == ERROR)
+			return (1);
+		pretoken = pretoken->next;
+	}
+	return (0);
+}
 
 static void	tag_env_variables(t_pretok *start)
 {
@@ -90,19 +101,24 @@ int	lexer(char *input, t_minishell *mini)
 		ft_error("Malloc error", mini);
 		return (1);
 	}
-	t_pretok *print = mini->pretok;
-	while (print)
-	{
-		printf("before pretok val: %c  type: %i\n", print->c, print->type);
-		print = print->next;
-	}
+	// t_pretok *print = mini->pretok;
+	// while (print)
+	// {
+	// 	printf("before pretok val: %c  type: %i\n", print->c, print->type);
+	// 	print = print->next;
+	// }
 	parse_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
-	print = mini->pretok;
+	if (check_errors(mini->pretok) != 0)
+	{
+		ft_error("Syntaxis error: invalid character", mini);
+		return (1);
+	}
+	t_pretok *print = mini->pretok;
 	while (print)
 	{
-		printf("after pretok val: %c  type: %i\n", print->c, print->type);
+		printf("pretok val: %c  type: %i\n", print->c, print->type);
 		print = print->next;
 	}
 	return (0);
