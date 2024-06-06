@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/05 03:19:47 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/06 14:24:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ void	clean_pretokens(t_minishell *minishell)
 	minishell->pretok = NULL;
 }
 
-void	clean_subtokens(t_token *sub_token)
-{
-	t_token	*temp;
+// void	clean_subtokens(t_token *sub_token)
+// {
+// 	t_token	*temp;
 
-	while (sub_token)
-	{
-		temp = sub_token;
-		sub_token = sub_token->next;
-		if (temp->value)
-		{
-			free(temp->value);
-			temp->value = NULL;
-		}
-		free(temp);
-	}
-}
+// 	while (sub_token)
+// 	{
+// 		temp = sub_token;
+// 		sub_token = sub_token->next;
+// 		if (temp->value)
+// 		{
+// 			free(temp->value);
+// 			temp->value = NULL;
+// 		}
+// 		free(temp);
+// 	}
+// }
 
 void	clean_token_list(t_token *token)
 {
@@ -79,11 +79,6 @@ void	clean_token_list(t_token *token)
 		{
 			free(token->value);
 			token->value = NULL;
-		}
-		if (token->sub_token)
-		{
-			clean_subtokens(token->sub_token);
-			token->sub_token = NULL;
 		}
 		free(token);
 		token = temp;

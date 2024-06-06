@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 00:05:51 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:41:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ char	*get_env_value(t_lst_env *env, char *name)
 		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
 		{
 			dup = ft_strdup(temp->value);
+			free(name);
 			return (dup);
 		}
 		temp = temp->next;
 	}
+	free(name);
 	empty = malloc(sizeof(char));
 	if (empty == NULL)
 		return (NULL);
@@ -37,50 +39,50 @@ char	*get_env_value(t_lst_env *env, char *name)
 	return (empty);
 }
 
-char	*return_env_str(char *token)
-{
-	int		letters;
-	char	*env;
+// char	*return_env_str(char *token)
+// {
+// 	int		letters;
+// 	char	*env;
 
-	letters = env_name_len(token);
-	env = malloc((letters + 1) * sizeof(char));
-	if (env == NULL)
-		return (NULL);
-	ft_strlcpy(env, token + 1, letters + 1);
-	return (env);
-}
+// 	letters = env_name_len(token);
+// 	env = malloc((letters + 1) * sizeof(char));
+// 	if (env == NULL)
+// 		return (NULL);
+// 	ft_strlcpy(env, token + 1, letters + 1);
+// 	return (env);
+// }
 
-int	calcule_new_size(t_minishell *minishell, char *token, int old_size)
-{
-	int		new_size;
-	char	*name;
-	char	*value;
-	int		value_len;
+// int	calcule_new_size(t_minishell *minishell, char *token, int old_size)
+// {
+// 	int		new_size;
+// 	char	*name;
+// 	char	*value;
+// 	int		value_len;
 
-	old_size = old_size - (env_name_len(token) + 1);
-	name = return_env_str(token);
-	if (name == NULL)
-		ft_error("Malloc in return_env_value", minishell);
-	value = get_env_value(minishell->env, name);
-	if (value == NULL)
-		value_len = 0;
-	else
-		value_len = ft_strlen(value);
-	new_size = old_size + value_len;
-	free(name);
-	return (new_size);
-}
+// 	old_size = old_size - (env_name_len(token) + 1);
+// 	name = return_env_str(token);
+// 	if (name == NULL)
+// 		ft_error("Malloc in return_env_value", minishell);
+// 	value = get_env_value(minishell->env, name);
+// 	if (value == NULL)
+// 		value_len = 0;
+// 	else
+// 		value_len = ft_strlen(value);
+// 	new_size = old_size + value_len;
+// 	free(name);
+// 	return (new_size);
+// }
 
-int	env_name_len(char *token)
-{
-	int	i;
+// int	env_name_len(char *token)
+// {
+// 	int	i;
 
-	i = 1;
-	while (token[i] && token[i] != 32 && token[i] != 34 \
-			&& token[i] != 39 && token[i] != '$')
-		i++;
-	return (i - 1);
-}
+// 	i = 1;
+// 	while (token[i] && token[i] != 32 && token[i] != 34 \
+// 			&& token[i] != 39 && token[i] != '$')
+// 		i++;
+// 	return (i - 1);
+// }
 
 int	is_env_value(t_minishell *minishell, char *value)
 {

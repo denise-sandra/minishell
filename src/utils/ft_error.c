@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/05 00:22:59 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:34:01 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ void	ft_error(char *msg, t_minishell *minishell)
 		clean_token_list(minishell->token);
 }
 
-// void	ft_error(char *msg, t_minishell *minishell)
-// {
-// 	write(2, msg, ft_strlen(msg));
-// 	write(2, "\n", 1);
-// }
+void check_malloc_error(t_minishell *mini, void *element, char *msg, int e)
+{
+     if (element == NULL)
+	{
+		ft_error(msg, mini);
+		if (e > 0)
+			exit(e);
+	}
+     return ; 
+}

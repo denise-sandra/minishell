@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 15:20:43 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:50:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static t_minishell	*init_minishell(char **envp)
 {
-	t_minishell	*minishell;
+	t_minishell	*mini;
 
-	minishell = malloc(sizeof(t_minishell));
-	if (minishell == NULL)
+	mini = malloc(sizeof(t_minishell));
+	if (mini == NULL)
 	{
-		ft_error("Malloc for minishell structure", minishell);
+		ft_error("Malloc for minishell structure", mini);
 		exit(EXIT_FAILURE);
 	}
-	ft_bzero(minishell, sizeof(t_minishell));
-	minishell->env = fill_env_struct(envp, minishell);
-	minishell->builtin[0] = "echo";
-	minishell->builtin[1] = "cd";
-	minishell->builtin[2] = "pwd";
-	minishell->builtin[3] = "export";
-	minishell->builtin[4] = "unset";
-	minishell->builtin[5] = "env";
-	minishell->builtin[6] = "exit";
-	return (minishell);
+	ft_bzero(mini, sizeof(t_minishell));
+	mini->env = fill_env_struct(envp, mini);
+	mini->builtin[0] = "echo";
+	mini->builtin[1] = "cd";
+	mini->builtin[2] = "pwd";
+	mini->builtin[3] = "export";
+	mini->builtin[4] = "unset";
+	mini->builtin[5] = "env";
+	mini->builtin[6] = "exit";
+	return (mini);
 }
 
 static	void	minishell(t_minishell *mini)
@@ -52,6 +52,12 @@ static	void	minishell(t_minishell *mini)
 				break ;
 			}
 			parser(mini);
+			t_token *tmp = mini->token;
+			while (tmp)
+			{
+				printf("%s\n", tmp->value);
+				tmp = tmp->next;
+			}
 			//execution(mini);
 		}
 		else if (*input && ft_strncmp(input, mini->builtin[6], 4) == 0)

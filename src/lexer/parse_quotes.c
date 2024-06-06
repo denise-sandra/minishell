@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:26:25 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:33:58 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	tag_inside_quotes(t_pretok *start, t_type quote_type)
 	current = start->next;
 	while (current && current->type != quote_type)
 	{
-		// printf("before quote_type: %i  current type: %i\n", quote_type, current->type);
 		if (quote_type == D_Q && current->type == EXP)
 		{
 			current = current->next;

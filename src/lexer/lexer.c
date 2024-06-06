@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 15:11:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:56:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	pre_tag(char c)
 		return (OUT);
 	if (c == 124)
 		return (PIPE);
-	if (c == 38 || c == 40 || c == 41)
+	if (c == 38 || c == 40 || c == 41 || c == 59 || c == 92)
 		return (ERROR);
 	return (CHAR);
 }
@@ -104,12 +104,6 @@ int	lexer(char *input, t_minishell *mini)
 		ft_error("Malloc error", mini);
 		return (1);
 	}
-	// t_pretok *print = mini->pretok;
-	// while (print)
-	// {
-	// 	printf("before pretok val: %c  type: %i\n", print->c, print->type);
-	// 	print = print->next;
-	// }
 	parse_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
