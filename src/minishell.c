@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 13:44:19 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/07 13:52:39 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static	void	minishell(t_minishell *mini)
 		if (*input && ft_strncmp(input, mini->builtin[6], 4) != 0)
 		{
 			add_history(input);
-			if (lexer(input, mini) != 0)
+			if (lexer(input, mini) == 0)
 			{
 				parser(mini);
 				t_token *tmp = mini->token;
@@ -70,6 +70,7 @@ static	void	minishell(t_minishell *mini)
 	}
 }
 
+// trate con esto y hace segfault. deberia decir que las comillas no estan cerradas: ""`" cat" << pepeloco
 int	main(int argc, char **argv, char **envp)
 {
 	t_minishell	*mini;
