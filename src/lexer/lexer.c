@@ -6,13 +6,13 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 13:33:32 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:45:50 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_errors(t_minishell *mini)
+static int	check_basic_errors(t_minishell *mini)
 {
 	t_pretok	*list1;
 	t_pretok	*list2;
@@ -77,7 +77,7 @@ static int	pre_tag(char c)
 		return (OUT);
 	if (c == 124)
 		return (PIPE);
-	if (c == 38 || c == 40 || c == 41)
+	if (c == 38 || c == 40 || c == 41 || c == 59 || c == 92)
 		return (ERROR);
 	return (CHAR);
 }
@@ -109,12 +109,12 @@ static int	create_pretokens_list(char *input, t_minishell *mini)
 	return (0);
 }
 
-int	lexer(char *input, t_minishell *mini)
+void	lexer(char *input, t_minishell *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
 	{
-		ft_error("Malloc error", mini);
-		return (1);
+		ft_error("Memory allocation error", mini);
+		return ;
 	}
 	// t_pretok *print = mini->pretok;
 	// while (print)
@@ -125,10 +125,10 @@ int	lexer(char *input, t_minishell *mini)
 	parse_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
-	if (check_errors(mini) != 0)
+	if (check_basic_errors(mini) != 0)
 	{
-		ft_error("Syntaxis error: invalid character", mini);
-		return (1);
+		ft_error("Syntaxis error: special character not supported", mini);
+		return ;
 	}
 	t_pretok *print = mini->pretok;
 	while (print)
@@ -136,5 +136,4 @@ int	lexer(char *input, t_minishell *mini)
 		printf("pretok val: %c  type: %i\n", print->c, print->type);
 		print = print->next;
 	}
-	return (0);
 }

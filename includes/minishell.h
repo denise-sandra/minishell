@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 13:26:41 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:38:07 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,13 @@ t_lst_env	*ft_lstlast_env(t_lst_env *lst);
 void		ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
 
 //lexer
-int			lexer(char *input, t_minishell *mini);
+void			lexer(char *input, t_minishell *mini);
 void		parse_quotes(t_minishell *mini, t_pretok *close_quote);
 void		remove_spaces(t_minishell *mini);
 
 //parser2
 t_token		*tok_new_node(char *content);
 void		tok_addback(t_token **lst, t_token *new);
-// int			parser(t_minishell *mini);
-// void		expand_env(t_minishell *minishell, t_token **sub_token);
-// int			is_normal_command(t_minishell *minishell, t_token *token);
-// int			is_builtin(t_minishell *minishell, t_token *token);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_minishell *minishell);

@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 13:32:05 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:23:44 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ static	void	minishell(t_minishell *mini)
 		if (*input && ft_strncmp(input, mini->builtin[6], 4) != 0)
 		{
 			add_history(input);
-			if (lexer(input, mini) != 0)
-			{
-				free(input);
-				break ;
-			}
+			lexer(input, mini);
+			// if (lexer(input, mini) != 0)
+			// {
+			// 	free(input);
+			// 	break ;
+			// }
 			clean_pretokens(mini);
 			// if (parser(mini) != 0)
 			// 	break ;
