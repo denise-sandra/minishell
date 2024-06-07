@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 15:50:32 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/07 13:40:58 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static	void	minishell(t_minishell *mini)
 			if (lexer(input, mini) != 0)
 			{
 				free(input);
-				break ;
+				break ; // no hay que hqcer breqk porque tiene que volver al prompt
 			}
 			parser(mini);
 			t_token *tmp = mini->token;
