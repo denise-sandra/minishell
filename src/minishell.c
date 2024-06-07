@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 13:40:58 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/07 13:44:19 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,15 @@ static	void	minishell(t_minishell *mini)
 			add_history(input);
 			if (lexer(input, mini) != 0)
 			{
-				free(input);
-				break ; // no hay que hqcer breqk porque tiene que volver al prompt
-			}
-			parser(mini);
-			t_token *tmp = mini->token;
-			while (tmp)
-			{
-				printf("%s\n", tmp->value);
-				tmp = tmp->next;
-			}
-			//execution(mini);
+				parser(mini);
+				t_token *tmp = mini->token;
+				while (tmp)
+				{
+					printf("%s\n", tmp->value);
+					tmp = tmp->next;
+				}
+				//execution(mini);
+			}	
 		}
 		else if (*input && ft_strncmp(input, mini->builtin[6], 4) == 0)
 		{
@@ -66,7 +64,6 @@ static	void	minishell(t_minishell *mini)
 			free(input);
 			break ;
 		}
-		// clean_pretokens(mini->pretok);
 		clean_token_list(mini->token);
 		mini->token = NULL;
 		free(input);
