@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 17:52:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:36:19 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void		parse_quotes(t_minishell *mini, t_pretok *close_quote);
 void		remove_spaces(t_minishell *mini);
 
 //parser2
-t_token	*tok_new_node(char *content, int type);
+t_token	*tok_new_node(char *content, t_type type, t_type prev);
 void		tok_addback(t_token **lst, t_token *new);
 int	     check_syntax_errors(t_minishell *mini);
 void	     parser(t_minishell *mini);
 char 	*ft_strjoin_char(char *s, char c);
 void      check_malloc_error(t_minishell *mini, void *element, char *msg, int exit);
-t_pretok	*type_join(t_minishell *mini, t_pretok *lexer);
-t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer);
+t_pretok	*type_join(t_minishell *mini, t_pretok *lexer, t_type prev);
+t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer, t_type prev);
 void      tag_token(t_minishell *minishell);
 // int			parser(t_minishell *mini);
 // void		expand_env(t_minishell *minishell, t_token **sub_token);

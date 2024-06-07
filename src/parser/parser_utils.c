@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 17:51:55 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:10:15 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static char	*replace_env_value(t_minishell *mini, char *env, char *s)
 	return (s);
 }
 
-static void	create_node_txt(t_minishell *mini, char *s)
+static void	create_node_txt(t_minishell *mini, char *s, t_type prev)
 {
 	t_token	*new_node;
 
-	new_node = tok_new_node(s, TEXT);
+	new_node = tok_new_node(s, TEXT, prev);
 	free(s);
 	check_malloc_error(mini, new_node, "Malloc error", -1);
 	tok_addback(&mini->token, new_node);
 }
 
-t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer)
+t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer, t_type prev)
 {
 	char	*s;
 	char	*env;
@@ -56,11 +56,11 @@ t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer)
 			lexer = lexer->next;
 		}
 	}
-	create_node_txt(mini, s);
+	create_node_txt(mini, s, prev);
 	return (lexer);
 }
 
-t_pretok	*type_join(t_minishell *mini, t_pretok *lexer)
+t_pretok	*type_join(t_minishell *mini, t_pretok *lexer, t_type prev)
 {
 	char	*s;
 	char *env;
@@ -86,6 +86,6 @@ t_pretok	*type_join(t_minishell *mini, t_pretok *lexer)
 			lexer = lexer->next;
 		}
 	}
-	create_node_txt(mini, s);
+	create_node_txt(mini, s, prev);
 	return (lexer);
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/06 17:51:57 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:47:30 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*tok_new_node(char *content, int type)
+t_token	*tok_new_node(char *content, t_type type, t_type prev)
 {
 	t_token	*new;
 
@@ -23,6 +23,8 @@ t_token	*tok_new_node(char *content, int type)
 	if (!new->value)
 		return (NULL);
 	new->type = type;
+	new->prev = prev;
+	new->order = -1;
 	new->next = NULL;
 	return (new);
 }

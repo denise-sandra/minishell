@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 14:21:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/07 09:47:01 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_lst_env
 typedef enum e_type
 {
 	WHITE,
+	TEXT,
 	D_Q,
 	S_Q,
 	EXP,
@@ -38,6 +39,8 @@ typedef enum e_type
 	END,
 	HEREDOC,
 	APPEND,
+	IN_FILE,
+	OUT_FILE,
 	ARG,
 	ERROR
 }	t_type;
@@ -53,6 +56,8 @@ typedef struct s_token
 {
 	char			*value;
 	t_type			type;
+	t_type			prev;
+	int				order;
 	struct s_token	*next;
 }	t_token;
 
