@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/09 14:58:23 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 19:56:35 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,15 @@
 
 static int	is_double_redir(t_type type, t_pretok **cur)
 {
-	int	is_here;
-	int	is_app;
-
-	is_here = 0;
-	is_app = 0;
 	if (type == IN && (*cur)->next)
 	{
 		if ((*cur)->next->type == IN)
-		{
-			is_here = 1;
-			return (is_here);
-		}
+			return (1);
 	}
 	else if (type == OUT && (*cur)->next)
 	{
 		if ((*cur)->next->type == OUT)
-		{
-			is_app = 1;
-			return (is_app);
-		}
+			return (1);
 	}
 	return (0);
 }

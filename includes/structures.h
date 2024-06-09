@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 15:56:34 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 19:56:28 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,11 @@ typedef enum e_type
 	EMPTY,//lexer etiqueta hasta aca
 	TEXT,
 	HEREDOC,
-	END,
 	APPEND,
 	ENV,
-	COMMAND,
-	BUILTIN,
-	ARG
+	COMMAND,//no creo que sea necesario
+	BUILTIN,//no creo que sea necesario
+	ARG//no creo que sea necesario
 }	t_type;
 
 typedef struct s_pretok
