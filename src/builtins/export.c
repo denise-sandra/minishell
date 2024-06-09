@@ -6,13 +6,13 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:30:35 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:45:53 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_command(t_minishell *minishell)
+void	export_command(t_mini *minishell)
 {
 	int			res;
 	char		**split_new_envp;

@@ -37,6 +37,9 @@
         "utility": "c",
         "structures.h": "c",
         "libft_extended.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "thread": "c",
+        "ios": "c",
+        "string.h": "c"
     }
 }

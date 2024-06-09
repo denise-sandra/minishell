@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:26:25 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:03:11 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	tag_inside_quotes(t_pretok *start, t_type quote_type)
 	current = start->next;
 	while (current && current->type != quote_type)
 	{
-		// printf("before quote_type: %i  current type: %i\n", quote_type, current->type);
 		if (quote_type == D_Q && current->type == EXP)
 		{
 			current = current->next;
@@ -66,7 +65,7 @@ t_pretok	*find_matching_quote(t_pretok *start, t_type quote_type)
 	return (current);
 }
 
-void	parse_quotes(t_minishell *mini, t_pretok *close_quote)
+void	parse_quotes(t_mini *mini, t_pretok *close_quote)
 {
 	t_pretok	*current;
 

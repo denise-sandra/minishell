@@ -6,13 +6,13 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:25:23 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:47:18 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	remove_end_spaces(t_minishell *mini)
+static void	remove_end_spaces(t_mini *mini)
 {
 	t_pretok	*current;
 	t_pretok	*prev;
@@ -34,18 +34,6 @@ static void	remove_end_spaces(t_minishell *mini)
 	}
 }
 
-static void	remove_init_spaces(t_minishell *mini)
-{
-	t_pretok	*temp;
-
-	while (mini->pretok && mini->pretok->type == WHITE)
-	{
-		temp = mini->pretok;
-		mini->pretok = mini->pretok->next;
-		free(temp);
-	}
-}
-
 static void	remove_consec_spaces(t_pretok *current)
 {
 	t_pretok	*temp;
@@ -58,7 +46,19 @@ static void	remove_consec_spaces(t_pretok *current)
 	}
 }
 
-void	remove_spaces(t_minishell *mini)
+static void	remove_init_spaces(t_mini *mini)
+{
+	t_pretok	*temp;
+
+	while (mini->pretok && mini->pretok->type == WHITE)
+	{
+		temp = mini->pretok;
+		mini->pretok = mini->pretok->next;
+		free(temp);
+	}
+}
+
+void	remove_spaces(t_mini *mini)
 {
 	t_pretok	*current;
 	int			inside_quotes;

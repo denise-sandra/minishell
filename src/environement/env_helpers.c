@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 00:05:51 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:46:03 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*return_env_str(char *token)
 	return (env);
 }
 
-int	calcule_new_size(t_minishell *minishell, char *token, int old_size)
+int	calcule_new_size(t_mini *minishell, char *token, int old_size)
 {
 	int		new_size;
 	char	*name;
@@ -82,7 +82,7 @@ int	env_name_len(char *token)
 	return (i - 1);
 }
 
-int	is_env_value(t_minishell *minishell, char *value)
+int	is_env_value(t_mini *minishell, char *value)
 {
 	t_lst_env	*temp;
 	char		*str;

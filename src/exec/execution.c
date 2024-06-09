@@ -6,13 +6,13 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:28:11 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:46:28 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(t_minishell *minishell)
+void	execution(t_mini *minishell)
 {
 	t_token	*tmp;
 

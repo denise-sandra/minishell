@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 00:05:38 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:46:18 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
 	return ;
 }
 
-t_lst_env	*fill_env_struct(char **envp, t_minishell *minishell)
+t_lst_env	*fill_env_struct(char **envp, t_mini *minishell)
 {
 	char		**split_envp;
 	t_lst_env	*lst_env;

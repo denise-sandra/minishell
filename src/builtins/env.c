@@ -6,13 +6,13 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:32:20 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:45:17 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_command(t_minishell *minishell)
+void	env_command(t_mini *minishell)
 {
 	t_lst_env	*temp;
 

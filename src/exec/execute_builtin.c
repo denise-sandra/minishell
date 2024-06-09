@@ -6,13 +6,13 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:27:35 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:46:23 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_builtin(t_minishell *minishell, char *command)
+void	execute_builtin(t_mini *minishell, char *command)
 {
 	if (ft_strncmp(command, "export", 6) == 0)
 		export_command(minishell);

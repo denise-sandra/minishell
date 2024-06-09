@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 11:23:10 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/09 15:56:34 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_lst_env
 typedef enum e_type
 {
 	WHITE,
+	ERROR,
 	D_Q,
 	S_Q,
 	EXP,
@@ -31,15 +32,15 @@ typedef enum e_type
 	OPT,
 	PIPE,
 	CHAR,
-	EMPTY,
+	EMPTY,//lexer etiqueta hasta aca
+	TEXT,
+	HEREDOC,
+	END,
+	APPEND,
 	ENV,
 	COMMAND,
 	BUILTIN,
-	END,
-	HEREDOC,
-	APPEND,
-	ARG,
-	ERROR
+	ARG
 }	t_type;
 
 typedef struct s_pretok
@@ -53,7 +54,7 @@ typedef struct s_token
 {
 	char			*value;
 	t_type			type;
-	struct s_token	*sub_token;
+	char			**cmd_tab;
 	struct s_token	*next;
 }	t_token;
 
@@ -62,13 +63,13 @@ typedef struct s_minishell
 	t_lst_env	*env;
 	t_token		*token;
 	t_pretok	*pretok;
-	int			token_count;
-	int			last_exit_status;
+	int			exit_status;
+	int			error;
 	int			redirect_in;
 	int			redirect_out;
 	char		*builtin[7];
 	char		*input_file;
 	char		*output_file;
-}	t_minishell;
+}	t_mini;
 
 #endif
