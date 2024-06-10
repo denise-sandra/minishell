@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 13:52:39 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/10 14:01:54 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,7 @@ static	void	minishell(t_minishell *mini)
 			if (lexer(input, mini) == 0)
 			{
 				parser(mini);
-				t_token *tmp = mini->token;
-				while (tmp)
-				{
-					printf("%s\n", tmp->value);
-					tmp = tmp->next;
-				}
+				
 				//execution(mini);
 			}	
 		}
@@ -64,7 +59,7 @@ static	void	minishell(t_minishell *mini)
 			free(input);
 			break ;
 		}
-		clean_token_list(mini->token);
+		// clean_token_list(mini->token);
 		mini->token = NULL;
 		free(input);
 	}

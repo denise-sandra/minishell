@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 17:56:16 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:10:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ int	lexer(char *input, t_minishell *mini)
 		ft_error("Syntaxis error: invalid character", mini);
 		return (1);
 	}
-	t_pretok *print = mini->pretok;
+	/*t_pretok *print = mini->pretok;
 	while (print)
 	{
 		printf("pretok val: %c  type: %i\n", print->c, print->type);
 		print = print->next;
-	}
+	}*/
 	return (0);
 }

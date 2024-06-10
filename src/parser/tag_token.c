@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tag_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 10:02:38 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/10 13:16:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,17 @@
 static int	is_builtin(t_minishell *minishell, t_token *token)
 {
 	int	i;
-
+	size_t	len;
+	
+	len = ft_strlen(token->value);
 	i = 0;
 	while (i < 6)
 	{
-		if (ft_strncmp(token->value, minishell->builtin[i], \
-			ft_strlen(token->value)) == 0)
+		if (ft_strlen(minishell->builtin[i]) == len)
+		{
+			if (ft_strncmp(token->value, minishell->builtin[i], len) == 0)
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -56,21 +60,22 @@ static int	is_builtin(t_minishell *minishell, t_token *token)
 
 static void	tag_token_utils(t_minishell *minishell, t_token	*token)
 {	
-	if (token->type == HEREDOC)
+	if (token->next && token->type == HEREDOC)
 		token->next->type = END;	
-	if (token->type == OUT || token->type == APPEND)
+	else if (token->next && (token->type == OUT || token->type == APPEND))
 		token->next->type = OUT_FILE;
-	if (token->type == IN)
+	else if (token->next && token->type == IN)
 		token->next->type = IN_FILE;
-	else if ((token->order == 0 || token->prev == PIPE || token->prev == IN_FILE\
-		|| token->prev == OUT_FILE))
+	else if ((token->order == 0 && token->type == TEXT) || token->prev == PIPE || token->prev == IN_FILE)
 	{
 		if (is_builtin(minishell, token) == 1)
 			token->type = BUILTIN;
 		else
 			token->type = COMMAND;
-	}	
-	else
+	}
+	else if (token->value[0] == '-')
+		token->type = OPT;
+	else if (token->type == TEXT)
 		token->type = ARG;
 }
 

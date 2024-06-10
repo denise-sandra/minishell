@@ -11,7 +11,7 @@ NAME	:= minishell
 SRCS	:= ${addprefix src/, minishell.c \
 		${addprefix environement/, split_env_vars.c fill_env_struct.c env_helpers.c } \
 		${addprefix lexer/, lexer.c parse_quotes.c remove_spaces.c} \
-		${addprefix parser/, parser.c parser_utils.c token_list.c expand_env.c check_syntax_errors.c tag_token.c} \
+		${addprefix parser/, parser.c parser_utils.c token_list.c expand_env.c check_syntax_errors.c tag_token.c parse_cmd.c} \
 		${addprefix exec/, execution.c execute_builtin.c} \
 		${addprefix builtins/, export.c env.c exit.c pwd.c cd.c echo.c} \
 		${addprefix utils/, ft_error.c  clean_minishell.c ft_strjoin_free.c}}

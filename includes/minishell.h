@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 09:36:19 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/10 13:39:41 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void      check_malloc_error(t_minishell *mini, void *element, char *msg, int ex
 t_pretok	*type_join(t_minishell *mini, t_pretok *lexer, t_type prev);
 t_pretok	*opt_join(t_minishell *mini, t_pretok *lexer, t_type prev);
 void      tag_token(t_minishell *minishell);
+void	     parse_commands(t_minishell *mini);
 // int			parser(t_minishell *mini);
 // void		expand_env(t_minishell *minishell, t_token **sub_token);
 // int			is_normal_command(t_minishell *minishell, t_token *token);

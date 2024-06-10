@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/07 09:55:40 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/10 15:20:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,34 @@ static t_pretok	*simple_char(t_minishell *mini, char c, t_pretok *lexer, t_type 
 static t_pretok	*double_char(t_minishell *mini, t_pretok *lexer, t_type prev)
 {
 	t_token	*new_node;
+	t_type	type;
 	char	*s;
 
 	if (lexer->type == IN)
+	{
 		s = "<<";
+		type = HEREDOC;
+	}
+		
 	else
+	{
 		s = ">>";
-	new_node = tok_new_node(s, lexer->type, prev);
+		type = APPEND;
+	}	
+	new_node = tok_new_node(s, type, prev);
 	check_malloc_error(mini, new_node, "Malloc error", -1);
 	tok_addback(&mini->token, new_node);
 	return (lexer->next->next);
+}
+
+static	t_pretok	*empty_node(t_minishell *mini, t_pretok *lexer, t_type prev)
+{
+	t_token	*new_node;
+
+	new_node = tok_new_node("", lexer->type, prev);
+	check_malloc_error(mini, new_node, "Malloc error", -1);
+	tok_addback(&mini->token, new_node);
+	return (lexer->next);
 }
 
 void	parser(t_minishell *mini)
@@ -58,14 +76,25 @@ void	parser(t_minishell *mini)
 			lexer = double_char(mini, lexer, prev);
 		else if (lexer->type == IN || lexer->type == OUT || lexer->type == PIPE)
 			lexer =simple_char(mini, lexer->c, lexer, prev);
-		else if (lexer->type == CHAR || lexer->type == ENV || lexer->type == EMPTY)
+		else if (lexer->type == CHAR || lexer->type == ENV)
 			lexer = type_join(mini, lexer, prev);
 		else if (lexer->type == OPT)
 			lexer = opt_join(mini, lexer, prev);
+		else if (lexer->type == EMPTY)
+			lexer = empty_node(mini, lexer, prev);
 		else
 			lexer = lexer->next;
 		prev = current;
 	}
 	clean_pretokens(mini);
 	tag_token(mini);
+	parse_commands(mini);
+	t_token *tmp = mini->token;
+	while (tmp)
+	{
+		int i = 0;
+		while (tmp->tab[i])
+			printf("%s\n", tmp->tab[i++]);
+		tmp = tmp->next;
+	}
 }
