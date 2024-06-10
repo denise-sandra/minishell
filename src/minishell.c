@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 14:01:54 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:56:28 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static	void	minishell(t_minishell *mini)
 			free(input);
 			break ;
 		}
-		// clean_token_list(mini->token);
+		clean_token_list(mini->token);
 		mini->token = NULL;
 		free(input);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 15:20:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:41:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static t_pretok	*double_char(t_minishell *mini, t_pretok *lexer, t_type prev)
 		s = "<<";
 		type = HEREDOC;
 	}
-		
 	else
 	{
 		s = ">>";
@@ -75,7 +74,7 @@ void	parser(t_minishell *mini)
 			|| (lexer->type == OUT && lexer->next->type == OUT)))
 			lexer = double_char(mini, lexer, prev);
 		else if (lexer->type == IN || lexer->type == OUT || lexer->type == PIPE)
-			lexer =simple_char(mini, lexer->c, lexer, prev);
+			lexer = simple_char(mini, lexer->c, lexer, prev);
 		else if (lexer->type == CHAR || lexer->type == ENV)
 			lexer = type_join(mini, lexer, prev);
 		else if (lexer->type == OPT)
@@ -92,9 +91,15 @@ void	parser(t_minishell *mini)
 	t_token *tmp = mini->token;
 	while (tmp)
 	{
+		printf("tok: %s  type: %i\n", tmp->value, tmp->type);
 		int i = 0;
-		while (tmp->tab[i])
-			printf("%s\n", tmp->tab[i++]);
+		if (tmp->tab && tmp->tab[i])
+		{
+			while (tmp->tab[i])
+			{	printf("tab[%i]: %s\n", i, tmp->tab[i]);
+				i++;
+			}
+		}
 		tmp = tmp->next;
 	}
 }
