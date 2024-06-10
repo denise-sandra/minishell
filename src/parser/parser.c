@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 16:00:32 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:41:01 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,15 @@ void parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	parse_commands(mini); //para despues, tener en cuenta que esto puede hacer un return despues de un error
 	t_token *print = mini->token;
 	printf ("tok list: %p \n", mini->token);
+	while (print)
+	{
+		printf("token: %s  type: %i\n", print->value, print->type);
+		print = print->next;
+	}
+	parse_commands(mini); //para despues, tener en cuenta que esto puede hacer un return despues de un error
+	print = mini->token;
 	while (print)
 	{
 		printf("new: %s  type: %i\n", print->value, print->type);

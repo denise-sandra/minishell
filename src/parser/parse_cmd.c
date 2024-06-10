@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/09 16:50:09 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/10 15:39:43 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	handle_redirs_text(t_mini *mini, t_token **cur, t_token **prev)
 
 static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 {
-	int	i;
+	int		i;
+	t_token	*tmp;
 
 	i = 0;
 	while (*cur && ((*cur)->type == TEXT
@@ -43,7 +44,10 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		if (!new->cmd_tab[i])
 			return (ft_error("Memory allocation error", mini));
 		i++;
-		*cur = (*cur)->next;
+		tmp = (*cur)->next;
+		free((*cur)->value);
+		free(*(cur));
+		*cur = tmp;
 	}
 	new->cmd_tab[i] = NULL;
 }
