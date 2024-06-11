@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 15:52:50 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:56:26 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ typedef enum e_type
 	CHAR,
 	EMPTY,
 	STRING,
-	HEREDOC,
-	APPEND,
+	HERE,
+	APP,
 	ENV,
 	COMMAND,//no creo que sea necesario
 }	t_type;

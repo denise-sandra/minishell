@@ -6,13 +6,13 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 16:03:40 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:06:27 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
+static void	tokenize_quote(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 {
 	char	*str;
 
@@ -93,6 +93,32 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
+int	last_error_checks(t_mini *mini)
+{
+	t_token	*list;
+	t_token	*next;
+
+	list = mini->token;
+	while (list)
+	{
+		next = list->next;
+		if (list->value && list->value[0] == 92)
+			ft_error("Syntax error unsupported character `\\'", mini);
+		else if (list->type == PIPE && next && next->type != COMMAND)
+			ft_error("Syntax error near unexpected token `|'", mini);
+		else if (list->type == HERE && (!next || (next && next->value[0] == '-')
+				|| (next && next->type != STRING)))
+			ft_error("Syntax error near unexpected token `<<'", mini);
+		else if (list->type == APP && (!next || (next && next->value[0] == '-')
+				|| (next && next->type != STRING)))
+			ft_error("Syntax error near unexpected token `>>'", mini);
+		if (mini->error)
+			return (1);
+		list = list->next;
+	}
+	return (0);
+}
+
 void	parser(t_mini *mini)
 {
 	t_pretok	*cur_pretok;
@@ -108,7 +134,7 @@ void	parser(t_mini *mini)
 		else if (cur_pretok->type == IN || cur_pretok->type == OUT)
 			tokenize_redirs(mini, &cur_pretok, &(mini->token));
 		else if (cur_pretok->type == D_Q || cur_pretok->type == S_Q)
-			tokenize_quotes(mini, &cur_pretok, &(mini->token), cur_pretok->type);
+			tokenize_quote(mini, &cur_pretok, &(mini->token), cur_pretok->type);
 		else
 			cur_pretok = cur_pretok->next;
 		if (mini->error != 0)
@@ -139,5 +165,5 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
-	// check_syntax_erros(mini);
+	last_error_checks(mini);
 }

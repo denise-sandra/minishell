@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 15:42:42 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:46:24 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,8 @@ static	void	minishell(t_mini *mini)
 			add_history(input);
 			lexer(input, mini);
 			parser(mini);
-			// t_token *tmp;
-			// while (tmp)
-			// {
-				
-			// }
-			//execution(mini);
+			if (!mini->error)
+				execution(mini);
 		}
 		else if (*input && ft_strncmp(input, "exit", 4) == 0)
 		{
@@ -55,7 +51,7 @@ static	void	minishell(t_mini *mini)
 			free(input);
 			break ;
 		}
-		clean_token_list(&(mini->token)); //temporal para no tener leaks: esto va en execution()
+		clean_token_list(&(mini->token));
 		mini->token = NULL;
 		free(input);
 	}
@@ -75,4 +71,4 @@ int	main(int argc, char **argv, char **envp)
 	return (temp);
 }
 
-//valgrind --suppressions=s.supp ./minishell 
+//valgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all ./minishell 

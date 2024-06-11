@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 15:50:35 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:56:40 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	double_red(t_type type, t_token **list, t_pretok **cur, t_mini *ms)
 {
 	if (type == IN)
 	{
-		if (tok_list("<<", HEREDOC, list) != 0)
+		if (tok_list("<<", HERE, list) != 0)
 		{
 			ft_error("Memory allocation error", ms);
 			return (1);
@@ -24,7 +24,7 @@ static int	double_red(t_type type, t_token **list, t_pretok **cur, t_mini *ms)
 	}
 	else if (type == OUT)
 	{
-		if (tok_list(">>", APPEND, list) != 0)
+		if (tok_list(">>", APP, list) != 0)
 		{
 			ft_error("Memory allocation error", ms);
 			return (1);
@@ -59,7 +59,6 @@ void	tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list)
 		type = (*cur)->type;
 		str[0] = (*cur)->c;
 		str[1] = '\0';
-		// printf("Checking tok: %c, type: %u\n", (*cur)->c, (*cur)->type);
 		if ((type == IN || type == OUT) && !(*cur)->next)
 			return (ft_error("Syntax error unexpected token `newline'", mini));
 		if ((type == IN && (*cur)->next->type != IN)

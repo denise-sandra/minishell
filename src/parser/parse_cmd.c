@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 15:50:55 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 16:56:37 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	parse_commands(t_mini *mini)
 			if (mini->error)
 				return ;
 		}
-		else if (cur->type == HEREDOC || cur->type == IN
-			|| cur->type == OUT || cur->type == APPEND)
+		else if (cur->type == HERE || cur->type == IN
+			|| cur->type == OUT || cur->type == APP)
 			handle_redirs_next(mini, &cur, &prev);
 		else
 		{
