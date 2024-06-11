@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 21:01:39 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 22:03:26 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,11 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 
 	join = NULL;
 	prev = NULL;
-
 	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY
 			|| (*cur)->type == OPT || (*cur)->type == D_Q
 			|| (*cur)->type == S_Q))
 	{
 		tok_str_help(mini, cur, &join, &prev);
-
 		if (*cur)
 		{
 			prev = *cur;
