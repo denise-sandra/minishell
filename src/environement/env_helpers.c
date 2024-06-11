@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:42:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:26:16 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,30 @@ char	*get_env_name(char *token)
 	return (env);
 }
 
+int	env_name_len(char *token)
+{
+	int	i;
+
+	i = 1;
+	while (token[i] && token[i] != 32 && token[i] != 34 \
+			&& token[i] != 39 && token[i] != '$')
+		i++;
+	return (i - 1);
+}
+
+char	*expand_variable(t_mini *mini, char *temp_str, int *len)
+{
+	char	*env_name;
+	char	*env_value;
+
+	env_name = get_env_name(&temp_str[*len]);
+	env_value = get_env_value(mini->env, env_name);
+	free(env_name);
+	if (!env_value)
+		env_value = ft_strdup("");
+	*len += env_name_len(&temp_str[*len]) + 1;
+	return (env_value);
+}
 
 void	free_env(t_lst_env *env, char *name)
 {
@@ -72,55 +96,7 @@ void	free_env(t_lst_env *env, char *name)
 			prev->next = next;
 			return ;
 		}
-		prev = temp;	
+		prev = temp;
 		temp = temp->next;
 	}
 }
-
-// int	calcule_new_size(t_mini *minishell, char *token, int old_size)
-// {
-// 	int		new_size;
-// 	char	*name;
-// 	char	*value;
-// 	int		value_len;
-
-// 	old_size = old_size - (env_name_len(token) + 1);
-// 	name = get_env_name(token);
-// 	if (name == NULL)
-// 		ft_error("Malloc in return_env_value", minishell);
-// 	value = get_env_value(minishell->env, name);
-// 	if (value == NULL)
-// 		value_len = 0;
-// 	else
-// 		value_len = ft_strlen(value);
-// 	new_size = old_size + value_len;
-// 	free(name);
-// 	return (new_size);
-// }
-
-int	env_name_len(char *token)
-{
-	int	i;
-
-	i = 1;
-	while (token[i] && token[i] != 32 && token[i] != 34 \
-			&& token[i] != 39 && token[i] != '$')
-		i++;
-	return (i - 1);
-}
-
-// int	is_env_value(t_mini *minishell, char *value)
-// {
-// 	t_lst_env	*temp;
-// 	char		*str;
-
-// 	temp = minishell->env;
-// 	while (temp)
-// 	{
-// 		str = ft_strnstr(value, temp->value, ft_strlen(value));
-// 		if (str && ft_strncmp(str, temp->value, ft_strlen(str)) == 0)
-// 			return (1);
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-// }

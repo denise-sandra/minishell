@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:53:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:24:57 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		*ft_strjoin_free(char *s1, char *s2);
 t_lst_env	*ft_lstnew_env(char *name, char *value);
 t_lst_env	*ft_lstlast_env(t_lst_env *lst);
 void		ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
-int	     count_elements(t_mini *mini);
+int			count_elements(t_mini *mini);
 
 //lexer
 void		lexer(char *input, t_mini *mini);
@@ -69,12 +69,13 @@ char		*get_env_value(t_lst_env *env, char *name);
 int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
-void	free_env(t_lst_env *env, char *name);
+char		*expand_variable(t_mini *mini, char *temp_str, int *len);
+void		free_env(t_lst_env *env, char *name);
 
 
 //exec
 void		execution(t_mini *minishell);
-int		execute_builtin(t_mini *minishell, char *command);
+int			execute_builtin(t_mini *minishell, char *command);
 
 //builtin fucntions
 void		echo_command(t_mini *minishell);
