@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:57:17 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:42:42 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static	void	minishell(t_mini *mini)
 			// {
 				
 			// }
-			execution(mini);
+			//execution(mini);
 		}
 		else if (*input && ft_strncmp(input, "exit", 4) == 0)
 		{

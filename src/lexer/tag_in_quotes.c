@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tag_in_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 22:24:52 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:42:17 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,8 @@ static void	tag_inside_quotes(t_pretok *start, t_type quote_type)
 	current = start->next;
 	while (current && current->type != quote_type)
 	{
-		if (quote_type == D_Q && current->type == EXP)
-		{
-			current = current->next;
-			while (current && current->type == CHAR)
-			{
-				current->type = ENV;
-				current = current->next;
-			}
-		}
-		else
-		{
-			current->type = CHAR;
-			current = current->next;
-		}
+		current->type = CHAR;
+		current = current->next;
 	}
 }
 
