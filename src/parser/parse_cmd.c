@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 16:56:37 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 20:50:56 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int	count_cmd_tokens(t_token *cur)
 
 	tmp = cur;
 	i = 0;
-	while (tmp && (tmp->type == STRING || tmp->type == OPT || tmp->type == EMPTY))
+	while (tmp && (tmp->type == STRING
+			|| tmp->type == OPT || tmp->type == EMPTY))
 	{
 		i++;
 		tmp = tmp->next;
@@ -97,10 +98,8 @@ void	parse_commands(t_mini *mini)
 
 	cur = mini->token;
 	prev = NULL;
-	printf("----entered parse command ----\n");
 	while (cur)
 	{
-		printf("cur val: %s  type: %u\n", cur->value, cur->type);
 		if (cur->type == STRING || cur->type == OPT || cur->type == EMPTY)
 		{
 			create_cmd_tab(mini, &cur, &prev);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 17:24:57 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 21:40:52 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
+void		expand_inside_dq(t_mini *mini, char **str);
+void		expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
 void		parse_commands(t_mini *mini);
+int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
@@ -69,9 +72,7 @@ char		*get_env_value(t_lst_env *env, char *name);
 int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
-char		*expand_variable(t_mini *mini, char *temp_str, int *len);
 void		free_env(t_lst_env *env, char *name);
-
 
 //exec
 void		execution(t_mini *minishell);
