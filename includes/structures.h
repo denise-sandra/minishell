@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 15:37:41 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:52:50 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,12 @@ typedef enum e_type
 	OPT,
 	PIPE,
 	CHAR,
-	EMPTY,//lexer etiqueta hasta aca
+	EMPTY,
 	STRING,
 	HEREDOC,
 	APPEND,
 	ENV,
 	COMMAND,//no creo que sea necesario
-	BUILTIN,//no creo que sea necesario
-	ARG//no creo que sea necesario
 }	t_type;
 
 typedef struct s_pretok

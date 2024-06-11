@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:57:05 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:03:40 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 	}
 }
 
-static void	tokenize_pipes_opts(t_mini *mini, t_pretok **cur, t_token **list)
+static void	tokenize_pipes(t_mini *mini, t_pretok **cur, t_token **list)
 {
 	if ((*cur)->type == PIPE)
 	{
@@ -44,41 +44,46 @@ static void	tokenize_pipes_opts(t_mini *mini, t_pretok **cur, t_token **list)
 		if (tok_list("|", PIPE, list) != 0)
 			return (ft_error("Memory allocation error", mini));
 	}
-	else
-	{
-		if ((*cur)->next && (*cur)->next->type == OPT)
-		{
-			if (tok_list("--", OPT, list) != 0)
-				return (ft_error("Memory allocation error", mini));
-		}
-		else
-		{
-			if (tok_list("-", OPT, list) != 0)
-				return (ft_error("Memory allocation error", mini));
-		}
-	}
 	*cur = (*cur)->next;
 }
 
 static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 {
-	char	*join;
+	char		*join;
+	t_pretok	*prev;
 
 	join = NULL;
-	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY))
+	prev = NULL;
+	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY || (*cur)->type == OPT || (*cur)->type == D_Q || (*cur)->type == S_Q))
 	{
-		if ((*cur)->type == CHAR)
+		if ((*cur)->type == CHAR || (*cur)->type == OPT)
 		{
 			join = ft_strjoin_char(join, (*cur)->c);
 			if (!join)
 				return (ft_error("Memory allocation error", mini));
+		}
+		else if ((prev && prev->c == '=') && ((*cur)->type == D_Q || (*cur)->type == S_Q))
+		{
+			while ((*cur) && ((*cur)->type == CHAR || (*cur)->type == D_Q || (*cur)->type == S_Q))
+			{
+				printf("cur type in tok str: %u\n", (*cur)->type);
+				join = ft_strjoin_char(join, (*cur)->c);
+				if (!join)
+					return (ft_error("Memory allocation error", mini));
+				*cur = (*cur)->next;
+			}
+			printf("join: %s\n", join);
 		}
 		else if ((*cur)->type == EMPTY)
 		{
 			if (tok_list("", EMPTY, list) != 0)
 				return (ft_error("Memory allocation error", mini));
 		}
-		*cur = (*cur)->next;
+		if ((*cur))
+		{
+			prev = *cur;
+			*cur = (*cur)->next;
+		}
 	}
 	if (join)
 	{
@@ -95,10 +100,11 @@ void	parser(t_mini *mini)
 	cur_pretok = mini->pretok;
 	while (cur_pretok)
 	{
-		if (cur_pretok->type == CHAR || cur_pretok->type == EMPTY)
+		if (cur_pretok->type == CHAR || cur_pretok->type == EMPTY
+			|| cur_pretok->type == OPT)
 			tokenize_strings(mini, &cur_pretok, &(mini->token));
-		else if (cur_pretok->type == PIPE || cur_pretok->type == OPT)
-			tokenize_pipes_opts(mini, &cur_pretok, &(mini->token));
+		else if (cur_pretok->type == PIPE)
+			tokenize_pipes(mini, &cur_pretok, &(mini->token));
 		else if (cur_pretok->type == IN || cur_pretok->type == OUT)
 			tokenize_redirs(mini, &cur_pretok, &(mini->token));
 		else if (cur_pretok->type == D_Q || cur_pretok->type == S_Q)
@@ -109,9 +115,20 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	expand_env_vars(mini, mini->token);
-	parse_commands(mini);
 	t_token *print = mini->token;
+	while (print)
+	{
+		printf("tok: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
+	expand_env_vars(mini, mini->token);
+	parse_commands(mini); //para despues, tener en cuenta que esto puede hacer un return despues de un error
+	print = mini->token;
 	while (print)
 	{
 		printf("new: %s  type: %i\n", print->value, print->type);
