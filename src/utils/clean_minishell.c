@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/06 14:24:12 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:43:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	clean_token_list(t_token *token)
 	while (token)
 	{
 		temp = token->next;
+		if (token->tab)
+			free_tab(token->tab);
 		if (token->value)
 		{
 			free(token->value);
@@ -89,6 +91,11 @@ void	clean_minishell(t_minishell *minishell)
 {
 	if (minishell->env)
 		clean_env(minishell);
+	if (minishell->mod_env == 1)
+	{
+		printf("lala\n");
+		free_tab(minishell->env_char);
+	}
 	if (minishell->pretok)
 		clean_pretokens(minishell);
 	if (minishell->token)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 00:05:38 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 11:19:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,21 @@ void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
 		current ->next = new;
 	}
 	return ;
+}
+
+int	count_elements(t_minishell *mini)
+{
+	t_lst_env *tmp;
+	int		i;
+
+	i = 0;
+	tmp = mini->env;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }
 
 t_lst_env	*fill_env_struct(char **envp, t_minishell *minishell)

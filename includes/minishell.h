@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 16:31:59 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 13:08:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char		*ft_strjoin_free(char *s1, char *s2);
 t_lst_env	*ft_lstnew_env(char *name, char *value);
 t_lst_env	*ft_lstlast_env(t_lst_env *lst);
 void		ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
+int	     count_elements(t_minishell *mini);
+void	replace_env(t_lst_env *env, char *name);
 
 //lexer
 int			lexer(char *input, t_minishell *mini);

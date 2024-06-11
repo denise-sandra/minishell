@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 13:28:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:32:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,14 @@ typedef struct s_token
 typedef struct s_minishell
 {
 	t_lst_env	*env;
+	char	**env_char;
 	t_token		*token;
 	t_pretok	*pretok;
 	int			token_count;
 	int			last_exit_status;
 	int			redirect_in;
 	int			redirect_out;
+	int		mod_env;
 	char		*builtin[7];
 	char		*input_file;
 	char		*output_file;

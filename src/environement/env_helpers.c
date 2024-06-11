@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/06 15:41:24 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:16:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*get_env_value(t_lst_env *env, char *name)
 		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
 		{
 			dup = ft_strdup(temp->value);
-			free(name);
 			return (dup);
 		}
 		temp = temp->next;
@@ -39,18 +38,31 @@ char	*get_env_value(t_lst_env *env, char *name)
 	return (empty);
 }
 
-// char	*return_env_str(char *token)
-// {
-// 	int		letters;
-// 	char	*env;
+void	replace_env(t_lst_env *env, char *name)
+{
+	t_lst_env	*temp;
+	t_lst_env	*next;
+	t_lst_env	*prev;
 
-// 	letters = env_name_len(token);
-// 	env = malloc((letters + 1) * sizeof(char));
-// 	if (env == NULL)
-// 		return (NULL);
-// 	ft_strlcpy(env, token + 1, letters + 1);
-// 	return (env);
-// }
+	temp = env;
+	prev = NULL;
+	next = NULL;
+	while (temp)
+	{
+		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
+		{
+			free(temp->name);
+			free(temp->value);
+			if (temp->next)
+				next = temp->next;
+			free(temp);
+			prev->next = next;
+			return ;
+		}
+		prev = temp;	
+		temp = temp->next;
+	}
+}
 
 // int	calcule_new_size(t_minishell *minishell, char *token, int old_size)
 // {

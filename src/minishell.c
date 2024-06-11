@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 15:56:28 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 11:32:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_minishell	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_minishell));
 	mini->env = fill_env_struct(envp, mini);
+	mini->env_char = envp;
 	mini->builtin[0] = "echo";
 	mini->builtin[1] = "cd";
 	mini->builtin[2] = "pwd";
@@ -50,7 +51,7 @@ static	void	minishell(t_minishell *mini)
 			{
 				parser(mini);
 				
-				//execution(mini);
+				execution(mini);
 			}	
 		}
 		else if (*input && ft_strncmp(input, mini->builtin[6], 4) == 0)

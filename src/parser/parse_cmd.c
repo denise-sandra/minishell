@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/10 16:36:09 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 09:23:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	fill_cmd_table(t_token **cur, t_token *new, t_minishell *mini)
 	t_token	*tmp;
 
 	i = 0;
-	printf("table -- type: %u \n", (*cur)->type);
+	//printf("table -- type: %u \n", (*cur)->type);
 	while (*cur && ((*cur)->type == COMMAND || (*cur)->type == BUILTIN \
 		|| (*cur)->type == OPT || (*cur)->type == ARG || (*cur)->type == EMPTY))
 	{
@@ -26,7 +26,7 @@ void	fill_cmd_table(t_token **cur, t_token *new, t_minishell *mini)
 			new->tab[i] = ft_strdup("");
 		else
 			new->tab[i] = ft_strdup((*cur)->value);
-		check_malloc_error(mini, new->tab,"Malloc in parser",  -1);
+		check_malloc_error(mini, new->tab, "Malloc in parser", -1);
 		printf("parse: %s\n", new->tab[i]);
 		i++;
 		tmp = (*cur)->next;
@@ -45,10 +45,31 @@ static int	count_token(t_token	*cur)
 	while (cur)
 	{
 		if (cur->type == OPT || cur->type == ARG || cur->type == EMPTY)
-		i++;
+			i++;
 		cur = cur->next;
 	}
 	return (i);
+}
+
+static t_token	*create_node(t_token *cur, t_token	*prev)
+{
+	t_token	*new;
+
+	if (cur->type == BUILTIN)
+	{
+		if (prev == NULL)
+			new = tok_new_node("builtin", BUILTIN, EMPTY);
+		else
+			new = tok_new_node("builtin", BUILTIN, prev->type);
+	}
+	else
+	{
+		if (prev == NULL)
+			new = tok_new_node("command", COMMAND, EMPTY);
+		else
+			new = tok_new_node("command", COMMAND, prev->type);
+	}
+	return (new);
 }
 
 void	parse_commands(t_minishell *mini)
@@ -59,27 +80,13 @@ void	parse_commands(t_minishell *mini)
 	int		i;
 
 	cur = mini->token;
-	printf("----entered parse command ----\n");
 	prev = NULL;
 	while (cur)
 	{
 		if (cur && (cur->type == COMMAND || cur->type == BUILTIN \
 			|| cur->type == OPT || cur->type == ARG || cur->type == EMPTY))
 		{
-			if (cur->type == BUILTIN)
-			{
-				if (prev == NULL)
-					new = tok_new_node("builtin", BUILTIN, EMPTY);
-				else
-					new = tok_new_node("builtin", BUILTIN, prev->type);
-			}
-			else
-			{
-				if (prev == NULL)
-					new = tok_new_node("command", COMMAND, EMPTY);
-				else
-					new = tok_new_node("command", COMMAND, prev->type);
-			}
+			new = create_node(cur, prev);
 			check_malloc_error(mini, new, "Malloc in parse_command", -1);
 			i = count_token(cur);
 			new->tab = malloc((i + 2) * sizeof (char*));

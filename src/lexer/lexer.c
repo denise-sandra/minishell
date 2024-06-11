@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 13:10:42 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:12:01 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	pre_tag(char c)
 		return (WHITE);
 	if (c == 34)
 		return (D_Q);
-	if (c == 36 || c == 61)
+	if (c == 36)
 		return (EXP);
 	if (c == 39)
 		return (S_Q);
@@ -112,11 +112,11 @@ int	lexer(char *input, t_minishell *mini)
 		ft_error("Syntaxis error: invalid character", mini);
 		return (1);
 	}
-	/*t_pretok *print = mini->pretok;
-	while (print)
-	{
-		printf("pretok val: %c  type: %i\n", print->c, print->type);
-		print = print->next;
-	}*/
-	return (0);
+	// t_pretok *print = mini->pretok;
+	// while (print)
+	// {
+	// 	printf("pretok val: %c  type: %i\n", print->c, print->type);
+	// 	print = print->next;
+	// }
+	 return (0);
 }
