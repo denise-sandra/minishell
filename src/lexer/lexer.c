@@ -3,38 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 13:33:32 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 00:12:23 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_errors(t_minishell *mini)
+static int	check_basic_errors(t_mini *mini)
 {
 	t_pretok	*list1;
-	t_pretok	*list2;
 
-	list1 = mini->pretok; 
-	list2 = mini->pretok;
+	list1 = mini->pretok;
 	while (list1)
 	{
 		if (list1->type == ERROR)
 			return (1);
 		list1 = list1->next;
 	}
-	// while (list2)
-	// {
-	// 	if (list2->type != PIPE)
-	// 		list2 = list2->next;
-	// 	else
-	// 	{
-	// 		if (list2->next && list2->next->type == PIPE)
-	// 			return (1);
-	// 	}
-	// }
 	return (0);
 }
 
@@ -65,8 +53,6 @@ static int	pre_tag(char c)
 		return (WHITE);
 	if (c == 34)
 		return (D_Q);
-	if (c == 36 || c == 61)
-		return (EXP);
 	if (c == 39)
 		return (S_Q);
 	if (c == 45)
@@ -77,12 +63,12 @@ static int	pre_tag(char c)
 		return (OUT);
 	if (c == 124)
 		return (PIPE);
-	if (c == 38 || c == 40 || c == 41)
+	if (c == 38 || c == 40 || c == 41 || c == 59 || c == 92)
 		return (ERROR);
 	return (CHAR);
 }
 
-static int	create_pretokens_list(char *input, t_minishell *mini)
+static int	create_pretokens_list(char *input, t_mini *mini)
 {
 	t_pretok	*current;
 	t_pretok	*new_node;
@@ -109,32 +95,25 @@ static int	create_pretokens_list(char *input, t_minishell *mini)
 	return (0);
 }
 
-int	lexer(char *input, t_minishell *mini)
+void	lexer(char *input, t_mini *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
 	{
-		ft_error("Malloc error", mini);
-		return (1);
+		ft_error("Memory allocation error", mini);
+		return ;
+	}
+	tag_in_quotes(mini, NULL);
+	tag_env_variables(mini->pretok);
+	remove_spaces(mini);
+	if (check_basic_errors(mini) != 0)
+	{
+		ft_error("Syntaxis error: special character not supported", mini);
+		return ;
 	}
 	// t_pretok *print = mini->pretok;
 	// while (print)
 	// {
-	// 	printf("before pretok val: %c  type: %i\n", print->c, print->type);
+	// 	printf("pretok val: %c  type: %i\n", print->c, print->type);
 	// 	print = print->next;
 	// }
-	parse_quotes(mini, NULL);
-	tag_env_variables(mini->pretok);
-	remove_spaces(mini);
-	if (check_errors(mini) != 0)
-	{
-		ft_error("Syntaxis error: invalid character", mini);
-		return (1);
-	}
-	t_pretok *print = mini->pretok;
-	while (print)
-	{
-		printf("pretok val: %c  type: %i\n", print->c, print->type);
-		print = print->next;
-	}
-	return (0);
 }

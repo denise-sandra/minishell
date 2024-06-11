@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/04 16:09:19 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/09 13:45:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	verify_spaces(t_minishell *minishell, char *input)
+static	int	verify_spaces(t_mini *minishell, char *input)
 {
 	int	i;
 
@@ -21,13 +21,13 @@ static	int	verify_spaces(t_minishell *minishell, char *input)
 		i++;
 	if (input[i] == '\0')
 	{
-		minishell->last_exit_status = 0;
+		minishell->exit_status = 0;
 		return (0);
 	}
 	return (i);
 }
 
-static void	is_arg_valid(t_minishell *minishell, char *exit_arg, int sign)
+static void	is_arg_valid(t_mini *minishell, char *exit_arg, int sign)
 {
 	long long	arg;
 	int			err;
@@ -36,16 +36,16 @@ static void	is_arg_valid(t_minishell *minishell, char *exit_arg, int sign)
 	arg = ft_atoll(exit_arg, &err) * sign;
 	if (err || arg < LLONG_MIN + 1 || arg > LLONG_MAX)
 	{
-		minishell->last_exit_status = 255;
+		minishell->exit_status = 255;
 		write(2, "Wrong arguments\n", 17);
 		return ;
 	}
 	if (arg < 0)
 		arg = 256 + (arg % 256);
-	minishell->last_exit_status = (arg % 256);
+	minishell->exit_status = (arg % 256);
 }
 
-static void	is_var_valid(t_minishell *minishell, char *var_name)
+static void	is_var_valid(t_mini *minishell, char *var_name)
 {
 	char	*var_value;
 	int		i;
@@ -56,7 +56,7 @@ static void	is_var_valid(t_minishell *minishell, char *var_name)
 	var_value = get_env_value(minishell->env, var_name);
 	if (var_value == NULL)
 	{
-		minishell->last_exit_status = 0;
+		minishell->exit_status = 0;
 		return ;
 	}
 	else
@@ -70,7 +70,7 @@ static void	is_var_valid(t_minishell *minishell, char *var_name)
 	}
 }
 
-void	exit_cmd(t_minishell *minishell, char *input)
+void	exit_cmd(t_mini *minishell, char *input)
 {
 	int	i;
 	int	sign;
@@ -92,7 +92,7 @@ void	exit_cmd(t_minishell *minishell, char *input)
 			return (is_arg_valid(minishell, input + i, sign));
 		else
 		{
-			minishell->last_exit_status = 255;
+			minishell->exit_status = 255;
 			write (2, "minishell: wrong argument\n", 27);
 			return ;
 		}
