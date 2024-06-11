@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 13:46:03 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 00:04:41 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_env_value(t_lst_env *env, char *name)
 	return (empty);
 }
 
-char	*return_env_str(char *token)
+char	*get_env_name(char *token)
 {
 	int		letters;
 	char	*env;
@@ -58,7 +58,7 @@ int	calcule_new_size(t_mini *minishell, char *token, int old_size)
 	int		value_len;
 
 	old_size = old_size - (env_name_len(token) + 1);
-	name = return_env_str(token);
+	name = get_env_name(token);
 	if (name == NULL)
 		ft_error("Malloc in return_env_value", minishell);
 	value = get_env_value(minishell->env, name);

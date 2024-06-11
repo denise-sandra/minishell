@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/10 15:39:43 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:33:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_redirs_text(t_mini *mini, t_token **cur, t_token **prev)
+static void	handle_redirs_next(t_mini *mini, t_token **cur, t_token **prev)
 {
 	if (*prev)
 		(*prev)->next = *cur;
@@ -20,7 +20,7 @@ static void	handle_redirs_text(t_mini *mini, t_token **cur, t_token **prev)
 		mini->token = *cur;
 	*prev = *cur;
 	*cur = (*cur)->next;
-	if (*cur && (*cur)->type == TEXT)
+	if (*cur && (*cur)->type == STRING)
 	{
 		(*prev)->next = *cur;
 		*prev = *cur;
@@ -34,7 +34,7 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 	t_token	*tmp;
 
 	i = 0;
-	while (*cur && ((*cur)->type == TEXT
+	while (*cur && ((*cur)->type == STRING
 			|| (*cur)->type == OPT || (*cur)->type == EMPTY))
 	{
 		if ((*cur)->type == EMPTY)
@@ -59,7 +59,7 @@ static int	count_cmd_tokens(t_token *cur)
 
 	tmp = cur;
 	i = 0;
-	while (tmp && (tmp->type == TEXT || tmp->type == OPT || tmp->type == EMPTY))
+	while (tmp && (tmp->type == STRING || tmp->type == OPT || tmp->type == EMPTY))
 	{
 		i++;
 		tmp = tmp->next;
@@ -101,7 +101,7 @@ void	parse_commands(t_mini *mini)
 	while (cur)
 	{
 		printf("cur val: %s  type: %u\n", cur->value, cur->type);
-		if (cur->type == TEXT || cur->type == OPT || cur->type == EMPTY)
+		if (cur->type == STRING || cur->type == OPT || cur->type == EMPTY)
 		{
 			create_cmd_tab(mini, &cur, &prev);
 			if (mini->error)
@@ -109,7 +109,7 @@ void	parse_commands(t_mini *mini)
 		}
 		else if (cur->type == HEREDOC || cur->type == IN
 			|| cur->type == OUT || cur->type == APPEND)
-			handle_redirs_text(mini, &cur, &prev);
+			handle_redirs_next(mini, &cur, &prev);
 		else
 		{
 			prev = cur;

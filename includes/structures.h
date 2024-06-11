@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 19:56:28 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/10 21:30:24 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_type
 	PIPE,
 	CHAR,
 	EMPTY,//lexer etiqueta hasta aca
-	TEXT,
+	STRING,
 	HEREDOC,
 	APPEND,
 	ENV,

@@ -40,6 +40,8 @@
         "errno.h": "c",
         "thread": "c",
         "ios": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "algorithm": "c",
+        "cmath": "c"
     }
 }

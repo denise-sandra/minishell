@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 13:46:40 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 00:12:23 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static int	pre_tag(char c)
 		return (WHITE);
 	if (c == 34)
 		return (D_Q);
-	if (c == 36 || c == 61)
-		return (EXP);
 	if (c == 39)
 		return (S_Q);
 	if (c == 45)
@@ -104,7 +102,7 @@ void	lexer(char *input, t_mini *mini)
 		ft_error("Memory allocation error", mini);
 		return ;
 	}
-	parse_quotes(mini, NULL);
+	tag_in_quotes(mini, NULL);
 	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
@@ -112,10 +110,10 @@ void	lexer(char *input, t_mini *mini)
 		ft_error("Syntaxis error: special character not supported", mini);
 		return ;
 	}
-	t_pretok *print = mini->pretok;
-	while (print)
-	{
-		printf("pretok val: %c  type: %i\n", print->c, print->type);
-		print = print->next;
-	}
+	// t_pretok *print = mini->pretok;
+	// while (print)
+	// {
+	// 	printf("pretok val: %c  type: %i\n", print->c, print->type);
+	// 	print = print->next;
+	// }
 }

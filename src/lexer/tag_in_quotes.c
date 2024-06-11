@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_quotes.c                                     :+:      :+:    :+:   */
+/*   tag_in_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 14:03:11 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/10 22:24:52 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_pretok	*find_matching_quote(t_pretok *start, t_type quote_type)
 	return (current);
 }
 
-void	parse_quotes(t_mini *mini, t_pretok *close_quote)
+void	tag_in_quotes(t_mini *mini, t_pretok *close_quote)
 {
 	t_pretok	*current;
 

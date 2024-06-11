@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 16:47:45 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 02:40:47 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void		ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new);
 
 //lexer
 void		lexer(char *input, t_mini *mini);
-void		parse_quotes(t_mini *mini, t_pretok *close_quote);
+void		tag_in_quotes(t_mini *mini, t_pretok *close_quote);
 void		remove_spaces(t_mini *mini);
 
 //parser2
 void		parser(t_mini *mini);
-void		parse_redirs(t_mini *mini, t_pretok **cur, t_token **list);
-// void		last_quote_pars(t_mini *mini, t_pretok **cur, t_token **list);
+void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
+void		expand_env_vars(t_mini *mini, t_token *token);
 void		parse_commands(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
@@ -67,7 +67,7 @@ t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);
 char		*get_env_value(t_lst_env *env, char *name);
 int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
-char		*return_env_str(char *token);
+char		*get_env_name(char *token);
 int			calcule_new_size(t_mini *minishell, char *token, int old_size);
 
 //exec
