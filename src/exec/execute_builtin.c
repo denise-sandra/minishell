@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 13:46:23 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:52:18 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_builtin(t_mini *minishell, char *command)
+int	execute_builtin(t_mini *minishell, char *command)
 {
 	if (ft_strncmp(command, "export", 6) == 0)
-		export_command(minishell);
+		return (export_command(minishell), 0);
 	else if (ft_strncmp(command, "env", 3) == 0)
-		env_command(minishell);
+		return (env_command(minishell), 0);
 	else if (ft_strncmp(command, "echo", 4) == 0)
-		echo_command(minishell);
+		return (echo_command(minishell), 0);
 	else
-		printf("special command not yet coded\n");
+		return (1);
 }

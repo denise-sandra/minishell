@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 21:30:24 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:48:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ typedef struct s_token
 typedef struct s_minishell
 {
 	t_lst_env	*env;
+	char		**env_char;
 	t_token		*token;
 	t_pretok	*pretok;
 	int			exit_status;
+	int			mod_env;
 	int			error;
 	int			redirect_in;
 	int			redirect_out;
-	char		*builtin[7];
 	char		*input_file;
 	char		*output_file;
 }	t_mini;

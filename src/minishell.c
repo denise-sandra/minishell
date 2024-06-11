@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 16:49:49 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:57:17 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(minishell, sizeof(t_mini));
 	minishell->env = fill_env_struct(envp, minishell);
-	minishell->builtin[0] = "echo";
-	minishell->builtin[1] = "cd";
-	minishell->builtin[2] = "pwd";
-	minishell->builtin[3] = "export";
-	minishell->builtin[4] = "unset";
-	minishell->builtin[5] = "env";
-	minishell->builtin[6] = "exit";
 	return (minishell);
 }
 
@@ -44,14 +37,19 @@ static	void	minishell(t_mini *mini)
 		input = readline("minishell$ ");
 		if (!input)
 			break ;
-		if (*input && ft_strncmp(input, mini->builtin[6], 4) != 0)
+		if (*input && ft_strncmp(input, "exit", 4) != 0)
 		{
 			add_history(input);
 			lexer(input, mini);
-			parser(mini);	
-			//execution(mini);
+			parser(mini);
+			// t_token *tmp;
+			// while (tmp)
+			// {
+				
+			// }
+			execution(mini);
 		}
-		else if (*input && ft_strncmp(input, mini->builtin[6], 4) == 0)
+		else if (*input && ft_strncmp(input, "exit", 4) == 0)
 		{
 			exit_cmd(mini, input + 4);
 			free(input);
