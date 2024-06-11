@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 17:06:27 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:18:16 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,16 @@ int	last_error_checks(t_mini *mini)
 	while (list)
 	{
 		next = list->next;
-		if (list->value && list->value[0] == 92)
+		if (list->value && list->value[0] == '\\')
 			ft_error("Syntax error unsupported character `\\'", mini);
 		else if (list->type == PIPE && next && next->type != COMMAND)
 			ft_error("Syntax error near unexpected token `|'", mini);
 		else if (list->type == HERE && (!next || (next && next->value[0] == '-')
 				|| (next && next->type != STRING)))
-			ft_error("Syntax error near unexpected token `<<'", mini);
+			ft_error("Syntax error near token `<<'", mini);
 		else if (list->type == APP && (!next || (next && next->value[0] == '-')
 				|| (next && next->type != STRING)))
-			ft_error("Syntax error near unexpected token `>>'", mini);
+			ft_error("Syntax error near token `>>'", mini);
 		if (mini->error)
 			return (1);
 		list = list->next;
