@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:54:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/11 21:59:23 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ static char	*join_path(t_mini *mini, char *cmd, char *path)
 	free(joint_a);
 	return (joint_b);
 }
+
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
-	char		**paths;
-	char		*path_with_token;
+	char	**paths;
+	char	*path_with_token;
 	int		i;
 
 	tmp = mini->token;
@@ -52,7 +53,7 @@ void	execution(t_mini *mini)
 	{
 		paths = pars_path(mini);
 		if (paths == NULL)
-			ft_error("Malloc in exectution", mini);
+			return (ft_error("Malloc in exectution", mini));
 		i = 0;
 		while (paths[i])
 		{
@@ -60,8 +61,8 @@ void	execution(t_mini *mini)
 			if (access(path_with_token, X_OK) == 0)
 			{
 				if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
-					ft_error("execve Error", mini);
-			}		
+					return (ft_error("execve Error", mini));
+			}
 			free(path_with_token);
 			i++;
 		}
