@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/09 16:49:43 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:19:47 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,21 @@ void	ft_error(char *msg, t_mini *minishell)
 		clean_pretokens(minishell);
 	if (minishell->token)
 		clean_token_list(&(minishell->token));
-		// clean_token_list(minishell);
+	if (minishell->fd_in)
+	{
+		free(minishell->fd_in);
+		minishell->fd_in = NULL;
+	}
+	if (minishell->fd_out)
+	{
+		free(minishell->fd_out);
+		minishell->fd_out = NULL;
+	}
+	if (minishell->pid)
+	{
+		free(minishell->pid);
+		minishell->pid = NULL;
+	}
 	minishell->error = 1;
 }
 
