@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 00:12:23 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/11 15:48:36 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,6 @@ static int	check_basic_errors(t_mini *mini)
 		list1 = list1->next;
 	}
 	return (0);
-}
-
-static void	tag_env_variables(t_pretok *start)
-{
-	t_pretok	*current;
-
-	current = start;
-	while (current)
-	{
-		if (current->type == EXP)
-		{
-			current = current->next;
-			while (current && current->type == CHAR)
-			{
-				current->type = ENV;
-				current = current->next;
-			}
-		}
-		else
-			current = current->next;
-	}
 }
 
 static int	pre_tag(char c)
@@ -103,7 +82,6 @@ void	lexer(char *input, t_mini *mini)
 		return ;
 	}
 	tag_in_quotes(mini, NULL);
-	tag_env_variables(mini->pretok);
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
 	{

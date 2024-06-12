@@ -42,6 +42,7 @@
         "ios": "c",
         "string.h": "c",
         "algorithm": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "compare": "c"
     }
 }

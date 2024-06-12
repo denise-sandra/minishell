@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:57:05 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:13:48 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 	}
 }
 
-static void	tokenize_pipes_opts(t_mini *mini, t_pretok **cur, t_token **list)
+static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 {
 	if ((*cur)->type == PIPE)
 	{
@@ -44,41 +44,53 @@ static void	tokenize_pipes_opts(t_mini *mini, t_pretok **cur, t_token **list)
 		if (tok_list("|", PIPE, list) != 0)
 			return (ft_error("Memory allocation error", mini));
 	}
-	else
+	else if ((*cur)->type == EMPTY)
 	{
-		if ((*cur)->next && (*cur)->next->type == OPT)
-		{
-			if (tok_list("--", OPT, list) != 0)
-				return (ft_error("Memory allocation error", mini));
-		}
-		else
-		{
-			if (tok_list("-", OPT, list) != 0)
-				return (ft_error("Memory allocation error", mini));
-		}
+		if (tok_list("", EMPTY, list) != 0)
+			return (ft_error("Memory allocation error", mini));
 	}
 	*cur = (*cur)->next;
 }
 
+static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
+{
+	if ((*cur)->type == CHAR || (*cur)->type == OPT)
+	{
+		*s = ft_strjoin_char(*s, (*cur)->c);
+		if (!(*s))
+			return (ft_error("Memory allocation error", ms));
+	}
+	else if ((*prev && (*prev)->c == '=') && ((*cur)->type == D_Q
+			|| (*cur)->type == S_Q))
+	{
+		while ((*cur) && ((*cur)->type == CHAR
+				|| (*cur)->type == D_Q || (*cur)->type == S_Q))
+		{
+			*s = ft_strjoin_char(*s, (*cur)->c);
+			if (!(*s))
+				return (ft_error("Memory allocation error", ms));
+			*cur = (*cur)->next;
+		}
+	}
+}
+
 static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 {
-	char	*join;
+	char		*join;
+	t_pretok	*prev;
 
 	join = NULL;
-	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY))
+	prev = NULL;
+	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY
+			|| (*cur)->type == OPT || (*cur)->type == D_Q
+			|| (*cur)->type == S_Q))
 	{
-		if ((*cur)->type == CHAR)
+		tok_str_help(mini, cur, &join, &prev);
+		if (*cur)
 		{
-			join = ft_strjoin_char(join, (*cur)->c);
-			if (!join)
-				return (ft_error("Memory allocation error", mini));
+			prev = *cur;
+			*cur = (*cur)->next;
 		}
-		else if ((*cur)->type == EMPTY)
-		{
-			if (tok_list("", EMPTY, list) != 0)
-				return (ft_error("Memory allocation error", mini));
-		}
-		*cur = (*cur)->next;
 	}
 	if (join)
 	{
@@ -90,27 +102,40 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 
 void	parser(t_mini *mini)
 {
-	t_pretok	*cur_pretok;
+	t_pretok	*pretok;
 
-	cur_pretok = mini->pretok;
-	while (cur_pretok)
+	pretok = mini->pretok;
+	while (pretok)
 	{
-		if (cur_pretok->type == CHAR || cur_pretok->type == EMPTY)
-			tokenize_strings(mini, &cur_pretok, &(mini->token));
-		else if (cur_pretok->type == PIPE || cur_pretok->type == OPT)
-			tokenize_pipes_opts(mini, &cur_pretok, &(mini->token));
-		else if (cur_pretok->type == IN || cur_pretok->type == OUT)
-			tokenize_redirs(mini, &cur_pretok, &(mini->token));
-		else if (cur_pretok->type == D_Q || cur_pretok->type == S_Q)
-			tokenize_quotes(mini, &cur_pretok, &(mini->token), cur_pretok->type);
+		if (pretok->type == CHAR || pretok->type == OPT)
+			tokenize_strings(mini, &pretok, &(mini->token));
+		else if (pretok->type == PIPE || pretok->type == EMPTY)
+			tokenize_pipes_n_empty(mini, &pretok, &(mini->token));
+		else if (pretok->type == IN || pretok->type == OUT)
+			tokenize_redirs(mini, &pretok, &(mini->token));
+		else if (pretok->type == D_Q || pretok->type == S_Q)
+			tokenize_quotes(mini, &pretok, &(mini->token), pretok->type);
 		else
-			cur_pretok = cur_pretok->next;
+			pretok = pretok->next;
 		if (mini->error != 0)
 			return ;
 	}
+	t_token * print2 = mini->token;
+	while (print2)
+	{
+		printf("1new: %s  type: %i\n", print2->value, print2->type);
+		print2 = print2->next;
+	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
+	t_token * print3 = mini->token;
+	while (print3)
+	{
+		printf("2new: %s  type: %i\n", print3->value, print3->type);
+		print3 = print3->next;
+	}
 	parse_commands(mini);
+	last_error_checks(mini);
 	t_token *print = mini->token;
 	while (print)
 	{
@@ -122,5 +147,4 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
-	// check_syntax_erros(mini);
 }

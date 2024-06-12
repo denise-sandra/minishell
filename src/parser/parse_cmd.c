@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/10 21:33:42 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 08:41:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int	count_cmd_tokens(t_token *cur)
 
 	tmp = cur;
 	i = 0;
-	while (tmp && (tmp->type == STRING || tmp->type == OPT || tmp->type == EMPTY))
+	while (tmp && (tmp->type == STRING
+			|| tmp->type == OPT || tmp->type == EMPTY))
 	{
 		i++;
 		tmp = tmp->next;
@@ -97,18 +98,16 @@ void	parse_commands(t_mini *mini)
 
 	cur = mini->token;
 	prev = NULL;
-	printf("----entered parse command ----\n");
 	while (cur)
 	{
-		printf("cur val: %s  type: %u\n", cur->value, cur->type);
 		if (cur->type == STRING || cur->type == OPT || cur->type == EMPTY)
 		{
 			create_cmd_tab(mini, &cur, &prev);
 			if (mini->error)
 				return ;
 		}
-		else if (cur->type == HEREDOC || cur->type == IN
-			|| cur->type == OUT || cur->type == APPEND)
+		else if (cur->type == HERE || cur->type == IN
+			|| cur->type == OUT || cur->type == APP)
 			handle_redirs_next(mini, &cur, &prev);
 		else
 		{

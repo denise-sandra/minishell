@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:48:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/12 09:31:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,17 @@ typedef enum e_type
 	ERROR,
 	D_Q,
 	S_Q,
-	EXP,
 	IN,
 	OUT,
 	OPT,
 	PIPE,
 	CHAR,
-	EMPTY,//lexer etiqueta hasta aca
+	EMPTY,
 	STRING,
-	HEREDOC,
-	APPEND,
+	HERE,
+	APP,
 	ENV,
 	COMMAND,//no creo que sea necesario
-	BUILTIN,//no creo que sea necesario
-	ARG//no creo que sea necesario
 }	t_type;
 
 typedef struct s_pretok
@@ -66,8 +63,8 @@ typedef struct s_minishell
 	int			exit_status;
 	int			mod_env;
 	int			error;
-	int			redirect_in;
-	int			redirect_out;
+	int			fd_in;
+	int			fd_out;
 	char		*input_file;
 	char		*output_file;
 }	t_mini;
