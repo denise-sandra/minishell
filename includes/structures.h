@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 16:56:26 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/12 09:31:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ typedef struct s_minishell
 	int			exit_status;
 	int			mod_env;
 	int			error;
-	int			redirect_in;
-	int			redirect_out;
+	int			fd_in;
+	int			fd_out;
 	char		*input_file;
 	char		*output_file;
 }	t_mini;

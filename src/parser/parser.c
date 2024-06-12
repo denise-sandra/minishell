@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 22:03:26 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 09:13:48 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,20 @@ void	parser(t_mini *mini)
 		if (mini->error != 0)
 			return ;
 	}
+	t_token * print2 = mini->token;
+	while (print2)
+	{
+		printf("1new: %s  type: %i\n", print2->value, print2->type);
+		print2 = print2->next;
+	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
+	t_token * print3 = mini->token;
+	while (print3)
+	{
+		printf("2new: %s  type: %i\n", print3->value, print3->type);
+		print3 = print3->next;
+	}
 	parse_commands(mini);
 	last_error_checks(mini);
 	t_token *print = mini->token;

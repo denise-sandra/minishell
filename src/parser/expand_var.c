@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 21:42:29 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 09:11:53 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,12 @@ void	expand_env_vars(t_mini *mini, t_token *list)
 			&& ft_strchr(cur->value, '$'))
 			expand_and_add(mini, cur, &new_list);
 		else
+		{
+			if (cur->type == D_Q || cur->type == S_Q)
+				cur->type = STRING;
 			tok_list(cur->value, cur->type, &new_list);
+		}
+			
 		free(cur->value);
 		free (cur);
 		cur = temp;
