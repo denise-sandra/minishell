@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/12 11:35:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:01:37 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void		free_env(t_lst_env *env, char *name);
 //exec
 void		execution(t_mini *minishell);
 int			execute_builtin(t_mini *minishell, char *command);
-void      init_fds(t_mini *mini);
+void		init_fds(t_mini *mini);
+void		fill_fd(t_mini *mini);
 
 //builtin fucntions
 void		echo_command(t_mini *minishell);

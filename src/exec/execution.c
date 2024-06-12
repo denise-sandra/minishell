@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/12 15:14:47 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:09:24 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	**pars_path(t_mini *mini)
 	char	**split_paths;
 
 	path = get_env_value(mini->env, "PATH");
-	check_malloc_error(mini, path, "Malloc in exectution",  -1);
+	check_malloc_error(mini, path, "Malloc in exectution", -1);
 	split_paths = ft_split(path, ':');
 	if (!split_paths)
 		return (NULL);
@@ -32,83 +32,16 @@ static char	*join_path(t_mini *mini, char *cmd, char *path)
 	char	*joint_b;
 
 	joint_a = ft_strjoin_char(path, '/');
-	check_malloc_error(mini, joint_a, "Malloc in exectution",  -1);
+	check_malloc_error(mini, joint_a, "Malloc in exectution", -1);
 	joint_b = ft_strjoin(joint_a, cmd);
-	check_malloc_error(mini, joint_b, "Malloc in exectution",  -1);
+	check_malloc_error(mini, joint_b, "Malloc in exectution", -1);
 	free(joint_a);
 	return (joint_b);
 }
 
-static int	process_line(t_mini *mini, char *line, char *eof,int i)
-{
-	size_t	line_len;
-	size_t	eof_len;
-
-	line_len = ft_strlen(line);
-	eof_len = ft_strlen(eof);
-	if (line_len > 0 && line[line_len - 1] == '\n')
-	{
-		line[line_len - 1] = '\0';
-		line--;
-	}
-	if (ft_strncmp(line, eof, eof_len) == 0 && line_len == eof_len)
-		return (free(line), 1);
-	line[line_len] = '\n';
-	line_len++;
-	write(mini->fd_in[i], line, line_len);
-	free(line);
-	return (0);
-}
-
-static int	get_infile(t_mini *mini, t_token *token, int i)
-{
-	int		is_eof;
-	char	*line;
-	char	*eof;
-	
-	is_eof = 0;
-	eof = NULL;
-	if (token->type == IN)
-	{
-		mini->fd_in[i] =  open(token->next->value, O_RDONLY);
-		if (mini->fd_in[i] < 0)
-			return (ft_error("Can't open infile", mini), 1);
-	}
-	else if (token->type == HERE)
-	{
-		eof = token->next->value;
-		while (is_eof == 0)
-		{
-			line = readline(STDIN_FILENO);
-			if (!line)
-				is_eof = 1;
-			else
-				is_eof = process_line(mini, line, eof, i);
-		}
-	}
-	return (0);
-}
-
-static int	get_outfile(t_mini *mini, t_token *token, int i)
-{
-	if (token->type == OUT)
-	{
-		mini->fd_out[i] =  open(token->next->value, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (mini->fd_out[i] < 0)
-			return (ft_error("Can't open outfile", mini), 1);
-	}
-	if (token->type == APP)
-	{
-		mini->fd_out[i] =  open(token->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if (mini->fd_out[i] < 0)
-			return (ft_error("Can't open outfile", mini), 1);
-	}
-	return (0);
-}
-
 static void	cmd_exec(t_mini *mini, t_token *tmp)
 {
-	int	i;
+	int		i;
 	char	**paths;
 	char	*path_with_token;
 
@@ -153,30 +86,11 @@ static void	ft_dup(t_mini *mini, int i)
 	}
 }
 
-static void	fill_fd(t_mini *mini)
-{
-	t_token	*tmp;
-	int		i;
-	
-	tmp = mini->token;
-	i = 0;
-	while (tmp)
-	{
-		if (tmp->type == PIPE)
-			i++;
-		if (get_infile(mini, tmp, i) != 0)
-			return ;
-		if (get_outfile(mini, tmp, i) != 0)
-			return ;
-		tmp = tmp->next;
-	}
-}
-
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
 	int		i;
-	
+
 	init_fds(mini);
 	fill_fd(mini);
 	i = 0;
@@ -187,7 +101,7 @@ void	execution(t_mini *mini)
 		{
 			mini->pid[i] = fork();
 			if (mini->pid[i] < 0)
-				return(ft_error("Fork error", mini));
+				return (ft_error("Fork error", mini));
 			if (mini->pid[i] == 0)
 			{
 				ft_dup(mini, i);
@@ -209,5 +123,4 @@ void	execution(t_mini *mini)
 			close(mini->fd_out[i]);
 		waitpid(mini->pid[i++], NULL, 0);
 	}
-		
 }
