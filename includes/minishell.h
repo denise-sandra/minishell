@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 21:40:52 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:35:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <limits.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
 
@@ -77,6 +78,7 @@ void		free_env(t_lst_env *env, char *name);
 //exec
 void		execution(t_mini *minishell);
 int			execute_builtin(t_mini *minishell, char *command);
+void      init_fds(t_mini *mini);
 
 //builtin fucntions
 void		echo_command(t_mini *minishell);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/09 16:50:04 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/12 15:21:57 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,20 @@ void	clean_minishell(t_mini *minishell)
 		clean_pretokens(minishell);
 	if (minishell->token)
 		clean_token_list(&(minishell->token));
-	if (minishell->output_file)
-		free(minishell->output_file);
-	if (minishell->input_file)
-		free(minishell->input_file);
+	if (minishell->fd_in)
+	{
+		free(minishell->fd_in);
+		minishell->fd_in = NULL;
+	}
+	if (minishell->fd_out)
+	{
+		free(minishell->fd_out);
+		minishell->fd_out = NULL;
+	}
+	if (minishell->pid)
+	{
+		free(minishell->pid);
+		minishell->pid = NULL;
+	}
 	free(minishell);
 }
