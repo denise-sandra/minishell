@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 20:52:44 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 21:41:11 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:29:51 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	last_error_checks(t_mini *mini)
 		next = list->next;
 		if (list->value && list->value[0] == '\\')
 			ft_error("Syntax error unsupported character `\\'", mini);
-		else if (list->type == PIPE && next && next->type != COMMAND)
+		else if ((list->type == PIPE && next) && (next->type != COMMAND && next->type != IN))
 			ft_error("Syntax error near unexpected token `|'", mini);
 		else if (list->type == HERE && (!next || (next && next->value[0] == '-')
 				|| (next && next->type != STRING)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 11:09:13 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/13 17:55:51 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum e_type
 	HERE,
 	APP,
 	ENV,
-	COMMAND,//no creo que sea necesario
+	COMMAND,
 }	t_type;
 
 typedef struct s_pretok
@@ -67,6 +67,7 @@ typedef struct s_minishell
 	int			*fd_in;
 	int			*fd_out;
 	int			(*tube)[2];
+	int			here_fd[2];
 	pid_t		*pid;
 	char		*input_file;
 	char		*output_file;

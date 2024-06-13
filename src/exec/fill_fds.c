@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_fds.c                                         :+:      :+:    :+:   */
+/*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 13:59:48 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/13 17:42:23 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	process_line(t_mini *mini, char *line, char *eof,int i)
+static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 {
 	size_t	line_len;
 	size_t	eof_len;
@@ -28,36 +28,48 @@ static int	process_line(t_mini *mini, char *line, char *eof,int i)
 		return (free(line), 1);
 	line[line_len] = '\n';
 	line_len++;
-	write(mini->fd_in[i], line, line_len);
+	write(hd_pipe[1], line, line_len);
 	free(line);
 	return (0);
 }
 
+static void	read_here_doc(t_mini *mini, char *eof, int i)
+{
+	char	*line;
+	int		is_eof;
+
+	if (pipe(mini->here_fd) < 0)
+		return (ft_error("Can't open infile", mini));
+	is_eof = 0;
+	while (is_eof == 0)
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			is_eof = 1;
+		else
+			is_eof = process_here_line(mini->here_fd, line, eof);
+	}
+	close(mini->here_fd[1]);
+	if (mini->fd_in && i < mini->cmd_count)
+		mini->fd_in[i] = mini->here_fd[0];
+	else
+		close(mini->here_fd[0]);
+}
+
+
 static int	get_infile(t_mini *mini, t_token *token, int i)
 {
-	int		is_eof;
-	char	*line;
-	char	*eof;
-	
-	is_eof = 0;
-	eof = NULL;
 	if (token->type == IN)
 	{
-		mini->fd_in[i] =  open(token->next->value, O_RDONLY);
+		mini->fd_in[i] = open(token->next->value, O_RDONLY);
 		if (mini->fd_in[i] < 0)
 			return (ft_error("Can't open infile", mini), 1);
 	}
 	else if (token->type == HERE)
 	{
-		eof = token->next->value;
-		while (is_eof == 0)
-		{
-			line = readline(STDIN_FILENO);
-			if (!line)
-				is_eof = 1;
-			else
-				is_eof = process_line(mini, line, eof, i);
-		}
+		read_here_doc(mini, token->next->value, i);
+		if (mini->error)
+			return (1);
 	}
 	return (0);
 }
@@ -66,24 +78,26 @@ static int	get_outfile(t_mini *mini, t_token *token, int i)
 {
 	if (token->type == OUT)
 	{
-		mini->fd_out[i] =  open(token->next->value, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		mini->fd_out[i] = open(token->next->value, O_CREAT
+				| O_RDWR | O_TRUNC, 0644);
 		if (mini->fd_out[i] < 0)
 			return (ft_error("Can't open outfile", mini), 1);
 	}
 	if (token->type == APP)
 	{
-		mini->fd_out[i] =  open(token->next->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+		mini->fd_out[i] = open(token->next->value, O_CREAT
+				| O_RDWR | O_APPEND, 0644);
 		if (mini->fd_out[i] < 0)
 			return (ft_error("Can't open outfile", mini), 1);
 	}
 	return (0);
 }
 
-int fill_fd(t_mini *mini)
+int	fill_fd(t_mini *mini)
 {
 	t_token	*tmp;
 	int		i;
-	
+
 	tmp = mini->token;
 	i = 0;
 	while (tmp)

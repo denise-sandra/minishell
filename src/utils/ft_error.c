@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/12 15:19:47 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:08:48 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	ft_error(char *msg, t_mini *minishell)
 	{
 		free(minishell->pid);
 		minishell->pid = NULL;
+	}
+	if (minishell->tube)
+	{
+		free(minishell->tube);
+		minishell->tube = NULL;
 	}
 	minishell->error = 1;
 }
