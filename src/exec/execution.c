@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 14:00:49 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/13 16:05:59 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ void	execution(t_mini *mini)
 				else
 					return (cmd_exec(mini, tmp));
 			}
+			if (i > 0)
+                close(mini->tube[i - 1][0]);
+			if ((i + 1) != mini->cmd_count)
+           		close(mini->tube[i][1]);
 			i++;
 		}
 		tmp = tmp->next;
