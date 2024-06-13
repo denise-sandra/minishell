@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/12 13:58:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:09:13 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_minishell
 	int			error;
 	int			*fd_in;
 	int			*fd_out;
-	//int			*fd[2];
+	int			(*tube)[2];
 	pid_t		*pid;
 	char		*input_file;
 	char		*output_file;
