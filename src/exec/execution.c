@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 17:40:57 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/13 20:30:57 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,15 @@ void	execution(t_mini *mini)
 			close(mini->fd_out[i]);
 		waitpid(mini->pid[i++], NULL, 0);
 	}
-		
+	//test
+	// int status;
+	// pid_t pid;
+
+	// while ((pid = wait(&status)) != -1)
+	// {
+	// 	if (WIFEXITED(status))
+	// 		printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
+	// 	else if (WIFSIGNALED(status))
+	// 		printf("Child %d killed by signal %d\n", pid, WTERMSIG(status));
+	// }
 }
