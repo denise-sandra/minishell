@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 20:30:45 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/14 10:10:16 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_dup(t_mini *mini, int i)
 {
 	if (ft_dup_in_out(mini, i) != 0)
 		return (1);
-	if (mini->cmd_count < 1 && ft_dup_tubes(mini, i) != 0)
+	if (mini->cmd_count != 1 && ft_dup_tubes(mini, i) != 0)
 		return (1);
 	return (0);
 }

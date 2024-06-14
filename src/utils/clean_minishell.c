@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/13 18:08:58 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/14 10:01:27 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	clean_token_list(t_token **list)
 
 void	clean_minishell(t_mini *minishell)
 {
-	int i;
+	//int i;
 
-	i = 0;
+	//i = 0;
 	if (minishell->env)
 		clean_env(minishell);
 	if (minishell->pretok)

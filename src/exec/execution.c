@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 20:30:57 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/14 10:12:24 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,23 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 	free(paths);
 }
 
+static void	close_fd_and_wait(t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->cmd_count)
+	{
+		//close(mini->tube[i][0]);
+       // close(mini->tube[i++][1]);
+		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
+			close(mini->fd_in[i]);
+		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
+			close(mini->fd_out[i]);
+		waitpid(mini->pid[i++], NULL, 0);
+	}
+}
+
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
@@ -94,22 +111,15 @@ void	execution(t_mini *mini)
 					return (cmd_exec(mini, tmp));
 			}
 			if (i > 0)
+            {
                 close(mini->tube[i - 1][0]);
-			if ((i + 1) != mini->cmd_count)
-           		close(mini->tube[i][1]);
+                close(mini->tube[i - 1][1]);
+            }
 			i++;
 		}
 		tmp = tmp->next;
 	}
-	i = 0;
-	while (i < mini->cmd_count)
-	{
-		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
-			close(mini->fd_in[i]);
-		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
-			close(mini->fd_out[i]);
-		waitpid(mini->pid[i++], NULL, 0);
-	}
+	close_fd_and_wait(mini);
 	//test
 	// int status;
 	// pid_t pid;
