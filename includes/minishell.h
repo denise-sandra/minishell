@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 14:20:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:49:26 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		clean_pretokens(t_mini *minishell);
 void		clean_token_list(t_token **list);
 void		clean_minishell(t_mini *minishell);
 char		*ft_strjoin_free(char *s1, char *s2);
-void	      clean_fd(t_mini *minishell);
+void		clean_fd(t_mini *minishell);
 
 //env
 t_lst_env	*ft_lstnew_env(char *name, char *value);
@@ -78,17 +78,18 @@ void		free_env(t_lst_env *env, char *name);
 
 //exec
 void		execution(t_mini *minishell);
-int			execute_builtin(t_mini *minishell, char *command, int i);
-int         init_fds(t_mini *mini);
-int	        ft_dup(t_mini *mini, int i);
-int         fill_fd(t_mini *mini);
+int			is_builtin(char *command);
+void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
+int			init_fds(t_mini *mini);
+int			ft_dup(t_mini *mini, int i);
+int			fill_fd(t_mini *mini);
 
 //builtin fucntions
-void		echo_command(t_mini *minishell, int i);
-void		export_command(t_mini *minishell, int i);
+void		echo_command(t_token *cur);
+void		export_command(t_mini *mini, t_token *cur);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *minishell, char *input);
-void      pwd_cmd(t_mini *mini);
-void      cd_cmd(t_mini *mini);
+void		pwd_cmd(t_mini *mini);
+void		cd_cmd(t_mini *mini);
 
 #endif

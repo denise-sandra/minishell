@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 14:41:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:47:51 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static char	*join_env(t_lst_env *env)
 {
-	char *name;
+	char	*name;
 	char	*value;
 	char	*joint_a;
 	char	*joint_b;
-	
+
 	name = ft_strdup(env->name);
 	value = ft_strdup(env->value);
 	if (name == NULL || value == NULL)
@@ -62,6 +62,7 @@ static char	**list_to_tab(t_mini *mini)
 static void	print_export(t_mini *mini)
 {
 	t_lst_env	*temp;
+
 	temp = mini->env;
 	while (temp)
 	{
@@ -92,31 +93,38 @@ static void	add_env(t_mini *mini, char *new_var)
 	mini->env_char = list_to_tab(mini);          //poner en exec
 }
 
-void	export_command(t_mini *mini, int i)
+void	export_command(t_mini *mini, t_token *cur)
 {
 	int			res;
 	char		*new_var;
-	t_token *tmp;
-	int j;
+	t_token		*tmp;
+	// int			j;
 
 	res = 0;
-	j = 0;
+	// j = 0;
 	tmp = mini->token;
-	while (i != 0 && tmp && j <= i)
-	{
-		tmp = tmp->next;
-		j++;
-	}
-	new_var = tmp->cmd_tab[1];
+	// while (i != 0 && tmp && j <= i)
+	// {
+	// 	tmp = tmp->next;
+	// 	j++;
+	// }
+	new_var = cur->cmd_tab[1];
 	if (new_var)
 		res = ft_strchr_int(new_var, '=');
 	else
 	{
 		print_export(mini);
-		return ;
+		// mini->exit_status = 0;
+		// exit (0);
 	}	
 	if (res > 0)
 		add_env(mini, new_var);
 	else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
+	{
 		printf("bash: export: `=': not a valid identifier\n");
+		// mini->exit_status = 1;
+		// exit (1);
+	}
+	// mini->exit_status = 0;
+	// exit (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:44:22 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 18:48:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	env_command(t_mini *minishell)
 		printf("%s=%s\n", temp->name, temp->value);
 		temp = temp->next;
 	}
+	// minishell->exit_status = 0;
+	// exit (0);
 }
 
 // static char	*join_env(t_lst_env *env)
