@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 13:53:20 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/17 09:51:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		clean_pretokens(t_mini *minishell);
 void		clean_token_list(t_token **list);
 void		clean_minishell(t_mini *minishell);
 char		*ft_strjoin_free(char *s1, char *s2);
+void	      clean_fd(t_mini *minishell);
 
 //env
 t_lst_env	*ft_lstnew_env(char *name, char *value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/14 16:32:50 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/17 09:47:36 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static void	close_fd_and_wait(t_mini *mini)
 			close(mini->fd_out[i]);
 		waitpid(mini->pid[i++], &status, 0);
 	}
-	
 }
 
 void	execution(t_mini *mini)
@@ -109,7 +108,8 @@ void	execution(t_mini *mini)
 				if (execute_builtin(mini, tmp->cmd_tab[0]) == 0)
 					return ;
 				else
-					return (cmd_exec(mini, tmp));
+					cmd_exec(mini, tmp);
+				//clean_minishell(mini);
 			}
 			if (i > 0)
             {

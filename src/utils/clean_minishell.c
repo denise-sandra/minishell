@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/14 10:01:27 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/17 10:22:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,8 @@ void	clean_token_list(t_token **list)
 	*list = NULL;
 }
 
-
-void	clean_minishell(t_mini *minishell)
+void	clean_fd(t_mini *minishell)
 {
-	//int i;
-
-	//i = 0;
-	if (minishell->env)
-		clean_env(minishell);
-	if (minishell->pretok)
-		clean_pretokens(minishell);
-	if (minishell->token)
-		clean_token_list(&(minishell->token));
 	if (minishell->fd_in)
 	{
 		free(minishell->fd_in);
@@ -128,5 +118,19 @@ void	clean_minishell(t_mini *minishell)
 		free(minishell->tube);
 		minishell->tube = NULL;
 	}
+}
+
+void	clean_minishell(t_mini *minishell)
+{
+	//int i;
+
+	//i = 0;
+	if (minishell->env)
+		clean_env(minishell);
+	if (minishell->pretok)
+		clean_pretokens(minishell);
+	if (minishell->token)
+		clean_token_list(&(minishell->token));
+	clean_fd(minishell);
 	free(minishell);
 }

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/12 14:42:35 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 09:52:37 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static	void	minishell(t_mini *mini)
 			break ;
 		}
 		clean_token_list(&(mini->token));
+		clean_fd(mini);
 		mini->token = NULL;
 		free(input);
 	}
