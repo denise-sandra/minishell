@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 12:46:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:03:00 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 static void	close_fd_and_wait(t_mini *mini)
 {
 	int	i;
-	int	status;
+	//int	status;
 	// pid_t pid;
 
 	i = 0;
@@ -83,7 +83,7 @@ static void	close_fd_and_wait(t_mini *mini)
 			close(mini->fd_in[i]);
 		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
 			close(mini->fd_out[i]);
-		waitpid(mini->pid[i++], &status, 0);
+		//waitpid(mini->pid[i++], &status, 0);
 	}
 }
 
@@ -111,7 +111,7 @@ void	execution(t_mini *mini)
 			{
 				if (ft_dup(mini, i) != 0)
 					return ;
-				if (execute_builtin(mini, tmp->cmd_tab[0]) == 0)
+				if (execute_builtin(mini, tmp->cmd_tab[0], i) == 0)
 					return ;
 				else
 				{
@@ -122,8 +122,6 @@ void	execution(t_mini *mini)
 			}
 			if (i > 0)
             {
-				//waitpid(mini->pid[i - 1], NULL, 0);
-				printf("%d cerrado en parent\n", i - 1);
                 close(mini->tube[i - 1][0]);
                 close(mini->tube[i - 1][1]);
             }
@@ -133,14 +131,18 @@ void	execution(t_mini *mini)
 	}
 	close_fd_and_wait(mini);
 	//test
-	// int status;
-	// pid_t pid;
+	int status;
+	pid_t pid;
 
-	// while ((pid = wait(&status)) != -1)
-	// {
-	// 	if (WIFEXITED(status))
-	// 		printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
-	// 	else if (WIFSIGNALED(status))
-	// 		printf("Child %d killed by signal %d\n", pid, WTERMSIG(status));
-	// }
+	while ((pid = wait(&status)) != -1)
+	{
+		if (WIFEXITED(status))
+		{
+			mini->exit_status = WEXITSTATUS(status);
+			printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
+		}
+		
+		else if (WIFSIGNALED(status))
+			printf("Child %d killed by signal %d\n", pid, WTERMSIG(status));
+	}
 }

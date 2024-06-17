@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:58:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:41:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,22 @@ static void	add_env(t_mini *mini, char *new_var)
 	mini->env_char = list_to_tab(mini);          //poner en exec
 }
 
-void	export_command(t_mini *mini)
+void	export_command(t_mini *mini, int i)
 {
 	int			res;
 	char		*new_var;
+	t_token *tmp;
+	int j;
 
 	res = 0;
-	new_var = mini->token->cmd_tab[1];
+	j = 0;
+	tmp = mini->token;
+	while (i != 0 && tmp && j <= i)
+	{
+		tmp = tmp->next;
+		j++;
+	}
+	new_var = tmp->cmd_tab[1];
 	if (new_var)
 		res = ft_strchr_int(new_var, '=');
 	else

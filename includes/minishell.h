@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 12:59:20 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 14:20:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ void		free_env(t_lst_env *env, char *name);
 
 //exec
 void		execution(t_mini *minishell);
-int			execute_builtin(t_mini *minishell, char *command);
+int			execute_builtin(t_mini *minishell, char *command, int i);
 int         init_fds(t_mini *mini);
 int	        ft_dup(t_mini *mini, int i);
 int         fill_fd(t_mini *mini);
 
 //builtin fucntions
-void		echo_command(t_mini *minishell);
-void		export_command(t_mini *minishell);
+void		echo_command(t_mini *minishell, int i);
+void		export_command(t_mini *minishell, int i);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *minishell, char *input);
 void      pwd_cmd(t_mini *mini);

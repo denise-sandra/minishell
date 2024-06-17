@@ -3,33 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 13:45:10 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:32:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo_command(t_mini *minishell)
+void	echo_command(t_mini *mini, int i)
 {
-	t_token	*tmp;
+	t_token *tmp;
+	int j;
 
-	tmp = minishell->token;
-	while (tmp)
+	j = 0;
+	tmp = mini->token;
+	while (i != 0 && tmp && j <= i)
 	{
-		if (tmp->next && ft_strncmp(tmp->value, \
-			"echo", ft_strlen(tmp->value)) == 0)
-		{
-			printf("%s\n", tmp->next->value);
-			break ;
-		}
-		else if (ft_strncmp(tmp->value, "echo", ft_strlen(tmp->value)) == 0)
-		{
-			printf("\n");
-			break ;
-		}
 		tmp = tmp->next;
+		j++;
 	}
+	if (tmp->cmd_tab[1])
+		printf("%s\n", tmp->cmd_tab[1]);
+	else
+		printf("\n");
 }
