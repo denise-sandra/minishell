@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 09:47:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:46:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,18 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 		if (access(path_with_token, X_OK) == 0)
 		{
 			if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
-				return (ft_error("execve Error", mini));
+			{
+				ft_error("execve Error", mini);
+				exit(1);
+			}
 		}
 		free(path_with_token);
 		i++;
 	}
+	printf("%s :command not found\n", tmp->cmd_tab[0]);
 	free(paths);
+	//clean_minishell(mini);
+	//exit(1);
 }
 
 static void	close_fd_and_wait(t_mini *mini)
@@ -108,8 +114,11 @@ void	execution(t_mini *mini)
 				if (execute_builtin(mini, tmp->cmd_tab[0]) == 0)
 					return ;
 				else
+				{
 					cmd_exec(mini, tmp);
-				//clean_minishell(mini);
+					if (mini->error)
+						return ;
+				}
 			}
 			if (i > 0)
             {

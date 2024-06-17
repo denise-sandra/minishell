@@ -3,11 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/05 03:30:03 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/17 13:48:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char *pwd_cmd_char(t_mini *mini)
+{
+     char *cwd;
+     int  size;
+     
+     size = 1024;
+     cwd = malloc((size) * sizeof(char));
+     if (cwd == NULL)
+          return (ft_error("Malloc error", mini), NULL);
+     if (getcwd(cwd, size) == NULL)
+      {
+        perror("getcwd");
+        return (ft_error("pwd error", mini), NULL);
+      }
+       return (cwd);
+}
+
+int	ft_strrchr_int(char *str, int c)
+{
+	int	size;
+
+	size = ft_strlen(str);
+     if (str[size] == (char)c)
+          size--;
+	while (size >= 0)
+	{
+		if (str[size] == (char)c)
+			return (size + 1);
+		size--;
+	}
+	return (-1);
+}
+
+static void go_home(t_mini *mini)
+{
+     char *path;
+
+     path = get_env_value(mini->env, "HOME");
+     if (path == NULL)
+          return (ft_error("Malloc error", mini));
+     if (chdir(path) != 0)
+            return (ft_error("No such file or directory", mini));
+}
+
+static void go_back(t_mini *mini)
+{
+     char *path;
+     char *new_path;
+     int  c;
+
+     path = pwd_cmd_char(mini);
+     c = ft_strrchr_int(path, '/');
+     printf("%d\n", c);
+     new_path = malloc((c + 1) * sizeof(char));
+     if (new_path == NULL)
+          return (ft_error("Malloc error", mini));
+     ft_strlcpy(new_path, path, c);
+     printf("%s\n", new_path);
+     free(path);
+     if (chdir(new_path) != 0)
+     {
+          free(new_path);
+           return (ft_error("No such file or directory", mini));
+     }
+     free(new_path);
+}
+
+void cd_cmd(t_mini *mini)
+{
+     const char     *path;
+
+     path = mini->token->cmd_tab[1];
+     if (!path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
+           return (go_home(mini));
+     else if (ft_strncmp(path, "..", ft_strlen(path)) == 0)
+          return(go_back(mini));
+     else if (chdir(path) != 0)
+          return (ft_error("No such file or directory", mini));
+}

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 09:51:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/17 12:59:20 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ void		echo_command(t_mini *minishell);
 void		export_command(t_mini *minishell);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *minishell, char *input);
+void      pwd_cmd(t_mini *mini);
+void      cd_cmd(t_mini *mini);
 
 #endif
