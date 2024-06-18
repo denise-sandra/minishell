@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 18:51:05 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:41:37 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ static void	go_home(t_mini *mini)
 		return (ft_error("Malloc error", mini));
 	if (chdir(path) != 0)
 		return (ft_error("No such file or directory", mini));
+	else
+		free (path);
 }
 
 static void	go_back(t_mini *mini)
 {
 	char	*path;
 	char	*new_path;
-	int 	c;
+	int		c;
 
 	path = pwd_cmd_char(mini);
 	c = ft_strrchr_int(path, '/');
@@ -85,18 +87,9 @@ void	cd_cmd(t_mini *mini)
 
 	path = mini->token->cmd_tab[1];
 	if (!path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
-	{
 		go_home(mini);
-	}
 	else if (ft_strncmp(path, "..", ft_strlen(path)) == 0)
-	{
 		go_back(mini);
-	}
 	else if (chdir(path) != 0)
-	{
 		ft_error("No such file or directory", mini);
-	}
-	// mini->exit_status = 0;
-	// clean_minishell(mini);
-	// exit (0);
 }
