@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/17 10:22:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:22:05 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,10 @@ void	clean_fd(t_mini *minishell)
 
 void	clean_minishell(t_mini *minishell)
 {
-	//int i;
-
-	//i = 0;
 	if (minishell->env)
 		clean_env(minishell);
+	if (minishell->env_char)
+		free_tab(minishell->env_char);
 	if (minishell->pretok)
 		clean_pretokens(minishell);
 	if (minishell->token)
