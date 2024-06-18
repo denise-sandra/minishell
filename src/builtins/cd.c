@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 16:41:37 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:44:06 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	go_home(t_mini *mini)
 	if (path == NULL)
 		return (ft_error("Malloc error", mini));
 	if (chdir(path) != 0)
-		return (ft_error("No such file or directory", mini));
+		return (free(path), ft_error("No such file or directory", mini));
 	else
 		free (path);
 }
