@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 11:40:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/18 16:37:55 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	close_fd_and_wait(t_mini *mini)
 
 static void	cmd_exec(t_mini *mini, t_token *tmp)
 {
-	int	i;
+	int		i;
 	char	**paths;
 	char	*path_with_token;
 
@@ -91,12 +91,13 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 		free(path_with_token);
 		i++;
 	}
-	mini->exit_status = 127;
-	printf("%s :command not found\n", tmp->cmd_tab[0]);
+	// mini->exit_status = 127;
+	// printf("%s :command not found\n", tmp->cmd_tab[0]);
 	free(paths);
-	exit(mini->exit_status);
-	//clean_minishell(mini);
+	ft_error("command not found", mini);
+	// exit(mini->exit_status);
 }
+
 
 void	execution(t_mini *mini)
 {
@@ -108,9 +109,11 @@ void	execution(t_mini *mini)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
+	builtin = is_builtin(mini->token->cmd_tab[0]);
+	if (mini->cmd_count == 1 && builtin > 0)
+		return (execute_builtin(mini, builtin, mini->token));
 	i = 0;
 	tmp = mini->token;
-	builtin = -1;
 	while (tmp)
 	{
 		if (tmp->type == COMMAND)
@@ -123,7 +126,7 @@ void	execution(t_mini *mini)
 			if (mini->pid[i] == 0)
 			{
 				if (ft_dup(mini, i) != 0)
-					exit (1) ;
+					exit (1);
 				builtin = is_builtin(tmp->cmd_tab[0]);
 				if (builtin > 0)
 					execute_builtin(mini, builtin, tmp);
@@ -148,20 +151,3 @@ void	execution(t_mini *mini)
 	}
 	close_fd_and_wait(mini);
 }
-
-
-	//test
-	// int status;
-	// pid_t pid;
-
-	// while ((pid = wait(&status)) != -1)
-	// {
-	// 	if (WIFEXITED(status))
-	// 	{
-	// 		mini->exit_status = WEXITSTATUS(status);
-	// 		printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
-	// 	}
-		
-	// 	else if (WIFSIGNALED(status))
-	// 		printf("Child %d killed by signal %d\n", pid, WTERMSIG(status));
-	// }
