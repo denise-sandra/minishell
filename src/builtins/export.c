@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 16:21:50 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 19:54:06 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,8 @@ void	export_command(t_mini *mini, t_token *cur)
 {
 	int			res;
 	char		*new_var;
-	t_token		*tmp;
 
 	res = 0;
-	tmp = mini->token;
 	new_var = cur->cmd_tab[1];
 	if (new_var)
 		res = ft_strchr_int(new_var, '=');

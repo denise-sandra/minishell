@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/09 16:45:35 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/18 22:34:45 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	tok_addback(t_token **lst, t_token *new)
 int	tok_list(char *s, int type, t_token **lst)
 {
 	t_token	*new;
-
+	
 	new = tok_new_node(s, type);
 	if (!new)
 		return (1);
