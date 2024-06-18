@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 16:37:55 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 17:39:43 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,22 @@ static void	close_fd_and_wait(t_mini *mini)
 {
 	int	i;
 	int	status;
-	// pid_t pid;
+	int	last_exit_status;
 
 	i = 0;
+	last_exit_status = 0;
 	while (i < mini->cmd_count)
 	{
 		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
 			close(mini->fd_in[i]);
 		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
 			close(mini->fd_out[i]);
-		if (waitpid(mini->pid[i], &status, 0) == -1)
-		{
-			ft_error("waitpid error", mini);
-			mini->exit_status = 1;
-		}
-		else if (WIFEXITED(status))
-		{
-			mini->exit_status = WEXITSTATUS(status);
-		}
+		waitpid(mini->pid[i], &status, 0);
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
 		i++;
 	}
+	mini->exit_status = last_exit_status;
 }
 
 static void	cmd_exec(t_mini *mini, t_token *tmp)
@@ -83,19 +79,17 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 		{
 			if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
 			{
-				mini->exit_status = 1;
 				ft_error("execve Error", mini);
-				exit(mini->exit_status);
+				exit(1);
 			}
 		}
 		free(path_with_token);
 		i++;
 	}
-	// mini->exit_status = 127;
-	// printf("%s :command not found\n", tmp->cmd_tab[0]);
+	printf("%s :command not found\n", tmp->cmd_tab[0]);
 	free(paths);
-	ft_error("command not found", mini);
-	// exit(mini->exit_status);
+	//ft_error("command not found", mini);
+	exit(127);
 }
 
 
@@ -103,7 +97,7 @@ void	execution(t_mini *mini)
 {
 	t_token	*tmp;
 	int		i;
-	int	builtin;
+	int		builtin;
 
 	if (init_fds(mini) != 0)
 		return ;
