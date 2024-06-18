@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/11 21:41:03 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/18 12:38:22 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,28 @@ void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 	temp_str = (*cur)->value;
 	before_var = NULL;
 	j = 0;
-	while (temp_str[j] && temp_str[j] != '$')
+	// while (temp_str[j] && temp_str[j] != '$')
+	// {
+	// 	before_var = ft_strjoin_char(before_var, temp_str[j]);
+	// 	j++;
+	// }
+	while (temp_str[j])
 	{
-		before_var = ft_strjoin_char(before_var, temp_str[j]);
-		j++;
+		if (temp_str[j] != '$' || (temp_str[j] == '$' && !temp_str[j + 1]) ||
+		(temp_str[j] == '$' && temp_str[j + 1] && (temp_str[j + 1] == '?'
+		|| temp_str[j + 1] == ' ')))
+		{
+			before_var = ft_strjoin_char(before_var, temp_str[j]);
+			j++;
+		}
+		else
+		{
+			env_value = expand_variable(mini, temp_str, &j);
+			handle_before_var(&before_var, env_value);
+		}
+		
 	}
-	while (temp_str[j] == '$')
-	{
-		env_value = expand_variable(mini, temp_str, &j);
-		handle_before_var(&before_var, env_value);
-	}
+	
 	if (before_var)
 		split_and_add_to_list(before_var, new_list);
 }
@@ -94,7 +106,8 @@ void	expand_inside_dq(t_mini *mini, char **str)
 	i = 0;
 	while (temp_str[i])
 	{
-		if (temp_str[i] == '$')
+		if (temp_str[i] == '$' && temp_str[i + 1] && temp_str[i + 1] != '?'
+			&& temp_str[i + 1] != ' ')
 		{
 			env_value = expand_variable(mini, temp_str, &i);
 			new_str = ft_strjoin_free(new_str, env_value);

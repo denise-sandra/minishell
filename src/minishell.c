@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 09:52:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:13:25 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static t_mini	*init_minishell(char **envp)
 {
-	t_mini	*minishell;
+	t_mini	*mini;
 
-	minishell = malloc(sizeof(t_mini));
-	if (minishell == NULL)
+	mini = malloc(sizeof(t_mini));
+	if (mini == NULL)
 	{
-		ft_error("Malloc for minishell structure", minishell);
+		ft_error("Malloc for minishell structure", mini);
 		exit(EXIT_FAILURE);
 	}
-	ft_bzero(minishell, sizeof(t_mini));
-	minishell->env = fill_env_struct(envp, minishell);
-	return (minishell);
+	ft_bzero(mini, sizeof(t_mini));
+	mini->env = fill_env_struct(envp, mini);
+	return (mini);
 }
 
 static	void	minishell(t_mini *mini)

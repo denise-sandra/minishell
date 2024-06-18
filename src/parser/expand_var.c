@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/12 09:11:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/18 11:47:25 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	expand_env_vars(t_mini *mini, t_token *list)
 				cur->type = STRING;
 			tok_list(cur->value, cur->type, &new_list);
 		}
-			
 		free(cur->value);
 		free (cur);
 		cur = temp;

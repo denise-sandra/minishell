@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 18:49:26 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 09:08:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			ft_dup(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
 
 //builtin fucntions
-void		echo_command(t_token *cur);
+void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *minishell, char *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 18:57:27 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:40:03 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,16 @@ static void	close_fd_and_wait(t_mini *mini)
 			close(mini->fd_in[i]);
 		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
 			close(mini->fd_out[i]);
-		waitpid(mini->pid[i++], &status, 0);
+		if (waitpid(mini->pid[i], &status, 0) == -1)
+		{
+			ft_error("waitpid error", mini);
+			mini->exit_status = 1;
+		}
+		else if (WIFEXITED(status))
+		{
+			mini->exit_status = WEXITSTATUS(status);
+		}
+		i++;
 	}
 }
 
@@ -74,17 +83,19 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 		{
 			if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
 			{
+				mini->exit_status = 1;
 				ft_error("execve Error", mini);
-				exit(1);
+				exit(mini->exit_status);
 			}
 		}
 		free(path_with_token);
 		i++;
 	}
+	mini->exit_status = 127;
 	printf("%s :command not found\n", tmp->cmd_tab[0]);
 	free(paths);
+	exit(mini->exit_status);
 	//clean_minishell(mini);
-	//exit(1);
 }
 
 void	execution(t_mini *mini)
@@ -124,7 +135,6 @@ void	execution(t_mini *mini)
 					exit (1);
 				}
 				clean_minishell(mini);
-				// mini->exit_status = 0;
 				exit (0);
 			}
 			if (i > 0)
