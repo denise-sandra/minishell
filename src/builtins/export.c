@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 14:17:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:26:05 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	export_command(t_mini *mini, t_token *cur)
 
 	res = NULL;
 	new_var = cur->cmd_tab[1];
+	printf("new_var %s\n", new_var);
 	if (new_var)
 	{
 		res = ft_strchr(new_var, '=');

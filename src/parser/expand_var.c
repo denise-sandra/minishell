@@ -6,14 +6,38 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/18 15:10:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:43:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	check_valid_exp(t_mini *mini, t_token *cur)
+{
+	int	i;
+
+	if (ft_isalpha(cur->value[0]) == 0)
+	{
+		mini->exit_status = 1;
+		return (ft_error(" not a valid identifier\n", mini), 1);
+	}
+	i = 1;
+	while (new_var[i] && new_var[i] != '=')
+	{
+		if(isalnum(new_var[i]) == 0)
+		{
+			mini->exit_status = 1;
+			return (ft_error(" not a valid identifier\n", mini), 1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 {
+	if (check_valid_exp(mini, cur) == 1)
+		return ;
 	if (cur->type == D_Q)
 	{
 		expand_inside_dq(mini, &cur->value);
