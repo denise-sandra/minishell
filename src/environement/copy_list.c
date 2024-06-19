@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   copy_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 15:52:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 18:51:01 by skanna           ###   ########.fr       */
+/*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
+/*   Updated: 2024/06/19 12:06:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd_cmd(t_mini *mini)
+t_lst_env	*copy_list(t_lst_env *lst)
 {
-	char	cwd[1024];
-	int		size;
+	t_lst_env *new;
+	t_lst_env *new_lst;
 
-	size = 1024;
-	if (getcwd(cwd, size) == NULL)
+	new_lst = NULL;
+	while (lst)
 	{
-		ft_error("pwd error", mini);
+		new = ft_lstnew_env(lst->name, lst->value);
+		if (!new)
+			return (NULL);
+		ft_lstadd_back_env(&new_lst, new);
+		lst = lst->next;
 	}
-	printf("%s\n", cwd);
-	// mini->exit_status = 0;
-	// exit (0);
+	return (new_lst);
 }

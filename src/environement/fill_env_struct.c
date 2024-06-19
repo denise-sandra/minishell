@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 14:32:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 13:22:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,14 @@ t_lst_env	*ft_lstnew_env(char *name, char *value)
 	new->name = ft_strdup(name);
 	if (new->name == NULL)
 		return (NULL);
-	new->value = ft_strdup(value);
-	if (new->value == NULL)
-		return (NULL);
+	if (value)
+	{
+		new->value = ft_strdup(value);
+		if (new->value == NULL)
+			return (NULL);
+	}
+	else
+		new->value = NULL;
 	new->next = NULL;
 	return (new);
 }

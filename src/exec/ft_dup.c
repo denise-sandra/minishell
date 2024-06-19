@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 12:19:34 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:56:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	last_command(t_mini *mini, int i)
 {
 	int	j;
 
-	printf("%d\n",mini->tube[i - 1][0] );
 	j = 0;
 	while (j < i)
 		close(mini->tube[j++][1]);

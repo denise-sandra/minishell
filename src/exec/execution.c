@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 12:46:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:12:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,31 @@ static char	*join_path(char *cmd, char *path)
 	return (joint_b);
 }
 
-static void	cmd_exec(t_mini *mini, t_token *tmp)
+static void	close_fd_and_wait(t_mini *mini)
 {
 	int	i;
+	int	status;
+	int	last_exit_status;
+
+	i = 0;
+	last_exit_status = 0;
+	while (i < mini->cmd_count)
+	{
+		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
+			close(mini->fd_in[i]);
+		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
+			close(mini->fd_out[i]);
+		waitpid(mini->pid[i], &status, 0);
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
+		i++;
+	}
+	mini->exit_status = last_exit_status;
+}
+
+static void	cmd_exec(t_mini *mini, t_token *tmp)
+{
+	int		i;
 	char	**paths;
 	char	*path_with_token;
 
@@ -66,36 +88,23 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 	}
 	printf("%s :command not found\n", tmp->cmd_tab[0]);
 	free(paths);
-	//clean_minishell(mini);
-	//exit(1);
-}
-
-static void	close_fd_and_wait(t_mini *mini)
-{
-	int	i;
-	int	status;
-	// pid_t pid;
-
-	i = 0;
-	while (i < mini->cmd_count)
-	{
-		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
-			close(mini->fd_in[i]);
-		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
-			close(mini->fd_out[i]);
-		waitpid(mini->pid[i++], &status, 0);
-	}
+	//ft_error("command not found", mini);
+	exit(127);
 }
 
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
 	int		i;
-	
+	int		builtin;
+
 	if (init_fds(mini) != 0)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
+	builtin = is_builtin(mini->token->cmd_tab[0]);
+	if (mini->cmd_count == 1 && builtin > 0)
+		return (execute_builtin(mini, builtin, mini->token));
 	i = 0;
 	tmp = mini->token;
 	while (tmp)
@@ -110,37 +119,28 @@ void	execution(t_mini *mini)
 			if (mini->pid[i] == 0)
 			{
 				if (ft_dup(mini, i) != 0)
-					return ;
-				if (execute_builtin(mini, tmp->cmd_tab[0]) == 0)
-					return ;
+					exit (1);
+				builtin = is_builtin(tmp->cmd_tab[0]);
+				if (builtin > 0)
+					execute_builtin(mini, builtin, tmp);
 				else
-				{
 					cmd_exec(mini, tmp);
-					if (mini->error)
-						return ;
+				if (mini->error)
+				{
+					clean_minishell(mini);
+					exit (1);
 				}
+				clean_minishell(mini);
+				exit (0);
 			}
 			if (i > 0)
-            {
-				//waitpid(mini->pid[i - 1], NULL, 0);
-				printf("%d cerrado en parent\n", i - 1);
-                close(mini->tube[i - 1][0]);
-                close(mini->tube[i - 1][1]);
-            }
+			{
+				close(mini->tube[i - 1][0]);
+				close(mini->tube[i - 1][1]);
+			}
 			i++;
 		}
 		tmp = tmp->next;
 	}
 	close_fd_and_wait(mini);
-	//test
-	// int status;
-	// pid_t pid;
-
-	// while ((pid = wait(&status)) != -1)
-	// {
-	// 	if (WIFEXITED(status))
-	// 		printf("Child %d exited with status %d\n", pid, WEXITSTATUS(status));
-	// 	else if (WIFSIGNALED(status))
-	// 		printf("Child %d killed by signal %d\n", pid, WTERMSIG(status));
-	// }
 }

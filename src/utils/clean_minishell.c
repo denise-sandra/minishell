@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/17 10:22:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:17:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ void	clean_env(t_mini *minishell)
 		current = next;
 	}
 	minishell->env = NULL;
+}
+
+void	clean_exp(t_mini *minishell)
+{
+	t_lst_env	*current;
+	t_lst_env	*next;
+
+	printf("entra a clean exp\n");
+	current = minishell->export;
+	while (current)
+	{
+		next = current->next;
+		free(current->name);
+		free(current->value);
+		current->name = NULL;
+		current->value = NULL;
+		free(current);
+		current = next;
+	}
+	minishell->export = NULL;
 }
 
 void	clean_pretokens(t_mini *minishell)
@@ -122,11 +142,13 @@ void	clean_fd(t_mini *minishell)
 
 void	clean_minishell(t_mini *minishell)
 {
-	//int i;
-
-	//i = 0;
 	if (minishell->env)
 		clean_env(minishell);
+	printf("exp: %p\n", minishell->export);
+	if (minishell->export)
+		clean_exp(minishell);
+	if (minishell->env_char)
+		free_tab(minishell->env_char);
 	if (minishell->pretok)
 		clean_pretokens(minishell);
 	if (minishell->token)
