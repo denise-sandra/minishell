@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 10:12:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:34:13 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	execution(t_mini *mini)
 	if (init_fds(mini) != 0)
 		return ;
 	if (fill_fd(mini) != 0)
+		return ;
+	if (mini->cmd_count <= 0)
 		return ;
 	builtin = is_builtin(mini->token->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)

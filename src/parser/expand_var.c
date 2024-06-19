@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/19 14:43:35 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:10:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,19 @@
 
 int	check_valid_exp(t_mini *mini, t_token *cur)
 {
-	int	i;
+	char	*tmp;
 
-	if (ft_isalpha(cur->value[0]) == 0)
+	tmp = ft_strchr(cur->value, '$');
+	if (ft_isdigit(tmp[1]) == 1 && ft_isdigit(tmp[2]) == 1)
 	{
 		mini->exit_status = 1;
-		return (ft_error(" not a valid identifier\n", mini), 1);
-	}
-	i = 1;
-	while (new_var[i] && new_var[i] != '=')
-	{
-		if(isalnum(new_var[i]) == 0)
-		{
-			mini->exit_status = 1;
-			return (ft_error(" not a valid identifier\n", mini), 1);
-		}
-		i++;
+		return (ft_error("Syntax error character unsupported", mini), 1);
 	}
 	return (0);
 }
 
 static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 {
-	if (check_valid_exp(mini, cur) == 1)
-		return ;
 	if (cur->type == D_Q)
 	{
 		expand_inside_dq(mini, &cur->value);
@@ -62,7 +51,9 @@ void	expand_env_vars(t_mini *mini, t_token *list)
 		temp = cur->next;
 		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
 			&& ft_strchr(cur->value, '$'))
+		{
 			expand_and_add(mini, cur, &new_list);
+		}
 		else
 		{
 			if (cur->type == D_Q || cur->type == S_Q)
