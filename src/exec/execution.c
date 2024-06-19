@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 15:34:13 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/19 17:21:49 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ void	execution(t_mini *mini)
 		return ;
 	if (mini->cmd_count <= 0)
 		return ;
-	builtin = is_builtin(mini->token->cmd_tab[0]);
+	tmp = mini->token;
+	while (tmp->type != COMMAND)
+		tmp = tmp->next;
+	builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 		return (execute_builtin(mini, builtin, mini->token));
 	i = 0;

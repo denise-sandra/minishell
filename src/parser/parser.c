@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 16:48:20 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/19 17:12:39 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	//  t_token *print = mini->token;
+	 t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1new: %s  type: %i\n", print->value, print->type);
@@ -135,15 +135,15 @@ void	parser(t_mini *mini)
 	// }
 	parse_commands(mini);
 	last_error_checks(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2new: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("2new: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 }
