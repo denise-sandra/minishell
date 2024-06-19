@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 10:12:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:02:16 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	**pars_path(t_mini *mini)
 	if (path == NULL)
 		return (NULL);
 	split_paths = ft_split(path, ':');
-	free(path);	
+	free(path);
 	return (split_paths);
 }
 
@@ -102,7 +102,12 @@ void	execution(t_mini *mini)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
-	builtin = is_builtin(mini->token->cmd_tab[0]);
+	if (mini->cmd_count <= 0)
+		return ;
+	tmp = mini->token;
+	while (tmp->type != COMMAND)
+		tmp = tmp->next;
+	builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 		return (execute_builtin(mini, builtin, mini->token));
 	i = 0;

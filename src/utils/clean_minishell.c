@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/19 14:17:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:49:14 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	clean_env(t_mini *minishell)
+void	clean_env_exp(t_mini *minishell, int id)
 {
 	t_lst_env	*current;
 	t_lst_env	*next;
 
-	current = minishell->env;
+	if (id == 1)
+		current = minishell->env;
+	else
+		current = minishell->export;
 	while (current)
 	{
 		next = current->next;
@@ -28,27 +31,10 @@ void	clean_env(t_mini *minishell)
 		free(current);
 		current = next;
 	}
-	minishell->env = NULL;
-}
-
-void	clean_exp(t_mini *minishell)
-{
-	t_lst_env	*current;
-	t_lst_env	*next;
-
-	printf("entra a clean exp\n");
-	current = minishell->export;
-	while (current)
-	{
-		next = current->next;
-		free(current->name);
-		free(current->value);
-		current->name = NULL;
-		current->value = NULL;
-		free(current);
-		current = next;
-	}
-	minishell->export = NULL;
+	if (id == 1)
+		minishell->env = NULL;
+	else
+		minishell->export = NULL;
 }
 
 void	clean_pretokens(t_mini *minishell)
@@ -65,31 +51,6 @@ void	clean_pretokens(t_mini *minishell)
 	}
 	minishell->pretok = NULL;
 }
-
-// void	clean_token_list(t_mini *minishell)
-// {
-// 	t_token	*temp;
-
-// 	if (minishell->token == NULL)
-// 		return ;
-// 	while (minishell->token)
-// 	{
-// 		temp = minishell->token->next;
-// 		if (minishell->token->value)
-// 		{
-// 			free(minishell->token->value);
-// 			minishell->token->value = NULL;
-// 		}
-// 		if (minishell->token->cmd_tab)
-// 		{
-// 			free_tab(minishell->token->cmd_tab);
-// 			minishell->token->cmd_tab = NULL;
-// 		}
-// 		free(minishell->token);
-// 		minishell->token = temp;
-// 	}
-// 	minishell->token = NULL;
-// }
 
 void	clean_token_list(t_token **list)
 {
@@ -143,10 +104,9 @@ void	clean_fd(t_mini *minishell)
 void	clean_minishell(t_mini *minishell)
 {
 	if (minishell->env)
-		clean_env(minishell);
-	printf("exp: %p\n", minishell->export);
+		clean_env_exp(minishell, 1);
 	if (minishell->export)
-		clean_exp(minishell);
+		clean_env_exp(minishell, 2);
 	if (minishell->env_char)
 		free_tab(minishell->env_char);
 	if (minishell->pretok)

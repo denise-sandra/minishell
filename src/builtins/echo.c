@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 10:57:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:36:27 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	echo_opt(t_token *cur, int *n)
 	{
 		if (ft_strlen(cur->cmd_tab[i]) > 2)
 		{
-			j = 0;
+			j = 1;
 			while (cur->cmd_tab[i][j])
 			{
 				if (cur->cmd_tab[i][j] != 'n')

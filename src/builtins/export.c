@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 14:17:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:48:06 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static void	add_exp(t_mini *mini, char *new_var, char *res)
 	split_new_exp = NULL;
 	if (res)
 	{
-		printf("pepe\n");
 		split_new_exp = split_env_vars(new_var, '=');
 		if (split_new_exp == NULL)
 			return (ft_error("Malloc in export cmd", mini));
@@ -126,7 +125,7 @@ static void	add_env(t_mini *mini, char *new_var)
 	ft_lstadd_back_env(&mini->env, new_node);
 	if (mini->mod_env == 1)
 		free_tab(mini->env_char);
-	clean_exp(mini);
+	clean_env_exp(mini, 2);
 	mini->export = copy_list(mini->env);
 	if (mini->export == NULL)
 		return (ft_error("Malloc error", mini));
@@ -137,39 +136,36 @@ void	export_command(t_mini *mini, t_token *cur)
 {
 	char	*res;
 	char	*new_var;
-	int	i;
+	int		i;
 
 	res = NULL;
 	new_var = cur->cmd_tab[1];
 	if (new_var)
 	{
 		res = ft_strchr(new_var, '=');
-		printf("res %p %s\n", res, new_var);
 		if (ft_isalpha(new_var[0]) == 0)
 		{
 			mini->exit_status = 1;
-			ft_error(" not a valid identifier\n", mini);
-			return ;
+			return (ft_error(" not a valid identifier", mini));
 		}
 		i = 1;
 		while (new_var[i] && new_var[i] != '=')
 		{
-			if(isalnum(new_var[i]) == 0)
+			if(ft_isalnum(new_var[i]) == 0)
 			{
 				mini->exit_status = 1;
-				return (ft_error(" not a valid identifier\n", mini));
+				return (ft_error(" not a valid identifier", mini));
 			}
 			i++;
 		}
 		if (res)
 			add_env(mini, new_var);
 		else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
-			return (ft_error(" not a valid identifier\n", mini));
+			return (ft_error(" not a valid identifier", mini));
 		add_exp(mini, new_var, res);
 		if (mini->error)
 			return ;
 	}
 	else
 		print_export(mini->export);
-	
 }

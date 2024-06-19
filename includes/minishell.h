@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 14:16:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 16:46:29 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		ft_error(char *msg, t_mini *minishell);
 void		check_malloc_error(t_mini *mini, void *elem, char *msg, int e);
 char		**split_env_vars(char const *s, char c);
 void		clean_pretokens(t_mini *minishell);
-void 	clean_exp(t_mini *minishell);
+void		clean_env_exp(t_mini *minishell, int id);
 void		clean_token_list(t_token **list);
 void		clean_minishell(t_mini *minishell);
 char		*ft_strjoin_free(char *s1, char *s2);
@@ -77,7 +77,7 @@ int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
 void		free_env(t_lst_env *env, char *name);
-t_lst_env	     *copy_list(t_lst_env *lst);
+t_lst_env	*copy_list(t_lst_env *lst);
 
 //exec
 void		execution(t_mini *minishell);
