@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 15:53:18 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/19 16:59:26 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static	void	minishell(t_mini *mini)
 			if (!mini->error)
 			{
 				execution(mini);
-				if (!mini->error)
+				if (mini->error)
 					mini->exit_status = 1;
 			}
 		}
@@ -62,8 +62,7 @@ static	void	minishell(t_mini *mini)
 			free(input);
 			break ;
 		}
-		if (mini->token)
-			clean_token_list(&(mini->token));
+		clean_token_list(&(mini->token));
 		clean_fd(mini);
 		mini->token = NULL;
 		free(input);
