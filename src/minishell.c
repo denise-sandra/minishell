@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 22:47:37 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/19 12:28:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_exit_status = 0;
 
 static t_mini	*init_minishell(char **envp)
 {
@@ -26,6 +25,12 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
+	mini->export = copy_list(mini->env);
+	if (!mini->export)
+	{
+		ft_error("Malloc for minishell structure", mini);
+		exit(EXIT_FAILURE);
+	}
 	return (mini);
 }
 
@@ -45,7 +50,11 @@ static	void	minishell(t_mini *mini)
 			lexer(input, mini);
 			parser(mini);
 			if (!mini->error)
+			{
 				execution(mini);
+				if (!mini->error)
+					mini->exit_status = 1;
+			}
 		}
 		else if (*input && ft_strncmp(input, "exit", 4) == 0)
 		{

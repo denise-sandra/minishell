@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 09:08:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 14:16:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		ft_error(char *msg, t_mini *minishell);
 void		check_malloc_error(t_mini *mini, void *elem, char *msg, int e);
 char		**split_env_vars(char const *s, char c);
 void		clean_pretokens(t_mini *minishell);
+void 	clean_exp(t_mini *minishell);
 void		clean_token_list(t_token **list);
 void		clean_minishell(t_mini *minishell);
 char		*ft_strjoin_free(char *s1, char *s2);
@@ -67,6 +68,7 @@ int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
 char		*ft_strjoin_char(char *s, char c);
+char	     *ft_strjoin_frees1(char *s1, char *s2);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);
@@ -75,6 +77,7 @@ int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
 void		free_env(t_lst_env *env, char *name);
+t_lst_env	     *copy_list(t_lst_env *lst);
 
 //exec
 void		execution(t_mini *minishell);
@@ -85,7 +88,7 @@ int			ft_dup(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
 
 //builtin fucntions
-void		echo_command(t_mini *mini, t_token *cur);
+void		echo_command(t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *minishell, char *input);

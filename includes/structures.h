@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 22:45:55 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/19 11:57:15 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
-
-extern int g_exit_status;
 
 typedef struct s_lst_env
 {
@@ -59,6 +57,7 @@ typedef struct s_token
 typedef struct s_minishell
 {
 	t_lst_env	*env;
+	t_lst_env	*export;
 	char		**env_char;
 	t_token		*token;
 	t_pretok	*pretok;

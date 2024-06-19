@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 14:41:18 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/19 10:57:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	echo_opt(t_token *cur, int *n)
 	return (i);
 }
 
-void	echo_command(t_mini *mini, t_token *cur)
+void	echo_command(t_token *cur)
 {
 	int	i;
 	int	j;
@@ -56,14 +56,7 @@ void	echo_command(t_mini *mini, t_token *cur)
 		j = 0;
 		while (cur->cmd_tab[i][j])
 		{
-			if (cur->cmd_tab[i][j + 1] && cur->cmd_tab[i][j] == '$' 
-				&& cur->cmd_tab[i][j + 1] == '?')
-			{
-				printf("%d", mini->exit_status);
-				j++;
-			}
-			else
-				printf("%c", cur->cmd_tab[i][j]);
+			printf("%c", cur->cmd_tab[i][j]);
 			j++;
 		}
 		if (cur->cmd_tab[i + 1])

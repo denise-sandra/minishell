@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/18 23:06:00 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/19 10:51:21 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,35 @@ static char	*expand_variable(t_mini *mini, char *temp_str, int *len)
 {
 	char	*env_name;
 	char	*env_value;
+	char	*after_s;
 
 	env_name = get_env_name(&temp_str[*len]);
-	printf("%s\n", env_name);
-	if (ft_strncmp(env_name, "?", ft_strlen(env_name)) == 0)
+	if (ft_strncmp(env_name, "?", 1) == 0)
 	{
-		free(env_name);
-		env_value = ft_strdup("g_exit_status");
-		if (!env_value)
-			ft_error("Malloc error", mini);
-		*len +=  2;
-		return (env_value);
+		env_value = ft_itoa(mini->exit_status);
+		if (ft_strlen(env_name) > 1)
+		{
+			after_s = ft_strnstr(env_name, "?", ft_strlen(env_name));
+			env_value = ft_strjoin_frees1(env_value, after_s + 1);
+			if (env_value == NULL)
+			{
+				free(env_name);
+				ft_error("Malloc error", mini);
+				return (NULL);
+			}
+			*len +=  ft_strlen(env_name) + 1;
+		}
+		else
+			*len +=  2;
 	}
-	env_value = get_env_value(mini->env, env_name);
+	else
+	{
+		env_value = get_env_value(mini->env, env_name);
+		if (!env_value)
+			env_value = ft_strdup("");
+		*len += env_name_len(&temp_str[*len]) + 1;
+	}
 	free(env_name);
-	if (!env_value)
-		env_value = ft_strdup("");
-	*len += env_name_len(&temp_str[*len]) + 1;
 	return (env_value);
 }
 
@@ -94,6 +106,8 @@ void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		else
 		{
 			env_value = expand_variable(mini, temp_str, &j);
+			if (env_value == NULL)
+				return ;
 			handle_before_var(&before_var, env_value);
 		}
 		

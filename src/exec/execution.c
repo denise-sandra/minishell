@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/18 23:31:43 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/19 10:12:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	close_fd_and_wait(t_mini *mini)
 		i++;
 	}
 	mini->exit_status = last_exit_status;
-	g_exit_status = mini->exit_status;
 }
 
 static void	cmd_exec(t_mini *mini, t_token *tmp)
@@ -93,27 +92,6 @@ static void	cmd_exec(t_mini *mini, t_token *tmp)
 	exit(127);
 }
 
-static void	replace_exit_code(t_mini *mini)
-{
-	t_token	*tmp;
-	int		i;
-	
-	tmp = mini->token;
-	while (tmp)
-	{
-		i = 0;
-		while (tmp->cmd_tab[i])
-		{
-			if (!ft_strnstr(tmp->cmd_tab[i], "g_exit_status", ft_strlen(tmp->cmd_tab[i])))
-			{
-				
-			}
-			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
@@ -124,7 +102,6 @@ void	execution(t_mini *mini)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
-	replace_exit_code(mini);
 	builtin = is_builtin(mini->token->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 		return (execute_builtin(mini, builtin, mini->token));
