@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:45:56 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 15:10:45 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define SIGNAL
 
 //clean & error
-void		ft_error(char *msg, t_mini *minishell);
-void		check_malloc_error(t_mini *mini, void *elem, char *msg, int e);
+void		ft_error(t_mini *minishell, char *msg, char *error_msg);
+void		error_cleanup(t_mini *minishell);
 char		**split_env_vars(char const *s, char c);
 void		clean_pretokens(t_mini *minishell);
 void		clean_env_exp(t_mini *minishell, int id);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:12:27 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 14:43:11 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**list_to_tab(t_mini *mini)
 
 	env = malloc((count_elements(mini) + 1) * sizeof(char *));
 	if (env == NULL)
-		ft_error("Malloc in export cmd", mini);
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
 	i = 0;
 	tmp = mini->env;
 	while (tmp)
@@ -49,7 +49,7 @@ char	**list_to_tab(t_mini *mini)
 		if (env[i] == NULL)
 		{
 			free_tab(env);
-			ft_error("Malloc in export cmd", mini);
+			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		}
 		tmp = tmp->next;
 		i++;

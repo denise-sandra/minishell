@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/18 15:02:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:48:18 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		else
 			new->cmd_tab[i] = ft_strdup((*cur)->value);
 		if (!new->cmd_tab[i])
-			return (ft_error("Memory allocation error", mini));
+			return (ft_error(mini, NULL, strerror(errno)));
 		i++;
 		tmp = (*cur)->next;
 		free((*cur)->value);
@@ -75,11 +75,11 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 
 	new = tok_new_node("", COMMAND);
 	if (!new)
-		return (ft_error("Memory allocation error", mini));
+		return (ft_error(mini, NULL, strerror(errno)));
 	tok_count = count_cmd_tokens(*cur);
 	new->cmd_tab = malloc((tok_count + 1) * sizeof(char *));
 	if (!new->cmd_tab)
-		return (ft_error("Memory allocation error", mini));
+		return (ft_error(mini, NULL, strerror(errno)));
 	fill_cmd_table(cur, new, mini);
 	if (mini->error)
 		return (clean_token_list(&new));

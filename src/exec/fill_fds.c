@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/13 17:42:23 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:34:21 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,34 @@ static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 	line[line_len] = '\n';
 	line_len++;
 	write(hd_pipe[1], line, line_len);
+	if (write(hd_pipe[1], line, line_len) == -1)
+		return (free(line), -1);
 	free(line);
 	return (0);
 }
+
+// static void	read_here_doc(t_mini *mini, char *eof, int i)
+// {
+// 	char	*line;
+// 	int		is_eof;
+
+// 	if (pipe(mini->here_fd) < 0)
+// 		return (ft_error("Can't open infile", mini));
+// 	is_eof = 0;
+// 	while (is_eof == 0)
+// 	{
+// 		line = get_next_line(STDIN_FILENO);
+// 		if (!line)
+// 			is_eof = 1;
+// 		else
+// 			is_eof = process_here_line(mini->here_fd, line, eof);
+// 	}
+// 	close(mini->here_fd[1]);
+// 	if (mini->fd_in && i < mini->cmd_count)
+// 		mini->fd_in[i] = mini->here_fd[0];
+// 	else
+// 		close(mini->here_fd[0]);
+// }
 
 static void	read_here_doc(t_mini *mini, char *eof, int i)
 {
@@ -39,18 +64,22 @@ static void	read_here_doc(t_mini *mini, char *eof, int i)
 	int		is_eof;
 
 	if (pipe(mini->here_fd) < 0)
-		return (ft_error("Can't open infile", mini));
+		return (ft_error(mini, NULL, strerror(errno)));
 	is_eof = 0;
 	while (is_eof == 0)
 	{
 		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			is_eof = 1;
-		else
+		if (line)
+		{
 			is_eof = process_here_line(mini->here_fd, line, eof);
+			if (is_eof == -1)
+				ft_error(mini, NULL, strerror(errno));
+		}
+		else
+			is_eof = 1;
 	}
 	close(mini->here_fd[1]);
-	if (mini->fd_in && i < mini->cmd_count)
+	if (is_eof != -1 && mini->fd_in && i < mini->cmd_count)
 		mini->fd_in[i] = mini->here_fd[0];
 	else
 		close(mini->here_fd[0]);
@@ -63,7 +92,7 @@ static int	get_infile(t_mini *mini, t_token *token, int i)
 	{
 		mini->fd_in[i] = open(token->next->value, O_RDONLY);
 		if (mini->fd_in[i] < 0)
-			return (ft_error("Can't open infile", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
 	else if (token->type == HERE)
 	{
@@ -81,14 +110,14 @@ static int	get_outfile(t_mini *mini, t_token *token, int i)
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_RDWR | O_TRUNC, 0644);
 		if (mini->fd_out[i] < 0)
-			return (ft_error("Can't open outfile", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
 	if (token->type == APP)
 	{
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_RDWR | O_APPEND, 0644);
 		if (mini->fd_out[i] < 0)
-			return (ft_error("Can't open outfile", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
 	return (0);
 }

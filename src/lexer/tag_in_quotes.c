@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tag_in_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 15:42:17 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:37:09 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	tag_in_quotes(t_mini *mini, t_pretok *close_quote)
 			close_quote = find_matching_quote(current->next, current->type);
 			if (!close_quote)
 			{
-				ft_error("Syntax error: unclosed quotes", mini);
+				ft_error(mini, "Syntax error: unclosed quotes", NULL);
 				break ;
 			}
 			if (current->next == close_quote)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 13:22:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:32:50 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
 
 int	count_elements(t_mini *mini)
 {
-	t_lst_env *tmp;
-	int		i;
+	t_lst_env	*tmp;
+	int			i;
 
 	i = 0;
 	tmp = mini->env;
@@ -82,7 +82,7 @@ int	count_elements(t_mini *mini)
 	return (i);
 }
 
-t_lst_env	*fill_env_struct(char **envp, t_mini *minishell)
+t_lst_env	*fill_env_struct(char **envp, t_mini *mini)
 {
 	char		**split_envp;
 	t_lst_env	*lst_env;
@@ -95,10 +95,10 @@ t_lst_env	*fill_env_struct(char **envp, t_mini *minishell)
 	{
 		split_envp = split_env_vars(envp[i], '=');
 		if (split_envp == NULL)
-			ft_error("Malloc error in split", minishell);
+			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		new_node = ft_lstnew_env(split_envp[0], split_envp[1]);
 		if (new_node == NULL)
-			ft_error("Malloc error in new_node", minishell);
+			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		ft_lstadd_back_env(&lst_env, new_node);
 		free_tab(split_envp);
 		i++;

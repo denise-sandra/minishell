@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 10:43:47 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 13:57:49 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_after_dash(t_token *cur, int *n, int i)
 {
 	int	j;
-	
+
 	j = 1;
 	while (cur->cmd_tab[i][j])
 	{
@@ -30,7 +30,6 @@ static void	check_after_dash(t_token *cur, int *n, int i)
 static int	echo_opt(t_token *cur, int *n)
 {
 	int	i;
-	
 
 	i = 1;
 	while (cur->cmd_tab[i] && ft_strncmp(cur->cmd_tab[i], "-n", 2) == 0)

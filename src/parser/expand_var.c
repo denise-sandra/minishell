@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/19 16:10:31 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:47:39 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_valid_exp(t_mini *mini, t_token *cur)
 	if (ft_isdigit(tmp[1]) == 1 && ft_isdigit(tmp[2]) == 1)
 	{
 		mini->exit_status = 1;
-		return (ft_error("Syntax error character unsupported", mini), 1);
+		return (ft_error(mini, "Syntax error: unsupported character", NULL), 1);
 	}
 	return (0);
 }

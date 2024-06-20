@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/19 17:30:53 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:30:39 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ static char	*expand_variable(t_mini *mini, char *temp_str, int *len)
 			if (env_value == NULL)
 			{
 				free(env_name);
-				ft_error("Malloc error", mini);
-				return (NULL);
+				return (ft_error(mini, NULL, strerror(errno)), NULL);
 			}
-			*len +=  ft_strlen(env_name) + 1;
+			*len += ft_strlen(env_name) + 1;
 		}
 		else
-			*len +=  2;
+			*len += 2;
 	}
 	else
 	{
@@ -94,7 +93,7 @@ void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 	{
 		if (temp_str[j] != '$' || (temp_str[j] == '$' && !temp_str[j + 1])
 			|| (temp_str[j] == '$' && temp_str[j + 1] && (temp_str[j + 1] == ' '
-				|| ft_isdigit(temp_str[j + 1]))))
+					|| ft_isdigit(temp_str[j + 1]))))
 		{
 			before_var = ft_strjoin_char(before_var, temp_str[j]);
 			j++;

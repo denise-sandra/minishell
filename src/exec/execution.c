@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:58:11 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 14:33:32 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,17 @@ static void	child_pid(t_mini *mini, t_token	*tmp, int i)
 static void	exec_in_child(t_mini *mini, t_token	*tmp)
 {
 	int		i;
-	
+
 	i = 0;
 	while (tmp)
 	{
 		if (tmp->type == COMMAND)
 		{
 			if ((i + 1) != mini->cmd_count && pipe(mini->tube[i]) == -1)
-				return (ft_error("Error while piping", mini));
+				return (ft_error(mini, NULL, strerror(errno)));
 			mini->pid[i] = fork();
 			if (mini->pid[i] < 0)
-				return (ft_error("Fork error", mini));
+				return (ft_error(mini, NULL, strerror(errno)));
 			if (mini->pid[i] == 0)
 				child_pid(mini, tmp, i);
 			if (i > 0)
@@ -81,12 +81,11 @@ static void	exec_in_child(t_mini *mini, t_token	*tmp)
 	}
 }
 
-
-static int builtin_in_parent(t_mini *mini)
+static int	builtin_in_parent(t_mini *mini)
 {
 	t_token	*tmp;
 	int		builtin;
-	
+
 	tmp = mini->token;
 	while (tmp->type != COMMAND)
 		tmp = tmp->next;

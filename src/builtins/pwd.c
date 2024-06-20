@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:23:54 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 14:32:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	pwd_cmd(t_mini *mini)
 
 	size = 1024;
 	if (getcwd(cwd, size) == NULL)
-	{
-		ft_error("pwd error", mini);
-	}
+		return (ft_error(mini, NULL, strerror(errno)));
 	printf("%s\n", cwd);
 }

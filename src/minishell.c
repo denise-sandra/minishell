@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 16:59:26 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:30:55 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static t_mini	*init_minishell(char **envp)
 	mini = malloc(sizeof(t_mini));
 	if (mini == NULL)
 	{
-		ft_error("Malloc for minishell structure", mini);
+		ft_error(mini, NULL, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(mini, sizeof(t_mini));
@@ -28,7 +28,7 @@ static t_mini	*init_minishell(char **envp)
 	mini->export = copy_list(mini->env);
 	if (!mini->export)
 	{
-		ft_error("Malloc for minishell structure", mini);
+		ft_error(mini, NULL, strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	return (mini);

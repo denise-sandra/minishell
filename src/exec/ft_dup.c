@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:28:53 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 14:34:41 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_dup_in_out(t_mini *mini, int i)
 		if (dup2(mini->fd_in[i], STDIN_FILENO) == -1)
 		{
 			close(mini->fd_in[i]);
-			return (ft_error("dup Error", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 		close(mini->fd_in[i]);
 	}
@@ -28,7 +28,7 @@ static int	ft_dup_in_out(t_mini *mini, int i)
 		if (dup2(mini->fd_out[i], STDOUT_FILENO) == -1)
 		{
 			close(mini->fd_out[i]);
-			return (ft_error("dup Error", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 		close(mini->fd_out[i]);
 	}
