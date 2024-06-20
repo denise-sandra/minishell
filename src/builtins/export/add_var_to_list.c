@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:41:49 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/20 15:28:05 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ static void	check_syn_error(t_mini *mini, char	*new_var)
 	if (ft_isalpha(new_var[0]) == 0)
 	{
 		mini->exit_status = 1;
-		// return (ft_error(" not a valid identifier", mini));
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (ft_error(mini, " not a valid identifier", NULL));
+		// return (ft_error(mini, NULL, strerror(errno)));
 	}
 	i = 1;
 	while (new_var[i] && new_var[i] != '=')
@@ -96,8 +96,8 @@ static void	check_syn_error(t_mini *mini, char	*new_var)
 		if (ft_isalnum(new_var[i]) == 0)
 		{
 			mini->exit_status = 1;
-			// return (ft_error(" not a valid identifier", mini));
-			return (ft_error(mini, NULL, strerror(errno)));
+			return (ft_error(mini, " not a valid identifier", NULL));
+			// return (ft_error(mini, NULL, strerror(errno)));
 		}
 		i++;
 	}
@@ -117,8 +117,8 @@ void	add_var_to_list(t_mini *mini, t_token *cur)
 	if (res)
 		add_env(mini, new_var);
 	else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
-		return (ft_error(mini, NULL, strerror(errno)));
-		// return (ft_error(" not a valid identifier", mini));
+		return (ft_error(mini, " not a valid identifier", NULL));
+		// return (ft_error(mini, NULL, strerror(errno)));
 	add_exp(mini, new_var, res);
 	if (mini->error)
 		return ;
