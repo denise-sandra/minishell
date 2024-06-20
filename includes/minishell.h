@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 15:10:45 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/20 18:21:20 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
 char		*ft_strjoin_char(char *s, char c);
-char	     *ft_strjoin_frees1(char *s1, char *s2);
+char		*ft_strjoin_frees1(char *s1, char *s2);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);
@@ -81,21 +81,22 @@ t_lst_env	*copy_list(t_lst_env *lst);
 
 //exec
 void		execution(t_mini *minishell);
-void	    cmd_exec(t_mini *mini, t_token *tmp);
+void		cmd_exec(t_mini *mini, t_token *tmp);
 int			is_builtin(char *command);
 void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
 int			init_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
-int	        ft_dup_tubes(t_mini *mini, int i);
+int			ft_dup_tubes(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
 
 //builtin fucntions
 void		echo_command(t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
-void        add_var_to_list(t_mini *mini, t_token *cur);
-char	    **list_to_tab(t_mini *mini);
+void		add_var_to_list(t_mini *mini, t_token *cur);
+char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell);
-void		exit_cmd(t_mini *minishell, char *input);
+void		exit_cmd(t_mini *mini, char **cmd_tab);
+// void		exit_cmd(t_mini *minishell, char *input);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini);
 

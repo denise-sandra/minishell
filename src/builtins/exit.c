@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/09 13:45:42 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/20 22:04:11 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static	int	verify_spaces(t_mini *minishell, char *input)
 	if (input[i] == '\0')
 	{
 		minishell->exit_status = 0;
-		return (0);
+		return (-1);
 	}
 	return (i);
 }
@@ -36,13 +36,15 @@ static void	is_arg_valid(t_mini *minishell, char *exit_arg, int sign)
 	arg = ft_atoll(exit_arg, &err) * sign;
 	if (err || arg < LLONG_MIN + 1 || arg > LLONG_MAX)
 	{
-		minishell->exit_status = 255;
-		write(2, "Wrong arguments\n", 17);
+		minishell->exit_status = 2;
+		minishell->should_exit = 1;
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		return ;
 	}
 	if (arg < 0)
 		arg = 256 + (arg % 256);
 	minishell->exit_status = (arg % 256);
+	minishell->should_exit = 1;
 }
 
 static void	is_var_valid(t_mini *minishell, char *var_name)
@@ -57,6 +59,7 @@ static void	is_var_valid(t_mini *minishell, char *var_name)
 	if (var_value == NULL)
 	{
 		minishell->exit_status = 0;
+		minishell->should_exit = 1;
 		return ;
 	}
 	else
@@ -70,31 +73,53 @@ static void	is_var_valid(t_mini *minishell, char *var_name)
 	}
 }
 
-void	exit_cmd(t_mini *minishell, char *input)
+static void	process_exit_arg(t_mini *minishell, char *arg)
 {
-	int	i;
 	int	sign;
+	int	i;
 
-	printf("exit\n");
 	sign = 1;
-	i = verify_spaces(minishell, input);
-	if (i == 0)
-		return ;
-	while (input[i])
+	i = 0;
+	while (arg[i])
 	{
-		if (input[i] == '-')
+		if (arg[i] == '-')
 			sign = -1;
-		if (input[i] == '-' || input[i] == '+')
-			return (is_arg_valid(minishell, input + ++i, sign));
-		if (input[i] == '$')
-			return (is_var_valid(minishell, input + ++i));
-		if (ft_isdigit(input[i]))
-			return (is_arg_valid(minishell, input + i, sign));
+		if (arg[i] == '-' || arg[i] == '+')
+			return (is_arg_valid(minishell, arg + ++i, sign));
+		if (arg[i] == '$')
+			return (is_var_valid(minishell, arg + ++i));
+		if (ft_isdigit(arg[i]))
+			return (is_arg_valid(minishell, arg + i, sign));
 		else
 		{
-			minishell->exit_status = 255;
-			write (2, "minishell: wrong argument\n", 27);
+			minishell->exit_status = 2;
+			minishell->should_exit = 1;
+			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 			return ;
 		}
 	}
+}
+
+void	exit_cmd(t_mini *minishell, char **cmd_tab)
+{
+	int	i;
+
+	ft_putstr_fd("exit\n", 1);
+	if (!cmd_tab[1])
+	{
+		minishell->exit_status = 0;
+		minishell->should_exit = 1;
+		return ;
+	}
+	if (cmd_tab[2])
+	{
+		ft_error(minishell, "minishell: exit: too many arguments", NULL);
+		return ;
+	}
+	i = 0;
+	if (cmd_tab[1][i] == '"' || cmd_tab[1][i] == '\'' )
+		i = verify_spaces(minishell, ++cmd_tab[1]);
+	if (i == -1)
+		return ;
+	process_exit_arg(minishell, cmd_tab[1] + i);
 }

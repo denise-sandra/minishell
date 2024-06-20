@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:25:01 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 19:22:14 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	is_builtin(char *command)
 		return (5);
 	else if (ft_strncmp(command, "unset", len) == 0)
 		return (6);
+	else if (ft_strncmp(command, "exit", len) == 0)
+		return (7);
 	else
 		return (0);
 }
@@ -45,4 +47,6 @@ void	execute_builtin(t_mini *mini, int builtin, t_token *cur)
 		pwd_cmd(mini);
 	else if (builtin == 5)
 		cd_cmd(mini);
+	else if (builtin == 7)
+		exit_cmd(mini, cur->cmd_tab);
 }

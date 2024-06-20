@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 15:30:24 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/20 22:04:47 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ static void	go_back(t_mini *mini)
 
 	path = pwd_cmd_char(mini);
 	c = ft_strrchr_int(path, '/');
-	// printf("%d\n", c);
 	new_path = malloc((c + 1) * sizeof(char));
 	if (new_path == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
 	ft_strlcpy(new_path, path, c);
-	// printf("%s\n", new_path);
 	free(path);
 	if (chdir(new_path) != 0)
 	{
@@ -83,7 +81,7 @@ void	cd_cmd(t_mini *mini)
 	const char	*path;
 
 	if (mini->token->cmd_tab[2])
-		return (ft_error(mini, "too many arguments", NULL));
+		return (ft_error(mini, " too many arguments", NULL));
 	path = mini->token->cmd_tab[1];
 	if (!path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
 		go_home(mini);
