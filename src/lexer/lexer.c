@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/11 15:48:36 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 14:36:46 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,12 @@ static int	create_pretokens_list(char *input, t_mini *mini)
 void	lexer(char *input, t_mini *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
-	{
-		ft_error("Memory allocation error", mini);
-		return ;
-	}
+		return (ft_error(mini, NULL, strerror(errno)));
 	tag_in_quotes(mini, NULL);
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
 	{
-		ft_error("Syntaxis error: special character not supported", mini);
+		ft_error(mini, "Syntaxis error: special character not supported", NULL);
 		return ;
 	}
 	// t_pretok *print = mini->pretok;

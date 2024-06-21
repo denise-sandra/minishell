@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/19 18:03:19 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/20 15:39:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 	{
 		str = ft_strjoin_char(str, (*cur)->c);
 		if (!str)
-			return (ft_error("Memory allocation error", ms));
+			return (ft_error(ms, NULL, strerror(errno)));
 		*cur = (*cur)->next;
 	}
 	if (*cur && (*cur)->type == q)
@@ -30,7 +30,7 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 	if (str)
 	{
 		if (tok_list(str, q, lst) != 0)
-			return (free(str), ft_error("Memory allocation error", ms));
+			return (ft_error(ms, NULL, strerror(errno)));
 		free(str);
 	}
 }
@@ -40,14 +40,17 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 	if ((*cur)->type == PIPE)
 	{
 		if (!(*cur)->next)
-			return (ft_error("Syntax error near unexpected token `|'", mini));
+		{
+			ft_error(mini, "Syntax error near unexpected token `|'", NULL);
+			return ;
+		}
 		if (tok_list("|", PIPE, list) != 0)
-			return (ft_error("Memory allocation error", mini));
+			return (ft_error(mini, NULL, strerror(errno)));
 	}
 	else if ((*cur)->type == EMPTY)
 	{
 		if (tok_list("", EMPTY, list) != 0)
-			return (ft_error("Memory allocation error", mini));
+			return (ft_error(mini, NULL, strerror(errno)));
 	}
 	*cur = (*cur)->next;
 }
@@ -58,7 +61,7 @@ static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
 	{
 		*s = ft_strjoin_char(*s, (*cur)->c);
 		if (!(*s))
-			return (ft_error("Memory allocation error", ms));
+			return (ft_error(ms, NULL, strerror(errno)));
 	}
 	else if ((*prev && (*prev)->c == '=') && ((*cur)->type == D_Q
 			|| (*cur)->type == S_Q))
@@ -68,7 +71,7 @@ static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
 		{
 			*s = ft_strjoin_char(*s, (*cur)->c);
 			if (!(*s))
-				return (ft_error("Memory allocation error", ms));
+				return (ft_error(ms, NULL, strerror(errno)));
 			*cur = (*cur)->next;
 		}
 	}
@@ -95,7 +98,7 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	if (join)
 	{
 		if (tok_list(join, STRING, list) != 0)
-			return (free(join), ft_error("Memory allocation error", mini));
+			return (free(join), ft_error(mini, NULL, strerror(errno)));
 		free(join);
 	}
 }

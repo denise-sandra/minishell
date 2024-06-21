@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 09:40:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/20 14:34:58 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int	init_fds(t_mini *mini)
 	mini->fd_out = malloc(mini->cmd_count * sizeof(int));
 	mini->pid = malloc(mini->cmd_count * sizeof(pid_t));
 	if (!mini->fd_in || !mini->fd_out || !mini->pid)
-		return (ft_error("Malloc in execution", mini), 1);
+		return (ft_error(mini, NULL, strerror(errno)), 1);
 	if (mini->cmd_count > 1)
 	{
 		mini->tube = malloc((mini->cmd_count - 1) * sizeof(*mini->tube));
 		if (!mini->tube)
-			return (ft_error("Malloc in execution", mini), 1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
 	i = 0;
 	while (i < mini->cmd_count)

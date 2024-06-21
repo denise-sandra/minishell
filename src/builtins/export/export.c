@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 10:45:33 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/20 11:12:22 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_command(t_mini *minishell)
+static void	print_export(t_lst_env *env)
 {
-	t_lst_env	*temp;
-
-	temp = minishell->env;
-	while (temp)
+	while (env)
 	{
-		printf("%s=%s\n", temp->name, temp->value);
-		temp = temp->next;
+		if (env->value)
+			printf("declare -x %s=\"%s\"\n", env->name, env->value);
+		else
+			printf("declare -x %s\n", env->name);
+		env = env->next;
 	}
+}
+
+void	export_command(t_mini *mini, t_token *cur)
+{
+	char	*new_var;
+
+	new_var = cur->cmd_tab[1];
+	if (new_var)
+		add_var_to_list(mini, cur);
+	else
+		print_export(mini->export);
+	if (mini->error)
+		mini->exit_status = 1;
 }

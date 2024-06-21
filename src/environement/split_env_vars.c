@@ -25,7 +25,7 @@ static char	*copy_letters_until_end(char **tab, char const *s)
 		return (NULL);
 	i = 0;
 	while (s[i] && i < letters)
-	{	
+	{
 		tab[1][i] = s[i];
 		i++;
 	}
@@ -46,7 +46,7 @@ static char	*copy_letters_until_c(char **tab, char const *s, char c)
 		return (NULL);
 	i = 0;
 	while (s[i] && i < letters)
-	{	
+	{
 		tab[0][i] = s[i];
 		i++;
 	}
