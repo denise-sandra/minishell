@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/21 13:05:05 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/21 23:54:14 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			ft_dup(t_mini *mini, int i);
 int			ft_dup_tubes(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
 void	    parse_and_execute(t_mini *mini, char *input);
+int	        exec_script(t_mini *mini, t_token *tmp);
 
 //builtin fucntions
 void		echo_command(t_token *cur);
