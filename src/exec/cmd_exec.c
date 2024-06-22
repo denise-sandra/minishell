@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 15:13:16 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/21 23:53:52 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
+	if (exec_script(mini, tmp) == 1)
+		return ;
 	paths = pars_path(mini);
 	if (paths == NULL)
 		return (ft_error(mini, "Failed to parse path", NULL));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 21:53:27 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/21 10:03:48 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ static t_mini	*init_minishell(char **envp)
 	return (mini);
 }
 
+void	parse_and_execute(t_mini *mini, char *input)
+{
+	lexer(input, mini);
+	parser(mini);
+	if (!mini->error)
+	{
+		execution(mini);
+		if (mini->error)
+			mini->exit_status = 1;
+	}
+}
+
 static void	minishell(t_mini *mini)
 {
 	char	*input;
@@ -46,14 +58,7 @@ static void	minishell(t_mini *mini)
 		if (*input)
 		{
 			add_history(input);
-			lexer(input, mini);
-			parser(mini);
-			if (!mini->error)
-			{
-				execution(mini);
-				if (mini->error)
-					mini->exit_status = 1;
-			}
+			parse_and_execute(mini, input);
 		}
 		clean_token_list(&(mini->token));
 		clean_fd(mini);
