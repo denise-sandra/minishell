@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:34:21 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/24 14:29:34 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,6 @@ static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 	return (0);
 }
 
-// static void	read_here_doc(t_mini *mini, char *eof, int i)
-// {
-// 	char	*line;
-// 	int		is_eof;
-
-// 	if (pipe(mini->here_fd) < 0)
-// 		return (ft_error("Can't open infile", mini));
-// 	is_eof = 0;
-// 	while (is_eof == 0)
-// 	{
-// 		line = get_next_line(STDIN_FILENO);
-// 		if (!line)
-// 			is_eof = 1;
-// 		else
-// 			is_eof = process_here_line(mini->here_fd, line, eof);
-// 	}
-// 	close(mini->here_fd[1]);
-// 	if (mini->fd_in && i < mini->cmd_count)
-// 		mini->fd_in[i] = mini->here_fd[0];
-// 	else
-// 		close(mini->here_fd[0]);
-// }
-
 static void	read_here_doc(t_mini *mini, char *eof, int i)
 {
 	char	*line;
@@ -65,6 +42,7 @@ static void	read_here_doc(t_mini *mini, char *eof, int i)
 
 	if (pipe(mini->here_fd) < 0)
 		return (ft_error(mini, NULL, strerror(errno)));
+	printf("entra here\n");
 	is_eof = 0;
 	while (is_eof == 0)
 	{
