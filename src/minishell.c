@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/21 10:03:48 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/24 14:51:01 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
-	mini->export = copy_list(mini->env);
-	if (!mini->export)
-	{
-		ft_error(mini, NULL, strerror(errno));
-		exit(EXIT_FAILURE);
-	}
+	// mini->export = copy_list(mini->env);
+	// if (!mini->export)
+	// {
+	// 	ft_error(mini, NULL, strerror(errno));
+	// 	exit(EXIT_FAILURE);
+	// }
 	return (mini);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 11:12:22 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/24 14:58:27 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,21 @@ static void	print_export(t_lst_env *env)
 	}
 }
 
+static void	init_export(t_mini *mini)
+{
+	mini->export = copy_list(mini->env);
+	if (!mini->export)
+	{
+		ft_error(mini, NULL, strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	export_command(t_mini *mini, t_token *cur)
 {
 	char	*new_var;
 
+	init_export(mini);
 	new_var = cur->cmd_tab[1];
 	if (new_var)
 		add_var_to_list(mini, cur);

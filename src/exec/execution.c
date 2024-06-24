@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 14:36:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:59:56 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	close_fd_and_wait(t_mini *mini)
 {
 	int	i;
-	//int	j;
 	int	status;
 	int	last_exit_status;
 
@@ -39,7 +38,6 @@ static void	close_fd_and_wait(t_mini *mini)
 static void	child_pid(t_mini *mini, t_token	*tmp, int i)
 {
 	int		builtin;
-	//int		j;
 
 	if (ft_dup(mini, i) != 0)
 		exit (1);
@@ -80,11 +78,6 @@ static void	exec_in_child(t_mini *mini, t_token *tmp)
 			}
 			i++;
 		}
-		printf("in:%d  out: %d \n", mini->fd_in[0], mini->fd_out[0]);
-		printf("hd fd: %d \n", mini->here_fd[0]);
-		for (int j = 0; j < mini->cmd_count - 1; j++)
-			printf("tube0: %d, tube1: %d\n", mini->tube[j][0], mini->tube[j][1]);
-			
 		tmp = tmp->next;
 	}
 }

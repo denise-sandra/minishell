@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/21 23:53:52 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/24 14:55:48 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	{
 		ft_putstr_fd(tmp->cmd_tab[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		error_cleanup(mini);
+		clean_minishell(mini);
 		exit(127);
 	}
 	else if (exec_ret == -1)
