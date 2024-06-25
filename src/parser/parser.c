@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/25 10:22:17 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:42:21 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+/*
+commit 59d3dcbd2be8da82ee52a9a911c7d02331b53deb 
+
+correct thse examples should give this behaviour:
+
+skanna@k0r1p11:~/Documents/minishell$ echo hi <out bla
+hi bla
+
+
+skanna@k0r1p11:~/Documents/minishell$ cat <"1""2""3""4""5"
+hello World
+.skanna@k0r1p11:~/Documents/minishell$ 
+
+
+*/
 static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 {
 	char	*str;
@@ -125,28 +141,28 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	//  t_token *print = mini->token;
-	// while (print)
-	// {
-	// 	printf("1new: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	 t_token *print = mini->token;
+	while (print)
+	{
+		printf("1new: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 	parse_commands(mini);
 	last_error_checks(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2new: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("2new: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 }
