@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 14:59:56 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:18:59 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ static void	close_fd_and_wait(t_mini *mini)
 	last_exit_status = 0;
 	while (i < mini->cmd_count)
 	{
-		if (mini->fd_in && mini->fd_in[i] != STDIN_FILENO)
+		if (mini->fd_in &&  mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 			close(mini->fd_in[i]);
-		if (mini->fd_out && mini->fd_out[i] != STDOUT_FILENO)
+		if (mini->fd_out && mini->fd_out[i] > 0 && mini->fd_out[i] != STDOUT_FILENO)
 			close(mini->fd_out[i]);
+		i++;
+	}
+	i = 0;
+	while (i < mini->cmd_count)
+	{
 		waitpid(mini->pid[i], &status, 0);
 		if (WIFEXITED(status))
 			last_exit_status = WEXITSTATUS(status);
@@ -34,13 +39,15 @@ static void	close_fd_and_wait(t_mini *mini)
 	mini->exit_status = last_exit_status;
 }
 
-
-static void	child_pid(t_mini *mini, t_token	*tmp, int i)
+static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
 	int		builtin;
 
 	if (ft_dup(mini, i) != 0)
+	{
+		clean_minishell(mini);
 		exit (1);
+	}
 	builtin = is_builtin(tmp->cmd_tab[0]);
 	if (builtin > 0)
 		execute_builtin(mini, builtin, tmp);

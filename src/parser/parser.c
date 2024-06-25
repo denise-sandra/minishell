@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 15:00:06 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/25 10:22:17 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 
 	str = NULL;
 	*cur = (*cur)->next;
-	while (*cur && (*cur)->type != q)
+	while (*cur && (*cur)->type != WHITE)
 	{
 		str = ft_strjoin_char(str, (*cur)->c);
 		if (!str)
 			return (ft_error(ms, NULL, strerror(errno)));
 		*cur = (*cur)->next;
+		if (*cur && (*cur)->type == q)
+			*cur = (*cur)->next;
 	}
-	if (*cur && (*cur)->type == q)
-		*cur = (*cur)->next;
 	if (str)
 	{
 		if (tok_list(str, q, lst) != 0)
