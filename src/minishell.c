@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 14:51:01 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:12:05 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,7 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
-	// mini->export = copy_list(mini->env);
-	// if (!mini->export)
-	// {
-	// 	ft_error(mini, NULL, strerror(errno));
-	// 	exit(EXIT_FAILURE);
-	// }
+
 	return (mini);
 }
 
@@ -37,12 +32,12 @@ void	parse_and_execute(t_mini *mini, char *input)
 {
 	lexer(input, mini);
 	parser(mini);
-	if (!mini->error)
-	{
-		execution(mini);
-		if (mini->error)
-			mini->exit_status = 1;
-	}
+	// if (!mini->error)
+	// {
+	// 	execution(mini);
+	// 	if (mini->error)
+	// 		mini->exit_status = 1;
+	// }
 }
 
 static void	minishell(t_mini *mini)

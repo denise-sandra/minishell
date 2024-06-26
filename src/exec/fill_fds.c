@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 10:04:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 12:32:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,26 @@ static void	read_here_doc(t_mini *mini, char *eof, int i)
 
 static int	get_infile(t_mini *mini, t_token *token, int i)
 {
-	if (token->type == IN)
+	if (token->next && token->type == IN)
 		mini->fd_in[i] = open(token->next->value, O_RDONLY);
 	if (mini->fd_in[i] < 0)
 		mini->inv_fd[i] = 1;
-	else if (token->type == HERE)
+	else if (token->next && token->type == HERE)
 	{
 		read_here_doc(mini, token->next->value, i);
 		if (mini->error)
 			return (1);
 	}
+	printf("get infile: %d  value: %s\n",mini->inv_fd[i], token->value);
 	return (0);
 }
 
 static void	get_outfile(t_mini *mini, t_token *token, int i)
 {
-	if (token->type == OUT)
+	if (token->next && token->type == OUT)
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_RDWR | O_TRUNC, 0644);
-	if (token->type == APP)
+	if (token->next && token->type == APP)
 	{
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_RDWR | O_APPEND, 0644);

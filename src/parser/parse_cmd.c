@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/25 10:21:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:37:08 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,13 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		free((*cur)->value);
 		free(*(cur));
 		*cur = tmp;
-		if (*cur && ((*cur)->type == IN || (*cur)->type == OUT \
+		while (*cur && ((*cur)->type == IN || (*cur)->type == OUT \
 			|| (*cur)->type == HERE || (*cur)->type == APP))
 		{
 			if ((*cur)->next && (*cur)->next->next && (*cur)->next->next->type != PIPE)
 				*cur = (*cur)->next->next;
+			else	
+				break ;
 		}
 	}
 	new->cmd_tab[i] = NULL;
@@ -71,12 +73,14 @@ static int	count_cmd_tokens(t_token *cur)
 		i++;
 		tmp = tmp->next;
 	}
-	if (tmp && (tmp->type == IN || tmp->type == OUT \
+	while (tmp && (tmp->type == IN || tmp->type == OUT \
 			|| tmp->type == HERE || tmp->type == APP))
-		{
-			if (tmp->next && tmp->next->next)
-				tmp = tmp->next->next;	
-		}
+	{
+		if (tmp->next && tmp->next->next)
+			tmp = tmp->next->next;
+		else
+			tmp = tmp->next;
+	}
 	while (tmp && (tmp->type == STRING
 			|| tmp->type == OPT || tmp->type == EMPTY))
 	{

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 10:15:09 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:15:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 {
 	t_token	*tmp;
 
+	printf("inv %d\n", mini->inv_fd[0]);
 	if (mini->inv_fd[0] == 1)
 		return (ft_error(mini, " No such file or directory", NULL), 1);
 	tmp = mini->token;
@@ -120,13 +121,23 @@ void	execution(t_mini *mini)
 	int		builtin;
 
 	tmp = mini->token;
+	builtin = -1;
 	if (init_fds(mini) != 0)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
 	if (mini->cmd_count <= 0)
+	{
+		if (mini->fd_in[0] > 0)
+			close(mini->fd_in[0]);
+		if (mini->fd_out[0] > 1)
+			close(mini->fd_out[0]);
+		if (mini->fd_in[0] < 0 || mini->fd_out[0] < 0)
+			return (ft_error(mini, " No such file or directory", NULL));
 		return ;
-	builtin = is_builtin(tmp->cmd_tab[0]);
+	}
+	if (tmp->type == COMMAND)
+		builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0 && builtin_in_parent(mini, builtin) != 0)
 		return ;
 	exec_in_child(mini, tmp);
@@ -134,3 +145,6 @@ void	execution(t_mini *mini)
 		return ;
 	close_fd_and_wait(mini);
 }
+
+
+// grep <Makefile -v >outfile1 'A'

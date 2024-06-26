@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 09:03:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:22:48 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,71 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
+
+// static void	order_token(t_mini *mini)
+// {
+// 	t_token *lst;
+// 	t_token *redirs;
+// 	t_token *cmds;
+// 	int		i;
+// 	int		j;
+
+// 	lst = mini->token;
+// 	redirs = NULL;
+// 	cmds = NULL;
+// 	i = 0;
+// 	j = 0;
+// 	while (lst)
+// 	{
+// 		if (lst->type == STRING)
+// 		{
+// 			cmds = lst;
+// 			i++;
+// 		}
+// 		else if (lst->type == HERE || lst->type == IN)
+// 		{
+// 			redirs = lst;
+// 			j++;
+// 		}
+// 		lst = lst->next;
+// 	}
+// 	if (j)
+// 	{
+		
+// 	}
+	
+// }
+
+
+static void	order_token(t_mini *mini)
+{
+	t_token *lst;
+	t_token *in;
+	t_token *prev;
+	t_token *l_in;
+
+	lst = mini->token;
+	prev = NULL;
+	in = NULL;
+	while (lst)
+	{
+		if ((lst->type == IN || lst->type == HERE))
+			in = lst;
+		while (lst && prev && (lst->type == IN || lst->type == HERE) && lst->next->type == STRING)
+		{
+			l_in = lst->next;
+			lst = lst->next->next;
+			break ;
+		}
+		prev = lst;
+		lst = lst->next;
+	}
+	prev->next = lst;
+	l_in->next = mini->token;
+	mini->token = in;
+	
+}
+
 void	parser(t_mini *mini)
 {
 	t_pretok	*pretok;
@@ -141,28 +206,29 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	//  t_token *print = mini->token;
-	// while (print)
-	// {
-	// 	printf("1new: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	order_token(mini);
+	t_token *print = mini->token;
+	while (print)
+	{
+		printf("1new: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 	parse_commands(mini);
 	last_error_checks(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2new: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("2new: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 }
