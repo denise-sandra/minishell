@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/24 14:12:20 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:11:25 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ void	clean_fd(t_mini *minishell)
 	{
 		free(minishell->tube);
 		minishell->tube = NULL;
+	}
+	if (minishell->inv_fd)
+	{
+		free(minishell->inv_fd);
+		minishell->inv_fd = NULL;
 	}
 }
 

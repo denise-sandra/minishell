@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/25 14:18:59 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 10:15:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
 	int		builtin;
 
+	if (mini->inv_fd[i] == 1)
+	{
+		if (i < mini->cmd_count - 1)
+		{
+			close(mini->tube[i][0]);
+			close(mini->tube[i][1]);
+		}
+		ft_putstr_fd(" No such file or directory\n", 2);
+		clean_minishell(mini);
+		exit (1);
+	}
 	if (ft_dup(mini, i) != 0)
 	{
 		clean_minishell(mini);
@@ -89,16 +100,16 @@ static void	exec_in_child(t_mini *mini, t_token *tmp)
 	}
 }
 
-static int	builtin_in_parent(t_mini *mini)
+static int	builtin_in_parent(t_mini *mini, int builtin)
 {
 	t_token	*tmp;
-	int		builtin;
 
+	if (mini->inv_fd[0] == 1)
+		return (ft_error(mini, " No such file or directory", NULL), 1);
 	tmp = mini->token;
 	while (tmp->type != COMMAND)
 		tmp = tmp->next;
-	builtin = is_builtin(tmp->cmd_tab[0]);
-	if (mini->cmd_count == 1 && builtin > 0)
+	if (mini->cmd_count == 1)
 		return (execute_builtin(mini, builtin, mini->token), 1);
 	return (0);
 }
@@ -106,16 +117,18 @@ static int	builtin_in_parent(t_mini *mini)
 void	execution(t_mini *mini)
 {
 	t_token	*tmp;
+	int		builtin;
 
+	tmp = mini->token;
 	if (init_fds(mini) != 0)
 		return ;
 	if (fill_fd(mini) != 0)
 		return ;
 	if (mini->cmd_count <= 0)
 		return ;
-	if (builtin_in_parent(mini) != 0)
+	builtin = is_builtin(tmp->cmd_tab[0]);
+	if (mini->cmd_count == 1 && builtin > 0 && builtin_in_parent(mini, builtin) != 0)
 		return ;
-	tmp = mini->token;
 	exec_in_child(mini, tmp);
 	if (mini->error)
 		return ;

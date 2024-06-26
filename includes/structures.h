@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/25 13:49:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 09:49:53 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_minishell
 	int			cmd_count;
 	int			mod_env;
 	int			error;
+	int			*inv_fd;
 	int			*fd_in;
 	int			*fd_out;
 	int			(*tube)[2];

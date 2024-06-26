@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/25 14:16:23 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/26 09:51:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,9 @@ int	init_fds(t_mini *mini)
 		return (0);
 	mini->fd_in = malloc(mini->cmd_count * sizeof(int));
 	mini->fd_out = malloc(mini->cmd_count * sizeof(int));
+	mini->inv_fd = malloc(mini->cmd_count * sizeof(int));
 	mini->pid = malloc(mini->cmd_count * sizeof(pid_t));
-	if (!mini->fd_in || !mini->fd_out || !mini->pid)
+	if (!mini->fd_in || !mini->fd_out || !mini->pid || !mini->inv_fd)
 		return (ft_error(mini, NULL, strerror(errno)), 1);
 	if (mini->cmd_count > 1)
 	{
@@ -81,6 +82,7 @@ int	init_fds(t_mini *mini)
 	{
 		mini->fd_in[i] = 0;
 		mini->fd_out[i] = 1;
+		mini->inv_fd[i] = 0;
 		mini->pid[i] = 0;
 		i++;
 	}
