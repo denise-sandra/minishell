@@ -1,5 +1,5 @@
 CC 		= cc
-CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  #-fsanitize=address
 LDFLAGS = -lreadline
 
 GREEN = \033[32m
@@ -11,7 +11,8 @@ NAME	:= minishell
 SRCS	:= ${addprefix src/, minishell.c \
 		${addprefix environement/, split_env_vars.c fill_env_struct.c env_helpers.c copy_list.c} \
 		${addprefix lexer/, lexer.c tag_in_quotes.c remove_spaces.c} \
-		${addprefix parser/, parser.c parse_redirs.c expand_var.c expand_help.c order_toks.c parse_cmd.c parse_errors.c} \
+		${addprefix parser/, parser.c parse_redirs.c expand_var.c expand_help.c parse_cmd.c parse_errors.c} \
+		${addprefix parser/order_toks/, order_toks.c order_opt.c} \
 		${addprefix exec/, execution.c execute_builtin.c init_exec.c fill_fds.c ft_dup.c cmd.c cmd_exec.c exec_script.c} \
 		${addprefix builtins/, env.c exit.c pwd.c cd.c echo.c unset.c} \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c} \

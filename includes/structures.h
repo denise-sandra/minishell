@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 09:49:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 15:26:04 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,15 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_order
+{
+	t_token	*prev;
+	t_token	*redir_head;
+	t_token	*redir_tail;
+	t_token	*cmd_head;
+	t_token	*cmd_tail;
+}	t_order;
+
 typedef struct s_minishell
 {
 	t_lst_env	*env;
@@ -61,6 +70,7 @@ typedef struct s_minishell
 	char		**env_char;
 	t_token		*token;
 	t_pretok	*pretok;
+	t_order	*order;
 	int			exit_status;
 	int			should_exit;
 	int			cmd_count;
