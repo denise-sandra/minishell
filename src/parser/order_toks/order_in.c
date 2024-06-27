@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 16:41:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:29:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	handle_pipes_utils(t_mini *mini, t_order *order)
 {
-	if (order->redir_tail)
-		order->redir_tail->next = order->cmd_head;
+	order->redir_tail->next = order->cmd_head;
 	if (order->cmd_tail)
 		order->cmd_tail->next = NULL;
 	if (order->prev)
@@ -97,7 +96,7 @@ static void	handle_string(t_mini *mini, t_token **cur, t_token **next)
 	*cur = *next;
 }
 
-void	order_opt(t_mini *mini)
+void	order_in(t_mini *mini)
 {
 	t_token	*cur;
 	t_token	*next;

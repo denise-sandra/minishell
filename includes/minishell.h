@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 16:34:41 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:32:44 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
 void		expand_inside_dq(t_mini *mini, char **str);
 void		expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
-int		order_in(t_mini *mini);
-void      order_opt(t_mini *mini);
+int		order_tok(t_mini *mini);
+void      order_in(t_mini *mini);
 // void order_output_redirections(t_mini *mini);
 void		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);

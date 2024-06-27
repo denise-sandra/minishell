@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 15:48:05 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:32:07 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
-	if (order_in(mini) == 1)
+	if (order_tok(mini) == 1)
 		return ;
 	parse_commands(mini);
 	print = mini->token;
