@@ -1,8 +1,0 @@
-builtins
-environement
-exec
-lexer
-minishell.c
-minishell.o
-parser
-utils

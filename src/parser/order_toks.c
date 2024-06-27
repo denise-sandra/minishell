@@ -6,75 +6,120 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 13:41:59 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/27 15:04:07 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-static void	adjust_position(t_mini *mini, t_token **cur, t_token **prev, t_token **first)
+void	order_in(t_mini *mini)
 {
-	t_token	*temp;
+	t_token *cur = mini->token;
+	t_token *prev = NULL;
+	t_token *redir_head = NULL;
+	t_token *redir_tail = NULL;
+	t_token *cmd_head = NULL;
+	t_token *cmd_tail = NULL;
 
-	if (*prev)
-		(*prev)->next = (*cur)->next;
-	(*cur)->next = *first;
-	temp = *cur;
-	if (*prev)
-		*cur = (*prev)->next;
-	else
-		*cur = temp->next;
-	if (!*prev)
-		mini->token = temp;
-	if (*prev == *first)
-		*first = temp;
-}
-
-
-static void	handle_pipe(t_token **cur, t_token **prev, t_token **first)
-{
-	*first = NULL;
-	*prev = *cur;
-	*cur = (*cur)->next;
-}
-
-static void	handle_redirection(t_token **cur, t_token **prev, t_token **first, t_mini *ms)
-{
-	if (*first && (*prev != *first))
-		adjust_position(ms, cur, prev, first);
-	else
+	while (cur)
 	{
-		*prev = *cur;
-		*cur = (*cur)->next;
-	}
-}
+		t_token *next = cur->next;
 
-static void	handle_command(t_token **current, t_token **prev, t_token **first)
-{
-	if (!*first)
-		*first = *current;
-	*prev = *current;
-	*current = (*current)->next;
-}
+		if (cur->type == PIPE)
+		{
+			// Combine redirection tokens and command tokens for the current segment
+			if (redir_tail)
+			{
+				redir_tail->next = cmd_head;
+				cmd_tail->next = NULL; // End of command segment
+				if (prev)
+					prev->next = redir_head;
+				else
+					mini->token = redir_head;
+				prev = cmd_tail ? cmd_tail : redir_tail;
+			}
+			else if (cmd_tail)
+			{
+				if (prev)
+					prev->next = cmd_head;
+				else
+					mini->token = cmd_head;
+				prev = cmd_tail;
+			}
 
-void	order_token(t_mini *mini)
-{
-	t_token	*current;
-	t_token	*prev;
-	t_token	*first_nonredir;
+			// Set the pipe token
+			if (prev)
+				prev->next = cur;
+			prev = cur;
 
-	current = mini->token;
-	prev = NULL;
-	first_nonredir = NULL;
-	while (current)
-	{
-		if (current->type == PIPE)
-			handle_pipe(&current, &prev, &first_nonredir);
-		else if (current->type == IN || current->type == OUT
-			|| current->type == HERE || current->type == APP)
-			handle_redirection(&current, &prev, &first_nonredir, mini);
+			// Reset the lists for the next segment
+			redir_head = redir_tail = NULL;
+			cmd_head = cmd_tail = NULL;
+
+			cur = next;
+			continue;
+		}
+		else if (cur->type == IN || cur->type == HERE)
+		{
+			// Handle input redirection token
+			if (redir_tail)
+			{
+				redir_tail->next = cur;
+				redir_tail = cur;
+			}
+			else
+			{
+				redir_head = cur;
+				redir_tail = cur;
+			}
+
+			// Check if the next token is a string (filename or heredoc delimiter)
+			if (next && next->type == STRING)
+			{
+				redir_tail->next = next;
+				redir_tail = next;
+				cur = next->next;
+			}
+			else
+			{
+				cur = next;
+			}
+		}
 		else
-			handle_command(&current, &prev, &first_nonredir);
+		{
+			// Handle command/option/string token
+			if (cmd_tail)
+			{
+				cmd_tail->next = cur;
+				cmd_tail = cur;
+			}
+			else
+			{
+				cmd_head = cur;
+				cmd_tail = cur;
+			}
+			cur->next = NULL;
+			cur = next;
+		}
+	}
+
+	// Combine the last segment's redirection tokens and command tokens
+	if (redir_tail)
+	{
+		redir_tail->next = cmd_head;
+		if (cmd_tail)
+			cmd_tail->next = NULL;
+		if (prev)
+			prev->next = redir_head;
+		else
+			mini->token = redir_head;
+	}
+	else if (cmd_tail)
+	{
+		if (prev)
+			prev->next = cmd_head;
+		else
+			mini->token = cmd_head;
 	}
 }

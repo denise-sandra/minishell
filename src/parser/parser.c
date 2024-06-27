@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 13:41:31 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/27 14:36:38 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
-	order_token(mini);
+	order_in(mini);
 	parse_commands(mini);
-	last_error_checks(mini);
+	
 	print = mini->token;
 	while (print)
 	{
@@ -150,4 +150,5 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
+	last_error_checks(mini);
 }
