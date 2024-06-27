@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 14:15:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:24:25 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 {
 	t_token	*tmp;
 
-	printf("inv %d\n", mini->inv_fd[0]);
+	// printf("inv %d\n", mini->inv_fd[0]);
 	if (mini->inv_fd[0] == 1)
 		return (ft_error(mini, " No such file or directory", NULL), 1);
 	tmp = mini->token;

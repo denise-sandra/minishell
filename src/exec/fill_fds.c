@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 12:32:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:20:39 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	get_infile(t_mini *mini, t_token *token, int i)
 		if (mini->error)
 			return (1);
 	}
-	printf("get infile: %d  value: %s\n",mini->inv_fd[i], token->value);
+	// printf("get infile: %d  value: %s\n",mini->inv_fd[i], token->value);
 	return (0);
 }
 

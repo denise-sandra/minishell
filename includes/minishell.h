@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 13:35:26 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 12:29:57 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ void		lexer(char *input, t_mini *mini);
 void		tag_in_quotes(t_mini *mini, t_pretok *close_quote);
 void		remove_spaces(t_mini *mini);
 
-//parser2
+//parser
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
 void		expand_inside_dq(t_mini *mini, char **str);
 void		expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
+void		order_token(t_mini *mini);
 void		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);

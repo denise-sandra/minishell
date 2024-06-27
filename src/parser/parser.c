@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 15:22:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:41:31 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/*
-commit 59d3dcbd2be8da82ee52a9a911c7d02331b53deb 
-
-correct thse examples should give this behaviour:
-
-skanna@k0r1p11:~/Documents/minishell$ echo hi <out bla
-hi bla
-
-
-skanna@k0r1p11:~/Documents/minishell$ cat <"1""2""3""4""5"
-hello World
-.skanna@k0r1p11:~/Documents/minishell$ 
-
-
-*/
 static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 {
 	char	*str;
@@ -119,71 +103,6 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
-
-// static void	order_token(t_mini *mini)
-// {
-// 	t_token *lst;
-// 	t_token *redirs;
-// 	t_token *cmds;
-// 	int		i;
-// 	int		j;
-
-// 	lst = mini->token;
-// 	redirs = NULL;
-// 	cmds = NULL;
-// 	i = 0;
-// 	j = 0;
-// 	while (lst)
-// 	{
-// 		if (lst->type == STRING)
-// 		{
-// 			cmds = lst;
-// 			i++;
-// 		}
-// 		else if (lst->type == HERE || lst->type == IN)
-// 		{
-// 			redirs = lst;
-// 			j++;
-// 		}
-// 		lst = lst->next;
-// 	}
-// 	if (j)
-// 	{
-		
-// 	}
-	
-// }
-
-
-static void	order_token(t_mini *mini)
-{
-	t_token *lst;
-	t_token *in;
-	t_token *prev;
-	t_token *l_in;
-
-	lst = mini->token;
-	prev = NULL;
-	in = NULL;
-	while (lst)
-	{
-		if ((lst->type == IN || lst->type == HERE))
-			in = lst;
-		while (lst && prev && (lst->type == IN || lst->type == HERE) && lst->next->type == STRING)
-		{
-			l_in = lst->next;
-			lst = lst->next->next;
-			break ;
-		}
-		prev = lst;
-		lst = lst->next;
-	}
-	prev->next = lst;
-	l_in->next = mini->token;
-	mini->token = in;
-	
-}
-
 void	parser(t_mini *mini)
 {
 	t_pretok	*pretok;
@@ -206,7 +125,6 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	order_token(mini);
 	t_token *print = mini->token;
 	while (print)
 	{
@@ -218,6 +136,7 @@ void	parser(t_mini *mini)
 		}
 		print = print->next;
 	}
+	order_token(mini);
 	parse_commands(mini);
 	last_error_checks(mini);
 	print = mini->token;
