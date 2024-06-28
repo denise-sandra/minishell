@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/28 14:22:39 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/29 00:31:46 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	order_out(t_mini *mini)
 	t_token	*prev;
 	t_token	*next;
 	t_token	*out_lst;
-	t_token	*pipe_tail;
+	t_token *pipe_tail;
+	t_token *print;
 	
 
 	cur = mini->token;
 	prev = NULL;
 	out_lst = NULL;
+	pipe_tail = NULL;
 	while (cur)
 	{
 		if (cur->next && cur->type == OUT && cur->next->type == STRING)
@@ -84,10 +86,23 @@ int	order_out(t_mini *mini)
 					if (pipe_tail)
 						tok_addback(&pipe_tail, out_lst);
 					else
+					{
+						pipe_tail = cur;
+						tok_addback(&out_lst, pipe_tail);
+						cur = NULL; //deberia poner a null desde el pipe para que mini
+									//sea del inicio al primer pipe, y despues atarlo a out_slt que ya tiene
+									//pegado atras el resto del cmd. no entiendo porque no lo pone en nulo.
+						print = mini->token;;
+						while (print)
+						{
+							printf("2 %s\n", print->value);
+							print = print->next;
+						}
 						tok_addback(&mini->token, out_lst);
+						cur = pipe_tail;
+					}	
 					out_lst = NULL;
 				}
-				pipe_tail = cur;
 			}
 			prev = cur;
 			cur = cur->next;
@@ -99,6 +114,12 @@ int	order_out(t_mini *mini)
 			tok_addback(&pipe_tail, out_lst);
 		else
 			tok_addback(&mini->token, out_lst);
+	}
+	print = mini->token;
+	while (print)
+	{
+		printf("2 %s\n", print->value);
+		print = print->next;
 	}
 	return (0);
 }
