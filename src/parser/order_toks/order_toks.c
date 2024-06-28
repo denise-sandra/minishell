@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_toks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 18:03:24 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/28 14:22:39 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,39 +50,58 @@ static int	init_order_struct(t_mini *mini)
 	return (0);
 }
 
-// int	order_out(t_mini *mini)
-// {
-// 	t_token	*cur;
-// 	t_token	*prev;
-// 	t_token	*out_lst;
+int	order_out(t_mini *mini)
+{
+	t_token	*cur;
+	t_token	*prev;
+	t_token	*next;
+	t_token	*out_lst;
+	t_token	*pipe_tail;
+	
 
-// 	cur = mini->token;
-// 	prev = NULL;
-// 	out_lst = NULL;
-// 	while (cur)
-// 	{
-// 		printf("cur :%s\n", cur->value);
-// 		if (cur->next && cur->type == OUT && cur->next->type == STRING)
-// 		{
-// 			tok_addback(&out_lst, cur);
-// 			tok_addback(&out_lst, cur->next);
-// 			printf("out_lst :%s\n", out_lst->value);
-// 			if (prev)
-// 				prev->next = cur->next->next;
-// 			else
-// 				mini->token = cur->next->next;
-// 			cur = cur->next->next;
-// 		}
-// 		else
-// 		{
-// 			prev = cur;
-// 			cur = cur->next;
-// 		}
-// 	}
-// 	if (out_lst)
-// 		cur = out_lst;
-// 	return (0);
-// }
+	cur = mini->token;
+	prev = NULL;
+	out_lst = NULL;
+	while (cur)
+	{
+		if (cur->next && cur->type == OUT && cur->next->type == STRING)
+		{
+			next = cur->next->next;
+			cur->next->next = NULL;
+			tok_addback(&out_lst, cur);
+			if (prev)
+				prev->next = next;
+			else
+				mini->token = next;
+			cur = next;
+		}
+		else
+		{
+			if (cur->type == PIPE)
+			{
+				if (out_lst)
+				{
+					if (pipe_tail)
+						tok_addback(&pipe_tail, out_lst);
+					else
+						tok_addback(&mini->token, out_lst);
+					out_lst = NULL;
+				}
+				pipe_tail = cur;
+			}
+			prev = cur;
+			cur = cur->next;
+		}
+	}
+	if (out_lst)
+	{
+		if (pipe_tail)
+			tok_addback(&pipe_tail, out_lst);
+		else
+			tok_addback(&mini->token, out_lst);
+	}
+	return (0);
+}
 
 int	order_tok(t_mini *mini)
 {
@@ -90,6 +109,6 @@ int	order_tok(t_mini *mini)
 		return (1) ;
 	order_in(mini);
 	connect_tok(mini);
-	//order_out(mini);
+	order_out(mini);
 	return (0);
 }
