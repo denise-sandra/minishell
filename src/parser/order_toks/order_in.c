@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   order_opt.c                                        :+:      :+:    :+:   */
+/*   order_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 17:29:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:27:23 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,7 @@ void	order_in(t_mini *mini)
 	{
 		next = cur->next;
 		if (cur->type == PIPE)
-		{
 			handle_pipes(mini, &cur, &next);
-			continue ;
-		}
 		else if (cur->type == IN || cur->type == HERE)
 			handle_infiles(mini, &cur, &next);
 		else

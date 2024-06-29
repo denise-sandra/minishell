@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 17:19:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:43:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_minishell
 	char		**env_char;
 	t_token		*token;
 	t_pretok	*pretok;
-	t_order	*order;
+	t_order		*order;
 	int			exit_status;
 	int			should_exit;
 	int			cmd_count;

@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 13:53:36 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/29 17:23:01 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	parse_and_execute(t_mini *mini, char *input)
 {
 	lexer(input, mini);
 	parser(mini);
-	// if (!mini->error)
-	// {
-	// 	execution(mini);
-	// 	if (mini->error)
-	// 		mini->exit_status = 1;
-	// }
+	if (!mini->error)
+	{
+		execution(mini);
+		if (mini->error)
+			mini->exit_status = 1;
+	}
 }
 
 static void	minishell(t_mini *mini)

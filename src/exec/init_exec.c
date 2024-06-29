@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/26 12:22:56 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:23:25 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ static int	ft_cmd_count(t_mini *mini)
 	}
 	return (count);
 }
-
-// int	init_fds(t_mini *mini)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	mini->cmd_count = ft_cmd_count(mini);
-// 	mini->fd_in = malloc(mini->cmd_count * sizeof(int));
-// 	if (mini->fd_in == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	while (i < mini->cmd_count)
-// 		mini->fd_in[i++] = 0;
-// 	mini->fd_out = malloc(mini->cmd_count * sizeof(int));
-// 	if (mini->fd_out == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	i = 0;
-// 	while (i < mini->cmd_count)
-// 		mini->fd_out[i++] = 1;
-// 	mini->pid = malloc(mini->cmd_count * sizeof(pid_t));
-// 	if (mini->pid == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	mini->tube = malloc((mini->cmd_count - 1) * sizeof(*mini->tube));
-// 	if (mini->tube == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	i = 0;
-// 	while (i < mini->cmd_count)
-// 		mini->pid[i++] = 0;
-// 	return (0);
-// }
-
 
 int	init_fds(t_mini *mini)
 {
