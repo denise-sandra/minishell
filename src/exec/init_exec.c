@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/29 17:23:25 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 10:26:04 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	init_fds(t_mini *mini)
 	i = 0;
 	while (i < j)
 	{
+		if (i < j - 1)
+		{
+			mini->tube[i][0] = 0;
+			mini->tube[i][1] = 0;
+		}
 		mini->fd_in[i] = 0;
 		mini->fd_out[i] = 1;
 		mini->inv_fd[i] = 0;

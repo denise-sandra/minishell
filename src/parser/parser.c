@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 07:37:23 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/01 09:15:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	// t_token *print = mini->token;
+	t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
@@ -139,16 +139,16 @@ void	parser(t_mini *mini)
 	if (order_tok(mini) == 1)
 		return ;
 	parse_commands(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("2 tok: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 	last_error_checks(mini);
 }

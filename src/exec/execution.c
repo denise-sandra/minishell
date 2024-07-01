@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 12:24:25 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 10:27:28 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,45 @@ static void	close_fd_and_wait(t_mini *mini)
 	mini->exit_status = last_exit_status;
 }
 
+static void	close_all_fd(t_mini *mini)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < mini->cmd_count)
+	{
+		if (mini->inv_fd[i] == 1)
+		{
+			j = 0;
+			while (j < mini->cmd_count)
+			{
+				if (j < mini->cmd_count - 1)
+				{
+					if (mini->tube[j][1])
+						close(mini->tube[j][1]);
+					if (mini->tube[j][0])
+						close(mini->tube[j][0]);
+				}
+				if (mini->fd_in[j] > 0 && mini->fd_in[j] != STDIN_FILENO)
+					close(mini->fd_in[j]);
+				if (mini->fd_out[j] != STDOUT_FILENO)
+					close(mini->fd_out[j]);
+				j++;
+			}
+			ft_putstr_fd(" No such file or directory\n", 2);
+			clean_minishell(mini);
+			exit (1);
+		}
+		i++;
+	}
+}
+
 static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
 	int		builtin;
 
-	if (mini->inv_fd[i] == 1)
-	{
-		if (i < mini->cmd_count - 1)
-		{
-			close(mini->tube[i][0]);
-			close(mini->tube[i][1]);
-		}
-		ft_putstr_fd(" No such file or directory\n", 2);
-		clean_minishell(mini);
-		exit (1);
-	}
+	close_all_fd(mini);
 	if (ft_dup(mini, i) != 0)
 	{
 		clean_minishell(mini);
