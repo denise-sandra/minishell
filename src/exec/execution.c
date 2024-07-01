@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 12:53:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/01 22:46:52 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,29 +61,29 @@ static void	close_all_fd(t_mini *mini)
 	}
 }
 
-static void	close_if_inv_fd(t_mini *mini)
+static void	close_if_inv_fd(t_mini *mini, int j)
 {
 	int	i;
 
-	i = 0;
+	i = j;
 	while (i < mini->cmd_count)
 	{
 		if (mini->inv_fd[i] == 1)
-		{
 			close_all_fd(mini);
-			ft_putstr_fd(" No such file or directory\n", 2);
+		i++;
+	}
+	if (mini->inv_fd[j] == 1)
+		{
 			clean_minishell(mini);
 			exit (1);
 		}
-		i++;
-	}
 }
 
 static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
 	int		builtin;
 
-	close_if_inv_fd(mini);
+	close_if_inv_fd(mini, i);
 	if (ft_dup(mini, i) != 0)
 	{
 		clean_minishell(mini);
@@ -137,7 +137,6 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 	int		original_stdin;
 	int		original_stdout;
 
-	// printf("inv %d\n", mini->inv_fd[0]);
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	if (mini->inv_fd[0] == 1)
@@ -153,7 +152,7 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 	if (mini->fd_out[0] > 1)
 	{
 		if (dup2(mini->fd_out[0], STDOUT_FILENO) == -1)
-			return (ft_error(mini, "dup2 stdin error", NULL), -1);
+			return (ft_error(mini, "dup2 stdout error", NULL), -1);
 
 	}
 	if (mini->cmd_count == 1)
@@ -163,6 +162,8 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 		dup2(original_stdout, STDOUT_FILENO);
 		close(original_stdin);
 		close(original_stdout);
+		if (mini->error)
+			return (1);
 		if (mini->fd_in[0] > 0)
 			close(mini->fd_in[0]);
 		if (mini->fd_out[0] > 1)

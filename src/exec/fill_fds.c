@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 13:20:39 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 22:54:22 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,13 @@ static int	get_infile(t_mini *mini, t_token *token, int i)
 {
 	if (token->next && token->type == IN)
 		mini->fd_in[i] = open(token->next->value, O_RDONLY);
-	if (mini->fd_in[i] < 0)
+	if (token->type == IN && mini->fd_in[i] < 0)
+	{
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 		mini->inv_fd[i] = 1;
+	}
 	else if (token->next && token->type == HERE)
 	{
 		read_here_doc(mini, token->next->value, i);
@@ -89,8 +94,13 @@ static void	get_outfile(t_mini *mini, t_token *token, int i)
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_RDWR | O_APPEND, 0644);
 	}
-	if (mini->fd_out[i] < 0)
+	if ((token->type == OUT || token->type == APP ) && mini->fd_out[i] < 0)
+	{
+		ft_putstr_fd("Error: ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putstr_fd("\n", 2);
 		mini->inv_fd[i] = 1;
+	}
 }
 
 int	fill_fd(t_mini *mini)
