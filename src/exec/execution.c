@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 10:27:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/01 12:28:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,26 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 	tmp = mini->token;
 	while (tmp->type != COMMAND)
 		tmp = tmp->next;
+	if (mini->fd_in[0] > 0)
+	{
+		if (dup2(mini->fd_in[0], STDIN_FILENO) == -1)
+			return (ft_error(mini, "dup2 stdin error", NULL), 1);
+	}
+	if (mini->fd_out[0] > 1)
+	{
+		if (dup2(mini->fd_out[0], STDOUT_FILENO) == -1)
+			return (ft_error(mini, "dup2 stdin error", NULL), 1);
+
+	}
 	if (mini->cmd_count == 1)
-		return (execute_builtin(mini, builtin, mini->token), 1);
+	{
+		execute_builtin(mini, builtin, mini->token);
+		dup2(STDIN_FILENO, mini->fd_in[0]);
+		dup2(STDOUT_FILENO, mini->fd_out[0]);
+		close(mini->fd_in[0]);
+		close(mini->fd_out[0]);
+		return (1);
+	}
 	return (0);
 }
 
