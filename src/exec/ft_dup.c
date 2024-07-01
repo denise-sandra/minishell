@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:34:41 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 09:23:01 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,48 @@
 
 static int	ft_dup_in_out(t_mini *mini, int i)
 {
-	if (mini->fd_in[i] != STDIN_FILENO)
+	int	j;
+
+	if (mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 	{
 		if (dup2(mini->fd_in[i], STDIN_FILENO) == -1)
 		{
 			close(mini->fd_in[i]);
+			close(mini->fd_out[i]);
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
-		close(mini->fd_in[i]);
+	}
+	else if (mini->fd_in[i] < 0)
+	{
+		if (i < mini->cmd_count - 1)
+		{
+			close(mini->tube[i][0]);
+			close(mini->tube[i][1]);
+		}
+		return (ft_error(mini, NULL, strerror(errno)), 1);
+	}
+	j = 0;
+	while (j <= i && mini->fd_in[j] != STDIN_FILENO)
+	{
+		if (mini->fd_in[j] > 0)
+			close(mini->fd_in[j]);
+		j++;
 	}
 	if (mini->fd_out[i] != STDOUT_FILENO)
 	{
 		if (dup2(mini->fd_out[i], STDOUT_FILENO) == -1)
 		{
 			close(mini->fd_out[i]);
+			close(mini->fd_in[i]);
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
-		close(mini->fd_out[i]);
+	}
+	j = 0;
+	while (j <= i && mini->fd_out[j] != STDOUT_FILENO)
+	{
+		if (mini->fd_out[j] > 0)
+			close(mini->fd_out[j]);
+		j++;
 	}
 	return (0);
 }

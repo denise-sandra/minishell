@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/21 23:54:14 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/06/29 17:16:09 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,16 @@ void		lexer(char *input, t_mini *mini);
 void		tag_in_quotes(t_mini *mini, t_pretok *close_quote);
 void		remove_spaces(t_mini *mini);
 
-//parser2
+//parser
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
 void		expand_inside_dq(t_mini *mini, char **str);
 void		expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
+int			order_tok(t_mini *mini);
+void		order_in(t_mini *mini);
+void		order_out(t_mini *mini);
+// void order_output_redirections(t_mini *mini);
 void		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
@@ -88,8 +92,8 @@ int			init_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
 int			ft_dup_tubes(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
-void	    parse_and_execute(t_mini *mini, char *input);
-int	        exec_script(t_mini *mini, t_token *tmp);
+void		parse_and_execute(t_mini *mini, char *input);
+int			exec_script(t_mini *mini, t_token *tmp);
 
 //builtin fucntions
 void		echo_command(t_token *cur);
@@ -101,5 +105,6 @@ void		exit_cmd(t_mini *mini, char **cmd_tab);
 // void		exit_cmd(t_mini *minishell, char *input);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini);
+void      unset_cmd(t_mini *mini, t_token *cur);
 
 #endif

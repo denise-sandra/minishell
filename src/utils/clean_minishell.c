@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/19 16:49:14 by skanna           ###   ########.fr       */
+/*   Updated: 2024/06/26 11:49:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ void	clean_fd(t_mini *minishell)
 	{
 		free(minishell->tube);
 		minishell->tube = NULL;
+	}
+	if (minishell->inv_fd)
+	{
+		free(minishell->inv_fd);
+		minishell->inv_fd = NULL;
 	}
 }
 

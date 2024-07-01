@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:34:58 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 10:26:04 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,47 +28,20 @@ static int	ft_cmd_count(t_mini *mini)
 	return (count);
 }
 
-// int	init_fds(t_mini *mini)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	mini->cmd_count = ft_cmd_count(mini);
-// 	mini->fd_in = malloc(mini->cmd_count * sizeof(int));
-// 	if (mini->fd_in == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	while (i < mini->cmd_count)
-// 		mini->fd_in[i++] = 0;
-// 	mini->fd_out = malloc(mini->cmd_count * sizeof(int));
-// 	if (mini->fd_out == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	i = 0;
-// 	while (i < mini->cmd_count)
-// 		mini->fd_out[i++] = 1;
-// 	mini->pid = malloc(mini->cmd_count * sizeof(pid_t));
-// 	if (mini->pid == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	mini->tube = malloc((mini->cmd_count - 1) * sizeof(*mini->tube));
-// 	if (mini->tube == NULL)
-// 		return (ft_error("Malloc in execution", mini), 1);
-// 	i = 0;
-// 	while (i < mini->cmd_count)
-// 		mini->pid[i++] = 0;
-// 	return (0);
-// }
-
-
 int	init_fds(t_mini *mini)
 {
 	int	i;
+	int	j;
 
 	mini->cmd_count = ft_cmd_count(mini);
+	j = mini->cmd_count;
 	if (mini->cmd_count == 0)
-		return (0);
-	mini->fd_in = malloc(mini->cmd_count * sizeof(int));
-	mini->fd_out = malloc(mini->cmd_count * sizeof(int));
-	mini->pid = malloc(mini->cmd_count * sizeof(pid_t));
-	if (!mini->fd_in || !mini->fd_out || !mini->pid)
+		j = 1;
+	mini->fd_in = malloc(j * sizeof(int));
+	mini->fd_out = malloc(j * sizeof(int));
+	mini->inv_fd = malloc(j * sizeof(int));
+	mini->pid = malloc(j * sizeof(pid_t));
+	if (!mini->fd_in || !mini->fd_out || !mini->pid || !mini->inv_fd)
 		return (ft_error(mini, NULL, strerror(errno)), 1);
 	if (mini->cmd_count > 1)
 	{
@@ -77,10 +50,16 @@ int	init_fds(t_mini *mini)
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
 	i = 0;
-	while (i < mini->cmd_count)
+	while (i < j)
 	{
+		if (i < j - 1)
+		{
+			mini->tube[i][0] = 0;
+			mini->tube[i][1] = 0;
+		}
 		mini->fd_in[i] = 0;
 		mini->fd_out[i] = 1;
+		mini->inv_fd[i] = 0;
 		mini->pid[i] = 0;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 18:21:28 by sandra           ###   ########.fr       */
+/*   Updated: 2024/06/29 16:43:42 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,15 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_order
+{
+	t_token	*prev;
+	t_token	*redir_head;
+	t_token	*redir_tail;
+	t_token	*cmd_head;
+	t_token	*cmd_tail;
+}	t_order;
+
 typedef struct s_minishell
 {
 	t_lst_env	*env;
@@ -61,11 +70,13 @@ typedef struct s_minishell
 	char		**env_char;
 	t_token		*token;
 	t_pretok	*pretok;
+	t_order		*order;
 	int			exit_status;
 	int			should_exit;
 	int			cmd_count;
 	int			mod_env;
 	int			error;
+	int			*inv_fd;
 	int			*fd_in;
 	int			*fd_out;
 	int			(*tube)[2];
