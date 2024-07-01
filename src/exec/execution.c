@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 12:28:31 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/01 12:50:42 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,31 +127,39 @@ static void	exec_in_child(t_mini *mini, t_token *tmp)
 static int	builtin_in_parent(t_mini *mini, int builtin)
 {
 	t_token	*tmp;
+	int		original_stdin;
+	int		original_stdout;
 
 	// printf("inv %d\n", mini->inv_fd[0]);
+	original_stdin = dup(STDIN_FILENO);
+	original_stdout = dup(STDOUT_FILENO);
 	if (mini->inv_fd[0] == 1)
-		return (ft_error(mini, " No such file or directory", NULL), 1);
+		return (ft_error(mini, " No such file or directory", NULL), -1);
 	tmp = mini->token;
 	while (tmp->type != COMMAND)
 		tmp = tmp->next;
 	if (mini->fd_in[0] > 0)
 	{
 		if (dup2(mini->fd_in[0], STDIN_FILENO) == -1)
-			return (ft_error(mini, "dup2 stdin error", NULL), 1);
+			return (ft_error(mini, "dup2 stdin error", NULL), -1);
 	}
 	if (mini->fd_out[0] > 1)
 	{
 		if (dup2(mini->fd_out[0], STDOUT_FILENO) == -1)
-			return (ft_error(mini, "dup2 stdin error", NULL), 1);
+			return (ft_error(mini, "dup2 stdin error", NULL), -1);
 
 	}
 	if (mini->cmd_count == 1)
 	{
 		execute_builtin(mini, builtin, mini->token);
-		dup2(STDIN_FILENO, mini->fd_in[0]);
-		dup2(STDOUT_FILENO, mini->fd_out[0]);
-		close(mini->fd_in[0]);
-		close(mini->fd_out[0]);
+		dup2(original_stdin, STDIN_FILENO);
+		dup2(original_stdout, STDOUT_FILENO);
+		close(original_stdin);
+		close(original_stdout);
+		if (mini->fd_in[0] > 0)
+			close(mini->fd_in[0]);
+		if (mini->fd_out[0] > 1)
+			close(mini->fd_out[0]);
 		return (1);
 	}
 	return (0);
