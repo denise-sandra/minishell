@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 13:02:02 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/01 07:39:49 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 		if ((type == IN && (*cur)->next->type != IN)
 			|| (type == OUT && (*cur)->next->type != OUT))
 		{
-			printf ("token type: %d\n", type);
 			if (tok_list(str, type, list) != 0)
 				return (ft_error(ms, NULL, strerror(errno)));
 			*cur = (*cur)->next;

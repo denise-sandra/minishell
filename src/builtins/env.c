@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 15:36:12 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/01 08:02:11 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	path_exits(t_lst_env *env)
 {
 	while (env)
 	{
-		if (ft_strncmp(env->name, "PATH", ft_strlen(env->name)) == 0)
+		if (ft_strlen(env->name) == 4 && ft_strncmp(env->name, "PATH", 4) == 0)
 			return (1);
 		env = env->next;
 	}
