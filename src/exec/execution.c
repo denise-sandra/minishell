@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 12:50:42 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/01 12:53:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,35 @@ static void	close_fd_and_wait(t_mini *mini)
 static void	close_all_fd(t_mini *mini)
 {
 	int	i;
-	int	j;
+
+	i = 0;
+	while (i < mini->cmd_count)
+	{
+		if (i < mini->cmd_count - 1)
+		{
+			if (mini->tube[i][1])
+				close(mini->tube[i][1]);
+			if (mini->tube[i][0])
+				close(mini->tube[i][0]);
+		}
+		if (mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
+			close(mini->fd_in[i]);
+		if (mini->fd_out[i] != STDOUT_FILENO)
+			close(mini->fd_out[i]);
+		i++;
+	}
+}
+
+static void	close_if_inv_fd(t_mini *mini)
+{
+	int	i;
 
 	i = 0;
 	while (i < mini->cmd_count)
 	{
 		if (mini->inv_fd[i] == 1)
 		{
-			j = 0;
-			while (j < mini->cmd_count)
-			{
-				if (j < mini->cmd_count - 1)
-				{
-					if (mini->tube[j][1])
-						close(mini->tube[j][1]);
-					if (mini->tube[j][0])
-						close(mini->tube[j][0]);
-				}
-				if (mini->fd_in[j] > 0 && mini->fd_in[j] != STDIN_FILENO)
-					close(mini->fd_in[j]);
-				if (mini->fd_out[j] != STDOUT_FILENO)
-					close(mini->fd_out[j]);
-				j++;
-			}
+			close_all_fd(mini);
 			ft_putstr_fd(" No such file or directory\n", 2);
 			clean_minishell(mini);
 			exit (1);
@@ -77,7 +83,7 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
 	int		builtin;
 
-	close_all_fd(mini);
+	close_if_inv_fd(mini);
 	if (ft_dup(mini, i) != 0)
 	{
 		clean_minishell(mini);
@@ -93,6 +99,7 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 		clean_minishell(mini);
 		exit (1);
 	}
+	close_all_fd(mini);
 	clean_minishell(mini);
 	exit (0);
 }
