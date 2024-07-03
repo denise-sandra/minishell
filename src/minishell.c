@@ -51,14 +51,14 @@ char	*get_dynamic_prompt(void)
 	{
 		temp = ft_strjoin("minishell:", cwd);
 		if (!temp)
-			return (strdup("minishell$ "));
+			return (ft_strdup("minishell$ "));
 		prompt = ft_strjoin(temp, "$ ");
 		if (!prompt)
-			return (strdup("minishell$ "));
+			return (ft_strdup("minishell$ "));
 		free (temp);
 		return (prompt);
 	}
-	return (strdup("minishell$ "));
+	return (ft_strdup("minishell$ "));
 }
 
 static void	minishell(t_mini *mini)
