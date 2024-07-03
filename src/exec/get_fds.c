@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 13:37:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:11:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	get_infile(t_mini *mini, t_token *token, int i)
 {
 	if (token->next && token->type == IN)
 		mini->fd_in[i] = open(token->next->value, O_RDONLY);
-	if (token->type == IN && mini->fd_in[i] < 0 && mini->inv_fd[i] != 1)
+	if (token->type == IN && mini->fd_in[i] < 0)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
@@ -94,7 +94,7 @@ void	get_outfile(t_mini *mini, t_token *token, int i)
 				| O_WRONLY | O_APPEND, 0644);
 	}
 	if ((token->type == OUT || token->type == APP) && \
-		mini->fd_out[i] < 0 && mini->inv_fd[i] != 1)
+		mini->fd_out[i] < 0 )
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);

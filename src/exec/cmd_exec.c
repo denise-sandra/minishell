@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:11:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:35:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	{
 		if (exec_ret == -2)
 		{
+			mini->exit_status = 127;
 			ft_putstr_fd(tmp->cmd_tab[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
 			free(paths);

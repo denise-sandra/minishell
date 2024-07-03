@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 13:36:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:15:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,23 @@ static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 		i = check_pipes(tmp, i, in, out);
 		if (tmp->type == IN || tmp->type == HERE)
 		{
-			if (get_infile(mini, tmp, i) != 0)
+			if (mini->inv_fd[i] != 1 && get_infile(mini, tmp, i) != 0)
+			{
 				return (1);
-			in--;
-			if (in > 0 && mini->fd_in[i] > 1)
-				close (mini->fd_in[i]);
+				(*in)--;
+				if (*in > 0 && mini->fd_in[i] > 1)
+					close (mini->fd_in[i]);
+			}
 		}
 		else if (tmp->type == OUT || tmp->type == APP)
 		{
-			get_outfile(mini, tmp, i);
-			out--;
-			if (out > 0 && mini->fd_out[i] > 1)
-				close (mini->fd_out[i]);
+			if (mini->inv_fd[i] != 1)
+			{
+				get_outfile(mini, tmp, i);
+				(*out)--;
+				if (*out > 0 && mini->fd_out[i] > 1)
+					close (mini->fd_out[i]);
+			}
 		}
 		tmp = tmp->next;
 	}
