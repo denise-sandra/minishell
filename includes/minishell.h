@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/29 17:16:09 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/03 08:46:17 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		add_var_to_list(t_mini *mini, t_token *cur);
 char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
-// void		exit_cmd(t_mini *minishell, char *input);
+void      go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini);
 void      unset_cmd(t_mini *mini, t_token *cur);

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/02 13:33:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:20:27 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	parser(t_mini *mini)
 	// 	print = print->next;
 	// }
 	parse_commands(mini);
+	last_error_checks(mini);
 	// t_token *print = mini->token;
 	// while (print)
 	// {
@@ -156,5 +157,4 @@ void	parser(t_mini *mini)
 	// 	}
 	// 	print = print->next;
 	// }
-	last_error_checks(mini);
 }

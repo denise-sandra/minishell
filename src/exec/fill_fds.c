@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/02 14:19:06 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:19:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int	fill_fd(t_mini *mini)
 			count_in_out(&in, &out, tmp->next);
 			i++;
 		}
-		else if (tmp->type == IN)
+		else if (tmp->type == IN || tmp->type == HERE)
 		{
 			if (get_infile(mini, tmp, i) != 0)
 				return (1);
@@ -142,7 +142,7 @@ int	fill_fd(t_mini *mini)
 			if (in > 0 && mini->fd_in[i] > 1)
 				close (mini->fd_in[i]);
 		}
-		else if (tmp->type == OUT)
+		else if (tmp->type == OUT || tmp->type == APP)
 		{
 			get_outfile(mini, tmp, i);
 			out--;

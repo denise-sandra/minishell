@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/02 14:28:47 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 11:07:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static void	close_all_fd(t_mini *mini)
 			if (mini->tube[i][0])
 				close(mini->tube[i][0]);
 		}
-		if (mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
+		if (mini->fd_in[i] > 0)
 			close(mini->fd_in[i]);
-		if (mini->fd_out[i] != STDOUT_FILENO)
+		if (mini->fd_out[i] > 1)
 			close(mini->fd_out[i]);
 		i++;
 	}
