@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 08:46:17 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:11:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,10 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
-void		expand_inside_dq(t_mini *mini, char **str);
-void		expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
+char		*expand_var(t_mini *mini, char *temp_str, int *len);
 int			order_tok(t_mini *mini);
 void		order_in(t_mini *mini);
-void		order_out(t_mini *mini);
-// void order_output_redirections(t_mini *mini);
+void		order_out(t_mini *mini, t_token *cur);
 void		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
@@ -73,6 +71,8 @@ t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
 char		*ft_strjoin_char(char *s, char c);
 char		*ft_strjoin_frees1(char *s1, char *s2);
+void	     handle_before_var(char **before_var, char *env_value);
+
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);
@@ -88,12 +88,20 @@ void		execution(t_mini *minishell);
 void		cmd_exec(t_mini *mini, t_token *tmp);
 int			is_builtin(char *command);
 void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
-int			init_fds(t_mini *mini);
+int			malloc_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
-int			ft_dup_tubes(t_mini *mini, int i);
+int			dup_tubes(t_mini *mini, int i);
 int			fill_fd(t_mini *mini);
+int			get_infile(t_mini *mini, t_token *token, int i);
+void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
 int			exec_script(t_mini *mini, t_token *tmp);
+int			is_slash(t_mini *mini, t_token *tmp);
+void		builtin_in_parent(t_mini *mini, int builtin);
+void		exec_in_child(t_mini *mini, t_token *tmp);
+void		close_fd_and_wait(t_mini *mini);
+void		close_all_fd(t_mini *mini);
+void		close_if_inv_fd(t_mini *mini, int j);
 
 //builtin fucntions
 void		echo_command(t_token *cur);
@@ -102,9 +110,9 @@ void		add_var_to_list(t_mini *mini, t_token *cur);
 char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
-void      go_home(t_mini *mini);
+void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini);
-void      unset_cmd(t_mini *mini, t_token *cur);
+void		unset_cmd(t_mini *mini, t_token *cur);
 
 #endif

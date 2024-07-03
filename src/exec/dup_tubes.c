@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd.c                                              :+:      :+:    :+:   */
+/*   dup_tubes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 10:28:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:37:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	last_command(t_mini *mini, int i)
 	return (0);
 }
 
-int	ft_dup_tubes(t_mini *mini, int i)
+int	dup_tubes(t_mini *mini, int i)
 {
 	int	res;
 

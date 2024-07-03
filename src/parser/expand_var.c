@@ -3,26 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/20 14:47:39 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/03 13:27:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_valid_exp(t_mini *mini, t_token *cur)
+static void	split_and_add_to_list(char *before_var, t_token **new_list)
 {
-	char	*tmp;
+	char	**split_env;
+	int		i;
 
-	tmp = ft_strchr(cur->value, '$');
-	if (ft_isdigit(tmp[1]) == 1 && ft_isdigit(tmp[2]) == 1)
+	split_env = ft_split(before_var, ' ');
+	free(before_var);
+	i = 0;
+	while (split_env[i])
 	{
-		mini->exit_status = 1;
-		return (ft_error(mini, "Syntax error: unsupported character", NULL), 1);
+		tok_list(split_env[i], STRING, new_list);
+		i++;
 	}
-	return (0);
+	free_tab(split_env);
+}
+
+static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
+{
+	char	*temp_str;
+	char	*before_var;
+	char	*env_value;
+	int		j;
+
+	temp_str = (*cur)->value;
+	before_var = NULL;
+	j = 0;
+	while (temp_str[j])
+	{
+		if (temp_str[j] != '$' || (temp_str[j] == '$' && !temp_str[j + 1])
+			|| (temp_str[j] == '$' && temp_str[j + 1] && (temp_str[j + 1] == ' '
+					|| ft_isdigit(temp_str[j + 1]))))
+			before_var = ft_strjoin_char(before_var, temp_str[j++]);
+		else
+		{
+			env_value = expand_var(mini, temp_str, &j);
+			if (env_value == NULL)
+				return ;
+			handle_before_var(&before_var, env_value);
+		}
+	}
+	if (before_var)
+		split_and_add_to_list(before_var, new_list);
+}
+
+static void	expand_inside_dq(t_mini *mini, char **str)
+{
+	char	*temp_str;
+	char	*new_str;
+	char	*env_value;
+	int		i;
+
+	temp_str = *str;
+	new_str = NULL;
+	i = 0;
+	while (temp_str[i])
+	{
+		if (temp_str[i] == '$' && temp_str[i + 1] && (temp_str[i + 1] != ' '
+				&& !ft_isdigit(temp_str[i + 1])))
+		{
+			env_value = expand_var(mini, temp_str, &i);
+			new_str = ft_strjoin_free(new_str, env_value);
+		}
+		else
+		{
+			new_str = ft_strjoin_char(new_str, temp_str[i]);
+			i++;
+		}
+	}
+	free(*str);
+	*str = new_str;
 }
 
 static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)

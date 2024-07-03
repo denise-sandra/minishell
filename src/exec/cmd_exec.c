@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 10:20:08 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:11:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,65 +38,28 @@ static char	*join_path(char *cmd, char *path)
 	return (joint_b);
 }
 
-static int	is_directory_from_home(t_mini *mini)
-{
-	struct stat statbuf;
-	char	cwd[1024];
-
-	if (getcwd(cwd, 1024) == NULL)
-		return (ft_error(mini, NULL, strerror(errno)), -1);
-	// if (chdir(mini->token->cmd_tab[0]) != 0)
-	// 	return (ft_error(mini, NULL, strerror(errno)), 0);
-	if (stat(mini->token->cmd_tab[0], &statbuf) != 0)
-	{
-		if (chdir(cwd) != 0)
-			return (ft_error(mini, NULL, strerror(errno)), -1);
-		return (0);
-	}
-	if (chdir(cwd) != 0)
-		return (ft_error(mini, NULL, strerror(errno)), -1);
-	return S_ISDIR(statbuf.st_mode);
-}
-
 static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 {
 	int		i;
-	char	*path_with_token;
+	char	*p;
 	int		command_found;
-	int		res;
 
 	i = 0;
 	command_found = 0;
 	if (tmp->cmd_tab[0][0] == '/')
-	{
-		res = is_directory_from_home(mini);
-		if ( res == 1)
-			return (ft_error(mini, " Is a directory", NULL), -3);
-		if (res == -1)
-			return(-1);
-		if (access(tmp->cmd_tab[0], F_OK) == 0)
-		{
-			if (execve(tmp->cmd_tab[0], tmp->cmd_tab, mini->env_char) == -1)
-			{
-				mini->exit_status = 1;
-				return (ft_error(mini, NULL, strerror(errno)), -1);
-			}
-		}
-		return (-1);
-	}
+		return (is_slash(mini, tmp));
 	while (paths[i])
 	{
-		path_with_token = join_path(tmp->cmd_tab[0], paths[i]);
-		if (!path_with_token)
+		p = join_path(tmp->cmd_tab[0], paths[i]);
+		if (!p)
 			return (ft_error(mini, NULL, strerror(errno)), -1);
-		if (access(path_with_token, X_OK) == 0)
+		if (access(p, X_OK) == 0)
 		{
 			command_found = 1;
-			if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
-				return (free(path_with_token), \
-				ft_error(mini, NULL, strerror(errno)), -1);
+			if (execve(p, tmp->cmd_tab, mini->env_char) == -1)
+				return (free(p), ft_error(mini, NULL, strerror(errno)), -1);
 		}
-		free(path_with_token);
+		free(p);
 		i++;
 	}
 	if (!command_found)
@@ -108,6 +71,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 {
 	char	**paths;
 	int		exec_ret;
+	int		exit_tmp;
 
 	if (exec_script(mini, tmp) == 1)
 		return ;
@@ -115,26 +79,18 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	if (paths == NULL)
 		return (ft_error(mini, "Failed to parse path", NULL));
 	exec_ret = cmd_exec_utils(mini, tmp, paths);
-	if (exec_ret == -3)
+	if (exec_ret < 0)
 	{
-		free_tab(paths);
+		if (exec_ret == -2)
+		{
+			ft_putstr_fd(tmp->cmd_tab[0], 2);
+			ft_putstr_fd(": command not found\n", 2);
+			free(paths);
+		}
+		else
+			free_tab(paths);
+		exit_tmp = mini->exit_status;
 		clean_minishell(mini);
-		exit(126);
+		exit(exit_tmp);
 	}
-	if (exec_ret == -2)
-	{
-		free(paths);
-		ft_putstr_fd(tmp->cmd_tab[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		clean_minishell(mini);
-		exit(127);
-	}
-	else if (exec_ret == -1)
-	{
-		free_tab(paths);
-		ft_error(mini, NULL, strerror(errno));
-		clean_minishell(mini);
-		exit(127);
-	}
-	free(paths);
 }

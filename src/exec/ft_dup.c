@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 09:23:01 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:11:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_dup(t_mini *mini, int i)
 {
 	if (ft_dup_in_out(mini, i) != 0)
 		return (1);
-	if (mini->cmd_count != 1 && ft_dup_tubes(mini, i) != 0)
+	if (mini->cmd_count != 1 && dup_tubes(mini, i) != 0)
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_toks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/29 17:21:47 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/03 14:11:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,82 +57,8 @@ int	order_tok(t_mini *mini)
 	order_in(mini);
 	connect_tok(mini);
 	ft_bzero(mini->order, sizeof(t_order));
-	order_out(mini);
+	order_out(mini, mini->token);
 	free(mini->order);
 	mini->order = NULL;
 	return (0);
 }
-
-// int	order_out(t_mini *mini)
-// {
-// 	t_token	*cur;
-// 	t_token	*prev;
-// 	t_token	*next;
-// 	t_token	*out_lst;
-// 	t_token *pipe_tail;
-// 	t_token *print;
-	
-
-// 	cur = mini->token;
-// 	prev = NULL;
-// 	out_lst = NULL;
-// 	pipe_tail = NULL;
-// 	while (cur)
-// 	{
-// 		if (cur->next && cur->type == OUT && cur->next->type == STRING)
-// 		{
-// 			next = cur->next->next;
-// 			cur->next->next = NULL;
-// 			tok_addback(&out_lst, cur);
-// 			if (prev)
-// 				prev->next = next;
-// 			else
-// 				mini->token = next;
-// 			cur = next;
-// 		}
-// 		else
-// 		{
-// 			if (cur->type == PIPE)
-// 			{
-// 				if (out_lst)
-// 				{
-// 					if (pipe_tail)
-// 						tok_addback(&pipe_tail, out_lst);
-// 					else
-// 					{
-// 						pipe_tail = cur;
-// 						tok_addback(&out_lst, pipe_tail);
-// 						cur = NULL; //deberia poner a null desde el pipe para que mini
-// 									//sea desdel inicio al primer pipe, y despues atarlo a out_lst que ya tiene
-// 									//pegado atras el resto del cmd. no entiendo porque no lo pone en nulo.
-// 						print = mini->token;;
-// 						while (print)
-// 						{
-// 							printf("2 %s\n", print->value);
-// 							print = print->next;
-// 						}
-// 						tok_addback(&mini->token, out_lst);
-// 						cur = pipe_tail;
-// 					}	
-// 					out_lst = NULL;
-// 				}
-// 			}
-// 			prev = cur;
-// 			cur = cur->next;
-// 		}
-// 	}
-// 	if (out_lst)
-// 	{
-// 		if (pipe_tail)
-// 			tok_addback(&pipe_tail, out_lst);
-// 		else
-// 			tok_addback(&mini->token, out_lst);
-// 	}
-// 	print = mini->token;
-// 	while (print)
-// 	{
-// 		printf("2 %s\n", print->value);
-// 		print = print->next;
-// 	}
-// 	return (0);
-// }

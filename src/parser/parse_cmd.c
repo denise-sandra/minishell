@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/02 11:03:41 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:08:39 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 	new->cmd_tab[i] = NULL;
 }
 
-static int	count_cmd_tokens(t_token *cur)
+static int	count_cmd_tokens(t_token *tmp)
 {
-	t_token	*tmp;
 	int		i;
 
-	tmp = cur;
 	i = 0;
 	while (tmp && (tmp->type == STRING
 			|| tmp->type == OPT || tmp->type == EMPTY))
