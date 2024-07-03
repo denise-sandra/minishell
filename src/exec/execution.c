@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 22:46:52 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/02 14:28:47 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,16 @@ static void	close_if_inv_fd(t_mini *mini, int j)
 
 static void	child_pid(t_mini *mini, t_token *tmp, int i)
 {
-	int		builtin;
+	int	builtin;
+	int	exit_code;
 
 	close_if_inv_fd(mini, i);
+	exit_code = 0;
 	if (ft_dup(mini, i) != 0)
 	{
+		exit_code = mini->exit_status;
 		clean_minishell(mini);
-		exit (1);
+		exit (exit_code);
 	}
 	builtin = is_builtin(tmp->cmd_tab[0]);
 	if (builtin > 0)
@@ -96,12 +99,14 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 		cmd_exec(mini, tmp);
 	if (mini->error)
 	{
+		exit_code = mini->exit_status;
 		clean_minishell(mini);
-		exit (1);
+		exit (exit_code);
 	}
 	close_all_fd(mini);
+	exit_code = mini->exit_status;
 	clean_minishell(mini);
-	exit (0);
+	exit (exit_code);
 }
 
 static void	exec_in_child(t_mini *mini, t_token *tmp)
@@ -140,7 +145,7 @@ static int	builtin_in_parent(t_mini *mini, int builtin)
 	original_stdin = dup(STDIN_FILENO);
 	original_stdout = dup(STDOUT_FILENO);
 	if (mini->inv_fd[0] == 1)
-		return (ft_error(mini, " No such file or directory", NULL), -1);
+		return (-1);
 	tmp = mini->token;
 	while (tmp->type != COMMAND)
 		tmp = tmp->next;
@@ -191,7 +196,7 @@ void	execution(t_mini *mini)
 		if (mini->fd_out[0] > 1)
 			close(mini->fd_out[0]);
 		if (mini->fd_in[0] < 0 || mini->fd_out[0] < 0)
-			return (ft_error(mini, " No such file or directory", NULL));
+			return ;
 		return ;
 	}
 	if (tmp->type == COMMAND)

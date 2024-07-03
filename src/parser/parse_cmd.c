@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 12:43:47 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/02 11:03:41 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,6 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		free((*cur)->value);
 		free(*(cur));
 		*cur = tmp;
-		while (*cur && ((*cur)->type == IN || (*cur)->type == OUT \
-			|| (*cur)->type == HERE || (*cur)->type == APP))
-		{
-			if ((*cur)->next && (*cur)->next->next && (*cur)->next->next->type != PIPE)
-				*cur = (*cur)->next->next;
-			else	
-				break ;
-		}
 	}
 	new->cmd_tab[i] = NULL;
 }

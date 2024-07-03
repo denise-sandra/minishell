@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 14:55:48 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/02 15:23:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ static char	*join_path(char *cmd, char *path)
 	return (joint_b);
 }
 
+static int	is_directory(const char *path)
+{
+	struct stat statbuf;
+    if (stat(path, &statbuf) != 0)
+        return (0);
+    return S_ISDIR(statbuf.st_mode);
+}
+
 static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 {
 	int		i;
@@ -46,6 +54,24 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 
 	i = 0;
 	command_found = 0;
+	if (tmp->cmd_tab[0][0] == '/')
+	{
+		if(is_directory(tmp->cmd_tab[0]) == 0)
+		{
+			mini->exit_status = 126;
+			return (ft_error(mini, " Is a directory", NULL), -1);
+		}
+		if (access(tmp->cmd_tab[0], F_OK) == 0)
+		{
+			if (execve(tmp->cmd_tab[0], tmp->cmd_tab, mini->env_char) == -1)
+			{
+				mini->exit_status = 1;
+				return(ft_error(mini, NULL, strerror(errno)), -1);
+			}
+		}
+		mini->exit_status = 126;
+		return (ft_error(mini, " No such file or directory", NULL), -1);
+	}
 	while (paths[i])
 	{
 		path_with_token = join_path(tmp->cmd_tab[0], paths[i]);

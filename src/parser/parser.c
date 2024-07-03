@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 21:40:23 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/02 13:33:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	parser(t_mini *mini)
 	}
 	clean_pretokens(mini);
 	expand_env_vars(mini, mini->token);
-	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
@@ -138,8 +137,15 @@ void	parser(t_mini *mini)
 	// }
 	if (order_tok(mini) == 1)
 		return ;
+	//print = mini->token;
+	// t_token *print = mini->token;
+	// while (print)
+	// {
+	// 	printf("order : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	parse_commands(mini);
-	// print = mini->token;
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
@@ -149,6 +155,6 @@ void	parser(t_mini *mini)
 	// 			printf("cmd: %s\n", print->cmd_tab[i]);
 	// 	}
 	// 	print = print->next;
-	//}
+	// }
 	last_error_checks(mini);
 }

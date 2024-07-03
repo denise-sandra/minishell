@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 22:54:22 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/02 14:19:06 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	get_infile(t_mini *mini, t_token *token, int i)
 {
 	if (token->next && token->type == IN)
 		mini->fd_in[i] = open(token->next->value, O_RDONLY);
-	if (token->type == IN && mini->fd_in[i] < 0)
+	if (token->type == IN && mini->fd_in[i] < 0 && mini->inv_fd[i] != 1)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
@@ -78,9 +78,8 @@ static int	get_infile(t_mini *mini, t_token *token, int i)
 	{
 		read_here_doc(mini, token->next->value, i);
 		if (mini->error)
-			return (1);
+			return (INT_MIN);
 	}
-	// printf("get infile: %d  value: %s\n",mini->inv_fd[i], token->value);
 	return (0);
 }
 
@@ -88,13 +87,13 @@ static void	get_outfile(t_mini *mini, t_token *token, int i)
 {
 	if (token->next && token->type == OUT)
 		mini->fd_out[i] = open(token->next->value, O_CREAT
-				| O_RDWR | O_TRUNC, 0644);
+				| O_WRONLY | O_TRUNC, 0644);
 	if (token->next && token->type == APP)
 	{
-		mini->fd_out[i] = open(token->next->value, O_CREAT
-				| O_RDWR | O_APPEND, 0644);
+		mini->fd_out[i]  = open(token->next->value, O_CREAT
+				| O_WRONLY | O_APPEND, 0644);
 	}
-	if ((token->type == OUT || token->type == APP ) && mini->fd_out[i] < 0)
+	if ((token->type == OUT || token->type == APP) && mini->fd_out[i] < 0 && mini->inv_fd[i] != 1)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
@@ -103,20 +102,53 @@ static void	get_outfile(t_mini *mini, t_token *token, int i)
 	}
 }
 
+static void	count_in_out(int *in, int *out, t_token *tmp)
+{
+	*in = 0;
+	*out = 0;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == IN)
+			(*in)++;
+		if (tmp->type == OUT)
+			(*out)++;
+		tmp = tmp->next;
+	}
+}
+
 int	fill_fd(t_mini *mini)
 {
 	t_token	*tmp;
 	int		i;
+	int		in;
+	int		out;
 
+	tmp = mini->token;
+	count_in_out(&in, &out, tmp);
 	tmp = mini->token;
 	i = 0;
 	while (tmp)
 	{
 		if (tmp->type == PIPE)
+		{
+			count_in_out(&in, &out, tmp->next);
 			i++;
-		if (get_infile(mini, tmp, i) != 0)
-			return (1);
-		get_outfile(mini, tmp, i);
+		}
+		else if (tmp->type == IN)
+		{
+			if (get_infile(mini, tmp, i) != 0)
+				return (1);
+			in--;
+			if (in > 0 && mini->fd_in[i] > 1)
+				close (mini->fd_in[i]);
+		}
+		else if (tmp->type == OUT)
+		{
+			get_outfile(mini, tmp, i);
+			out--;
+			if (out > 0 && mini->fd_out[i] > 1)
+				close (mini->fd_out[i]);
+		}
 		tmp = tmp->next;
 	}
 	return (0);

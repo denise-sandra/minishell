@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 21:28:06 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/02 14:40:44 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,20 @@ int	exec_script(t_mini *mini, t_token *tmp)
 	{
 		script = open(name, O_RDONLY);
 		if (is_directory(name))
-            return (ft_error(mini, " is a directory", NULL), 1);
+          {
+			close(script);
+			mini->exit_status = 126;
+			return (ft_error(mini, " Is a directory", NULL), 1);
+		}
 		if (script == -1)
-				return (ft_error(mini, NULL, strerror(errno)), 1);
+		{
+			if (errno == EACCES)
+				mini->exit_status = 126;
+			else
+				mini->exit_status = 127;
+			return (ft_error(mini, NULL, strerror(errno)), 1);
+		}
+			
 		if (ft_strncmp(name + ft_strlen(name) - 3, ".sh", 3) == 0)
 			args[0] = get_shebang(mini, script);
 		close(script);
@@ -96,6 +107,7 @@ int	exec_script(t_mini *mini, t_token *tmp)
 		args[2] = NULL;
 		if (execve(args[0], args, mini->env_char) == -1)
 		{
+			mini->exit_status = 127;
 			ft_error(mini, NULL, strerror(errno));
 			return (close(script), 1);
 		}		
