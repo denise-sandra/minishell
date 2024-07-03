@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:06:13 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	close_exec(t_mini *mini)
+{
+	if (mini->fd_in[0] > 0)
+		close(mini->fd_in[0]);
+	if (mini->fd_out[0] > 1)
+		close(mini->fd_out[0]);
+}
 
 void	execution(t_mini *mini)
 {
@@ -25,11 +33,11 @@ void	execution(t_mini *mini)
 		return ;
 	if (mini->cmd_count <= 0)
 	{
-		if (mini->fd_in[0] > 0)
-			close(mini->fd_in[0]);
-		if (mini->fd_out[0] > 1)
-			close(mini->fd_out[0]);
-		return ;
+		// if (mini->fd_in[0] > 0)
+		// 	close(mini->fd_in[0]);
+		// if (mini->fd_out[0] > 1)
+		// 	close(mini->fd_out[0]);
+		return (close_exec(mini));
 	}
 	if (tmp->type == COMMAND)
 		builtin = is_builtin(tmp->cmd_tab[0]);
@@ -43,6 +51,5 @@ void	execution(t_mini *mini)
 		return ;
 	close_fd_and_wait(mini);
 }
-
 
 // grep <Makefile -v >outfile1 'A'

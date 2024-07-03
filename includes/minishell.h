@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 17:57:33 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/03 18:47:22 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		env_command(t_mini *minishell);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
 void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
-void		cd_cmd(t_mini *mini);
+void		cd_cmd(t_mini *mini, t_token *cur);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 #endif

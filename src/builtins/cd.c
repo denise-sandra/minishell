@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 08:45:44 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:40:17 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*pwd_cmd_char(t_mini *mini)
 	if (cwd == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), NULL);
 	if (getcwd(cwd, size) == NULL)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);
 	return (cwd);
 }
 
@@ -30,7 +30,9 @@ int	ft_strrchr_int(char *str, int c)
 {
 	int	size;
 
-	size = ft_strlen(str);
+	if (!str)
+		return (-1);
+	size = ft_strlen(str) - 1;
 	if (str[size] == (char)c)
 		size--;
 	while (size >= 0)
@@ -62,10 +64,17 @@ static void	go_back(t_mini *mini)
 	int		c;
 
 	path = pwd_cmd_char(mini);
+	if (!path)
+		return ;
 	c = ft_strrchr_int(path, '/');
+	if (c == -1)
+	{
+		free (path);
+		return (ft_error(mini, "Can't go back or invalid path", NULL));
+	}
 	new_path = malloc((c + 1) * sizeof(char));
 	if (new_path == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (free(path), ft_error(mini, NULL, strerror(errno)));
 	ft_strlcpy(new_path, path, c);
 	free(path);
 	if (chdir(new_path) != 0)
@@ -76,14 +85,20 @@ static void	go_back(t_mini *mini)
 	free(new_path);
 }
 
-void	cd_cmd(t_mini *mini)
+void	cd_cmd(t_mini *mini, t_token *cur)
 {
 	const char	*path;
+	int			count;
 
-	if (mini->token->cmd_tab[2])
+	if (!cur->cmd_tab)
+		return ;
+	count = 0;
+	while (cur->cmd_tab[count])
+		count++;
+	if (count == 3)
 		return (ft_error(mini, " too many arguments", NULL));
-	path = mini->token->cmd_tab[1];
-	if (!path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
+	path = cur->cmd_tab[1];
+	if (count == 1 || !path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
 		go_home(mini);
 	else if (ft_strncmp(path, "..", ft_strlen(path)) == 0)
 		go_back(mini);

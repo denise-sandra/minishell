@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 18:06:17 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/03 19:36:28 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,40 @@ void	parse_and_execute(t_mini *mini, char *input)
 	}
 }
 
+char	*get_dynamic_prompt(void)
+{
+	char	cwd[1024];
+	char	*prompt;
+	char	*temp;
+
+	temp = NULL;
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		temp = ft_strjoin("minishell:", cwd);
+		if (!temp)
+			return (strdup("minishell$ "));
+		prompt = ft_strjoin(temp, "$ ");
+		if (!prompt)
+			return (strdup("minishell$ "));
+		free (temp);
+		return (prompt);
+	}
+	return (strdup("minishell$ "));
+}
+
 static void	minishell(t_mini *mini)
 {
 	char	*input;
+	char	*prompt;
 
 	while (!mini->should_exit)
 	{
 		mini->error = 0;
-		input = readline("minishell$ ");
+		prompt = get_dynamic_prompt();
+		if (!prompt)
+			break ;
+		input = readline(prompt);
+		free (prompt);
 		if (!input)
 			break ;
 		if (*input)
