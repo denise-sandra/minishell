@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 17:35:45 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/03 18:13:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,21 +124,17 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	expand_env_vars(mini, mini->token);
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
 	// 	print = print->next;
 	// }
+	prep_heredoc(mini);
+	expand_env_vars(mini, mini->token);
 	if (order_tok_list(mini) == 1)
 		return ;
-	//print = mini->token;
-	// t_token *print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("order : %s type %d\n", print->value, print->type);
@@ -146,7 +142,7 @@ void	parser(t_mini *mini)
 	// }
 	parse_commands(mini);
 	last_error_checks(mini);
-	// t_token *print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);

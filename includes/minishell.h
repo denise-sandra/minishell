@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 17:35:10 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/03 17:57:33 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void		remove_spaces(t_mini *mini);
 //parser
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
+void		prep_heredoc(t_mini *mini);
 void		expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
 int			order_tok_list(t_mini *mini);
