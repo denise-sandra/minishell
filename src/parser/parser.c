@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 11:20:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:35:45 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	parser(t_mini *mini)
 	// 	}
 	// 	print = print->next;
 	// }
-	if (order_tok(mini) == 1)
+	if (order_tok_list(mini) == 1)
 		return ;
 	//print = mini->token;
 	// t_token *print = mini->token;

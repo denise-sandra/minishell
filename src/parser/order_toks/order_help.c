@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/29 17:27:23 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/03 17:32:09 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	handle_string(t_mini *mini, t_token **cur, t_token **next)
 	*cur = *next;
 }
 
-void	order_in(t_mini *mini)
+void	order_redirs(t_mini *mini)
 {
 	t_token	*cur;
 	t_token	*next;
@@ -107,7 +107,7 @@ void	order_in(t_mini *mini)
 		next = cur->next;
 		if (cur->type == PIPE)
 			handle_pipes(mini, &cur, &next);
-		else if (cur->type == IN || cur->type == HERE)
+		else if (cur->type == IN || cur->type == HERE || cur->type == OUT || cur->type == APP)
 			handle_infiles(mini, &cur, &next);
 		else
 			handle_string(mini, &cur, &next);

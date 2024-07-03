@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_toks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:34:29 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,13 @@ static int	init_order_struct(t_mini *mini)
 	return (0);
 }
 
-int	order_tok(t_mini *mini)
+int	order_tok_list(t_mini *mini)
 {
 	if (init_order_struct(mini) == 1)
 		return (1);
-	order_in(mini);
+	order_redirs(mini);
 	connect_tok(mini);
 	ft_bzero(mini->order, sizeof(t_order));
-	order_out(mini, mini->token);
 	free(mini->order);
 	mini->order = NULL;
 	return (0);

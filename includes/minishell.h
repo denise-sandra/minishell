@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:35:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
-int			order_tok(t_mini *mini);
-void		order_in(t_mini *mini);
-void		order_out(t_mini *mini, t_token *cur);
+int			order_tok_list(t_mini *mini);
+void		order_redirs(t_mini *mini);
 void		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
@@ -71,7 +70,7 @@ t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
 char		*ft_strjoin_char(char *s, char c);
 char		*ft_strjoin_frees1(char *s1, char *s2);
-void	     handle_before_var(char **before_var, char *env_value);
+void		handle_before_var(char **before_var, char *env_value);
 
 
 //environement
