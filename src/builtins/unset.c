@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 15:57:27 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:43:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ void	unset_cmd(t_mini *mini, t_token *cur)
 	}
 	if (changed == 1)
 	{
-		free(mini->env_char);
+		free_tab(mini->env_char);
 		mini->env_char = list_to_tab(mini);
 	}
+	mini->exit_status = 0;
 }
 

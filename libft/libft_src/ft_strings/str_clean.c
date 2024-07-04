@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/20 15:38:43 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/04 14:06:50 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 	{
 		free (tab[i]);
 		i++;

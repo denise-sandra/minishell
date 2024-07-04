@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 19:40:17 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:39:06 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,6 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 		go_back(mini);
 	else if (chdir(path) != 0)
 		return (ft_error(mini, NULL, strerror(errno)));
+	if (mini->error == 0)
+		mini->exit_status = 0;
 }

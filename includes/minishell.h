@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 18:47:22 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:35:20 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char		*get_env_value(t_lst_env *env, char *name);
 int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
-void		free_env(t_lst_env *env, char *name);
+void		free_env(t_mini *mini, t_lst_env *env, char *name);
 t_lst_env	*copy_list(t_lst_env *lst);
 
 //exec
@@ -102,6 +102,7 @@ void		exec_in_child(t_mini *mini, t_token *tmp);
 void		close_fd_and_wait(t_mini *mini);
 void		close_all_fd(t_mini *mini);
 void		close_if_inv_fd(t_mini *mini, int j);
+char	     *get_dynamic_prompt(void);
 
 //builtin fucntions
 void		echo_command(t_token *cur);
@@ -114,5 +115,8 @@ void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);
 void		unset_cmd(t_mini *mini, t_token *cur);
+
+//signals
+void      setup_signal_handlers(void);
 
 #endif

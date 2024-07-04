@@ -6,11 +6,12 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 15:35:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/04 13:52:13 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 static char	**pars_path(t_mini *mini)
 {
@@ -67,31 +68,42 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 	return (0);
 }
 
+void	execve_failed(t_mini *mini, t_token *tmp, char **paths, int exec_ret)
+{
+	int		exit_tmp;
+	
+	if (exec_ret == -2)
+	{
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free(paths);
+	}
+	else
+		free_tab(paths);
+	exit_tmp = mini->exit_status;
+	clean_minishell(mini);
+	exit(exit_tmp);
+}
+
 void	cmd_exec(t_mini *mini, t_token *tmp)
 {
 	char	**paths;
 	int		exec_ret;
-	int		exit_tmp;
 
 	if (exec_script(mini, tmp) == 1)
 		return ;
 	paths = pars_path(mini);
 	if (paths == NULL)
-		return (ft_error(mini, "Failed to parse path", NULL));
+		return (ft_error(mini, NULL, strerror(errno)));
+	if (paths[0] == NULL)
+	{
+		free(paths);
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		return (ft_error(mini, " : No such file or directory\n", NULL));
+	}
 	exec_ret = cmd_exec_utils(mini, tmp, paths);
 	if (exec_ret < 0)
-	{
-		if (exec_ret == -2)
-		{
-			mini->exit_status = 127;
-			ft_putstr_fd(tmp->cmd_tab[0], 2);
-			ft_putstr_fd(": command not found\n", 2);
-			free(paths);
-		}
-		else
-			free_tab(paths);
-		exit_tmp = mini->exit_status;
-		clean_minishell(mini);
-		exit(exit_tmp);
-	}
+		execve_failed(mini, tmp, paths, exec_ret);
 }

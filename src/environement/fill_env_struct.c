@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_env_struct.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:32:50 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:10:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,9 @@ void	ft_lstadd_back_env(t_lst_env **lst, t_lst_env *new)
 			*lst = new;
 			return ;
 		}
-		while (current ->next != NULL)
-		{
-			current = current ->next;
-		}
-		current ->next = new;
+		while (current->next)
+			current = current->next;
+		current->next = new;
 	}
 	return ;
 }

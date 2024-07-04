@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_var_to_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 15:17:53 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:09:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,14 @@ static int	add_with_nulll_value(t_mini *mini, char *new_var, char	***split)
 	return (0);
 }
 
-static void	add_exp(t_mini *mini, char *new_var, char *res)
+static void	add_exp(t_mini *mini, char *new_var)
 {
 	char		**split_new_exp;
 	t_lst_env	*new_node;
 
 	split_new_exp = NULL;
-	if (res)
-	{
-		split_new_exp = split_env_vars(new_var, '=');
-		if (split_new_exp == NULL)
-			return (ft_error(mini, NULL, strerror(errno)));
-		free_env(mini->export, split_new_exp[0]);
-	}
-	else
-	{
-		if (add_with_nulll_value(mini, new_var, &split_new_exp) == 1)
-			return ;
-	}
+	if (add_with_nulll_value(mini, new_var, &split_new_exp) == 1)
+		return ;
 	new_node = ft_lstnew_env(split_new_exp[0], split_new_exp[1]);
 	free_tab(split_new_exp);
 	if (new_node == NULL)
@@ -65,7 +55,7 @@ static void	add_env(t_mini *mini, char *new_var)
 	split_new_envp = split_env_vars(new_var, '=');
 	if (split_new_envp == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
-	free_env(mini->env, split_new_envp[0]);
+	free_env(mini, mini->env, split_new_envp[0]);
 	new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);
 	free_tab(split_new_envp);
 	if (new_node == NULL)
@@ -113,10 +103,15 @@ void	add_var_to_list(t_mini *mini, t_token *cur)
 		return ;
 	res = ft_strchr(new_var, '=');
 	if (res)
+	{
 		add_env(mini, new_var);
+		if (mini->error != 0)
+			return ;
+	}
 	else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
 		return (ft_error(mini, " not a valid identifier", NULL));
-	add_exp(mini, new_var, res);
+	if (!res)
+		add_exp(mini, new_var);
 	if (mini->error)
 		return ;
 }
