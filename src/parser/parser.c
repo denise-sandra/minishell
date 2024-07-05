@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 14:03:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 14:55:53 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 {
 	char	*str;
-	t_type	final_q;
 
 	str = NULL;
 	*cur = (*cur)->next;
-	final_q = q;
 	while (*cur && (*cur)->type != q)
 	{
 		str = ft_strjoin_char(str, (*cur)->c);
@@ -28,10 +26,10 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 		*cur = (*cur)->next;
 	}
 	if (*cur && (*cur)->type == q)
-			*cur = (*cur)->next;
+		*cur = (*cur)->next;
 	if (str)
 	{
-		if (tok_list(str, final_q, lst) != 0)
+		if (tok_list(str, q, lst) != 0)
 			return (ft_error(ms, NULL, strerror(errno)));
 		free(str);
 	}
@@ -49,11 +47,11 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 		if (tok_list("|", PIPE, list) != 0)
 			return (ft_error(mini, NULL, strerror(errno)));
 	}
-	// else if ((*cur)->type == EMPTY)
-	// {
-	// 	if (tok_list("", EMPTY, list) != 0)
-	// 		return (ft_error(mini, NULL, strerror(errno)));
-	// }
+	else if ((*cur)->type == EMPTY)
+	{
+		if (tok_list("", EMPTY, list) != 0)
+			return (ft_error(mini, NULL, strerror(errno)));
+	}
 	*cur = (*cur)->next;
 }
 
@@ -167,7 +165,9 @@ void	parser(t_mini *mini)
 	pretok = mini->pretok;
 	while (pretok)
 	{
-		if (pretok->type == CHAR || pretok->type == OPT)
+		if (pretok->c == '$' && pretok->next && (pretok->next->type == D_Q || pretok->next->type == S_Q))
+			pretok = pretok->next;
+		else if (pretok->type == CHAR || pretok->type == OPT)
 			tokenize_strings(mini, &pretok, &(mini->token));
 		else if (pretok->type == PIPE || pretok->type == EMPTY)
 			tokenize_pipes_n_empty(mini, &pretok, &(mini->token));
@@ -187,12 +187,12 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	t_token *print = mini->token;
-	while (print)
-	{
-		printf("1 tok %s  type: %i\n", print->value, print->type);
-		print = print->next;
-	}
+	
+	// while (print)
+	// {
+	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	prep_heredoc(mini);
 	expand_env_vars(mini, mini->token);
 	check_white(mini);
@@ -206,7 +206,7 @@ void	parser(t_mini *mini)
 	// }
 	parse_commands(mini);
 	last_error_checks(mini);
-	// print = mini->token;
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);

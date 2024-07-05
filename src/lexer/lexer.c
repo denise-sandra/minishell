@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 13:04:26 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/05 15:20:22 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,25 @@ static int	create_pretokens_list(char *input, t_mini *mini)
 	return (0);
 }
 
+void	remove_extra_empty(t_mini *mini)
+{
+	t_pretok	*cur;
+	t_pretok	*next;
+
+	cur = mini->pretok;
+	while (cur)
+	{
+		next = cur->next;
+		if (cur->type != WHITE && next && next->type == EMPTY)
+		{
+			cur->next = next->next;
+			free(next);
+		}
+		else
+			cur = cur->next;
+	}
+}
+
 void	lexer(char *input, t_mini *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
@@ -85,10 +104,17 @@ void	lexer(char *input, t_mini *mini)
 		ft_error(mini, "Syntaxis error: special character not supported", NULL);
 		return ;
 	}
-	// t_pretok *print = mini->pretok;
-	// while (print)
-	// {
-	// 	printf("pretok val: %c  type: %i\n", print->c, print->type);
-	// 	print = print->next;
-	// }
+	t_pretok *print = mini->pretok;
+	while (print)
+	{
+		printf("pretok val: %c  type: %i\n", print->c, print->type);
+		print = print->next;
+	}
+	remove_extra_empty(mini);
+	print = mini->pretok;
+	while (print)
+	{
+		printf("pretok val 2: %c  type: %i\n", print->c, print->type);
+		print = print->next;
+	}
 }
