@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 16:09:19 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 08:58:57 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,36 +73,4 @@ char	*expand_variable(t_mini *mini, char *temp_str, int *len)
 		env_value = ft_strdup("");
 	*len += env_name_len(&temp_str[*len]) + 1;
 	return (env_value);
-}
-
-void	free_env(t_mini *mini, t_lst_env *env, char *name)
-{
-	t_lst_env	*temp;
-	t_lst_env	*next;
-	t_lst_env	*prev;
-	size_t	len;
-
-	temp = env;
-	prev = NULL;
-	next = NULL;
-	len = ft_strlen(name);
-	while (temp)
-	{
-		if (ft_strlen(temp->name) == len && \
-			ft_strncmp(temp->name, name, len) == 0)
-		{
-			free(temp->name);
-			free(temp->value);
-			if (temp->next)
-				next = temp->next;
-			free(temp);
-			if (prev)
-				prev->next = next;
-			else
-				mini->env = next;
-			return ;
-		}
-		prev = temp;
-		temp = temp->next;
-	}
 }

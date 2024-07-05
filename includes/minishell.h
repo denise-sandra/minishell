@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 17:35:20 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:04:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char		*get_env_value(t_lst_env *env, char *name);
 int			is_env_value(t_mini *minishell, char *value);
 int			env_name_len(char *token);
 char		*get_env_name(char *token);
-void		free_env(t_mini *mini, t_lst_env *env, char *name);
+void		free_env_node(t_mini *mini, t_lst_env *env, char *name);
 t_lst_env	*copy_list(t_lst_env *lst);
 
 //exec

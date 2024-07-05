@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 14:43:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 08:55:33 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ void	unset_cmd(t_mini *mini, t_token *cur)
 	}
 	mini->exit_status = 0;
 }
-

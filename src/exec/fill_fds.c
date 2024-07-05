@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 16:15:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:32:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ static int	check_pipes(t_token *tmp, int i, int *in, int *out)
 	return (i);
 }
 
+static void	redir_out(t_mini *mini, int *out, t_token *tmp, int i)
+{
+	if (mini->inv_fd[i] != 1)
+	{
+		get_outfile(mini, tmp, i);
+		(*out)--;
+		if (*out > 0 && mini->fd_out[i] > 1)
+			close (mini->fd_out[i]);
+	}
+}
+
 static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 {
 	int	i;
@@ -55,15 +66,7 @@ static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 			}
 		}
 		else if (tmp->type == OUT || tmp->type == APP)
-		{
-			if (mini->inv_fd[i] != 1)
-			{
-				get_outfile(mini, tmp, i);
-				(*out)--;
-				if (*out > 0 && mini->fd_out[i] > 1)
-					close (mini->fd_out[i]);
-			}
-		}
+			redir_out(mini, out, tmp, i);
 		tmp = tmp->next;
 	}
 	return (0);

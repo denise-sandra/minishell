@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 18:12:23 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/05 09:36:43 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 {
@@ -91,11 +90,11 @@ void	get_outfile(t_mini *mini, t_token *token, int i)
 				| O_WRONLY | O_TRUNC, 0644);
 	if (token->next && token->type == APP)
 	{
-		mini->fd_out[i]  = open(token->next->value, O_CREAT
+		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_WRONLY | O_APPEND, 0644);
 	}
 	if ((token->type == OUT || token->type == APP) && \
-		mini->fd_out[i] < 0 )
+		mini->fd_out[i] < 0)
 	{
 		ft_putstr_fd("Error: ", 2);
 		ft_putstr_fd(strerror(errno), 2);

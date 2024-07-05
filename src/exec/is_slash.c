@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:08:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:36:27 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	is_directory_from_home(t_mini *mini)
 {
-	struct stat statbuf;
-	char	cwd[1024];
+	struct stat	statbuf;
+	char			cwd[1024];
 
 	if (getcwd(cwd, 1024) == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), -1);

@@ -6,12 +6,11 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 13:52:13 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:11:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static char	**pars_path(t_mini *mini)
 {
@@ -71,7 +70,7 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 void	execve_failed(t_mini *mini, t_token *tmp, char **paths, int exec_ret)
 {
 	int		exit_tmp;
-	
+
 	if (exec_ret == -2)
 	{
 		mini->exit_status = 127;

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 13:32:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:06:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
-	int  i;
 	t_token	*tmp;
+	int		i;
 
 	i = 0;
 	tmp = cur;

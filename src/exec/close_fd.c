@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 15:32:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:45:12 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	close_fd_and_wait(t_mini *mini)
 
 	i = 0;
 	last_exit_status = 0;
+	status = 0;
 	while (i < mini->cmd_count)
 	{
 		if (mini->fd_in && mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)

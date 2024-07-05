@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:06:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:11:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	process_script(t_mini *mini, const char *name, int *script_fd)
 int	exec_script(t_mini *mini, t_token *tmp)
 {
 	char	*name;
-	int	script;
+	int		script;
 	char	*args[3];
 
 	name = get_script_name(tmp);

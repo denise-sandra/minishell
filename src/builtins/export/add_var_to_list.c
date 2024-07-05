@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 16:09:35 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:04:37 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	add_env(t_mini *mini, char *new_var)
 	split_new_envp = split_env_vars(new_var, '=');
 	if (split_new_envp == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
-	free_env(mini, mini->env, split_new_envp[0]);
+	free_env_node(mini, mini->env, split_new_envp[0]);
 	new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);
 	free_tab(split_new_envp);
 	if (new_node == NULL)

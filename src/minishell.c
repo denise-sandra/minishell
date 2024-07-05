@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 17:31:34 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 10:26:38 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
-
 	return (mini);
 }
 
@@ -73,7 +72,15 @@ static void	minishell(t_mini *mini)
 		prompt = get_dynamic_prompt();
 		if (!prompt)
 			break ;
-		input = readline(prompt);
+		if (isatty(fileno(stdin)))
+			input = readline(prompt);
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			input = ft_strtrim(line, "\n");
+			free(line);
+		}
 		free (prompt);
 		if (!input)
 			break ;

@@ -6,16 +6,14 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 15:50:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:41:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_dup_in_out(t_mini *mini, int i)
+static int	ft_dup_in(t_mini *mini, int i)
 {
-	int	j;
-
 	if (mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 	{
 		if (dup2(mini->fd_in[i], STDIN_FILENO) == -1)
@@ -34,13 +32,11 @@ static int	ft_dup_in_out(t_mini *mini, int i)
 		}
 		return (ft_error(mini, NULL, strerror(errno)), 1);
 	}
-	j = 0;
-	while (j <= i && mini->fd_in[j] != STDIN_FILENO)
-	{
-		if (mini->fd_in[j] > 0)
-			close(mini->fd_in[j]);
-		j++;
-	}
+	return (0);
+}
+
+static int	ft_dup_out(t_mini *mini, int i)
+{
 	if (mini->fd_out[i] != STDOUT_FILENO)
 	{
 		if (dup2(mini->fd_out[i], STDOUT_FILENO) == -1)
@@ -50,6 +46,24 @@ static int	ft_dup_in_out(t_mini *mini, int i)
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 	}
+	return (0);
+}
+
+static int	ft_dup_in_out(t_mini *mini, int i)
+{
+	int	j;
+
+	if (ft_dup_in(mini, i) != 0)
+		return (1);
+	j = 0;
+	while (j <= i && mini->fd_in[j] != STDIN_FILENO)
+	{
+		if (mini->fd_in[j] > 0)
+			close(mini->fd_in[j]);
+		j++;
+	}
+	if (ft_dup_out(mini, i) != 0)
+		return (1);
 	j = 0;
 	while (j <= i && mini->fd_out[j] != STDOUT_FILENO)
 	{

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 16:00:08 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 09:09:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	check_inv_fd(t_mini *mini)
 	}
 	return (0);
 }
+
 static int	first_command(t_mini *mini)
 {
 	close(mini->tube[0][0]);

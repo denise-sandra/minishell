@@ -6,12 +6,11 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 14:40:02 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 08:55:56 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	path_exits(t_lst_env *env)
 {
