@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 10:26:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:52:03 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_mini	*init_minishell(char **envp)
 	mini = malloc(sizeof(t_mini));
 	if (mini == NULL)
 	{
-		ft_error(mini, NULL, strerror(errno));
+		ft_putstr_fd("Failed to malloc minishell structure\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(mini, sizeof(t_mini));

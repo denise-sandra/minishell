@@ -3,29 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/05 11:23:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:18:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	split_and_add_to_list(char *before_var, t_token **new_list)
+static int	split_and_add_to_list(char *before_var, t_token **new_list)
 {
 	char	**split_env;
 	int		i;
 
 	split_env = ft_split(before_var, ' ');
-	free(before_var);
+	if (!split_env)
+		return (free(before_var), -1);
 	i = 0;
 	while (split_env[i])
 	{
-		tok_list(split_env[i], STRING, new_list);
+		if (tok_list(split_env[i], STRING, new_list) == 1)
+			return (free_tab(split_env), -1);
 		i++;
 	}
 	free_tab(split_env);
+	return (0);
 }
 
 static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
@@ -53,7 +56,10 @@ static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		}
 	}
 	if (before_var)
-		split_and_add_to_list(before_var, new_list);
+	{
+		if (split_and_add_to_list(before_var, new_list) < 0)
+			return (ft_error(mini, NULL, strerror(errno)));
+	}
 }
 
 static void	expand_inside_dq(t_mini *mini, char **str)
@@ -73,10 +79,14 @@ static void	expand_inside_dq(t_mini *mini, char **str)
 		{
 			env_value = expand_var(mini, temp_str, &i);
 			new_str = ft_strjoin_free(new_str, env_value);
+			if (!new_str)
+				return (ft_error(mini, NULL, strerror(errno)));
 		}
 		else
 		{
 			new_str = ft_strjoin_char(new_str, temp_str[i]);
+			if (!new_str)
+				return (ft_error(mini, NULL, strerror(errno)));
 			i++;
 		}
 	}
@@ -89,10 +99,16 @@ static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 	if (cur->type == D_Q)
 	{
 		expand_inside_dq(mini, &cur->value);
-		tok_list(cur->value, STRING, new_list);
+		if (mini->error)
+			return ;
+		if (tok_list(cur->value, STRING, new_list) == 1)
+			return (ft_error(mini, NULL, strerror(errno)));
 	}
 	else if (cur->type == S_Q)
-		tok_list(cur->value, STRING, new_list);
+	{
+		if (tok_list(cur->value, STRING, new_list) == 1)
+			return (ft_error(mini, NULL, strerror(errno)));
+	}
 	else
 		expand_outside_dq(mini, &cur, new_list);
 }
@@ -110,14 +126,13 @@ void	expand_env_vars(t_mini *mini, t_token *list)
 		temp = cur->next;
 		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
 			&& ft_strchr(cur->value, '$'))
-		{
 			expand_and_add(mini, cur, &new_list);
-		}
 		else
 		{
 			if (cur->type == D_Q || cur->type == S_Q)
 				cur->type = STRING;
-			tok_list(cur->value, cur->type, &new_list);
+			if (tok_list(cur->value, cur->type, &new_list) == 1)
+				return (ft_error(mini, NULL, strerror(errno)));
 		}
 		free(cur->value);
 		free (cur);

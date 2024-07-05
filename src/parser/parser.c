@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 14:55:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:48:22 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 	*cur = (*cur)->next;
 }
 
-static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
+static char	*tok_str_help(t_mini *ms, t_pretok **cur, char *s, t_pretok **prev)
 {
 	if ((*cur)->type == CHAR || (*cur)->type == OPT)
 	{
-		*s = ft_strjoin_char(*s, (*cur)->c);
-		if (!(*s))
-			return (ft_error(ms, NULL, strerror(errno)));
+		s = ft_strjoin_char(s, (*cur)->c);
+		if (!s)
+			return (ft_error(ms, NULL, strerror(errno)), NULL);
 	}
 	else if ((*prev && (*prev)->c == '=') && ((*cur)->type == D_Q
 			|| (*cur)->type == S_Q))
@@ -69,12 +69,13 @@ static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
 		while ((*cur) && ((*cur)->type == CHAR
 				|| (*cur)->type == D_Q || (*cur)->type == S_Q))
 		{
-			*s = ft_strjoin_char(*s, (*cur)->c);
+			s = ft_strjoin_char(s, (*cur)->c);
 			if (!(*s))
-				return (ft_error(ms, NULL, strerror(errno)));
+				return (ft_error(ms, NULL, strerror(errno)), NULL);
 			*cur = (*cur)->next;
 		}
 	}
+	return (s);
 }
 
 static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
@@ -87,7 +88,9 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY
 			|| (*cur)->type == OPT))
 	{
-		tok_str_help(mini, cur, &join, &prev);
+		join = tok_str_help(mini, cur, join, &prev);
+		if (!join)
+			return ;
 		if (*cur)
 		{
 			prev = *cur;
@@ -101,6 +104,7 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 		free(join);
 	}
 }
+
 static void check_white(t_mini *mini)
 {
 	t_token *tmp;
