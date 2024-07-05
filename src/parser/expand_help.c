@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/05 16:20:30 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/05 18:07:48 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*expand_var(t_mini *mini, char *temp_str, int *len)
 
 	name = get_env_name(&temp_str[*len]);
 	if (!name)
-		return (ft_error(mini, NULL, strerror(errno), NULL));
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
 	if (ft_strncmp(name, "?", 1) == 0)
 		value = expand_error_status(mini, len, name);
 	else
