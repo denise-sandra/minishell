@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:04:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:55:44 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,19 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 void		prep_heredoc(t_mini *mini);
-void		expand_env_vars(t_mini *mini, t_token *token);
+int		expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
 int			order_tok_list(t_mini *mini);
 void		order_redirs(t_mini *mini);
-void		parse_commands(t_mini *mini);
+int		parse_commands(t_mini *mini);
 int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
 char		*ft_strjoin_char(char *s, char c);
 char		*ft_strjoin_frees1(char *s1, char *s2);
-void		handle_before_var(char **before_var, char *env_value);
+int		handle_before_var(char **before_var, char *env_value);
+int        check_white(t_mini *mini);
 
 
 //environement
@@ -91,7 +92,7 @@ void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
 int			malloc_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
 int			dup_tubes(t_mini *mini, int i);
-int			fill_fd(t_mini *mini);
+void		fill_fd(t_mini *mini);
 int			get_infile(t_mini *mini, t_token *token, int i);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);

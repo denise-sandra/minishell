@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/04 14:44:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/06 16:23:07 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	execution(t_mini *mini)
 	builtin = -1;
 	if (malloc_fds(mini) != 0)
 		return ;
-	if (fill_fd(mini) != 0)
-		return ;
+	fill_fd(mini);
 	if (mini->cmd_count <= 0)
 		return (close_exec(mini));
-	if (tmp->type == COMMAND)
+	if (mini->cmd_count == 1 && tmp->type == COMMAND)
 		builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 	{

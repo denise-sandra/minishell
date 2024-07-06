@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:32:55 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:41:34 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	redir_out(t_mini *mini, int *out, t_token *tmp, int i)
 	}
 }
 
-static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
+static void	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 {
 	int	i;
 
@@ -59,7 +59,6 @@ static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 		{
 			if (mini->inv_fd[i] != 1 && get_infile(mini, tmp, i) != 0)
 			{
-				return (1);
 				(*in)--;
 				if (*in > 0 && mini->fd_in[i] > 1)
 					close (mini->fd_in[i]);
@@ -69,10 +68,10 @@ static int	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 			redir_out(mini, out, tmp, i);
 		tmp = tmp->next;
 	}
-	return (0);
+	return ;
 }
 
-int	fill_fd(t_mini *mini)
+void	fill_fd(t_mini *mini)
 {
 	t_token	*tmp;
 	int		in;
@@ -81,7 +80,5 @@ int	fill_fd(t_mini *mini)
 	tmp = mini->token;
 	count_in_out(&in, &out, tmp);
 	tmp = mini->token;
-	if (fill_fd_utils(mini, &in, &out, tmp) != 0)
-		return (1);
-	return (0);
+	fill_fd_utils(mini, &in, &out, tmp);
 }
