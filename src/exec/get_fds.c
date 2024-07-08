@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:36:43 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/08 11:30:42 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 		return (free(line), 1);
 	line[line_len] = '\n';
 	line_len++;
-	write(hd_pipe[1], line, line_len);
 	if (write(hd_pipe[1], line, line_len) == -1)
 		return (free(line), -1);
 	free(line);
