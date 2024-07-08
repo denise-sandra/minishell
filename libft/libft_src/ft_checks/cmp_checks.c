@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/03/15 11:13:35 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/08 13:34:53 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	string2 = (unsigned char *)s2;
 	if (n == 0)
 		return (0);
-	while (i < n - 1 && (string1[i]))
+	while (i < n && (string1[i]))
 	{
 		if (string1[i] == string2[i])
 			i++;

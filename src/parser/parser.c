@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 10:56:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/08 12:05:29 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	parser(t_mini *mini)
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
 	// 	print = print->next;
 	// }
-	if(check_white(mini) != 0)
+	if (check_white(mini) != 0)
 		return ;
 	prep_heredoc(mini);
 	expand_env_vars(mini, mini->token);
@@ -148,7 +148,7 @@ void	parser(t_mini *mini)
 		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
-	// t_token * print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("order : %s type %d\n", print->value, print->type);

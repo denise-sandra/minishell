@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/08 10:47:18 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/08 12:04:19 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	prep_heredoc(t_mini *mini)
 	cur = mini->token;
 	while (cur)
 	{
-		if (cur->type == STRING && prev && prev->type == HERE)
+		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
+			&& prev && prev->type == HERE)
 			cur->type = LIM;
 		prev = cur;
 		cur = cur->next;
