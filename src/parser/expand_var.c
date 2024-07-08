@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/08 12:05:58 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/08 16:04:44 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ static int	split_and_add_to_list(char *before_var, t_token **new_list)
 
 	split_env = ft_split(before_var, ' ');
 	if (!split_env)
-		return (free(before_var), 1);
+		return (free(before_var), -1);
 	i = 0;
 	while (split_env[i])
 	{
-		if (tok_list(split_env[i], STRING, new_list) == 1)
-			return (free_tab(split_env), 1);
+		if (tok_list(split_env[i], STRING, new_list) != 0)
+			return (free_tab(split_env), -1);
 		i++;
 	}
 	free_tab(split_env);
 	return (0);
 }
 
-static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
+static int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 {
 	char	*temp_str;
 	char	*before_var;
@@ -46,28 +46,29 @@ static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		if (temp_str[j] != '$' || (temp_str[j] == '$' && !temp_str[j + 1])
 			|| (temp_str[j] == '$' && temp_str[j + 1] && (temp_str[j + 1] == ' '
 					|| ft_isdigit(temp_str[j + 1]))))
-					{
-						before_var = ft_strjoin_char(before_var, temp_str[j++]);
-						if (!before_var)
-							return (ft_error(mini, NULL, strerror(errno)));
-					}		
+		{
+			before_var = ft_strjoin_char(before_var, temp_str[j++]);
+			if (!before_var)
+				return (-1);
+		}		
 		else
 		{
 			env_value = expand_var(mini, temp_str, &j);
 			if (!env_value)
-				return ;
+				return (-1);
 			if (handle_before_var(&before_var, env_value) != 0)
-				return(ft_error(mini, NULL, strerror(errno)));
+				return (free(env_value), -1);
 		}
 	}
 	if (before_var)
 	{
 		if (split_and_add_to_list(before_var, new_list) != 0)
-			return (ft_error(mini, NULL, strerror(errno)));
+			return (free(env_value), -1);
 	}
+	return (free(env_value), 0);
 }
 
-static void	expand_inside_dq(t_mini *mini, char **str)
+static int	expand_inside_dq(t_mini *mini, char **str)
 {
 	char	*temp_str;
 	char	*new_str;
@@ -84,44 +85,45 @@ static void	expand_inside_dq(t_mini *mini, char **str)
 		{
 			env_value = expand_var(mini, temp_str, &i);
 			if (!env_value)
-				return (ft_error(mini, NULL, strerror(errno)));
+				return (-1);
 			new_str = ft_strjoin_free(new_str, env_value);
+			free(env_value);
 			if (!new_str)
-				return (ft_error(mini, NULL, strerror(errno)));
+				return (-1);
 		}
 		else
 		{
 			new_str = ft_strjoin_char(new_str, temp_str[i]);
 			if (!new_str)
-				return (ft_error(mini, NULL, strerror(errno)));
+				return (-1);
 			i++;
 		}
 	}
 	free(*str);
 	*str = new_str;
+	return (0);
 }
 
-static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
+static int	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 {
 	if (cur->type == D_Q)
 	{
-		expand_inside_dq(mini, &cur->value);
-		if (mini->error)
-			return ;
-		if (tok_list(cur->value, STRING, new_list) == 1)
-			return (ft_error(mini, NULL, strerror(errno)));
+		if (expand_inside_dq(mini, &cur->value) != 0)
+			return (-1);
+		if (tok_list(cur->value, STRING, new_list) != 0)
+			return (-1);
 	}
 	else if (cur->type == S_Q)
 	{
-		if (tok_list(cur->value, STRING, new_list) == 1)
-			return (ft_error(mini, NULL, strerror(errno)));
+		if (tok_list(cur->value, STRING, new_list) != 0)
+			return (-1);
 	}
 	else
 	{
-		expand_outside_dq(mini, &cur, new_list);
-		if (mini->error)
-			return ;
-	}		
+		if (expand_outside_dq(mini, &cur, new_list) != 0)
+			return (-1);
+	}
+	return (0);
 }
 
 int	expand_env_vars(t_mini *mini, t_token *list)
@@ -138,9 +140,11 @@ int	expand_env_vars(t_mini *mini, t_token *list)
 		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
 			&& ft_strchr(cur->value, '$'))
 		{
-			expand_and_add(mini, cur, &new_list);
-			if (mini->error)
-				return (1);
+			if (expand_and_add(mini, cur, &new_list) != 0)
+			{
+				mini->token = new_list;
+				return (ft_error(mini, NULL, strerror(errno)), 1);
+			}
 		}	
 		else
 		{

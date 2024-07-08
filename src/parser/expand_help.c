@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/06 14:57:00 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/08 15:44:32 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ static char	*expand_error_status(t_mini *mini, int *len, char *name)
 
 	value = ft_itoa(mini->exit_status);
 	if (!value)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+		return (NULL);
 	if (ft_strlen(name) > 1)
 	{
 		after_s = ft_strnstr(name, "?", ft_strlen(name));
 		value = ft_strjoin_frees1(value, after_s + 1);
 		if (value == NULL)
-			return (ft_error(mini, NULL, strerror(errno)), NULL);
+			return (NULL);
 		*len += ft_strlen(name) + 1;
 	}
 	else
@@ -59,18 +59,22 @@ char	*expand_var(t_mini *mini, char *temp_str, int *len)
 
 	name = get_env_name(&temp_str[*len]);
 	if (!name)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+		return (NULL);
 	if (ft_strncmp(name, "?", 1) == 0)
 	{
 		value = expand_error_status(mini, len, name);
 		if (!value)
-			return (NULL);
+			return (free(name), NULL);
 	}
-	else	
+	else
 	{
 		value = get_env_value(mini->env, name);
 		if (!value)
+		{
 			value = ft_strdup("");
+			if (!value)
+				return (free(name), NULL);
+		}
 		*len += env_name_len(&temp_str[*len]) + 1;
 	}
 	free(name);
