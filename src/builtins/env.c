@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 08:02:11 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/05 08:55:56 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	path_exits(t_lst_env *env)
 {
@@ -24,16 +23,17 @@ static int	path_exits(t_lst_env *env)
 	return (0);
 }
 
-void	env_command(t_mini *minishell)
+void	env_command(t_mini *mini)
 {
 	t_lst_env	*temp;
 
-	temp = minishell->env;
+	temp = mini->env;
 	if (!path_exits(temp))
 	{
-		ft_putstr_fd("env: command not found\n", 2);
-		error_cleanup(minishell);
-		minishell->exit_status = 127;
+		ft_putstr_fd("env: No such file or directory\n", 2);
+		error_cleanup(mini);
+		mini->error = 1;
+		mini->exit_status = 127;
 		return ;
 	}
 	while (temp)
@@ -41,4 +41,6 @@ void	env_command(t_mini *minishell)
 		printf("%s=%s\n", temp->name, temp->value);
 		temp = temp->next;
 	}
+	if (mini->error == 0)
+		mini->exit_status = 0;
 }

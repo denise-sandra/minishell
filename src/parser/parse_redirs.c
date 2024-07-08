@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/01 07:39:49 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/08 10:47:18 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,21 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 		}
 		else
 			break ;
+	}
+}
+
+void	prep_heredoc(t_mini *mini)
+{
+	t_token	*prev;
+	t_token	*cur;
+
+	prev = NULL;
+	cur = mini->token;
+	while (cur)
+	{
+		if (cur->type == STRING && prev && prev->type == HERE)
+			cur->type = LIM;
+		prev = cur;
+		cur = cur->next;
 	}
 }

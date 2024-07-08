@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_exec.c                                        :+:      :+:    :+:   */
+/*   init_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:36:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:33:14 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	init_fds(t_mini *mini, int j)
 
 int	malloc_fds(t_mini *mini)
 {
-	int	i;
 	int	j;
 
 	mini->cmd_count = ft_cmd_count(mini);

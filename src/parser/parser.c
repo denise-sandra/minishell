@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/01 09:15:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/08 10:56:30 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ static void	tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q)
 
 	str = NULL;
 	*cur = (*cur)->next;
-	while (*cur && (*cur)->type != WHITE)
+	while (*cur && (*cur)->type != q)
 	{
 		str = ft_strjoin_char(str, (*cur)->c);
 		if (!str)
 			return (ft_error(ms, NULL, strerror(errno)));
 		*cur = (*cur)->next;
-		while (*cur && (*cur)->type == q)
-			*cur = (*cur)->next;
 	}
+	if (*cur && (*cur)->type == q)
+		*cur = (*cur)->next;
 	if (str)
 	{
 		if (tok_list(str, q, lst) != 0)
@@ -55,13 +55,13 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 	*cur = (*cur)->next;
 }
 
-static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
+static char	*tok_str_help(t_mini *ms, t_pretok **cur, char *s, t_pretok **prev)
 {
 	if ((*cur)->type == CHAR || (*cur)->type == OPT)
 	{
-		*s = ft_strjoin_char(*s, (*cur)->c);
-		if (!(*s))
-			return (ft_error(ms, NULL, strerror(errno)));
+		s = ft_strjoin_char(s, (*cur)->c);
+		if (!s)
+			return (ft_error(ms, NULL, strerror(errno)), NULL);
 	}
 	else if ((*prev && (*prev)->c == '=') && ((*cur)->type == D_Q
 			|| (*cur)->type == S_Q))
@@ -69,12 +69,13 @@ static void	tok_str_help(t_mini *ms, t_pretok **cur, char **s, t_pretok **prev)
 		while ((*cur) && ((*cur)->type == CHAR
 				|| (*cur)->type == D_Q || (*cur)->type == S_Q))
 		{
-			*s = ft_strjoin_char(*s, (*cur)->c);
+			s = ft_strjoin_char(s, (*cur)->c);
 			if (!(*s))
-				return (ft_error(ms, NULL, strerror(errno)));
+				return (ft_error(ms, NULL, strerror(errno)), NULL);
 			*cur = (*cur)->next;
 		}
 	}
+	return (s);
 }
 
 static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
@@ -85,10 +86,11 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	join = NULL;
 	prev = NULL;
 	while (*cur && ((*cur)->type == CHAR || (*cur)->type == EMPTY
-			|| (*cur)->type == OPT || (*cur)->type == D_Q
-			|| (*cur)->type == S_Q))
+			|| (*cur)->type == OPT))
 	{
-		tok_str_help(mini, cur, &join, &prev);
+		join = tok_str_help(mini, cur, join, &prev);
+		if (!join)
+			return ;
 		if (*cur)
 		{
 			prev = *cur;
@@ -110,7 +112,9 @@ void	parser(t_mini *mini)
 	pretok = mini->pretok;
 	while (pretok)
 	{
-		if (pretok->type == CHAR || pretok->type == OPT)
+		if (pretok->c == '$' && pretok->next && (pretok->next->type == D_Q || pretok->next->type == S_Q))
+			pretok = pretok->next;
+		else if (pretok->type == CHAR || pretok->type == OPT)
 			tokenize_strings(mini, &pretok, &(mini->token));
 		else if (pretok->type == PIPE || pretok->type == EMPTY)
 			tokenize_pipes_n_empty(mini, &pretok, &(mini->token));
@@ -118,17 +122,45 @@ void	parser(t_mini *mini)
 			tokenize_redirs(mini, &pretok, &(mini->token));
 		else if (pretok->type == D_Q || pretok->type == S_Q)
 			tokenize_quotes(mini, &pretok, &(mini->token), pretok->type);
+		else if (pretok->type == WHITE)
+		{
+			if (tok_list(" ", WHITE, &(mini->token)) != 0)
+				return (ft_error(mini, NULL, strerror(errno)));
+			pretok = pretok->next;
+		}
 		else
 			pretok = pretok->next;
 		if (mini->error != 0)
 			return ;
 	}
 	clean_pretokens(mini);
-	expand_env_vars(mini, mini->token);
-	t_token *print = mini->token;
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
+	// 	print = print->next;
+	// }
+	if(check_white(mini) != 0)
+		return ;
+	prep_heredoc(mini);
+	expand_env_vars(mini, mini->token);
+	if (mini->error != 0)
+		return ;
+	if (order_tok_list(mini) == 1)
+		return ;
+	// t_token * print = mini->token;
+	// while (print)
+	// {
+	// 	printf("order : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
+	if (parse_commands(mini) != 0)
+		return ;
+	last_error_checks(mini);
+	//  t_token * print = mini->token;
+	// while (print)
+	// {
+	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
 	// 	if (print->type == COMMAND)
 	// 	{
 	// 		for (int i = 0; print->cmd_tab[i]; i++)
@@ -136,19 +168,4 @@ void	parser(t_mini *mini)
 	// 	}
 	// 	print = print->next;
 	// }
-	if (order_tok(mini) == 1)
-		return ;
-	parse_commands(mini);
-	print = mini->token;
-	while (print)
-	{
-		printf("2 tok: %s  type: %i\n", print->value, print->type);
-		if (print->type == COMMAND)
-		{
-			for (int i = 0; print->cmd_tab[i]; i++)
-				printf("cmd: %s\n", print->cmd_tab[i]);
-		}
-		print = print->next;
-	}
-	last_error_checks(mini);
 }

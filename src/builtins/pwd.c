@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/20 14:32:42 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/04 14:41:03 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	pwd_cmd(t_mini *mini)
 	if (getcwd(cwd, size) == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
 	printf("%s\n", cwd);
+	mini->exit_status = 0;
 }

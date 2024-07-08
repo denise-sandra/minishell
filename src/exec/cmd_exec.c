@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 14:55:48 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/08 11:00:10 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,48 @@ static char	*join_path(char *cmd, char *path)
 static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 {
 	int		i;
-	char	*path_with_token;
+	char	*p;
 	int		command_found;
 
 	i = 0;
 	command_found = 0;
+	if (tmp->cmd_tab[0][0] == '/')
+		return (is_slash(mini, tmp));
 	while (paths[i])
 	{
-		path_with_token = join_path(tmp->cmd_tab[0], paths[i]);
-		if (!path_with_token)
+		p = join_path(tmp->cmd_tab[0], paths[i]);
+		if (!p)
 			return (ft_error(mini, NULL, strerror(errno)), -1);
-		if (access(path_with_token, X_OK) == 0)
+		if (access(p, X_OK) == 0)
 		{
 			command_found = 1;
-			if (execve(path_with_token, tmp->cmd_tab, mini->env_char) == -1)
-				return (free(path_with_token), \
-				ft_error(mini, NULL, strerror(errno)), -1);
+			if (execve(p, tmp->cmd_tab, mini->env_char) == -1)
+				return (free(p), ft_error(mini, NULL, strerror(errno)), -1);
 		}
-		free(path_with_token);
+		free(p);
 		i++;
 	}
 	if (!command_found)
 		return (-2);
 	return (0);
+}
+
+void	execve_failed(t_mini *mini, t_token *tmp, char **paths, int exec_ret)
+{
+	int		exit_tmp;
+
+	if (exec_ret == -2)
+	{
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free(paths);
+	}
+	else
+		free_tab(paths);
+	exit_tmp = mini->exit_status;
+	clean_minishell(mini);
+	exit(exit_tmp);
 }
 
 void	cmd_exec(t_mini *mini, t_token *tmp)
@@ -75,19 +94,15 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 		return ;
 	paths = pars_path(mini);
 	if (paths == NULL)
-		return (ft_error(mini, "Failed to parse path", NULL));
-	exec_ret = cmd_exec_utils(mini, tmp, paths);
-	free(paths);
-	if (exec_ret == -2)
+		return (ft_error(mini, NULL, strerror(errno)));
+	if (paths[0] == NULL)
 	{
+		free(paths);
+		mini->exit_status = 127;
 		ft_putstr_fd(tmp->cmd_tab[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		clean_minishell(mini);
-		exit(127);
+		return (ft_error(mini, " : No such file or directory\n", NULL));
 	}
-	else if (exec_ret == -1)
-	{
-		ft_error(mini, NULL, strerror(errno));
-		exit(127);
-	}
+	exec_ret = cmd_exec_utils(mini, tmp, paths);
+	if (exec_ret < 0)
+		execve_failed(mini, tmp, paths, exec_ret);
 }

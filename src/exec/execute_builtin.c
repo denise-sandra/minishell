@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/24 13:36:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:47:27 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	execute_builtin(t_mini *mini, int builtin, t_token *cur)
 	else if (builtin == 4)
 		pwd_cmd(mini);
 	else if (builtin == 5)
-		cd_cmd(mini);
+		cd_cmd(mini, cur);
 	else if (builtin == 6)
 		unset_cmd(mini, cur);
 	else if (builtin == 7)

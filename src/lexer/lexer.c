@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/27 13:04:26 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/08 10:16:09 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	create_pretokens_list(char *input, t_mini *mini)
 	{
 		new_node = malloc(sizeof(t_pretok));
 		if (!new_node)
-			return (1);
+			return (ft_error(mini, NULL, strerror(errno)), 1);
 		new_node->c = input[i];
 		new_node->type = pre_tag(input[i]);
 		new_node->next = NULL;
@@ -74,17 +74,40 @@ static int	create_pretokens_list(char *input, t_mini *mini)
 	return (0);
 }
 
+void	remove_extra_empty(t_mini *mini)
+{
+	t_pretok	*cur;
+	t_pretok	*next;
+
+	cur = mini->pretok;
+	while (cur)
+	{
+		next = cur->next;
+		if ((cur->type != WHITE || (cur->next->next && cur->next->next->type != WHITE)) \
+			&& next && next->type == EMPTY)
+		{
+			cur->next = next->next;
+			free(next);
+		}
+		else
+			cur = cur->next;
+	}
+}
+
 void	lexer(char *input, t_mini *mini)
 {
 	if (create_pretokens_list(input, mini) != 0)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return ;
 	tag_in_quotes(mini, NULL);
+	if (mini->error != 0)
+		return ;
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
 	{
 		ft_error(mini, "Syntaxis error: special character not supported", NULL);
 		return ;
 	}
+	remove_extra_empty(mini);
 	// t_pretok *print = mini->pretok;
 	// while (print)
 	// {

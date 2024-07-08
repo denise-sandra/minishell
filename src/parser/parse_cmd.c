@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/06/27 12:43:47 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:08:43 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,14 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		free((*cur)->value);
 		free(*(cur));
 		*cur = tmp;
-		while (*cur && ((*cur)->type == IN || (*cur)->type == OUT \
-			|| (*cur)->type == HERE || (*cur)->type == APP))
-		{
-			if ((*cur)->next && (*cur)->next->next && (*cur)->next->next->type != PIPE)
-				*cur = (*cur)->next->next;
-			else	
-				break ;
-		}
 	}
 	new->cmd_tab[i] = NULL;
 }
 
-static int	count_cmd_tokens(t_token *cur)
+static int	count_cmd_tokens(t_token *tmp)
 {
-	t_token	*tmp;
 	int		i;
 
-	tmp = cur;
 	i = 0;
 	while (tmp && (tmp->type == STRING
 			|| tmp->type == OPT || tmp->type == EMPTY))
@@ -113,7 +103,7 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 	*prev = new;
 }
 
-void	parse_commands(t_mini *mini)
+int	parse_commands(t_mini *mini)
 {
 	t_token	*cur;
 	t_token	*prev;
@@ -126,7 +116,7 @@ void	parse_commands(t_mini *mini)
 		{
 			create_cmd_tab(mini, &cur, &prev);
 			if (mini->error)
-				return ;
+				return (1);
 		}
 		else if (cur->type == HERE || cur->type == IN
 			|| cur->type == OUT || cur->type == APP)
@@ -137,4 +127,5 @@ void	parse_commands(t_mini *mini)
 			cur = cur->next;
 		}
 	}
+	return (0);
 }
