@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_help.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/03 17:42:09 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/08 10:46:28 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void	order_redirs(t_mini *mini)
 		next = cur->next;
 		if (cur->type == PIPE)
 			handle_pipes(mini, &cur, &next);
-		else if (cur->type == IN || cur->type == HERE
-			|| cur->type == OUT || cur->type == APP)
+		else if (cur->type == IN || cur->type == OUT || cur->type == APP)
 			handle_files(mini, &cur, &next);
 		else
 			handle_string(mini, &cur, &next);

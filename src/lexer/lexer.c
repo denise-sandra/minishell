@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/06 16:17:43 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/08 10:16:09 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	remove_extra_empty(t_mini *mini)
 	while (cur)
 	{
 		next = cur->next;
-		if (cur->type != WHITE && next && next->type == EMPTY)
+		if ((cur->type != WHITE || (cur->next->next && cur->next->next->type != WHITE)) \
+			&& next && next->type == EMPTY)
 		{
 			cur->next = next->next;
 			free(next);

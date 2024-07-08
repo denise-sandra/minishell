@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/06 16:21:55 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/08 10:56:30 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,15 @@ void	parser(t_mini *mini)
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
 	// 	print = print->next;
 	// }
+	if(check_white(mini) != 0)
+		return ;
 	prep_heredoc(mini);
 	expand_env_vars(mini, mini->token);
 	if (mini->error != 0)
 		return ;
-	if(check_white(mini) != 0)
-		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
-	// print = mini->token;
+	// t_token * print = mini->token;
 	// while (print)
 	// {
 	// 	printf("order : %s type %d\n", print->value, print->type);
@@ -157,7 +157,7 @@ void	parser(t_mini *mini)
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	// print = mini->token;
+	//  t_token * print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
