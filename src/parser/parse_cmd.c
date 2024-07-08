@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/03 14:08:39 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/06 15:08:43 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 	*prev = new;
 }
 
-void	parse_commands(t_mini *mini)
+int	parse_commands(t_mini *mini)
 {
 	t_token	*cur;
 	t_token	*prev;
@@ -116,7 +116,7 @@ void	parse_commands(t_mini *mini)
 		{
 			create_cmd_tab(mini, &cur, &prev);
 			if (mini->error)
-				return ;
+				return (1);
 		}
 		else if (cur->type == HERE || cur->type == IN
 			|| cur->type == OUT || cur->type == APP)
@@ -127,4 +127,5 @@ void	parse_commands(t_mini *mini)
 			cur = cur->next;
 		}
 	}
+	return (0);
 }

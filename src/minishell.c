@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 15:52:03 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/06 16:22:01 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,27 @@ static t_mini	*init_minishell(char **envp)
 	if (mini == NULL)
 	{
 		ft_putstr_fd("Failed to malloc minishell structure\n", 2);
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
+	if (mini->error == 1)
+		exit(1);
 	return (mini);
 }
 
 void	parse_and_execute(t_mini *mini, char *input)
 {
 	lexer(input, mini);
-	parser(mini);
 	if (!mini->error)
 	{
-		execution(mini);
-		if (mini->error)
-			mini->exit_status = 1;
+		parser(mini);
+		if (!mini->error)
+		{
+			execution(mini);
+			if (mini->error)
+				mini->exit_status = 1;
+		}
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/05 16:18:31 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/06 15:02:48 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	split_and_add_to_list(char *before_var, t_token **new_list)
 
 	split_env = ft_split(before_var, ' ');
 	if (!split_env)
-		return (free(before_var), -1);
+		return (free(before_var), 1);
 	i = 0;
 	while (split_env[i])
 	{
 		if (tok_list(split_env[i], STRING, new_list) == 1)
-			return (free_tab(split_env), -1);
+			return (free_tab(split_env), 1);
 		i++;
 	}
 	free_tab(split_env);
@@ -46,18 +46,23 @@ static void	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		if (temp_str[j] != '$' || (temp_str[j] == '$' && !temp_str[j + 1])
 			|| (temp_str[j] == '$' && temp_str[j + 1] && (temp_str[j + 1] == ' '
 					|| ft_isdigit(temp_str[j + 1]))))
-			before_var = ft_strjoin_char(before_var, temp_str[j++]);
+					{
+						before_var = ft_strjoin_char(before_var, temp_str[j++]);
+						if (!before_var)
+							return (ft_error(mini, NULL, strerror(errno)));
+					}		
 		else
 		{
 			env_value = expand_var(mini, temp_str, &j);
-			if (env_value == NULL)
+			if (!env_value)
 				return ;
-			handle_before_var(&before_var, env_value);
+			if (handle_before_var(&before_var, env_value) != 0)
+				return(ft_error(mini, NULL, strerror(errno)));
 		}
 	}
 	if (before_var)
 	{
-		if (split_and_add_to_list(before_var, new_list) < 0)
+		if (split_and_add_to_list(before_var, new_list) != 0)
 			return (ft_error(mini, NULL, strerror(errno)));
 	}
 }
@@ -78,6 +83,8 @@ static void	expand_inside_dq(t_mini *mini, char **str)
 				&& !ft_isdigit(temp_str[i + 1])))
 		{
 			env_value = expand_var(mini, temp_str, &i);
+			if (!env_value)
+				return (ft_error(mini, NULL, strerror(errno)));
 			new_str = ft_strjoin_free(new_str, env_value);
 			if (!new_str)
 				return (ft_error(mini, NULL, strerror(errno)));
@@ -110,10 +117,14 @@ static void	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 			return (ft_error(mini, NULL, strerror(errno)));
 	}
 	else
+	{
 		expand_outside_dq(mini, &cur, new_list);
+		if (mini->error)
+			return ;
+	}		
 }
 
-void	expand_env_vars(t_mini *mini, t_token *list)
+int	expand_env_vars(t_mini *mini, t_token *list)
 {
 	t_token	*cur;
 	t_token	*new_list;
@@ -126,17 +137,22 @@ void	expand_env_vars(t_mini *mini, t_token *list)
 		temp = cur->next;
 		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
 			&& ft_strchr(cur->value, '$'))
-			expand_and_add(mini, cur, &new_list);
+			{
+				expand_and_add(mini, cur, &new_list);
+				if (mini->error)
+					return (1);
+			}	
 		else
 		{
 			if (cur->type == D_Q || cur->type == S_Q)
 				cur->type = STRING;
 			if (tok_list(cur->value, cur->type, &new_list) == 1)
-				return (ft_error(mini, NULL, strerror(errno)));
+				return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 		free(cur->value);
 		free (cur);
 		cur = temp;
 	}
 	mini->token = new_list;
+	return (0);
 }

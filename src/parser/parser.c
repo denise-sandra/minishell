@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 15:48:22 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/06 16:21:55 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,63 +105,6 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
-static void check_white(t_mini *mini)
-{
-	t_token *tmp;
-	t_token *prev;
-	t_token	*new;
-	char	*new_token;
-
-	tmp = mini->token;
-	prev = NULL;
-	while (tmp)
-	{
-		if ((tmp->type == STRING || tmp->type == D_Q || tmp->type == S_Q)
-			&& tmp->next && (tmp->next->type == STRING || \
-			tmp->next->type == D_Q || tmp->next->type == S_Q))
-		{
-			new_token = ft_strjoin_free(tmp->value, tmp->next->value);
-			if (!new_token)
-				return (ft_error(mini, NULL, strerror(errno)));
-			new = tok_new_node(new_token, STRING);
-			free(new_token);
-			if (!new)
-				return (ft_error(mini, NULL, strerror(errno)));
-			new->next = tmp->next->next;
-			free(tmp->next);
-			free(tmp);
-			tmp = new;
-			if (prev)
-				prev->next = new;
-			else
-				mini->token = new;
-		}
-		else if (tmp->type == WHITE)
-		{
-			if (prev)
-			{
-				prev->next = tmp->next;
-				free(tmp->value);
-				free(tmp);
-				tmp = prev->next;
-			}
-			else
-			{
-				mini->token = tmp->next;
-				free(tmp->value);
-				free(tmp);
-				tmp = mini->token;
-			}
-		}
-		else
-		{
-			prev = tmp;
-			tmp = tmp->next;
-		}
-	}
-}
-
-
 void	parser(t_mini *mini)
 {
 	t_pretok	*pretok;
@@ -191,7 +134,7 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
@@ -199,7 +142,10 @@ void	parser(t_mini *mini)
 	// }
 	prep_heredoc(mini);
 	expand_env_vars(mini, mini->token);
-	check_white(mini);
+	if (mini->error != 0)
+		return ;
+	if(check_white(mini) != 0)
+		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
 	// print = mini->token;
@@ -208,9 +154,10 @@ void	parser(t_mini *mini)
 	// 	printf("order : %s type %d\n", print->value, print->type);
 	// 	print = print->next;
 	// }
-	parse_commands(mini);
+	if (parse_commands(mini) != 0)
+		return ;
 	last_error_checks(mini);
-	// t_token *print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
