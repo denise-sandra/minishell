@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/09 11:34:39 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*joint;
-	size_t	len_s1;
-	size_t	len_s2;
 	size_t	i;
 	size_t	j;
 
@@ -26,9 +24,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		return (s2);
 	if (s2 == NULL)
 		return (s1);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	joint = malloc((len_s1 + len_s2 + 1) * sizeof(char));
+	joint = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (joint == NULL)
 		return (NULL);
 	while (s1[j])
@@ -53,7 +49,11 @@ char	*ft_strjoin_char(char *s, char c)
 		len_s = ft_strlen(s);
 	joint = malloc((len_s + 2) * sizeof(char));
 	if (joint == NULL)
+	{
+		if (s)
+			free (s);
 		return (NULL);
+	}
 	if (s)
 		ft_memcpy(joint, s, len_s);
 	joint[len_s] = c;

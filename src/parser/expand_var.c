@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/08 16:04:44 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 11:45:11 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static int	split_and_add_to_list(char *before_var, t_token **new_list)
 	int		i;
 
 	split_env = ft_split(before_var, ' ');
+	free(before_var);
 	if (!split_env)
-		return (free(before_var), -1);
+		return (-1);
 	i = 0;
 	while (split_env[i])
 	{
@@ -55,7 +56,11 @@ static int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		{
 			env_value = expand_var(mini, temp_str, &j);
 			if (!env_value)
+			{
+				if (before_var)
+					free(before_var);
 				return (-1);
+			}
 			if (handle_before_var(&before_var, env_value) != 0)
 				return (free(env_value), -1);
 		}
