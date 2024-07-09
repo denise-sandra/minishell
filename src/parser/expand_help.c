@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/09 11:14:16 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 12:19:45 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ int	handle_before_var(char **before_var, char *env_value)
 	{
 		concatenated = ft_strjoin(*before_var, env_value);
 		free(*before_var);
+		free (env_value);
 		if (!concatenated)
 			return (-1);
 		*before_var = concatenated;
 	}
 	else
-		*before_var = env_value;
+	{
+		*before_var = ft_strdup(env_value);
+		free (env_value);
+		if (!*before_var)
+			return (-1);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/09 11:45:11 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 12:19:45 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,12 @@ static int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		{
 			before_var = ft_strjoin_char(before_var, temp_str[j++]);
 			if (!before_var)
+			{
+				if (env_value)
+					free(env_value);
 				return (-1);
-		}		
+			}
+		}
 		else
 		{
 			env_value = expand_var(mini, temp_str, &j);
@@ -62,15 +66,15 @@ static int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 				return (-1);
 			}
 			if (handle_before_var(&before_var, env_value) != 0)
-				return (free(env_value), -1);
+				return (-1);
 		}
 	}
 	if (before_var)
 	{
 		if (split_and_add_to_list(before_var, new_list) != 0)
-			return (free(env_value), -1);
+			return (-1);
 	}
-	return (free(env_value), 0);
+	return (0);
 }
 
 static int	expand_inside_dq(t_mini *mini, char **str)
