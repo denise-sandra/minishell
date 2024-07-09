@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 16:45:58 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 13:44:26 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char		*ft_strjoin_char(char *s, char c);
 char		*ft_strjoin_frees1(char *s1, char *s2);
 int			handle_before_var(char **before_var, char *env_value);
 int			check_white(t_mini *mini);
+int         check_slash(t_mini *mini);
 
 
 //environement

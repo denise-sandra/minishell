@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_var_to_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:04:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/09 13:46:17 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,23 +95,29 @@ void	add_var_to_list(t_mini *mini, t_token *cur)
 {
 	char	*res;
 	char	*new_var;
+	int		i;
 
-	res = NULL;
-	new_var = cur->cmd_tab[1];
-	check_syn_error(mini, new_var);
-	if (mini->error)
-		return ;
-	res = ft_strchr(new_var, '=');
-	if (res)
+	i = 1;
+	while (cur->cmd_tab[i])
 	{
-		add_env(mini, new_var);
-		if (mini->error != 0)
+		res = NULL;
+		new_var = cur->cmd_tab[1];
+		check_syn_error(mini, new_var);
+		if (mini->error)
 			return ;
+		res = ft_strchr(new_var, '=');
+		if (res)
+		{
+			add_env(mini, new_var);
+			if (mini->error != 0)
+				return ;
+		}
+		else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
+			return (ft_error(mini, " not a valid identifier", NULL));
+		if (!res)
+			add_exp(mini, new_var);
+		if (mini->error)
+			return ;
+		i++;
 	}
-	else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
-		return (ft_error(mini, " not a valid identifier", NULL));
-	if (!res)
-		add_exp(mini, new_var);
-	if (mini->error)
-		return ;
 }

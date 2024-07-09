@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 16:59:49 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 13:47:36 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	pre_tag(char c)
 		return (D_Q);
 	if (c == 39)
 		return (S_Q);
+	if (c == '/')
+		return (SLASH);
 	if (c == 45)
 		return (OPT);
 	if (c == 60)
