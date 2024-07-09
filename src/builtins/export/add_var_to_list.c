@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 13:46:17 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/09 16:18:26 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	add_var_to_list(t_mini *mini, t_token *cur)
 	while (cur->cmd_tab[i])
 	{
 		res = NULL;
-		new_var = cur->cmd_tab[1];
+		new_var = cur->cmd_tab[i];
 		check_syn_error(mini, new_var);
 		if (mini->error)
 			return ;

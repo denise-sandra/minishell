@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/09 12:47:53 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 14:23:43 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*expand_var(t_mini *mini, char *temp_str, int *len)
 	name = get_env_name(&temp_str[*len]);
 	if (!name)
 		return (NULL);
-	if (ft_strncmp(name, "?", 1) == 0)
+	if (name[0] == '?')
 	{
 		value = expand_error_status(mini, len, name);
 		if (!value)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 16:58:36 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 16:21:10 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	is_builtin(char *command)
 
 	if (ft_strncmp(command, "export", longer_len(command, "export")) == 0)
 		return (1);
-	else if (ft_strncmp(command, "env", longer_len(command, "env")) == 0)
+	else if (ft_strncmp(command, "env", longer_len(command, "env")) == 0 \
+		|| ft_strncmp(command, "env", longer_len(command, "ENV")) == 0)
 		return (2);
 	else if (ft_strncmp(command, "echo", longer_len(command, "echo")) == 0)
 		return (3);

@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 13:44:26 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/09 15:06:59 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		remove_spaces(t_mini *mini);
 //parser
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
-void		prep_heredoc(t_mini *mini);
+int		prep_heredoc(t_mini *mini);
 int			expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
 int			order_tok_list(t_mini *mini);
@@ -75,6 +75,7 @@ char		*ft_strjoin_frees1(char *s1, char *s2);
 int			handle_before_var(char **before_var, char *env_value);
 int			check_white(t_mini *mini);
 int         check_slash(t_mini *mini);
+void join_tok(t_mini *mini, t_token **tmp, t_token **prev);
 
 
 //environement

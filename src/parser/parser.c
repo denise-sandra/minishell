@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 14:00:49 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/09 16:28:20 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,44 +169,39 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	t_token *print = mini->token;
-	while (print)
-	{
-		printf("1 tok %s  type: %i\n", print->value, print->type);
-		print = print->next;
-	}
-	if (check_white(mini) != 0)
+	// t_token *print = mini->token;
+	// while (print)
+	// {
+	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
+	// 	print = print->next;
+	// }
+	if (prep_heredoc(mini) != 0)
 		return ;
-	print = mini->token;
-	while (print)
-	{
-		printf("expand : %s type %d\n", print->value, print->type);
-		print = print->next;
-	}
-	prep_heredoc(mini);
 	expand_env_vars(mini, mini->token);
-	print = mini->token;
-	while (print)
-	{
-		printf("expand : %s type %d\n", print->value, print->type);
-		print = print->next;
-	}
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("expand : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	if (mini->error != 0)
+		return ;
+	if (check_white(mini) != 0)
 		return ;
 	if(check_slash(mini) != 0)
 		return ;
-	print = mini->token;
-	while (print)
-	{
-		printf("expand : %s type %d\n", print->value, print->type);
-		print = print->next;
-	}
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("white : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	if (order_tok_list(mini) == 1)
 		return ;
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	print = mini->token;
+	t_token * print = mini->token;
 	while (print)
 	{
 		printf("2 tok: %s  type: %i\n", print->value, print->type);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:11:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:35:20 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	process_script(t_mini *mini, const char *name, int *script_fd)
 	{
 		close(script);
 		mini->exit_status = 126;
-		return (ft_error(mini, " Is a directory", NULL), 1);
+		return (ft_error(mini, "Is a directory", NULL), 1);
 	}
 	*script_fd = script;
 	return (0);

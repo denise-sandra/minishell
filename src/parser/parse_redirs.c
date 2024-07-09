@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/08 12:04:19 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/09 15:25:24 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 	}
 }
 
-void	prep_heredoc(t_mini *mini)
+int	prep_heredoc(t_mini *mini)
 {
 	t_token	*prev;
 	t_token	*cur;
@@ -81,10 +81,27 @@ void	prep_heredoc(t_mini *mini)
 	cur = mini->token;
 	while (cur)
 	{
-		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
+		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q || cur->type == LIM)
 			&& prev && prev->type == HERE)
-			cur->type = LIM;
-		prev = cur;
-		cur = cur->next;
+			{
+				if (cur->next && (cur->next->type == STRING || \
+					cur->next->type == D_Q || cur->next->type == S_Q))
+						 join_tok(mini, &cur, &prev);
+				else if (!cur->next)
+				{
+					cur->type = LIM;
+					break ;
+				}
+				cur->type = LIM;	
+			}
+		else
+		{
+				if (cur->type != WHITE)
+					prev = cur;
+				cur = cur->next;
+		}
+			if (mini->error != 0)
+            return (1);
 	}
+	return (0);
 }

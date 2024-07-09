@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/09 13:59:44 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/09 14:27:13 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 		else
 		{
 			env_value = expand_var(mini, temp_str, &j);
-			printf("env value%s\n", env_value );
 			if (!env_value)
 			{
 				if (before_var)
@@ -97,7 +96,6 @@ static int	expand_inside_dq(t_mini *mini, char **str)
 			if (!env_value)
 				return (-1);
 			new_str = ft_strjoin_free(new_str, env_value);
-			free(env_value);
 			if (!new_str)
 				return (-1);
 		}
@@ -150,7 +148,6 @@ int	expand_env_vars(t_mini *mini, t_token *list)
 		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q)
 			&& ft_strchr(cur->value, '$'))
 		{
-			printf("if %s\n", temp->value);
 			if (expand_and_add(mini, cur, &new_list) != 0)
 			{
 				mini->token = new_list;
@@ -159,7 +156,6 @@ int	expand_env_vars(t_mini *mini, t_token *list)
 		}	
 		else
 		{
-			printf("else %s\n", temp->value);
 			if (cur->type == D_Q || cur->type == S_Q)
 				cur->type = STRING;
 			if (tok_list(cur->value, cur->type, &new_list) == 1)
