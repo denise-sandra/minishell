@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 13:06:36 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 17:26:35 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 	{
 		if (tmp->type == COMMAND)
 		{
-			if ((i + 1) != mini->cmd_count && pipe(mini->tube[i]) == -1)
+			if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
 				return (ft_error(mini, NULL, strerror(errno)));
 			mini->pid[i] = fork();
 			if (mini->pid[i] < 0)

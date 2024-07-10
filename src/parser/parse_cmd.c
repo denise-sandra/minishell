@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/10 13:19:55 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 21:59:45 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,11 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 	t_token	*new;
 	int		tok_count;
 
-	if (mini->token == *cur && (*cur)->value[0] == '.' && !(*cur)->next)
+	if (mini->token == *cur && (*cur)->value[0] == '.' && ft_strlen((*cur)->value) == 1 && !(*cur)->next)
+	{
+		mini->exit_status = 2;
 		return (ft_error(mini, ". :filename argument required", NULL));
+	}		
 	new = tok_new_node("", COMMAND);
 	if (!new)
 		return (ft_error(mini, NULL, strerror(errno)));

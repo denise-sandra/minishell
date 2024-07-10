@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 14:07:56 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 22:18:35 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 {
 	if ((*cur)->type == PIPE)
 	{
-		if (!(*cur)->next)
+		if (!(*cur)->next || (*cur) == mini->pretok || (*cur)->next->type == PIPE)
 		{
+			mini->exit_status = 258;
 			ft_error(mini, "Syntax error near unexpected token `|'", NULL);
 			return ;
 		}

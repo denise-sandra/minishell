@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 12:52:50 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 15:58:58 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	env_name_len(char *token)
 
 	i = 1;
 	while (token[i] && token[i] != 32 && token[i] != 34 \
-			&& token[i] != 39 && token[i] != '$')
+			&& token[i] != 39 && (ft_isalnum(token[i]) != 0 || token[i] == '?'))
 		i++;
 	return (i - 1);
 }

@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 13:44:11 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 17:20:31 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_minishell
 	int			exit_status;
 	int			should_exit;
 	int			cmd_count;
+	int			pipe_count;
 	int			mod_env;
 	int			error;
 	int			*inv_fd;

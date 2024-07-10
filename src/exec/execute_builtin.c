@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 16:21:10 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 14:30:40 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execute_builtin(t_mini *mini, int builtin, t_token *cur)
 	else if (builtin == 2)
 		env_command(mini);
 	else if (builtin == 3)
-		echo_command(cur);
+		echo_command(mini, cur);
 	else if (builtin == 4)
 		pwd_cmd(mini);
 	else if (builtin == 5)

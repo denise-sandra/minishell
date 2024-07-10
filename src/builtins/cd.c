@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 16:29:30 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/10 22:29:48 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 {
 	const char	*path;
 	int			count;
+	t_lst_env	*new_node;
+	char	cwd[1024];
 
 	if (!cur->cmd_tab)
 		return ;
@@ -98,12 +100,19 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	if (count == 3)
 		return (ft_error(mini, " too many arguments", NULL));
 	path = cur->cmd_tab[1];
-	if (count == 1 || !path || ft_strncmp(path, "~", ft_strlen(path)) == 0)
+	if (count == 1 || !path || ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
 		go_home(mini);
-	else if (ft_strncmp(path, "..", ft_strlen(path)) == 0)
+	else if (ft_strncmp(path, "..", longer_len((char *)path, "..")) == 0)
 		go_back(mini);
 	else if (chdir(path) != 0)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->error == 0)
 		mini->exit_status = 0;
+	free_env_node(mini, mini->env, "PWD");
+	if (getcwd(cwd, 1024) == NULL)
+		return (ft_error(mini, NULL, strerror(errno)));
+	new_node = ft_lstnew_env("PWD", cwd);
+	if (new_node == NULL)
+		return (ft_error(mini, NULL, strerror(errno)));
+	ft_lstadd_back_env(&mini->env, new_node);
 }

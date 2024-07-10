@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 13:27:33 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 17:02:57 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int check_white(t_mini *mini)
 			&& tmp->next && (tmp->next->type == STRING || \
 			tmp->next->type == D_Q || tmp->next->type == S_Q))
                 join_tok(mini, &tmp, &prev);
-		else if (tmp->type == WHITE || (tmp->type == EMPTY && !prev && tmp->next->type != WHITE))
+		else if (tmp->type == WHITE || (tmp->type == EMPTY && !prev \
+            && tmp->next && tmp->next->type != WHITE))
             erase_white_tok(mini, &tmp, &prev);
 		else
 		{

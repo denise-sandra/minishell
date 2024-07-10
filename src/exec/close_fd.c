@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 15:32:39 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 17:25:45 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	close_fd_and_wait(t_mini *mini)
 	i = 0;
 	last_exit_status = 0;
 	status = 0;
-	while (i < mini->cmd_count)
+	while (i < mini->pipe_count)
 	{
 		if (mini->fd_in && mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 			close(mini->fd_in[i]);
@@ -31,7 +31,7 @@ void	close_fd_and_wait(t_mini *mini)
 		i++;
 	}
 	i = 0;
-	while (i < mini->cmd_count)
+	while (i < mini->pipe_count)
 	{
 		waitpid(mini->pid[i], &status, 0);
 		if (WIFEXITED(status))
@@ -46,9 +46,9 @@ void	close_all_fd(t_mini *mini)
 	int	i;
 
 	i = 0;
-	while (i < mini->cmd_count)
+	while (i < mini->pipe_count)
 	{
-		if (i < mini->cmd_count - 1)
+		if (i < mini->pipe_count - 1)
 		{
 			if (mini->tube[i][1])
 				close(mini->tube[i][1]);
@@ -68,7 +68,7 @@ void	close_if_inv_fd(t_mini *mini, int j)
 	int	i;
 
 	i = j;
-	while (i < mini->cmd_count)
+	while (i < mini->pipe_count)
 	{
 		if (mini->inv_fd[i] == 1)
 			close_all_fd(mini);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 11:18:27 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 14:29:30 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		close_if_inv_fd(t_mini *mini, int j);
 char		*get_dynamic_prompt(void);
 
 //builtin fucntions
-void		echo_command(t_token *cur);
+void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		add_var_to_list(t_mini *mini, t_token *cur);
 char		**list_to_tab(t_mini *mini);

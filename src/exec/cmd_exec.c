@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 13:18:19 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 22:49:29 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,19 @@ static char	**pars_path(t_mini *mini)
 {
 	char	*path;
 	char	**split_paths;
+	char	cwd[1024];
 
 	path = get_env_value(mini->env, "PATH");
 	if (path == NULL)
 		return (NULL);
+	if (path[0] == '\0')
+	{
+		if (getcwd(cwd, 1024) == NULL)
+			return (ft_error(mini, NULL, strerror(errno)), NULL);
+		path = ft_strdup(cwd);
+		if (path == NULL)
+			return (NULL);
+	}
 	split_paths = ft_split(path, ':');
 	free(path);
 	return (split_paths);

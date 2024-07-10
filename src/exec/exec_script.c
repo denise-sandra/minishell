@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 13:03:36 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 22:06:32 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static char	*get_script_name(t_token *tmp)
 	char	*name;
 
 	name = NULL;
-	if (ft_strncmp(tmp->cmd_tab[0], "./", \
-		longer_len(tmp->cmd_tab[0], "./")) == 0)
+	if (ft_strncmp(tmp->cmd_tab[0], "./", 2) == 0)
 		name = tmp->cmd_tab[0] + 2;
 	else if (ft_strncmp(tmp->cmd_tab[0], "sh", \
 		longer_len(tmp->cmd_tab[0], "sh")) == 0
