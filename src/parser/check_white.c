@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_white.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 15:25:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 11:31:57 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int check_white(t_mini *mini)
 		if ((tmp->type == STRING || tmp->type == D_Q || tmp->type == S_Q)
 			&& tmp->next && (tmp->next->type == STRING || \
 			tmp->next->type == D_Q || tmp->next->type == S_Q))
-                join_tok(mini, &tmp, &prev);       
-		else if (tmp->type == WHITE)
+                join_tok(mini, &tmp, &prev);
+		else if (tmp->type == WHITE || (tmp->type == EMPTY && !prev))
             erase_white_tok(mini, &tmp, &prev);
 		else
 		{

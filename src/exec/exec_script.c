@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 10:24:42 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 11:34:07 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,26 @@ static char	*get_shebang(t_mini *ms, int script, char *shebang)
 	return (shebang);
 }
 
-static char	*get_script_name(t_mini *mini, t_token *tmp)
+static char	*get_script_name(t_token *tmp)
 {
 	char	*name;
 
 	name = NULL;
-	if (tmp->cmd_tab && tmp->cmd_tab[0] && tmp->cmd_tab[0][0] == '.' && \
-		ft_strncmp(tmp->cmd_tab[0], ".", longer_len(tmp->cmd_tab[0], ".")) == 0)
-	{
-		ft_error(mini, " filename argument required", NULL);
-		mini->exit_status = 127;
-		return (NULL);
-	}
-	else if (tmp->cmd_tab && tmp->cmd_tab[0] && tmp->cmd_tab[0][0] == '/' && \
-		ft_strncmp(tmp->cmd_tab[0], "/", longer_len(tmp->cmd_tab[0], "/")) == 0)
-	{
-		ft_error(mini, " No such file or directory", NULL);
-		mini->exit_status = 127;
-		return (NULL);
-	}
-	else if (ft_strncmp(tmp->cmd_tab[0], "./", longer_len(tmp->cmd_tab[0], "./")) == 0)
+	// if (tmp->cmd_tab && tmp->cmd_tab[0] && tmp->cmd_tab[0][0] == '.' && \
+	// 	tmp == mini->token && ft_strncmp(tmp->cmd_tab[0], ".", longer_len(tmp->cmd_tab[0], ".")) == 0)
+	// {
+	// 	ft_error(mini, " filename argument required", NULL);
+	// 	mini->exit_status = 127;
+	// 	return (NULL);
+	// }
+	// else if (tmp->cmd_tab && tmp->cmd_tab[0] && tmp->cmd_tab[0][0] == '/' && \
+	// 	tmp == mini->token && ft_strncmp(tmp->cmd_tab[0], "/", longer_len(tmp->cmd_tab[0], "/")) == 0)
+	// {
+	// 	ft_error(mini, " No such file or directory", NULL);
+	// 	mini->exit_status = 127;
+	// 	return (NULL);
+	// }
+	if (ft_strncmp(tmp->cmd_tab[0], "./", longer_len(tmp->cmd_tab[0], "./")) == 0)
 		name = tmp->cmd_tab[0] + 2;
 	else if (ft_strncmp(tmp->cmd_tab[0], "sh", longer_len(tmp->cmd_tab[0], "sh")) == 0
 		|| ft_strncmp(tmp->cmd_tab[0], "bash", longer_len(tmp->cmd_tab[0], "bash")) == 0)
@@ -109,7 +109,7 @@ int	exec_script(t_mini *mini, t_token *tmp)
 	int		script;
 	char	*args[3];
 
-	name = get_script_name(mini, tmp);
+	name = get_script_name(tmp);
 	if (!name)
 		return (1);
 	init_args(args);

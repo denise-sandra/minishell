@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 16:28:20 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 11:32:05 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,49 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
+int	prep_expand(t_mini *mini, t_token *token)
+{
+	t_token	*cur;
+	t_token	*next;
+	t_token	*new;
+	int		res;
+	int		i;
+	char	*sub;
+
+	cur = token;
+	sub = NULL;
+	while (cur)
+	{
+		res = ft_strchr_int(cur->value, '$');
+		i = res + 1;
+		next = cur->next;
+		if ((cur->type == STRING || cur->type == D_Q)
+			&& res >= 0)
+		{
+			while (cur->value[i])
+			{
+				if (!ft_isalnum(cur->value[i]))
+				{
+					sub = ft_substr(cur->value, i, (ft_strlen(cur->value) - i));
+					if (!sub)
+						return (ft_error(mini, NULL, strerror(errno)), -1);
+					cur->value[i] = '\0';
+					new = tok_new_node(sub, STRING);
+					free(sub);
+					if (!new)
+						return (ft_error(mini, NULL, strerror(errno)), -1);
+					cur->next = new;
+					new->next = next;
+					break ;
+				}
+				i++;
+			}
+		}
+		cur = next;
+	}
+	return (0);
+}
+
 void	parser(t_mini *mini)
 {
 	t_pretok	*pretok;
@@ -177,6 +220,7 @@ void	parser(t_mini *mini)
 	// }
 	if (prep_heredoc(mini) != 0)
 		return ;
+	prep_expand(mini, mini->token);
 	expand_env_vars(mini, mini->token);
 	// print = mini->token;
 	// while (print)
@@ -201,7 +245,7 @@ void	parser(t_mini *mini)
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	t_token * print = mini->token;
+	t_token *print = mini->token;
 	while (print)
 	{
 		printf("2 tok: %s  type: %i\n", print->value, print->type);

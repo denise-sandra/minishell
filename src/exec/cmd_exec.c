@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 11:00:10 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 11:25:19 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
+	printf("entra a cmd_exe\n");
 	if (exec_script(mini, tmp) == 1)
 		return ;
 	paths = pars_path(mini);
