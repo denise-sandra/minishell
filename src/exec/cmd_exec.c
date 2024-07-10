@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 11:25:19 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 13:18:19 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 	command_found = 0;
 	if (tmp->cmd_tab[0][0] == '/')
 		return (is_slash(mini, tmp));
+	if (tmp->cmd_tab[0][0] == '\0')
+		return (-2);
 	while (paths[i])
 	{
 		p = join_path(tmp->cmd_tab[0], paths[i]);
@@ -90,7 +92,6 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
-	printf("entra a cmd_exe\n");
 	if (exec_script(mini, tmp) == 1)
 		return ;
 	paths = pars_path(mini);

@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 11:31:57 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 13:16:17 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,16 @@ int check_white(t_mini *mini)
 {
 	t_token *tmp;
 	t_token *prev;
-  //  int     res;
-	
+
 	tmp = mini->token;
 	prev = NULL;
 	while (tmp)
 	{
-       // res = ft_strchr_int(tmp->value, '$');
 		if ((tmp->type == STRING || tmp->type == D_Q || tmp->type == S_Q)
 			&& tmp->next && (tmp->next->type == STRING || \
 			tmp->next->type == D_Q || tmp->next->type == S_Q))
                 join_tok(mini, &tmp, &prev);
-		else if (tmp->type == WHITE || (tmp->type == EMPTY && !prev))
+		else if (tmp->type == WHITE || (tmp->type == EMPTY && !prev && tmp->next->type != WHITE))
             erase_white_tok(mini, &tmp, &prev);
 		else
 		{

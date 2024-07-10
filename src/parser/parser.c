@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 11:32:05 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 13:13:16 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	prep_expand(t_mini *mini, t_token *token)
 		{
 			while (cur->value[i])
 			{
-				if (!ft_isalnum(cur->value[i]))
+				if (!ft_isalnum(cur->value[i]) && cur->value[i] != '?')
 				{
 					sub = ft_substr(cur->value, i, (ft_strlen(cur->value) - i));
 					if (!sub)
@@ -222,7 +222,7 @@ void	parser(t_mini *mini)
 		return ;
 	prep_expand(mini, mini->token);
 	expand_env_vars(mini, mini->token);
-	// print = mini->token;
+	// t_token *print = mini->token;
 	// while (print)
 	// {
 	// 	printf("expand : %s type %d\n", print->value, print->type);
@@ -234,18 +234,18 @@ void	parser(t_mini *mini)
 		return ;
 	if(check_slash(mini) != 0)
 		return ;
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("white : %s type %d\n", print->value, print->type);
-	// 	print = print->next;
-	// }
 	if (order_tok_list(mini) == 1)
 		return ;
+	t_token *print = mini->token;
+	while (print)
+	{
+		printf("token : %s type %d\n", print->value, print->type);
+		print = print->next;
+	}
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	t_token *print = mini->token;
+	print = mini->token;
 	while (print)
 	{
 		printf("2 tok: %s  type: %i\n", print->value, print->type);
