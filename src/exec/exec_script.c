@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 15:35:20 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 10:00:17 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ static char	*get_script_name(t_token *tmp)
 	char	*name;
 
 	name = NULL;
-	if (ft_strncmp(tmp->cmd_tab[0], "./", 2) == 0)
+	if (ft_strncmp(tmp->cmd_tab[0], ".", longer_len(tmp->cmd_tab[0], ".")) == 0)
+		return (NULL);
+	if (ft_strncmp(tmp->cmd_tab[0], "./", longer_len(tmp->cmd_tab[0], "./")) == 0)
 		name = tmp->cmd_tab[0] + 2;
-	else if (ft_strncmp(tmp->cmd_tab[0], "sh", ft_strlen(tmp->cmd_tab[0])) == 0
-		|| ft_strncmp(tmp->cmd_tab[0], "bash", ft_strlen(tmp->cmd_tab[0])) == 0)
+	else if (ft_strncmp(tmp->cmd_tab[0], "sh", longer_len(tmp->cmd_tab[0], "sh")) == 0
+		|| ft_strncmp(tmp->cmd_tab[0], "bash", longer_len(tmp->cmd_tab[0], "bash")) == 0)
 		name = tmp->cmd_tab[1];
 	return (name);
 }
@@ -96,6 +98,8 @@ int	exec_script(t_mini *mini, t_token *tmp)
 	char	*args[3];
 
 	name = get_script_name(tmp);
+	if (!name)
+		return (ft_error(mini, " filename argument required", NULL), 1);
 	init_args(args);
 	if (name)
 	{
