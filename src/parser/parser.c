@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 13:13:16 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 14:07:56 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	prep_expand(t_mini *mini, t_token *token)
 		res = ft_strchr_int(cur->value, '$');
 		i = res + 1;
 		next = cur->next;
-		if ((cur->type == STRING || cur->type == D_Q)
+		if ((cur->type == STRING)
 			&& res >= 0)
 		{
 			while (cur->value[i])
@@ -221,8 +221,14 @@ void	parser(t_mini *mini)
 	if (prep_heredoc(mini) != 0)
 		return ;
 	prep_expand(mini, mini->token);
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("2 tok %s  type: %i\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	expand_env_vars(mini, mini->token);
-	// t_token *print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("expand : %s type %d\n", print->value, print->type);
@@ -230,30 +236,30 @@ void	parser(t_mini *mini)
 	// }
 	if (mini->error != 0)
 		return ;
-	if (check_white(mini) != 0)
-		return ;
 	if(check_slash(mini) != 0)
+		return ;
+	if (check_white(mini) != 0)
 		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
-	t_token *print = mini->token;
-	while (print)
-	{
-		printf("token : %s type %d\n", print->value, print->type);
-		print = print->next;
-	}
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("token : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	print = mini->token;
-	while (print)
-	{
-		printf("2 tok: %s  type: %i\n", print->value, print->type);
-		if (print->type == COMMAND)
-		{
-			for (int i = 0; print->cmd_tab[i]; i++)
-				printf("cmd: %s\n", print->cmd_tab[i]);
-		}
-		print = print->next;
-	}
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
+	// 	if (print->type == COMMAND)
+	// 	{
+	// 		for (int i = 0; print->cmd_tab[i]; i++)
+	// 			printf("cmd: %s\n", print->cmd_tab[i]);
+	// 	}
+	// 	print = print->next;
+	// }
 }

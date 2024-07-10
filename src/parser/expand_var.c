@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/09 14:27:13 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 14:09:03 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ static int	expand_inside_dq(t_mini *mini, char **str)
 	i = 0;
 	while (temp_str[i])
 	{
-		if (temp_str[i] == '$' && temp_str[i + 1] && (temp_str[i + 1] != ' '
-				&& !ft_isdigit(temp_str[i + 1])))
+		if (temp_str[i] == '$' && temp_str[i + 1] && temp_str[i + 1] != ' '
+				&& (ft_isalpha(temp_str[i + 1]) == 1 || temp_str[i + 1] == '?'))
 		{
 			env_value = expand_var(mini, temp_str, &i);
 			if (!env_value)

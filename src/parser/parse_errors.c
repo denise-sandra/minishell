@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 20:52:44 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/10 13:09:01 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/10 14:14:31 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ int	last_error_checks(t_mini *mini)
 		else if (list->type == HERE && (!next || (next && next->value[0] == '-')
 				|| (next && next->type != LIM)))
 			ft_error(mini, "Syntax error near token `<<'", NULL);
+		else if ((list->type == IN || list->type == OUT) && next && next->type != STRING)
+			ft_error(mini, "Syntax error near redirection token", NULL);
 		else if (list->type == APP && (!next || (next && next->value[0] == '-')
 				|| (next && next->type != STRING)))
 			ft_error(mini, "Syntax error near token `>>'", NULL);
 		if (mini->error)
+		{
+			mini->exit_status = 2;
 			return (1);
+		}	
 		list = list->next;
 	}
 	return (0);
