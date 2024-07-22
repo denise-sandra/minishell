@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 10:56:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 22:18:35 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static void	tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list)
 {
 	if ((*cur)->type == PIPE)
 	{
-		if (!(*cur)->next)
+		if (!(*cur)->next || (*cur) == mini->pretok || (*cur)->next->type == PIPE)
 		{
+			mini->exit_status = 258;
 			ft_error(mini, "Syntax error near unexpected token `|'", NULL);
 			return ;
 		}
@@ -78,6 +79,39 @@ static char	*tok_str_help(t_mini *ms, t_pretok **cur, char *s, t_pretok **prev)
 	return (s);
 }
 
+static void	tokenize_slash(t_mini *mini, t_pretok **cur, t_token **list)
+{
+	char		*join;
+	int			sq;
+	int			dq;
+
+	join = NULL;
+	sq = 0;
+	dq = 0;
+	while (*cur && ((*cur)->type == CHAR || (*cur)->type == SLASH \
+		|| (*cur)->type == S_Q || (*cur)->type == D_Q))
+	{
+		if ((*cur)->type == S_Q)
+			sq++;
+		if ((*cur)->type == D_Q)
+			dq++;
+		if ((*cur)->type == CHAR || (*cur)->type == SLASH ||\
+		 ((*cur)->type == D_Q && sq % 2 != 0) || ((*cur)->type == S_Q && dq % 2 != 0))
+		{
+			join = ft_strjoin_char(join, (*cur)->c);
+			if (!join)
+				return (ft_error(mini, NULL, strerror(errno)));
+		}
+		*cur = (*cur)->next;
+	}
+	if (join)
+	{
+		if (tok_list(join, SLASH, list) != 0)
+			return (free(join), ft_error(mini, NULL, strerror(errno)));
+		free(join);
+	}
+}
+
 static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 {
 	char		*join;
@@ -105,6 +139,49 @@ static void	tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list)
 	}
 }
 
+int	prep_expand(t_mini *mini, t_token *token)
+{
+	t_token	*cur;
+	t_token	*next;
+	t_token	*new;
+	int		res;
+	int		i;
+	char	*sub;
+
+	cur = token;
+	sub = NULL;
+	while (cur)
+	{
+		res = ft_strchr_int(cur->value, '$');
+		i = res + 1;
+		next = cur->next;
+		if ((cur->type == STRING)
+			&& res >= 0)
+		{
+			while (cur->value[i])
+			{
+				if (!ft_isalnum(cur->value[i]) && cur->value[i] != '?')
+				{
+					sub = ft_substr(cur->value, i, (ft_strlen(cur->value) - i));
+					if (!sub)
+						return (ft_error(mini, NULL, strerror(errno)), -1);
+					cur->value[i] = '\0';
+					new = tok_new_node(sub, STRING);
+					free(sub);
+					if (!new)
+						return (ft_error(mini, NULL, strerror(errno)), -1);
+					cur->next = new;
+					new->next = next;
+					break ;
+				}
+				i++;
+			}
+		}
+		cur = next;
+	}
+	return (0);
+}
+
 void	parser(t_mini *mini)
 {
 	t_pretok	*pretok;
@@ -116,6 +193,8 @@ void	parser(t_mini *mini)
 			pretok = pretok->next;
 		else if (pretok->type == CHAR || pretok->type == OPT)
 			tokenize_strings(mini, &pretok, &(mini->token));
+		else if (pretok->type == SLASH)
+			tokenize_slash(mini, &pretok, &(mini->token));
 		else if (pretok->type == PIPE || pretok->type == EMPTY)
 			tokenize_pipes_n_empty(mini, &pretok, &(mini->token));
 		else if (pretok->type == IN || pretok->type == OUT)
@@ -140,24 +219,40 @@ void	parser(t_mini *mini)
 	// 	printf("1 tok %s  type: %i\n", print->value, print->type);
 	// 	print = print->next;
 	// }
-	if(check_white(mini) != 0)
+	if (prep_heredoc(mini) != 0)
 		return ;
-	prep_heredoc(mini);
+	prep_expand(mini, mini->token);
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("2 tok %s  type: %i\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	expand_env_vars(mini, mini->token);
+	// print = mini->token;
+	// while (print)
+	// {
+	// 	printf("expand : %s type %d\n", print->value, print->type);
+	// 	print = print->next;
+	// }
 	if (mini->error != 0)
+		return ;
+	if(check_slash(mini) != 0)
+		return ;
+	if (check_white(mini) != 0)
 		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
-	// t_token * print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
-	// 	printf("order : %s type %d\n", print->value, print->type);
+	// 	printf("token : %s type %d\n", print->value, print->type);
 	// 	print = print->next;
 	// }
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	//  t_token * print = mini->token;
+	// print = mini->token;
 	// while (print)
 	// {
 	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);

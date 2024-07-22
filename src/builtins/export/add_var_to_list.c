@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:04:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:49:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,37 +47,38 @@ static void	add_exp(t_mini *mini, char *new_var)
 	ft_lstadd_back_env(&mini->export, new_node);
 }
 
-static void	add_env(t_mini *mini, char *new_var)
+static int	add_env(t_mini *mini, char *new_var)
 {
 	char		**split_new_envp;
 	t_lst_env	*new_node;
 
 	split_new_envp = split_env_vars(new_var, '=');
 	if (split_new_envp == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (ft_error(mini, NULL, strerror(errno)), -1);
 	free_env_node(mini, mini->env, split_new_envp[0]);
 	new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);
 	free_tab(split_new_envp);
 	if (new_node == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (ft_error(mini, NULL, strerror(errno)), -1);
 	ft_lstadd_back_env(&mini->env, new_node);
 	if (mini->mod_env == 1)
 		free_tab(mini->env_char);
 	clean_env_exp(mini, 2);
 	mini->export = copy_list(mini->env);
 	if (mini->export == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (ft_error(mini, NULL, strerror(errno)), -1);
 	mini->env_char = list_to_tab(mini);
+	return (0);
 }
 
-static void	check_syn_error(t_mini *mini, char	*new_var)
+static int	check_syn_error(t_mini *mini, char	*new_var)
 {
 	int		i;
 
 	if (ft_isalpha(new_var[0]) == 0)
 	{
 		mini->exit_status = 1;
-		return (ft_error(mini, " not a valid identifier", NULL));
+		return (ft_error(mini, " not a valid identifier", NULL), -1);
 	}
 	i = 1;
 	while (new_var[i] && new_var[i] != '=')
@@ -85,33 +86,38 @@ static void	check_syn_error(t_mini *mini, char	*new_var)
 		if (ft_isalnum(new_var[i]) == 0)
 		{
 			mini->exit_status = 1;
-			return (ft_error(mini, " not a valid identifier", NULL));
+			return (ft_error(mini, " not a valid identifier", NULL), -1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	add_var_to_list(t_mini *mini, t_token *cur)
 {
 	char	*res;
 	char	*new_var;
+	int		i;
 
-	res = NULL;
-	new_var = cur->cmd_tab[1];
-	check_syn_error(mini, new_var);
-	if (mini->error)
-		return ;
-	res = ft_strchr(new_var, '=');
-	if (res)
+	i = 1;
+	while (cur->cmd_tab[i])
 	{
-		add_env(mini, new_var);
-		if (mini->error != 0)
+		res = NULL;
+		new_var = cur->cmd_tab[i];
+		if (check_syn_error(mini, new_var) != 0)
 			return ;
+		res = ft_strchr(new_var, '=');
+		if (res)
+		{
+			if (add_env(mini, new_var) != 0)
+				return ;
+		}
+		else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
+			return (ft_error(mini, " not a valid identifier", NULL));
+		if (!res)
+			add_exp(mini, new_var);
+		if (mini->error)
+			return ;
+		i++;
 	}
-	else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
-		return (ft_error(mini, " not a valid identifier", NULL));
-	if (!res)
-		add_exp(mini, new_var);
-	if (mini->error)
-		return ;
 }

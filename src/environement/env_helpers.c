@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 08:58:57 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/10 15:58:58 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	longer_len(char *s1, char *s2)
+{
+	int	len1;
+	int	len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (len1 > len2)
+		return (len1);
+	else
+		return (len2);
+}
 
 char	*get_env_value(t_lst_env *env, char *name)
 {
@@ -23,7 +36,7 @@ char	*get_env_value(t_lst_env *env, char *name)
 	temp = env;
 	while (temp)
 	{
-		if (ft_strncmp(temp->name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(temp->name, name, longer_len(name, temp->name)) == 0)
 		{
 			dup = ft_strdup(temp->value);
 			return (dup);
@@ -56,7 +69,7 @@ int	env_name_len(char *token)
 
 	i = 1;
 	while (token[i] && token[i] != 32 && token[i] != 34 \
-			&& token[i] != 39 && token[i] != '$')
+			&& token[i] != 39 && (ft_isalnum(token[i]) != 0 || token[i] == '?'))
 		i++;
 	return (i - 1);
 }

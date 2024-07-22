@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 11:30:42 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 09:52:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,25 @@ static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 	return (0);
 }
 
-static void	read_here_doc(t_mini *mini, char *eof, int i)
+static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
+{
+	*is_eof = process_here_line(mini->here_fd, line, eof);
+	if (*is_eof == -1)
+	{
+		close(mini->here_fd[1]);
+		close(mini->here_fd[0]);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	read_here_doc(t_mini *mini, char *eof, int i)
 {
 	char	*line;
 	int		is_eof;
 
 	if (pipe(mini->here_fd) < 0)
-		return (ft_error(mini, NULL, strerror(errno)));
+		return (-1);
 	is_eof = 0;
 	while (is_eof == 0)
 	{
@@ -48,18 +60,15 @@ static void	read_here_doc(t_mini *mini, char *eof, int i)
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			is_eof = process_here_line(mini->here_fd, line, eof);
-			if (is_eof == -1)
-				ft_error(mini, NULL, strerror(errno));
+			if (ft_eof(mini, eof, line, &is_eof) != 0)
+				return (-1);
 		}
 		else
 			is_eof = 1;
 	}
 	close(mini->here_fd[1]);
-	if (is_eof != -1 && mini->fd_in && i < mini->cmd_count)
-		mini->fd_in[i] = mini->here_fd[0];
-	else
-		close(mini->here_fd[0]);
+	mini->fd_in[i] = mini->here_fd[0];
+	return (0);
 }
 
 int	get_infile(t_mini *mini, t_token *token, int i)
@@ -75,9 +84,13 @@ int	get_infile(t_mini *mini, t_token *token, int i)
 	}
 	else if (token->next && token->type == HERE)
 	{
-		read_here_doc(mini, token->next->value, i);
-		if (mini->error)
-			return (INT_MIN);
+		if (read_here_doc(mini, token->next->value, i) != 0)
+		{
+			ft_putstr_fd("Error: ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd("\n", 2);
+			mini->inv_fd[i] = 1;
+		}
 	}
 	return (0);
 }

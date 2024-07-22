@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/08 11:00:10 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 22:49:29 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,19 @@ static char	**pars_path(t_mini *mini)
 {
 	char	*path;
 	char	**split_paths;
+	char	cwd[1024];
 
 	path = get_env_value(mini->env, "PATH");
 	if (path == NULL)
 		return (NULL);
+	if (path[0] == '\0')
+	{
+		if (getcwd(cwd, 1024) == NULL)
+			return (ft_error(mini, NULL, strerror(errno)), NULL);
+		path = ft_strdup(cwd);
+		if (path == NULL)
+			return (NULL);
+	}
 	split_paths = ft_split(path, ':');
 	free(path);
 	return (split_paths);
@@ -48,6 +57,8 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 	command_found = 0;
 	if (tmp->cmd_tab[0][0] == '/')
 		return (is_slash(mini, tmp));
+	if (tmp->cmd_tab[0][0] == '\0')
+		return (-2);
 	while (paths[i])
 	{
 		p = join_path(tmp->cmd_tab[0], paths[i]);

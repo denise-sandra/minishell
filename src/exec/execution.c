@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/06 16:23:07 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 17:24:12 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	close_exec(t_mini *mini)
 		close(mini->fd_in[0]);
 	if (mini->fd_out[0] > 1)
 		close(mini->fd_out[0]);
+	if (mini->inv_fd[0] == 1)
+		mini->exit_status = 1;
 }
 
 void	execution(t_mini *mini)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:36:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:27:52 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	malloc_fds(t_mini *mini)
 	int	i;
 	int	j;
 
-	mini->cmd_count = ft_cmd_count(mini);
-	j = mini->cmd_count;
-	if (mini->cmd_count == 0)
+	mini->pipe_count = ft_pipe_count(mini);
+	j = mini->pipe_count;
+	if (mini->pipe_count == 0)
 		j = 1;
 	mini->fd_in = malloc(j * sizeof(int));
 	mini->fd_out = malloc(j * sizeof(int));
@@ -63,9 +63,9 @@ int	malloc_fds(t_mini *mini)
 	mini->pid = malloc(j * sizeof(pid_t));
 	if (!mini->fd_in || !mini->fd_out || !mini->pid || !mini->inv_fd)
 		return (ft_error(mini, NULL, strerror(errno)), 1);
-	if (mini->cmd_count > 1)
+	if (mini->pipe_count > 1)
 	{
-		mini->tube = malloc((mini->cmd_count - 1) * sizeof(*mini->tube));
+		mini->tube = malloc((mini->pipe_count - 1) * sizeof(*mini->tube));
 		if (!mini->tube)
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 	}

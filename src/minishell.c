@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/06 16:22:01 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 08:39:03 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,3 @@ int	main(int argc, char **argv, char **envp)
 	clean_minishell(mini);
 	return (final_status);
 }
-
-//valgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all --track-fds=yes ./minishell 
-
-
-/*
-testear esto: que esta enviadndo doble error y cerrando un std fd
-ls <<EOF  | cat <<LIM >./tests/in_ko
-
-*/

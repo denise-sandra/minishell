@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:11:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/10 22:06:32 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ static char	*get_script_name(t_token *tmp)
 	name = NULL;
 	if (ft_strncmp(tmp->cmd_tab[0], "./", 2) == 0)
 		name = tmp->cmd_tab[0] + 2;
-	else if (ft_strncmp(tmp->cmd_tab[0], "sh", ft_strlen(tmp->cmd_tab[0])) == 0
-		|| ft_strncmp(tmp->cmd_tab[0], "bash", ft_strlen(tmp->cmd_tab[0])) == 0)
+	else if (ft_strncmp(tmp->cmd_tab[0], "sh", \
+		longer_len(tmp->cmd_tab[0], "sh")) == 0
+		|| ft_strncmp(tmp->cmd_tab[0], "bash", \
+				longer_len(tmp->cmd_tab[0], "bash")) == 0)
 		name = tmp->cmd_tab[1];
 	return (name);
 }
@@ -83,7 +85,7 @@ static int	process_script(t_mini *mini, const char *name, int *script_fd)
 	{
 		close(script);
 		mini->exit_status = 126;
-		return (ft_error(mini, " Is a directory", NULL), 1);
+		return (ft_error(mini, "Is a directory", NULL), 1);
 	}
 	*script_fd = script;
 	return (0);

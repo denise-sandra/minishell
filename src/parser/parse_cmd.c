@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/06 15:08:43 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/10 21:59:45 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	handle_redirs_next(t_mini *mini, t_token **cur, t_token **prev)
 	}
 }
 
-static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
+static int	fill_cmd_table(t_token **cur, t_token *new)
 {
 	int		i;
 	t_token	*tmp;
@@ -42,7 +42,7 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		else
 			new->cmd_tab[i] = ft_strdup((*cur)->value);
 		if (!new->cmd_tab[i])
-			return (ft_error(mini, NULL, strerror(errno)));
+			return (-1);
 		i++;
 		tmp = (*cur)->next;
 		free((*cur)->value);
@@ -50,6 +50,7 @@ static void	fill_cmd_table(t_token **cur, t_token *new, t_mini *mini)
 		*cur = tmp;
 	}
 	new->cmd_tab[i] = NULL;
+	return (0);
 }
 
 static int	count_cmd_tokens(t_token *tmp)
@@ -85,6 +86,11 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 	t_token	*new;
 	int		tok_count;
 
+	if (mini->token == *cur && (*cur)->value[0] == '.' && ft_strlen((*cur)->value) == 1 && !(*cur)->next)
+	{
+		mini->exit_status = 2;
+		return (ft_error(mini, ". :filename argument required", NULL));
+	}		
 	new = tok_new_node("", COMMAND);
 	if (!new)
 		return (ft_error(mini, NULL, strerror(errno)));
@@ -92,9 +98,12 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 	new->cmd_tab = malloc((tok_count + 1) * sizeof(char *));
 	if (!new->cmd_tab)
 		return (ft_error(mini, NULL, strerror(errno)));
-	fill_cmd_table(cur, new, mini);
-	if (mini->error)
-		return (clean_token_list(&new));
+	if (fill_cmd_table(cur, new) != 0)
+	{
+		mini->token = new;
+		ft_error(mini, NULL, strerror(errno));
+		return ;
+	}
 	if (*prev)
 		(*prev)->next = new;
 	else

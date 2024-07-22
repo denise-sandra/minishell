@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   order_toks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/03 17:34:29 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/22 10:07:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	connect_tok(t_mini *mini)
 
 static int	init_order_struct(t_mini *mini)
 {
-
 	mini->order = malloc(sizeof(t_order));
 	if (!mini->order)
 		return (ft_error(mini, NULL, strerror(errno)), 1);

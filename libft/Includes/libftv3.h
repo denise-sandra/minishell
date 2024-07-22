@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/30 15:00:19 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/22 09:08:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 int			ft_strchr_order(const char *str, int c, int d);
+int		ft_strrchr_int(char *str, int c);
 
 /*search in str*/
 int			ft_strchr_int(const char *str, int c);

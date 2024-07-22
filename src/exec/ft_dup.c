@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:41:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:26:55 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_dup_in(t_mini *mini, int i)
 	}
 	else if (mini->fd_in[i] < 0)
 	{
-		if (i < mini->cmd_count - 1)
+		if (i < mini->pipe_count - 1)
 		{
 			close(mini->tube[i][0]);
 			close(mini->tube[i][1]);
@@ -78,7 +78,7 @@ int	ft_dup(t_mini *mini, int i)
 {
 	if (ft_dup_in_out(mini, i) != 0)
 		return (1);
-	if (mini->cmd_count != 1 && dup_tubes(mini, i) != 0)
+	if (mini->pipe_count != 1 && dup_tubes(mini, i) != 0)
 		return (1);
 	return (0);
 }

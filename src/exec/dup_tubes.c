@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_tubes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 09:09:42 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:26:22 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_inv_fd(t_mini *mini)
 	int	i;
 
 	i = 0;
-	while (i < mini->cmd_count)
+	while (i < mini->pipe_count)
 	{
 		if (mini->inv_fd[i] == 1)
 		{
@@ -93,7 +93,7 @@ int	dup_tubes(t_mini *mini, int i)
 
 	if (i == 0)
 		res = first_command(mini);
-	else if (i == mini->cmd_count - 1)
+	else if (i == mini->pipe_count - 1)
 		res = last_command(mini, i);
 	else
 		res = middle_command(mini, i);
