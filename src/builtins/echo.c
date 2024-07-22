@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 17:12:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 09:28:29 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_after_dash(t_token *cur, int *n, int *i)
 	while (cur->cmd_tab[*i][j])
 	{
 		if (cur->cmd_tab[*i][j] != 'n')
-			return (-1) ;
+			return (-1);
 		j++;
 	}
 	if (cur->cmd_tab[*i][j] == '\0')
@@ -28,7 +28,6 @@ static int	check_after_dash(t_token *cur, int *n, int *i)
 		++(*i);
 		++(*n);
 	}
-		
 	return (0);
 }
 
@@ -41,8 +40,8 @@ static int	echo_opt(t_token *cur, int *n)
 	{
 		if (ft_strlen(cur->cmd_tab[i]) > 2)
 		{
-			 if(check_after_dash(cur, n, &i) < 0)
-			 	break ;
+			if (check_after_dash(cur, n, &i) < 0)
+				break ;
 		}		
 		else
 		{
@@ -53,42 +52,58 @@ static int	echo_opt(t_token *cur, int *n)
 	return (i);
 }
 
+static void	is_cd(t_mini *mini, t_token *cur, int *i)
+{
+	char	*home;
+
+	if (!cur->cmd_tab[*i])
+		printf("cd");
+	if (cur->cmd_tab[*i] && ft_strncmp(cur->cmd_tab[*i], "~", \
+		longer_len(cur->cmd_tab[*i], "~")) == 0)
+	{
+		home = get_env_value(mini->env, "HOME");
+		if (!home)
+			return (ft_error(mini, NULL, strerror(errno)));
+		printf("cd %s", home);
+		free(home);
+		if (cur->cmd_tab[*i + 1])
+			printf(" ");
+		(*i)++;
+	}
+}
+
+static int	echo_print(t_token *cur, int i, int j)
+{
+	while (cur->cmd_tab[i] && cur->cmd_tab[i][j])
+	{
+		printf("%c", cur->cmd_tab[i][j]);
+		j++;
+	}
+	if (cur->cmd_tab[i + 1])
+		printf(" ");
+	return (j);
+}
+
 void	echo_command(t_mini *mini, t_token *cur)
 {
 	int	i;
 	int	j;
 	int	n;
-	char *home;
 
 	n = 0;
 	i = echo_opt(cur, &n);
 	while (cur->cmd_tab[i])
 	{
 		j = 0;
-		if (ft_strncmp(cur->cmd_tab[i], "cd", longer_len(cur->cmd_tab[i], "cd")) == 0)
+		if (ft_strncmp(cur->cmd_tab[i], "cd", \
+			longer_len(cur->cmd_tab[i], "cd")) == 0)
 		{
 			i++;
-			if (cur->cmd_tab[i] && ft_strncmp(cur->cmd_tab[i], "~", longer_len(cur->cmd_tab[i], "~")) == 0)
-			{
-				home = get_env_value(mini->env, "HOME");
-				if (!home)
-					return (ft_error(mini, NULL, strerror(errno)));
-				printf("cd %s", home);
-				free(home);
-				if (cur->cmd_tab[i + 1])
-					printf(" ");
-				i++;	
-			}
+			is_cd(mini, cur, &i);
 			if (!cur->cmd_tab[i])
 				break ;
 		}
-		while (cur->cmd_tab[i] && cur->cmd_tab[i][j])
-		{
-			printf("%c", cur->cmd_tab[i][j]);
-			j++;
-		}
-		if (cur->cmd_tab[i + 1])
-			printf(" ");
+		j = echo_print(cur, i, j);
 		i++;
 	}
 	if (n == 0)

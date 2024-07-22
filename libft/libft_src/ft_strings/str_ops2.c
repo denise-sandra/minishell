@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_ops2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:20 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 10:56:53 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 09:08:13 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 int	ft_strchr_order(const char *str, int c, int d)
 {
 	int	count_d;
-	
 	count_d = 0;
 	while (*str)
 	{
@@ -88,6 +87,24 @@ int	ft_strchr_order(const char *str, int c, int d)
 	if (str[0] == (char)c)
 		return (2);
 	return (0);
+}
+
+int	ft_strrchr_int(char *str, int c)
+{
+	int	size;
+
+	if (!str)
+		return (-1);
+	size = ft_strlen(str) - 1;
+	if (str[size] == (char)c)
+		size--;
+	while (size >= 0)
+	{
+		if (str[size] == (char)c)
+			return (size + 1);
+		size--;
+	}
+	return (-1);
 }
 
 

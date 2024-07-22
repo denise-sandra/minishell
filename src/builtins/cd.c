@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 22:29:48 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 09:10:04 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,6 @@ static char	*pwd_cmd_char(t_mini *mini)
 	if (getcwd(cwd, size) == NULL)
 		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);
 	return (cwd);
-}
-
-int	ft_strrchr_int(char *str, int c)
-{
-	int	size;
-
-	if (!str)
-		return (-1);
-	size = ft_strlen(str) - 1;
-	if (str[size] == (char)c)
-		size--;
-	while (size >= 0)
-	{
-		if (str[size] == (char)c)
-			return (size + 1);
-		size--;
-	}
-	return (-1);
 }
 
 void	go_home(t_mini *mini)
@@ -85,22 +67,31 @@ static void	go_back(t_mini *mini)
 	free(new_path);
 }
 
-void	cd_cmd(t_mini *mini, t_token *cur)
+static int	count_args(t_mini *mini, t_token *cur)
 {
-	const char	*path;
-	int			count;
-	t_lst_env	*new_node;
-	char	cwd[1024];
+	int	count;
 
 	if (!cur->cmd_tab)
-		return ;
+		return (-1);
 	count = 0;
 	while (cur->cmd_tab[count])
 		count++;
-	if (count == 3)
-		return (ft_error(mini, " too many arguments", NULL));
+	if (count >= 3)
+		return (ft_error(mini, " too many arguments", NULL), -1);
+	return (count);
+}
+
+void	cd_cmd(t_mini *mini, t_token *cur)
+{
+	const char	*path;
+	t_lst_env	*new_node;
+	char		cwd[1024];
+
+	if (count_args(mini, cur) < 0)
+		return ;
 	path = cur->cmd_tab[1];
-	if (count == 1 || !path || ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
+	if (count_args(mini, cur) == 1 || !path \
+		|| ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
 		go_home(mini);
 	else if (ft_strncmp(path, "..", longer_len((char *)path, "..")) == 0)
 		go_back(mini);

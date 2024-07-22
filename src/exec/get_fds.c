@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 13:12:18 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/22 09:52:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ static int	process_here_line(int *hd_pipe, char *line, const char *eof)
 	return (0);
 }
 
+static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
+{
+	*is_eof = process_here_line(mini->here_fd, line, eof);
+	if (*is_eof == -1)
+	{
+		close(mini->here_fd[1]);
+		close(mini->here_fd[0]);
+		return (-1);
+	}
+	return (0);
+}
+
 static int	read_here_doc(t_mini *mini, char *eof, int i)
 {
 	char	*line;
@@ -48,13 +60,8 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			is_eof = process_here_line(mini->here_fd, line, eof);
-			if (is_eof == -1)
-			{
-				close(mini->here_fd[1]);
-				close(mini->here_fd[0]);
+			if (ft_eof(mini, eof, line, &is_eof) != 0)
 				return (-1);
-			}
 		}
 		else
 			is_eof = 1;
@@ -62,7 +69,6 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 	close(mini->here_fd[1]);
 	mini->fd_in[i] = mini->here_fd[0];
 	return (0);
-
 }
 
 int	get_infile(t_mini *mini, t_token *token, int i)
