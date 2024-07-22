@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 22:18:35 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 13:43:20 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,13 +221,13 @@ void	parser(t_mini *mini)
 	// }
 	if (prep_heredoc(mini) != 0)
 		return ;
+	t_token *print = mini->token;
+	while (print)
+	{
+		printf("1 tok %s  type: %i\n", print->value, print->type);
+		print = print->next;
+	}
 	prep_expand(mini, mini->token);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2 tok %s  type: %i\n", print->value, print->type);
-	// 	print = print->next;
-	// }
 	expand_env_vars(mini, mini->token);
 	// print = mini->token;
 	// while (print)
@@ -243,24 +243,24 @@ void	parser(t_mini *mini)
 		return ;
 	if (order_tok_list(mini) == 1)
 		return ;
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("token : %s type %d\n", print->value, print->type);
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("token 2 : %s type %d\n", print->value, print->type);
+		print = print->next;
+	}
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("2 tok: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	print = mini->token;
+	while (print)
+	{
+		printf("3 tok: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 }

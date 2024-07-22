@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 20:52:44 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/22 10:12:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:45:48 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static void	lec_utils(t_mini *mini, t_token *list, t_token *next)
 		ft_error(mini, "Syntax error near token `<<'", NULL);
 	else if ((list->type == IN || list->type == OUT) \
 		&& next && next->type != STRING)
+	{
 		ft_error(mini, "Syntax error near redirection token", NULL);
+	}
 	else if (list->type == APP && (!next || (next && next->value[0] == '-')
 			|| (next && next->type != STRING)))
 		ft_error(mini, "Syntax error near token `>>'", NULL);

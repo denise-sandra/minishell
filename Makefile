@@ -15,8 +15,9 @@ SRCS	:= ${addprefix src/, minishell.c \
 		${addprefix parser/order_toks/, order_toks.c order_help.c} \
 		${addprefix exec/, execution.c execute_builtin.c init_fds.c fill_fds.c get_fds.c\
 		ft_dup.c dup_tubes.c cmd_exec.c exec_script.c is_slash.c builtin_in_parent.c exec_in_child.c close_fd.c} \
-		${addprefix builtins/, env.c exit.c pwd.c cd.c echo.c unset.c} \
+		${addprefix builtins/, env.c exit.c pwd.c echo.c unset.c} \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c} \
+		${addprefix builtins/cd/, cd.c go_back.c} \
 		${addprefix utils/, ft_error.c  clean_minishell.c ft_strjoin_free.c token_list.c handle_signals.c}}
 
 OBJS     = $(SRCS:.c=.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 14:29:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 11:33:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ void		exit_cmd(t_mini *mini, char **cmd_tab);
 void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);
+void	     go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 //signals

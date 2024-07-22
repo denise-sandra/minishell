@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/10 16:32:40 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/22 15:12:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,36 +81,33 @@ int	prep_heredoc(t_mini *mini)
 	cur = mini->token;
 	while (cur)
 	{
-		if ((cur->type == STRING || cur->type == D_Q || cur->type == S_Q || cur->type == LIM)
+		printf ("tok val: %s\n", cur->value);
+		if ((cur->type == STRING || cur->type == D_Q \
+			|| cur->type == S_Q || cur->type == LIM)
 			&& prev && prev->type == HERE)
+		{
+
+			if (cur->next && (cur->next->type == STRING || \
+				cur->next->type == D_Q || cur->next->type == S_Q))
 			{
-				
-				if (cur->next && (cur->next->type == STRING || \
-					cur->next->type == D_Q || cur->next->type == S_Q))
-					{
-						 join_tok(mini, &cur, &prev);
-						cur->type = LIM;	
-					}			
-				else if (!cur->next)
-				{
-					cur->type = LIM;
-					break ;
-				}
-				else
-				{
-					cur->type = LIM;
-					cur = cur->next;		
-				}
-					
+				join_tok(mini, &cur, &prev);
+				cur->type = LIM;
 			}
+			else
+			{
+				cur->type = LIM;
+				while (cur && cur->type != PIPE)
+					cur = cur->next;
+			}
+		}
 		else
 		{
-				if (cur->type != WHITE)
-					prev = cur;
-				cur = cur->next;
+			if (cur->type != WHITE)
+				prev = cur;
+			cur = cur->next;
 		}
-			if (mini->error != 0)
-            return (1);
+		if (mini->error != 0)
+			return (1);
 	}
 	return (0);
 }
