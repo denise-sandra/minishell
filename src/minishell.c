@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 08:39:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:03:06 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
+	mini->env_char = list_to_tab(mini);
 	if (mini->error == 1)
 		exit(1);
 	return (mini);

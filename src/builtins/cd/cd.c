@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 13:28:01 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:38:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	count_args(t_mini *mini, t_token *cur)
 	while (cur->cmd_tab[count])
 		count++;
 	if (count >= 3)
-		return (ft_error(mini, " too many arguments", NULL), -1);
+		return (ft_error(mini, "cd : Too many arguments", NULL), -1);
 	return (count);
 }
 

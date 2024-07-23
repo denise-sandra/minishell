@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 11:33:16 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:29:18 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 int			prep_heredoc(t_mini *mini);
+void	     tok_delone(t_token **lst, t_token **prev);
 int			expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
 int			order_tok_list(t_mini *mini);
@@ -112,8 +113,9 @@ char		*get_dynamic_prompt(void);
 void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		add_var_to_list(t_mini *mini, t_token *cur);
+int	     add_env(t_mini *mini, char *new_var);
 char		**list_to_tab(t_mini *mini);
-void		env_command(t_mini *minishell);
+void		env_command(t_mini *minishell, t_token *cur);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
 void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);

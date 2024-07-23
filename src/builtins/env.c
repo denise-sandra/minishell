@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/05 08:55:56 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:38:18 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ static int	path_exits(t_lst_env *env)
 	return (0);
 }
 
-void	env_command(t_mini *mini)
+void	env_command(t_mini *mini, t_token *cur)
 {
 	t_lst_env	*temp;
 
+	if (cur->cmd_tab[1])
+		return (ft_error(mini, "env: Too many arguments", NULL));
 	temp = mini->env;
 	if (!path_exits(temp))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_script.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 22:06:32 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/23 14:42:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,38 @@ static int	process_script(t_mini *mini, const char *name, int *script_fd)
 	return (0);
 }
 
+static int	is_mini(t_mini *mini, char *name)
+{
+	char	*shlvl;
+	char	*shlvl_join;
+	int	lvl;
+
+	if (ft_strncmp(name, "minishell", longer_len(name, "minishell")) == 0)
+	{
+		shlvl = get_env_value(mini->env, "SHLVL");
+		if (!shlvl)
+			return (1);
+		lvl = ft_atoi(shlvl);
+		free (shlvl);
+		lvl++;
+		shlvl = ft_itoa(lvl);
+		if (!shlvl)
+			return (1);
+		shlvl_join = ft_strjoin("SHLVL=", shlvl);
+		free (shlvl);
+		if (!shlvl_join)
+			return (1);
+		add_env(mini, shlvl_join);
+		if (mini->error == 1)
+			return (1);
+		free_tab(mini->env_char);
+		mini->env_char = list_to_tab(mini);
+		if (mini->env == NULL)
+			return (1);
+	}
+	return (0);
+}
+
 int	exec_script(t_mini *mini, t_token *tmp)
 {
 	char	*name;
@@ -101,14 +133,24 @@ int	exec_script(t_mini *mini, t_token *tmp)
 	init_args(args);
 	if (name)
 	{
+		if (is_mini(mini, name) != 0)
+			return (1);
 		if (process_script(mini, name, &script) != 0)
 			return (1);
 		if (ft_strncmp(name + ft_strlen(name) - 3, ".sh", 3) == 0)
 			args[0] = get_shebang(mini, script, args[0]);
 		if (!args[0])
 			return (close(script), 1);
-		args[1] = name;
-		args[2] = NULL;
+		if (args[0][0] == '\0')
+		{
+			args[0] = name;
+			args[1] = NULL;
+		}
+		else
+		{
+			args[1] = name;
+			args[2] = NULL;
+		}
 		if (execve(args[0], args, mini->env_char) == -1)
 		{
 			mini->exit_status = 127;

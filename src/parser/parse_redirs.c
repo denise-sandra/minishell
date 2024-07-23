@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/22 15:12:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:15:48 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,22 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 	}
 }
 
+static void	prep_lim(t_mini *mini, t_token	**cur, t_token	**prev)
+{
+	if ((*cur)->next && ((*cur)->next->type == STRING || \
+			(*cur)->next->type == D_Q || (*cur)->next->type == S_Q))
+	{
+		join_tok(mini, cur, prev);
+		(*cur)->type = LIM;
+	}
+	else
+	{
+		(*cur)->type = LIM;
+		while ((*cur) && (*cur)->type != PIPE)
+			(*cur) = (*cur)->next;
+	}
+}
+
 int	prep_heredoc(t_mini *mini)
 {
 	t_token	*prev;
@@ -81,30 +97,21 @@ int	prep_heredoc(t_mini *mini)
 	cur = mini->token;
 	while (cur)
 	{
-		printf ("tok val: %s\n", cur->value);
 		if ((cur->type == STRING || cur->type == D_Q \
 			|| cur->type == S_Q || cur->type == LIM)
 			&& prev && prev->type == HERE)
-		{
-
-			if (cur->next && (cur->next->type == STRING || \
-				cur->next->type == D_Q || cur->next->type == S_Q))
-			{
-				join_tok(mini, &cur, &prev);
-				cur->type = LIM;
-			}
-			else
-			{
-				cur->type = LIM;
-				while (cur && cur->type != PIPE)
-					cur = cur->next;
-			}
-		}
+			prep_lim(mini, &cur, &prev);
 		else
 		{
 			if (cur->type != WHITE)
+			{
 				prev = cur;
-			cur = cur->next;
+				cur = cur->next;
+			}
+			else if (cur->next && prev->type == HERE)
+				tok_delone(&cur, &prev);
+			else
+				cur = cur->next;
 		}
 		if (mini->error != 0)
 			return (1);

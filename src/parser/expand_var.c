@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/10 14:09:03 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/23 10:48:57 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static int	split_and_add_to_list(char *before_var, t_token **new_list)
 	{
 		if (tok_list(split_env[i], STRING, new_list) != 0)
 			return (free_tab(split_env), -1);
+		if (split_env [i + 1])
+		{
+			if (tok_list(" ", WHITE, new_list) != 0)
+				return (free_tab(split_env), -1);
+		}
 		i++;
 	}
 	free_tab(split_env);

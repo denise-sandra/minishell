@@ -6,11 +6,25 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:58:03 by derjavec          #+#    #+#             */
-/*   Updated: 2024/07/03 14:53:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 11:14:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+void	tok_delone(t_token **lst, t_token **prev)
+{
+	t_token	*temp;
+
+	if (!lst)
+		return ;
+	temp = (*lst)->next;
+	free((*lst)->value);
+	free(*lst);
+	*lst = temp;
+	(*prev)->next = *lst;
+}
 
 t_token	*tok_new_node(char *content, int type)
 {

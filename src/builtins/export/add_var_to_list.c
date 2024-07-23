@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 09:49:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:29:04 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	add_exp(t_mini *mini, char *new_var)
 	ft_lstadd_back_env(&mini->export, new_node);
 }
 
-static int	add_env(t_mini *mini, char *new_var)
+int	add_env(t_mini *mini, char *new_var)
 {
 	char		**split_new_envp;
 	t_lst_env	*new_node;
@@ -75,7 +75,7 @@ static int	check_syn_error(t_mini *mini, char	*new_var)
 {
 	int		i;
 
-	if (ft_isalpha(new_var[0]) == 0)
+	if (ft_isalpha(new_var[0]) == 0 && new_var[0] != '_')
 	{
 		mini->exit_status = 1;
 		return (ft_error(mini, " not a valid identifier", NULL), -1);
@@ -83,7 +83,7 @@ static int	check_syn_error(t_mini *mini, char	*new_var)
 	i = 1;
 	while (new_var[i] && new_var[i] != '=')
 	{
-		if (ft_isalnum(new_var[i]) == 0)
+		if (ft_isalnum(new_var[i]) == 0 && new_var[i] != '_')
 		{
 			mini->exit_status = 1;
 			return (ft_error(mini, " not a valid identifier", NULL), -1);
