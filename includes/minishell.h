@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 14:29:18 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:18:27 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void		close_fd_and_wait(t_mini *mini);
 void		close_all_fd(t_mini *mini);
 void		close_if_inv_fd(t_mini *mini, int j);
 char		*get_dynamic_prompt(void);
+int	     handle_shlvl(t_mini *mini);
 
 //builtin fucntions
 void		echo_command(t_mini *mini, t_token *cur);

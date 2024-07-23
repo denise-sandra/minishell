@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_script.c                                      :+:      :+:    :+:   */
+/*   exec_script_bin_helper.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 14:42:55 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:17:57 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_shebang(t_mini *ms, int script, char *shebang)
+char	*get_shebang(t_mini *ms, int script, char *shebang)
 {
 	char	*line;
 
@@ -41,7 +41,7 @@ static char	*get_shebang(t_mini *ms, int script, char *shebang)
 	return (shebang);
 }
 
-static char	*get_script_name(t_token *tmp)
+char	*get_name(t_token *tmp)
 {
 	char	*name;
 
@@ -56,7 +56,7 @@ static char	*get_script_name(t_token *tmp)
 	return (name);
 }
 
-static void	init_args(char **args)
+void	init_args(char **args)
 {
 	static char	empty[] = "";
 
@@ -65,7 +65,7 @@ static void	init_args(char **args)
 	args[2] = empty;
 }
 
-static int	process_script(t_mini *mini, const char *name, int *script_fd)
+int	process_script(t_mini *mini, const char *name, int *script_fd)
 {
 	struct stat	statbuf;
 	int			script;
@@ -91,72 +91,30 @@ static int	process_script(t_mini *mini, const char *name, int *script_fd)
 	return (0);
 }
 
-static int	is_mini(t_mini *mini, char *name)
+int	handle_shlvl(t_mini *mini)
 {
 	char	*shlvl;
 	char	*shlvl_join;
 	int	lvl;
 
-	if (ft_strncmp(name, "minishell", longer_len(name, "minishell")) == 0)
-	{
-		shlvl = get_env_value(mini->env, "SHLVL");
-		if (!shlvl)
-			return (1);
-		lvl = ft_atoi(shlvl);
-		free (shlvl);
-		lvl++;
-		shlvl = ft_itoa(lvl);
-		if (!shlvl)
-			return (1);
-		shlvl_join = ft_strjoin("SHLVL=", shlvl);
-		free (shlvl);
-		if (!shlvl_join)
-			return (1);
-		add_env(mini, shlvl_join);
-		if (mini->error == 1)
-			return (1);
-		free_tab(mini->env_char);
-		mini->env_char = list_to_tab(mini);
-		if (mini->env == NULL)
-			return (1);
-	}
-	return (0);
-}
-
-int	exec_script(t_mini *mini, t_token *tmp)
-{
-	char	*name;
-	int		script;
-	char	*args[3];
-
-	name = get_script_name(tmp);
-	init_args(args);
-	if (name)
-	{
-		if (is_mini(mini, name) != 0)
-			return (1);
-		if (process_script(mini, name, &script) != 0)
-			return (1);
-		if (ft_strncmp(name + ft_strlen(name) - 3, ".sh", 3) == 0)
-			args[0] = get_shebang(mini, script, args[0]);
-		if (!args[0])
-			return (close(script), 1);
-		if (args[0][0] == '\0')
-		{
-			args[0] = name;
-			args[1] = NULL;
-		}
-		else
-		{
-			args[1] = name;
-			args[2] = NULL;
-		}
-		if (execve(args[0], args, mini->env_char) == -1)
-		{
-			mini->exit_status = 127;
-			return (close(script), ft_error(mini, NULL, strerror(errno)), 1);
-		}
-		close(script);
-	}
+	shlvl = get_env_value(mini->env, "SHLVL");
+	if (!shlvl)
+		return (1);
+	lvl = ft_atoi(shlvl);
+	free (shlvl);
+	lvl++;
+	shlvl = ft_itoa(lvl);
+	if (!shlvl)
+		return (1);
+	shlvl_join = ft_strjoin("SHLVL=", shlvl);
+	free (shlvl);
+	if (!shlvl_join)
+		return (1);
+	if (add_env(mini, shlvl_join) != 0)
+		return (1);
+	free_tab(mini->env_char);
+	mini->env_char = list_to_tab(mini);
+	if (mini->env_char == NULL)
+		return (1);
 	return (0);
 }

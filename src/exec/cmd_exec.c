@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 14:01:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:52:07 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
-	if (exec_script(mini, tmp) == 1)
+	if (exec_script_bin(mini, tmp) == 1)
 		return ;
 	paths = pars_path(mini);
 	if (paths == NULL)
