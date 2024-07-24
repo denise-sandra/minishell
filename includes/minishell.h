@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 15:18:27 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:23:07 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		fill_fd(t_mini *mini);
 int			get_infile(t_mini *mini, t_token *token, int i);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
-int			exec_script(t_mini *mini, t_token *tmp);
+int	     exec_script_bin(t_mini *mini, t_token *tmp);
 int			is_slash(t_mini *mini, t_token *tmp);
 void		builtin_in_parent(t_mini *mini, int builtin);
 void		exec_in_child(t_mini *mini, t_token *tmp);
@@ -109,6 +109,9 @@ void		close_all_fd(t_mini *mini);
 void		close_if_inv_fd(t_mini *mini, int j);
 char		*get_dynamic_prompt(void);
 int	     handle_shlvl(t_mini *mini);
+int	     process_file(t_mini *mini, const char *name, int *script_fd);
+char	     *get_name(t_token *tmp);
+char	     *get_shebang(t_mini *ms, int script);
 
 //builtin fucntions
 void		echo_command(t_mini *mini, t_token *cur);

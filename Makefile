@@ -14,7 +14,7 @@ SRCS	:= ${addprefix src/, minishell.c \
 		${addprefix parser/, parser.c parse_redirs.c expand_var.c expand_help.c parse_cmd.c parse_errors.c check_white.c} \
 		${addprefix parser/order_toks/, order_toks.c order_help.c} \
 		${addprefix exec/, execution.c execute_builtin.c init_fds.c fill_fds.c get_fds.c\
-		ft_dup.c dup_tubes.c cmd_exec.c exec_script.c is_slash.c builtin_in_parent.c exec_in_child.c close_fd.c} \
+		ft_dup.c dup_tubes.c cmd_exec.c  exec_script_bin.c  exec_script_bin_helper.c is_slash.c builtin_in_parent.c exec_in_child.c close_fd.c} \
 		${addprefix builtins/, env.c exit.c pwd.c echo.c unset.c} \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c} \
 		${addprefix builtins/cd/, cd.c go_back.c} \
