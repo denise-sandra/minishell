@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 11:16:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:19:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,15 +252,15 @@ void	parser(t_mini *mini)
 	if (parse_commands(mini) != 0)
 		return ;
 	last_error_checks(mini);
-	// print = mini->token;
-	// while (print)
-	// {
-	// 	printf("4 tok: %s  type: %i\n", print->value, print->type);
-	// 	if (print->type == COMMAND)
-	// 	{
-	// 		for (int i = 0; print->cmd_tab[i]; i++)
-	// 			printf("cmd: %s\n", print->cmd_tab[i]);
-	// 	}
-	// 	print = print->next;
-	// }
+	t_token *print = mini->token;
+	while (print)
+	{
+		printf("4 tok: %s  type: %i\n", print->value, print->type);
+		if (print->type == COMMAND)
+		{
+			for (int i = 0; print->cmd_tab[i]; i++)
+				printf("cmd: %s\n", print->cmd_tab[i]);
+		}
+		print = print->next;
+	}
 }

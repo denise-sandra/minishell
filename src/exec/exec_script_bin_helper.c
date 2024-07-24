@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/24 13:52:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:18:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	handle_shlvl(t_mini *mini)
 	int	lvl;
 
 	shlvl = get_env_value(mini->env, "SHLVL");
-	printf("shlvl %s\n", shlvl);
 	if (!shlvl)
 		return (1);
 	lvl = ft_atoi(shlvl);

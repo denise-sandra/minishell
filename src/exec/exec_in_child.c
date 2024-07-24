@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 12:02:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:15:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 	tmp = cur;
 	while (tmp)
 	{
+		printf("i: %d\n", i);
 		if (tmp->type == COMMAND)
 		{
 			if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
 				return (ft_error(mini, NULL, strerror(errno)));
+			printf("tubes creados: %d %d\n", mini->tube[i][0],mini->tube[i][1] );
 			mini->pid[i] = fork();
 			if (mini->pid[i] < 0)
 				return (ft_error(mini, NULL, strerror(errno)));
@@ -60,6 +62,7 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 				child_pid(mini, tmp, i);
 			if (i > 0)
 			{
+				printf("tubes cerrados: %d %d %d\n", i, mini->tube[i - 1][0],mini->tube[i - 1][1] );
 				close(mini->tube[i - 1][0]);
 				close(mini->tube[i - 1][1]);
 			}

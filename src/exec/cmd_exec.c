@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 14:52:07 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:06:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	execve_failed(t_mini *mini, t_token *tmp, char **paths, int exec_ret)
 	else
 		free_tab(paths);
 	exit_tmp = mini->exit_status;
+	close_all_fd(mini);
 	clean_minishell(mini);
 	exit(exit_tmp);
 }

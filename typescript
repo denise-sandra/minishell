@@ -3450,4 +3450,219 @@ EXIT: command not found
 ==1649407== FILE DESCRIPTORS: 4 open (3 std) at exit.
 ==1649407== Open file descriptor 3: /home/derjavec/.local/share/Trash/files/script
 ==1649407==    <inherited from parent>
-=
+==1649407== 
+==1649407== 
+==1649407== HEAP SUMMARY:
+==1649407==     in use at exit: 208,375 bytes in 231 blocks
+==1649407==   total heap usage: 1,243 allocs, 1,012 frees, 285,676 bytes allocated
+==1649407== 
+==1649407== LEAK SUMMARY:
+==1649407==    definitely lost: 0 bytes in 0 blocks
+==1649407==    indirectly lost: 0 bytes in 0 blocks
+==1649407==      possibly lost: 0 bytes in 0 blocks
+==1649407==    still reachable: 0 bytes in 0 blocks
+==1649407==         suppressed: 208,375 bytes in 231 blocks
+==1649407== 
+==1649407== For lists of detected and suppressed errors, rerun with: -s
+==1649407== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[32mg[39m[32mg[39m[90mit pull[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39m [39m [39m [39m [90m pull[39m[1m[31mg[1m[31mi[0m[39m[39m [39m [39m [39m [39m [39m [90mt pull[39m[0m[32mg[39m[0m[39m [39m [39m [39m [39m [39m [39m [32mg[39m[90mit pull[39m[39m [39m [39m [39m [39m [39m [39m [39m [8D[4mm[24m[4mm[24m[90make re[39m[24m[1m[31mm[1m[31ma[0m[39m[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[39m [39mf[39m [90mclean[39m[39mc[39ml[39me[39ma[39mn[?1l>[?2004l
+]2;make fclean]1;makeobject files deleted
+all clean! 🧹
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[32mg[39m[32mg[39m[90mit pull[39m[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39ma[39m [39m [39m [90mdd .[39m[39md[39md[39m [39m[4m.[24m[?1l>[?2004l
+]2;git add .]1;git[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[32mg[39m[32mg[39m[90mit add .[39m[8D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39mc[39m [39m [39m [39m [90mommit -m 'SHLVl orden incompleto'[39m[33D[39mo[39mm[39mm[39mi[39mt[39m [39m-[39mm[39m [33m'[33mS[33mH[33mL[33mV[33ml[33m [33mo[33mr[33md[33me[33mn[33m [33mi[33mn[33mc[33mo[33mm[33mp[33ml[33me[33mt[33mo[33m'[39m[33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33mC[33m'[39m[33mS[33m'[39m[33mR[33m'[39m[33mI[33m'[39m[33mP[33m'[39m[33mT[33m'[39m[33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33m'[39m[39m [33ms[33m'[24m[39m[33mc[33m'[24m[39m[33mr[33m'[24m[39m[33mi[33m'[24m[39m[33mp[33m'[24m[39m[33mt[33m'[24m[39m[?1l>[?2004l
+]2;git commit -m 'script']1;git[corrections f1e9542] script
+ Committer: Denise Erjavec <derjavec@k2r1p2.42mulhouse.fr>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 7 files changed, 3542 insertions(+), 64 deletions(-)
+ create mode 100755 script
+ rewrite typescript (99%)
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[32mg[39m[32mg[39m[90mit commit -m 'script'[39m[21D[1m[31mg[1m[31mi[0m[39m[0m[32mg[0m[32mi[32mt[39m[39m [39mp[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [17D[90mull[39m[39mu[39ms[39m [90mh[39m[39mh[?1l>[?2004l
+]2;git push]1;gitEnumerating objects: 22, done.
+Counting objects:   4% (1/22)Counting objects:   9% (2/22)Counting objects:  13% (3/22)Counting objects:  18% (4/22)Counting objects:  22% (5/22)Counting objects:  27% (6/22)Counting objects:  31% (7/22)Counting objects:  36% (8/22)Counting objects:  40% (9/22)Counting objects:  45% (10/22)Counting objects:  50% (11/22)Counting objects:  54% (12/22)Counting objects:  59% (13/22)Counting objects:  63% (14/22)Counting objects:  68% (15/22)Counting objects:  72% (16/22)Counting objects:  77% (17/22)Counting objects:  81% (18/22)Counting objects:  86% (19/22)Counting objects:  90% (20/22)Counting objects:  95% (21/22)Counting objects: 100% (22/22)Counting objects: 100% (22/22), done.
+Delta compression using up to 12 threads
+Compressing objects:   8% (1/12)Compressing objects:  16% (2/12)Compressing objects:  25% (3/12)Compressing objects:  33% (4/12)Compressing objects:  41% (5/12)Compressing objects:  50% (6/12)Compressing objects:  58% (7/12)Compressing objects:  66% (8/12)Compressing objects:  75% (9/12)Compressing objects:  83% (10/12)Compressing objects:  91% (11/12)Compressing objects: 100% (12/12)Compressing objects: 100% (12/12), done.
+Writing objects:   8% (1/12)Writing objects:  16% (2/12)Writing objects:  25% (3/12)Writing objects:  33% (4/12)Writing objects:  41% (5/12)Writing objects:  50% (6/12)Writing objects:  58% (7/12)Writing objects:  66% (8/12)Writing objects:  75% (9/12)Writing objects:  83% (10/12)Writing objects:  91% (11/12)Writing objects: 100% (12/12)Writing objects: 100% (12/12), 17.12 KiB | 8.56 MiB/s, done.
+Total 12 (delta 8), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas:   0% (0/8)[Kremote: Resolving deltas:  12% (1/8)[Kremote: Resolving deltas:  25% (2/8)[Kremote: Resolving deltas:  37% (3/8)[Kremote: Resolving deltas:  50% (4/8)[Kremote: Resolving deltas:  62% (5/8)[Kremote: Resolving deltas:  75% (6/8)[Kremote: Resolving deltas:  87% (7/8)[Kremote: Resolving deltas: 100% (8/8)[Kremote: Resolving deltas: 100% (8/8), completed with 8 local objects.[K
+To github.com:denise-sandra/minishell.git
+   d2835dc..f1e9542  corrections -> corrections
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[1m[31mv[0m[39m[1m[31mv[0m[39m[90malgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all --track-fds=yes --leak-check=ful[90ml[90m ./minishell [39m[K[A[34C[0m[32mv[32ma[32ml[32mg[32mr[32mi[32mn[32md[39m[39m [39m-[39m-[39ms[39mu[39mp[39mp[39mr[39me[39ms[39ms[39mi[39mo[39mn[39ms[39m=[39ms[39m.[39ms[39mu[39mp[39mp[39m [39m-[39m-[39mt[39mr[39ma[39mc[39mk[39m-[39mo[39mr[39mi[39mg[39mi[39mn[39ms[39m=[39my[39me[39ms[39m [39m-[39m-[39ms[39mh[39mo[39mw[39m-[39ml[39me[39ma[39mk[39m-[39mk[39mi[39mn[39md[39ms[39m=[39ma[39ml[39ml[39m [39m-[39m-[39mt[39mr[39ma[39mc[39mk[39m-[39mf[39md[39ms[39m=[39my[39me[39ms[39m [39m-[39m-[39ml[39me[39ma[39mk[39m-[39mc[39mh[39me[39mc[39mk[39m=[39mf[39mu[39mll[39m [39m[4m.[39m[4m/[39m[4mm[39m[4mi[39m[4mn[39m[4mi[39m[4ms[39m[4mh[39m[4me[39m[4ml[39m[4ml[24m[K[1C[?1l>[?2004l
+]2;valgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all   ]1;valgrind==1659377== Memcheck, a memory error detector
+==1659377== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1659377== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1659377== Command: ./minishell
+==1659377== 
+[?2004hminishell:/home/derjavec/Documents/mini$ [7m/bin/env | grep "_="[27m/bin/env | grep "_="
+[?2004l_=/usr/bin/valgrind
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls | cat asd[27mls | cat asd
+[?2004lcat: asd: No such file or directory
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls | cat << stop | grep "asd"[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls | cat << stop | grep "asd"
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l> sdfg
+> stop
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls | cat << stop | ls -la | cat << stop1[27mls | cat << stop | ls -la | cat << stop1
+[?2004l> sdfgh
+> stip  op
+> sop   sdfg
+> stop1
+sdfg
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la | cat     << stop3[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la | cat     << stop3
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l> sdfg
+> stop
+> sdfg
+> stop1
+> dfgh
+> stop2
+> edrfg
+> stop3
+edrfg
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > out     | cat << 'stop3'[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls | cat << stop | ls -la | cat << stop1 | ls | cat << stop2 | ls -la > out     | cat << 'stop3'
+[?2004l> df
+> stop1
+> stop2
+> stop3
+> stop
+> stop1
+> stop2
+> stop3
+[?2004hminishell:/home/derjavec/Documents/mini$ [7mls|cat Makefile|cat<<asd>out[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cls|cat Makefile|cat<<asd>out
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+[?2004l> $USER
+153 asd
+154 /bin/rm -f out
+> > > 
+> ^Cminishell:/home/derjavec/Documents/mini$  ^C
+[?2004hminishell:/home/derjavec/Documents/mini$ ls|cat Makefile|cat<<asd>out
+[?2004l> $USER
+> asd
+[?2004hminishell:/home/derjavec/Documents/mini$ [7m/bin/rm -f out[27m/bin/rm -f out
+[?2004l[?2004hminishell:/home/derjavec/Documents/mini$ <<eof cat >out | echo "$USER"> out1 | cat Makefile >>out2
+[?2004l> pepe
+> eof
+==1659818== 
+==1659818== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1659818== Open file descriptor 3: /home/derjavec/.local/share/Trash/files/script
+==1659818==    <inherited from parent>
+==1659818== 
+==1659818== 
+==1659818== HEAP SUMMARY:
+==1659818==     in use at exit: 209,123 bytes in 254 blocks
+==1659818==   total heap usage: 3,022 allocs, 2,768 frees, 312,216 bytes allocated
+==1659818== 
+==1659818== 42 bytes in 1 blocks are definitely lost in loss record 13 of 68
+==1659818==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1659818==    by 0x40C8EE: ft_strjoin (str_ops.c:91)
+==1659818==    by 0x4013F9: get_dynamic_prompt (minishell.c:60)
+==1659818==    by 0x40B39F: sigint_handler (handle_signals.c:20)
+==1659818==    by 0x490B51F: ??? (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==1659818==    by 0x49DD7E1: read (read.c:26)
+==1659818==    by 0x40D262: check_read (get_next_line.c:88)
+==1659818==    by 0x40D364: get_next_line (get_next_line.c:112)
+==1659818==    by 0x406740: read_here_doc (get_fds.c:60)
+==1659818==    by 0x406665: get_infile (get_fds.c:87)
+==1659818==    by 0x4063D2: fill_fd_utils (fill_fds.c:60)
+==1659818==    by 0x4062A9: fill_fd (fill_fds.c:83)
+==1659818== 
+==1659818== LEAK SUMMARY:
+==1659818==    definitely lost: 42 bytes in 1 blocks
+==1659818==    indirectly lost: 0 bytes in 0 blocks
+==1659818==      possibly lost: 0 bytes in 0 blocks
+==1659818==    still reachable: 0 bytes in 0 blocks
+==1659818==         suppressed: 209,081 bytes in 253 blocks
+==1659818== 
+==1659818== For lists of detected and suppressed errors, rerun with: -s
+==1659818== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[?2004hminishell:/home/derjavec/Documents/mini$ exit
+[?2004lexit
+==1659377== 
+==1659377== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1659377== Open file descriptor 3: /home/derjavec/.local/share/Trash/files/script
+==1659377==    <inherited from parent>
+==1659377== 
+==1659377== 
+==1659377== HEAP SUMMARY:
+==1659377==     in use at exit: 209,106 bytes in 256 blocks
+==1659377==   total heap usage: 3,053 allocs, 2,797 frees, 312,730 bytes allocated
+==1659377== 
+==1659377== 42 bytes in 1 blocks are definitely lost in loss record 13 of 67
+==1659377==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1659377==    by 0x40C8EE: ft_strjoin (str_ops.c:91)
+==1659377==    by 0x4013F9: get_dynamic_prompt (minishell.c:60)
+==1659377==    by 0x40B39F: sigint_handler (handle_signals.c:20)
+==1659377==    by 0x490B51F: ??? (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==1659377==    by 0x49DD7E1: read (read.c:26)
+==1659377==    by 0x40D262: check_read (get_next_line.c:88)
+==1659377==    by 0x40D364: get_next_line (get_next_line.c:112)
+==1659377==    by 0x406740: read_here_doc (get_fds.c:60)
+==1659377==    by 0x406665: get_infile (get_fds.c:87)
+==1659377==    by 0x4063D2: fill_fd_utils (fill_fds.c:60)
+==1659377==    by 0x4062A9: fill_fd (fill_fds.c:83)
+==1659377== 
+==1659377== LEAK SUMMARY:
+==1659377==    definitely lost: 42 bytes in 1 blocks
+==1659377==    indirectly lost: 0 bytes in 0 blocks
+==1659377==      possibly lost: 0 bytes in 0 blocks
+==1659377==    still reachable: 0 bytes in 0 blocks
+==1659377==         suppressed: 209,064 bytes in 255 blocks
+==1659377== 
+==1659377== For lists of detected and suppressed errors, rerun with: -s
+==1659377== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[4mm[24m[4mm[24m[90mstest m[39m[24m[1m[31mm[1m[31ma[0m[39m[39m [39m [39m [39m [39m [39m [90mke fclean[39m[9D[1m[31mm[1m[31ma[1m[31mk[0m[39m[0m[32mm[0m[32ma[0m[32mk[32me[39m[39m [39mr[39m [39m [39m [39m [39m [90me[39m[39me[?1l>[?2004l
+]2;make re]1;makeobject files deleted
+all clean! 🧹
+...............................................
+[32m✔[0m compiled with libft
+[1m[7m%[27m[1m[0m                                                                                                                                                        ]2;derjavec@k2r1p2:~/Documents/mini]1;..ocuments/mini]7;file://k2r1p2.42mulhouse.fr/home/derjavec/Documents/mini\[0m[27m[24m[J[32mderjavec@k2r1p2:[01;34mDocuments/mini [31m‹corrections*›[00m[00m$ [K[?1h=[?2004h[1m[31mv[0m[39m[1m[31mv[0m[39m[90malgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all --track-fds=yes --leak-check=ful[90ml[90m ./minishell [39m[K[A[34C[0m[32mv[32ma[32ml[32mg[32mr[32mi[32mn[32md[39m[39m [39m-[39m-[39ms[39mu[39mp[39mp[39mr[39me[39ms[39ms[39mi[39mo[39mn[39ms[39m=[39ms[39m.[39ms[39mu[39mp[39mp[39m [39m-[39m-[39mt[39mr[39ma[39mc[39mk[39m-[39mo[39mr[39mi[39mg[39mi[39mn[39ms[39m=[39my[39me[39ms[39m [39m-[39m-[39ms[39mh[39mo[39mw[39m-[39ml[39me[39ma[39mk[39m-[39mk[39mi[39mn[39md[39ms[39m=[39ma[39ml[39ml[39m [39m-[39m-[39mt[39mr[39ma[39mc[39mk[39m-[39mf[39md[39ms[39m=[39my[39me[39ms[39m [39m-[39m-[39ml[39me[39ma[39mk[39m-[39mc[39mh[39me[39mc[39mk[39m=[39mf[39mu[39mll[39m [39m[4m.[39m[4m/[39m[4mm[39m[4mi[39m[4mn[39m[4mi[39m[4ms[39m[4mh[39m[4me[39m[4ml[39m[4ml[24m[K[1C[?1l>[?2004l
+]2;valgrind --suppressions=s.supp --track-origins=yes --show-leak-kinds=all   ]1;valgrind==1662283== Memcheck, a memory error detector
+==1662283== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1662283== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1662283== Command: ./minishell
+==1662283== 
+[?2004hminishell:/home/derjavec/Documents/mini$ [7m<<eof cat >out | echo "$USER"> out1 | cat Makefile >>out2[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C<<eof cat >out | echo "$USER"> out1 | cat Makefile >>out2
+[?2004l> sdfg
+> eof
+==1662290== 
+==1662290== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1662290== Open file descriptor 3: /home/derjavec/.local/share/Trash/files/script
+==1662290==    <inherited from parent>
+==1662290== 
+==1662290== 
+==1662290== HEAP SUMMARY:
+==1662290==     in use at exit: 208,393 bytes in 226 blocks
+==1662290==   total heap usage: 1,332 allocs, 1,106 frees, 256,087 bytes allocated
+==1662290== 
+==1662290== LEAK SUMMARY:
+==1662290==    definitely lost: 0 bytes in 0 blocks
+==1662290==    indirectly lost: 0 bytes in 0 blocks
+==1662290==      possibly lost: 0 bytes in 0 blocks
+==1662290==    still reachable: 0 bytes in 0 blocks
+==1662290==         suppressed: 208,393 bytes in 226 blocks
+==1662290== 
+==1662290== For lists of detected and suppressed errors, rerun with: -s
+==1662290== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004hminishell:/home/derjavec/Documents/mini$ [?2004l
+==1662283== 
+==1662283== FILE DESCRIPTORS: 4 open (3 std) at exit.
+==1662283== Open file descriptor 3: /home/derjavec/.local/share/Trash/files/script
+==1662283==    <inherited from parent>
+==1662283== 
+==1662283== 
+==1662283== HEAP SUMMARY:
+==1662283==     in use at exit: 208,335 bytes in 225 blocks
+==1662283==   total heap usage: 1,337 allocs, 1,112 frees, 256,261 bytes allocated
+==1662283== 

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/24 14:09:58 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 14:19:13 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	exec_bin(t_mini *mini, char *name, int script)
 
 	args[0] = name;
 	args[1] = NULL;
-	printf("ejecuta bin\n");
 	if (execve(args[0], args, mini->env_char) == -1)
 	{
 		mini->exit_status = 127;
@@ -70,8 +69,6 @@ static int	check_file(int script)
 		printf("c: %c\n", buf[i]);
 		if (buf[i] == '#')
 			return (1);
-		// if (buf[i] != '\n')
-		// 	return (0);
 		i++;
 	}
 	return (0);
@@ -83,7 +80,6 @@ int	exec_script_bin(t_mini *mini, t_token *tmp)
 	int		script;
 
 	name = get_name(tmp);
-	printf("name %s\n", name);
 	if (name)
 	{
 		if ( process_file(mini, name, &script) < 0)
