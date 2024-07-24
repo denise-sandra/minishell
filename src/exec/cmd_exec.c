@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 14:52:07 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:01:29 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	execve_failed(t_mini *mini, t_token *tmp, \
+char **paths, int exec_ret)
+{
+	int		exit_tmp;
+
+	if (exec_ret == -2)
+	{
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free(paths);
+	}
+	else
+		free_tab(paths);
+	exit_tmp = mini->exit_status;
+	close_all_fd(mini);
+	clean_minishell(mini);
+	exit(exit_tmp);
+}
 
 static char	**pars_path(t_mini *mini)
 {
@@ -51,14 +71,12 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 {
 	int		i;
 	char	*p;
-	int		command_found;
+	int		ret;
 
 	i = 0;
-	command_found = 0;
-	if (tmp->cmd_tab[0][0] == '/')
-		return (is_slash(mini, tmp));
-	if (tmp->cmd_tab[0][0] == '\0')
-		return (-2);
+	ret = is_absolute_or_relative_path(mini, tmp);
+	if (ret != 1)
+		return (ret);
 	while (paths[i])
 	{
 		p = join_path(tmp->cmd_tab[0], paths[i]);
@@ -66,34 +84,14 @@ static int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 			return (ft_error(mini, NULL, strerror(errno)), -1);
 		if (access(p, X_OK) == 0)
 		{
-			command_found = 1;
 			if (execve(p, tmp->cmd_tab, mini->env_char) == -1)
 				return (free(p), ft_error(mini, NULL, strerror(errno)), -1);
+			return (free(p), 0);
 		}
 		free(p);
 		i++;
 	}
-	if (!command_found)
-		return (-2);
-	return (0);
-}
-
-void	execve_failed(t_mini *mini, t_token *tmp, char **paths, int exec_ret)
-{
-	int		exit_tmp;
-
-	if (exec_ret == -2)
-	{
-		mini->exit_status = 127;
-		ft_putstr_fd(tmp->cmd_tab[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free(paths);
-	}
-	else
-		free_tab(paths);
-	exit_tmp = mini->exit_status;
-	clean_minishell(mini);
-	exit(exit_tmp);
+	return (-2);
 }
 
 void	cmd_exec(t_mini *mini, t_token *tmp)
@@ -101,8 +99,6 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
-	if (exec_script_bin(mini, tmp) == 1)
-		return ;
 	paths = pars_path(mini);
 	if (paths == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
@@ -113,7 +109,15 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 		ft_putstr_fd(tmp->cmd_tab[0], 2);
 		return (ft_error(mini, " : No such file or directory\n", NULL));
 	}
+	if (ft_strncmp(tmp->cmd_tab[0], "./minishell", \
+	longer_len(tmp->cmd_tab[0], "./minishell")) == 0)
+	{
+		if (handle_shlvl(mini) != 0)
+			return (free(paths), ft_error(mini, "Can't update SHLVL\n", NULL));
+	}
 	exec_ret = cmd_exec_utils(mini, tmp, paths);
 	if (exec_ret < 0)
 		execve_failed(mini, tmp, paths, exec_ret);
+	else
+		free_tab(paths);
 }
