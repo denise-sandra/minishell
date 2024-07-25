@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 12:00:43 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 11:01:52 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 static void	close_exec(t_mini *mini)
 {
-	if (mini->fd_in[0] > 0)
-		close(mini->fd_in[0]);
-	if (mini->fd_out[0] > 1)
-		close(mini->fd_out[0]);
-	if (mini->inv_fd[0] == 1)
-		mini->exit_status = 1;
+	int i;
+
+	i = 0;
+	while (i < mini->pipe_count)
+	{
+		if (mini->fd_in[i] > 0)
+			close(mini->fd_in[i]);
+		if (mini->fd_out[i] > 1)
+			close(mini->fd_out[i]);
+		i++;
+	}
 }
 
 void	execution(t_mini *mini)
@@ -47,4 +52,3 @@ void	execution(t_mini *mini)
 	close_fd_and_wait(mini);
 }
 
-// grep <Makefile -v >outfile1 'A'

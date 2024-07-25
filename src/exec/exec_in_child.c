@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 12:02:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 10:44:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,54 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 	exit (exit_code);
 }
 
+static void	pipe_if_no_cmd(t_mini *mini, int i)
+{
+	if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
+		return (ft_error(mini, NULL, strerror(errno)));
+	if (i > 0)
+	{
+		close(mini->tube[i - 1][0]);
+		close(mini->tube[i - 1][1]);
+	}
+}
+
+static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
+{
+	if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
+		return (ft_error(mini, NULL, strerror(errno)));
+	mini->pid[i] = fork();
+	if (mini->pid[i] < 0)
+		return (ft_error(mini, NULL, strerror(errno)));
+	if (mini->pid[i] == 0)
+		child_pid(mini, tmp, i);
+	if (i > 0)
+	{
+		close(mini->tube[i - 1][0]);
+		close(mini->tube[i - 1][1]);
+	}
+}
+
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
 	t_token	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	tmp = cur;
 	while (tmp)
 	{
+		if (tmp->type == PIPE)
+			j++;
 		if (tmp->type == COMMAND)
 		{
-			if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
-				return (ft_error(mini, NULL, strerror(errno)));
-			mini->pid[i] = fork();
-			if (mini->pid[i] < 0)
-				return (ft_error(mini, NULL, strerror(errno)));
-			if (mini->pid[i] == 0)
-				child_pid(mini, tmp, i);
-			if (i > 0)
-			{
-				close(mini->tube[i - 1][0]);
-				close(mini->tube[i - 1][1]);
-			}
+			pipe_if_cmd(mini, tmp, i);
+			i++;
+		}		
+		if (i < j)	
+		{
+			pipe_if_no_cmd(mini, i);
 			i++;
 		}
 		tmp = tmp->next;

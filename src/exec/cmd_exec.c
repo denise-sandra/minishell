@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/24 16:01:29 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/25 12:14:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static char	*join_path(char *cmd, char *path)
 		return (NULL);
 	joint_b = ft_strjoin(joint_a, cmd);
 	free(joint_a);
+	if (joint_b == NULL)
+		return (NULL);
 	return (joint_b);
 }
 
@@ -99,6 +101,13 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
+	if (tmp->cmd_tab[0] == NULL || tmp->cmd_tab[0][0] == '\0')
+	{
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		return;
+	}
 	paths = pars_path(mini);
 	if (paths == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
