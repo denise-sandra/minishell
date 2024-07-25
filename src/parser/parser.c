@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 15:17:33 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:29:46 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	prep_expand(t_mini *mini, t_token *token)
 	return (0);
 }
 
-static void    tokenize(t_mini *mini, t_pretok **pretok)
+static void	tokenize(t_mini *mini, t_pretok **pretok)
 {
 	if ((*pretok)->c == '$' && (*pretok)->next && \
 		((*pretok)->next->type == D_Q || (*pretok)->next->type == S_Q))
