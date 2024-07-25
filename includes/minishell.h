@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 14:40:18 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:41:23 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,6 @@ void	     go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 //signals
-void		setup_signal_handlers(void);
+void		setup_signal_handlers(t_mini *mini);
 
 #endif

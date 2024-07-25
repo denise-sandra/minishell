@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 14:42:20 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 17:25:07 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ char **paths, int exec_ret)
 		ft_putstr_fd(tmp->cmd_tab[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free(paths);
+		close_all_fd(mini);
 	}
 	else
 		free_tab(paths);
 	exit_tmp = mini->exit_status;
-	// close_all_fd(mini);
 	clean_minishell(mini);
 	exit(exit_tmp);
 }
