@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 11:38:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:11:25 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	count_args(t_mini *mini, t_token *cur)
 
 static void	go_back_utils(t_mini *mini, const char *path)
 {
-	char			*cpy_path;
-	int			i;
+	char	*cpy_path;
+	int		i;
 
 	cpy_path = (char *)path;
 	i = 0;
@@ -65,7 +65,6 @@ static void	go_back_utils(t_mini *mini, const char *path)
 			break ;
 	}
 }
-
 
 void	cd_cmd(t_mini *mini, t_token *cur)
 {

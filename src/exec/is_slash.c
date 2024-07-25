@@ -6,16 +6,16 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 09:56:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:39:02 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_directory_from_home(t_mini *mini, t_token *cur)
+int	is_directory_from_home(t_mini *mini, t_token *cur)
 {
 	struct stat	statbuf;
-	char			cwd[1024];
+	char		cwd[1024];
 
 	if (getcwd(cwd, 1024) == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), -1);

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 11:01:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:23:21 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	close_exec(t_mini *mini)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < mini->pipe_count)
@@ -51,4 +51,3 @@ void	execution(t_mini *mini)
 		return ;
 	close_fd_and_wait(mini);
 }
-

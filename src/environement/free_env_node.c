@@ -6,13 +6,13 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 09:41:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:12:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	free_env_utils(t_mini *mini, t_lst_env **temp,\
+static void	free_env_utils(t_mini *mini, t_lst_env **temp, \
 	t_lst_env **prev, t_lst_env **next)
 {
 	free((*temp)->name);

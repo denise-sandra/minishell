@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 10:44:16 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:18:56 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static void	pipe_if_no_cmd(t_mini *mini, int i)
 {
 	if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
 		return (ft_error(mini, NULL, strerror(errno)));
+	printf("sin cmd: %d\n", i);
 	if (i > 0)
 	{
+		printf("cierra sin cmd\n");
 		close(mini->tube[i - 1][0]);
 		close(mini->tube[i - 1][1]);
 	}
@@ -60,8 +62,10 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->pid[i] == 0)
 		child_pid(mini, tmp, i);
+	printf("con cmd: %d\n", i);
 	if (i > 0)
 	{
+		printf("cierra con cmd\n");
 		close(mini->tube[i - 1][0]);
 		close(mini->tube[i - 1][1]);
 	}
@@ -84,8 +88,9 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 		{
 			pipe_if_cmd(mini, tmp, i);
 			i++;
-		}		
-		if (i < j)	
+		}
+		//printf("i: %d cur_pipes: %d\n", i, cur_pipes);
+		else if (i < j)
 		{
 			pipe_if_no_cmd(mini, i);
 			i++;
