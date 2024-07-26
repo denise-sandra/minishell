@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/10 15:47:48 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 14:55:33 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,29 @@ char	*expand_var(t_mini *mini, char *temp_str, int *len)
 	}
 	free(name);
 	return (value);
+}
+
+int	split_and_add_to_list(char *before_var, t_token **new_list)
+{
+	char	**split_env;
+	int		i;
+
+	split_env = ft_split(before_var, ' ');
+	free(before_var);
+	if (!split_env)
+		return (-1);
+	i = 0;
+	while (split_env[i])
+	{
+		if (tok_list(split_env[i], STRING, new_list) != 0)
+			return (free_tab(split_env), -1);
+		if (split_env [i + 1])
+		{
+			if (tok_list(" ", WHITE, new_list) != 0)
+				return (free_tab(split_env), -1);
+		}
+		i++;
+	}
+	free_tab(split_env);
+	return (0);
 }

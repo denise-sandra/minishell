@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_tubes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 17:26:22 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 13:12:28 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	middle_command(t_mini *mini, int i)
 		if (check_inv_fd(mini) == 0)
 			ft_error(mini, NULL, strerror(errno));
 		return (1);
-	}	
+	}
 	j = 0;
 	while (j < i + 1)
 		close(mini->tube[j++][1]);
@@ -61,7 +61,7 @@ static int	middle_command(t_mini *mini, int i)
 		if (check_inv_fd(mini) == 0)
 			ft_error(mini, NULL, strerror(errno));
 		return (1);
-	}	
+	}
 	j = 0;
 	while (j < i)
 		close(mini->tube[j++][0]);
@@ -80,7 +80,7 @@ static int	last_command(t_mini *mini, int i)
 		if (check_inv_fd(mini) == 0)
 			ft_error(mini, NULL, strerror(errno));
 		return (1);
-	}	
+	}
 	j = 0;
 	while (j < i)
 		close(mini->tube[j++][0]);

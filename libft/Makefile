@@ -6,7 +6,7 @@ CHECK_FILES = $(addprefix libft_src/ft_checks/, basic_checks.c cmp_checks.c othe
 CONV_FILES = $(addprefix libft_src/ft_conversions/, chars_conversion.c ints_and_chars.c ft_atoll.c string_to_tab.c string_to_tab_utils.c ft_split.c)
 LIST_FILES = $(addprefix libft_src/ft_lists/, lst_clean.c lst_content_ops.c lst_node_ops.c lst_search.c)
 MEASURE_FILES = $(addprefix libft_src/ft_measures/, measures_basics.c measures_parse.c)
-STRING_FILES = $(addprefix libft_src/ft_strings/, mem_ops.c put_fd.c str_clean.c\
+STRING_FILES = $(addprefix libft_src/ft_strings/, special_strjoin.c mem_ops.c put_fd.c str_clean.c\
 			str_init.c str_ops.c str_ops2.c str_search.c )
 FT_PRINT_FILES = $(addprefix libft_src/ft_print/, ft_printf.c \
 			put_alpha.c put_nbr_hex.c)

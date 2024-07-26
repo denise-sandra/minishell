@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 17:26:59 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/26 15:23:34 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,17 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 	}
 }
 
-// static void	handle_pipes(t_mini *mini, t_token *tmp, int *i, int *j)
-// {
-// 	if (tmp->type == PIPE)
-// 		(*j)++;
-// 	if (tmp->type == COMMAND)
-// 	{
-// 		pipe_if_cmd(mini, tmp, *i);
-// 		(*i)++;
-// 	}
-// 	else if (*i < *j)
-// 	{
-// 		pipe_if_no_cmd(mini, *i);
-// 		(*i)++;
-// 	}
-// }
-
-void	exec_in_child(t_mini *mini, t_token *cur)
+static void	pipe_token(t_mini *mini, t_token *cur)
 {
 	t_token	*tmp;
 	int		i;
 	int		j;
-	int		k;
 
 	i = 0;
 	j = 0;
-	k = 0;
 	tmp = cur;
 	while (tmp)
 	{
-		// handle_pipes(mini, tmp, &i, &j);
-		// printf("i: %i   j: %i\n", i, j);
 		if (tmp->type == PIPE)
 			j++;
 		if (tmp->type == COMMAND)
@@ -112,6 +92,14 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	exec_in_child(t_mini *mini, t_token *cur)
+{
+	int		k;
+
+	pipe_token(mini, cur);
+	k = 0;
 	while (k < mini->pipe_count - 1)
 	{
 		close(mini->tube[k][0]);

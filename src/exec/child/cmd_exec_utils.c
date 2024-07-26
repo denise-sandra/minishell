@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 14:40:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:18:19 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	is_absolute_or_relative_path(t_mini *mini, t_token *tmp)
 
 	ret = 0;
 	if (tmp->cmd_tab[0][0] == '/')
-	{		
+	{
 		if (is_directory_from_home(mini, tmp) == 1)
 		{
 			mini->exit_status = 126;

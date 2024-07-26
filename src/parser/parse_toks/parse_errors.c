@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 20:52:44 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/22 10:45:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:18:37 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	last_error_checks(t_mini *mini)
 		{
 			mini->exit_status = 2;
 			return (1);
-		}	
+		}
 		list = list->next;
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftv3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 09:08:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/26 16:21:48 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int			ft_toupper(int c);
 int			ft_tolower(int c);
 int			ft_atoi(const char *str);
 int			ft_atoi_err(const char *str, int *error);
-char			*ft_itoa(int n);
-char			**ft_split_quotes(char *s, char c, int *quotes);
-char			*ft_copyletters(char **tab, int word, char *s, int *quotes);
-char			**ft_split(char const *s, char c);
-long long		ft_atoll(const char *str, int *err);
+char		*ft_itoa(int n);
+char		**ft_split_quotes(char *s, char c, int *quotes);
+char		*ft_copyletters(char **tab, int word, char *s, int *quotes);
+char		**ft_split(char const *s, char c);
+long long	ft_atoll(const char *str, int *err);
 
 /*mem alloc and str initialisation*/
 void		*ft_memset(void *str, int c, size_t n);
@@ -81,7 +81,7 @@ char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 int			ft_strchr_order(const char *str, int c, int d);
-int		ft_strrchr_int(char *str, int c);
+int			ft_strrchr_int(char *str, int c);
 
 /*search in str*/
 int			ft_strchr_int(const char *str, int c);
@@ -95,6 +95,11 @@ void		ft_putchar_fd(char c, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
+
+/*special str_join*/
+char		*ft_strjoin_frees1(char *s1, char *s2);
+char		*ft_strjoin_free(char *s1, char *s2);
+char		*ft_strjoin_char(char *s, char c);
 
 /*lists*/
 t_list		*ft_lstnew(void *content);
