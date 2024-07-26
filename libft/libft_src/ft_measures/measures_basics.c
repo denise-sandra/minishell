@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   measures_basics.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 20:51:10 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/21 13:18:52 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 19:10:50 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ int	arg_count(char const *s, char c)
 int	count_character(char *str, char c)
 {
 	int	i;
-	int count;
-	
+	int	count;
+
 	i = 0;
 	count = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == c)
 			count++;

@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/31 10:19:27 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 19:08:04 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static unsigned int	ft_countwords(char *s)
 			if (s[i] == 34)
 				d_q++;
 		}
-		// printf("comilla :%c espacio: %c s_q %d d_q %d\n", s[i], s[i + 1], s_q, d_q);
 		if (s[i] == 32 && s_q % 2 == 0 && d_q % 2 == 0 && s[i + 1] != 32)
 			words++;
 		i++;

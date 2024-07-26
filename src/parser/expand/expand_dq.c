@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 18:35:00 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 19:06:44 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 	return (0);
 }
 
-static char	*exp_in_dq_utils(t_mini *mini, char	*temp_str, char	**new_str, int *i)
+static char	*exp_in_dq_ut(t_mini *ms, char *str, char **new, int *i)
 {
 	char	*env_value;
 
-	env_value = expand_var(mini, temp_str, i);
+	env_value = expand_var(ms, str, i);
 	if (!env_value)
 		return (NULL);
-	*new_str = ft_strjoin_free(*new_str, env_value);
-	if (!*new_str)
+	*new = ft_strjoin_free(*new, env_value);
+	if (!*new)
 		return (NULL);
-	return (*new_str);
+	return (*new);
 }
 
 int	expand_inside_dq(t_mini *mini, char **str)
@@ -102,7 +102,7 @@ int	expand_inside_dq(t_mini *mini, char **str)
 	{
 		if (temp_str[i] == '$' && temp_str[i + 1] && temp_str[i + 1] != ' '
 			&& (ft_isalpha(temp_str[i + 1]) == 1 || temp_str[i + 1] == '?'))
-			new_str = exp_in_dq_utils(mini, temp_str, &new_str, &i);
+			new_str = exp_in_dq_ut(mini, temp_str, &new_str, &i);
 		else
 		{
 			new_str = ft_strjoin_char(new_str, temp_str[i]);

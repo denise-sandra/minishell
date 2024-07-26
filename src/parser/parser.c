@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 18:12:11 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 18:55:04 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	dollar_found(t_mini *mini, t_token **cur, t_token **next, int i)
 	sub = NULL;
 	while ((*cur)->value[i])
 	{
-		if (!ft_isalnum((*cur)->value[i]) && (*cur)->value[i] != '?' && (*cur)->value[i] != '_')
+		if (!ft_isalnum((*cur)->value[i]) && (*cur)->value[i] != '?' \
+		&& (*cur)->value[i] != '_')
 		{
 			sub = ft_substr((*cur)->value, i, (ft_strlen((*cur)->value) - i));
 			if (!sub)

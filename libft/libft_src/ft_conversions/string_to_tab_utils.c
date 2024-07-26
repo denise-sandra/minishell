@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_to_tab_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/05/24 08:32:13 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 19:08:39 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	count_letters(int inside_q, char *s, int quotes)
 		}
 	}
 	while (s[i] && s[i] != 32)
-			i++;
+		i++;
 	return (i);
 }
 

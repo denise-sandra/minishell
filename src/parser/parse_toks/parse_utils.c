@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_white_and_slash.c                            :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 15:26:26 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 19:06:46 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,14 @@ int	check_slash(t_mini *mini)
 			return (1);
 	}
 	return (0);
+}
+
+void	update_cmd(t_mini *mini, t_token **c, t_token **p, t_token **new)
+{
+	if (*p)
+		(*p)->next = *new;
+	else
+		mini->token = *new;
+	(*new)->next = *c;
+	*p = *new;
 }

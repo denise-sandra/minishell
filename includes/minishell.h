@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 15:50:58 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 19:11:31 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
 
-# define SIGNAL
+// # define SIGNAL
 
 //clean & error
 void		ft_error(t_mini *minishell, char *msg, char *error_msg);
@@ -60,6 +60,7 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 int			prep_heredoc(t_mini *mini);
+void		update_cmd(t_mini *mini, t_token **c, t_token **p, t_token **new);
 void		tok_delone(t_token **lst, t_token **prev);
 int			expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
@@ -78,10 +79,11 @@ int			check_white(t_mini *mini);
 int			check_slash(t_mini *mini);
 void		join_tok(t_mini *mini, t_token **tmp, t_token **prev);
 void		tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list);
-void		tokenize_quotes(t_mini *ms, t_pretok **cur, t_token **lst, t_type q);
+void		tokenize_quotes(t_mini *ms, t_pretok **cur, \
+			t_token **lst, t_type q);
 void		tokenize_slash(t_mini *mini, t_pretok **cur, t_token **list);
-void		tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, t_token **list);
-
+void		tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, \
+			t_token **list);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);

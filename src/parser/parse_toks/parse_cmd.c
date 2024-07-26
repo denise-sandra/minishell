@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:47:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 15:54:35 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 19:04:43 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,6 @@ static int	count_cmd_tokens(t_token *tmp)
 	return (i);
 }
 
-static void	update_tok(t_mini *mini, t_token **c, t_token **p, t_token **new)
-{
-	if (*p)
-		(*p)->next = *new;
-	else
-		mini->token = *new;
-	(*new)->next = *c;
-	*p = *new;
-}
-
 static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 {
 	t_token	*new;
@@ -115,7 +105,7 @@ static void	create_cmd_tab(t_mini *mini, t_token **cur, t_token **prev)
 		ft_error(mini, NULL, strerror(errno));
 		return ;
 	}
-	update_tok(mini, cur, prev, &new);
+	update_cmd(mini, cur, prev, &new);
 }
 
 int	parse_commands(t_mini *mini)
