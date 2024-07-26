@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 13:23:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:42:43 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	lexer(char *input, t_mini *mini)
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
 	{
+		mini->exit_status = 1;
 		ft_error(mini, "Syntaxis error: special character not supported", NULL);
 		return ;
 	}

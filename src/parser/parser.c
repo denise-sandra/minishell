@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 12:03:59 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 16:23:16 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 18:12:11 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	dollar_found(t_mini *mini, t_token **cur, t_token **next, int i)
 	sub = NULL;
 	while ((*cur)->value[i])
 	{
-		if (!ft_isalnum((*cur)->value[i]) && (*cur)->value[i] != '?')
+		if (!ft_isalnum((*cur)->value[i]) && (*cur)->value[i] != '?' && (*cur)->value[i] != '_')
 		{
 			sub = ft_substr((*cur)->value, i, (ft_strlen((*cur)->value) - i));
 			if (!sub)
@@ -100,20 +100,8 @@ void	parser(t_mini *mini)
 			return ;
 	}
 	clean_pretokens(mini);
-	t_token *print = mini->token;
-	while (print)
-	{
-		printf("tok1: %s type: %d\n", print->value, print->type);
-		print = print->next;
-	}
 	if (prep_heredoc(mini) != 0)
 		return ;
-	print = mini->token;
-	while (print)
-	{
-		printf("tok2: %s type: %d\n", print->value, print->type);
-		print = print->next;
-	}
 	prep_expand(mini, mini->token);
 	expand_env_vars(mini, mini->token);
 	if (mini->error != 0)

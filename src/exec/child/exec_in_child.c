@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 15:23:34 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 17:30:11 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	pipe_token(t_mini *mini, t_token *cur)
 	tmp = cur;
 	while (tmp)
 	{
-		if (tmp->type == PIPE)
+		if (tmp->type == PIPE || !tmp->next)
 			j++;
 		if (tmp->type == COMMAND)
 		{

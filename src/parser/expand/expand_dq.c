@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_dq.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 15:23:14 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 18:35:00 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,38 +57,36 @@ static int	check_before_and_expand(t_mini *mini, char *str, int *j, char **bef)
 int	expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list)
 {
 	char	*temp_str;
-	char	*before_var;
+	char	*bef;
 	int		j;
 
 	temp_str = (*cur)->value;
-	before_var = NULL;
+	bef = NULL;
 	j = 0;
 	while (temp_str[j])
 	{
-		if (check_before_and_expand(mini, temp_str, &j, &before_var) != 0)
+		if (check_before_and_expand(mini, temp_str, &j, &bef) != 0)
 			return (-1);
 	}
-	if (before_var)
+	if (bef)
 	{
-		if (split_and_add_to_list(before_var, new_list) != 0)
+		if (split_and_add_to_list(bef, new_list) != 0)
 			return (-1);
 	}
 	return (0);
 }
 
-static char	*exp_in_dq_utils(t_mini *mini, char	*temp_str, int *i)
+static char	*exp_in_dq_utils(t_mini *mini, char	*temp_str, char	**new_str, int *i)
 {
 	char	*env_value;
-	char	*new_str;
 
-	new_str = NULL;
 	env_value = expand_var(mini, temp_str, i);
 	if (!env_value)
 		return (NULL);
-	new_str = ft_strjoin_free(new_str, env_value);
-	if (!new_str)
+	*new_str = ft_strjoin_free(*new_str, env_value);
+	if (!*new_str)
 		return (NULL);
-	return (new_str);
+	return (*new_str);
 }
 
 int	expand_inside_dq(t_mini *mini, char **str)
@@ -99,11 +97,12 @@ int	expand_inside_dq(t_mini *mini, char **str)
 
 	temp_str = *str;
 	i = 0;
+	new_str = NULL;
 	while (temp_str[i])
 	{
 		if (temp_str[i] == '$' && temp_str[i + 1] && temp_str[i + 1] != ' '
 			&& (ft_isalpha(temp_str[i + 1]) == 1 || temp_str[i + 1] == '?'))
-			new_str = exp_in_dq_utils(mini, temp_str, &i);
+			new_str = exp_in_dq_utils(mini, temp_str, &new_str, &i);
 		else
 		{
 			new_str = ft_strjoin_char(new_str, temp_str[i]);

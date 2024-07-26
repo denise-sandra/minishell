@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_strjoin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:02:56 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 16:18:33 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 17:01:05 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strjoin_char(char *s, char c)
 	char	*joint;
 	size_t	len_s;
 
-	if (s == NULL)
+	if (!s)
 		len_s = 0;
 	else
 		len_s = ft_strlen(s);

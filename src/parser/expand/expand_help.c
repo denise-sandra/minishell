@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_help.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 21:32:46 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 14:55:33 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/26 18:36:53 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ char	*expand_var(t_mini *mini, char *temp_str, int *len)
 	return (value);
 }
 
-int	split_and_add_to_list(char *before_var, t_token **new_list)
+int	split_and_add_to_list(char *bef, t_token **new_list)
 {
 	char	**split_env;
 	int		i;
 
-	split_env = ft_split(before_var, ' ');
-	free(before_var);
+	split_env = ft_split(bef, ' ');
+	free(bef);
 	if (!split_env)
 		return (-1);
 	i = 0;
