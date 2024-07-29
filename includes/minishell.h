@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 19:11:31 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/29 11:51:45 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ char		*get_shebang(t_mini *ms, int script);
 void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		add_var_to_list(t_mini *mini, t_token *cur);
-int			add_env(t_mini *mini, char *new_var);
+int		add_env(t_mini *mini, char *new_var);
+int 		add_env_helper(t_mini *mini, char **new_env);
+char 	*concat_env(t_mini *mini, char *name, char *new_value);
 char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell, t_token *cur);
 void		exit_cmd(t_mini *mini, char **cmd_tab);

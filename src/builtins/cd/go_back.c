@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 11:41:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 11:51:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*pwd_cmd_char(t_mini *mini)
 	if (cwd == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), NULL);
 	if (getcwd(cwd, size) == NULL)
-		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);
+		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);		
 	return (cwd);
 }
 
@@ -30,22 +30,22 @@ void	go_back(t_mini *mini)
 {
 	char	*path;
 	char	*new_path;
-	char	*home;
+	char	*root;
 	int		c;
 
 	path = pwd_cmd_char(mini);
-	home = get_env_value(mini->env, "HOME");
-	if (!path || !home || \
-		ft_strncmp(path, home, longer_len((char *)path, home)) == 0)
-		return (free(path), free(home));
-	free(home);
+	root = ft_strdup("/");
+	if (!path || !root || \
+		ft_strncmp(path, root, longer_len((char *)path, root)) == 0)
+		return (free(path), free(root));
+	free(root);
 	c = ft_strrchr_int(path, '/');
 	if (c == -1)
 		return (free (path), ft_error(mini, "invalid path", NULL));
 	new_path = malloc((c + 1) * sizeof(char));
 	if (new_path == NULL)
 		return (free(path), ft_error(mini, NULL, strerror(errno)));
-	ft_strlcpy(new_path, path, c);
+	ft_strlcpy(new_path, path, c + 1);
 	free(path);
 	if (chdir(new_path) != 0)
 	{

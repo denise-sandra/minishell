@@ -1,5 +1,5 @@
 CC 		= cc
-CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  #-fsanitize=address
 LDFLAGS = -lreadline
 
 GREEN = \033[32m
@@ -21,7 +21,7 @@ SRCS	:= ${addprefix src/, minishell.c\
 		${addprefix exec/fd/, init_fds.c fill_fds.c get_fds.c close_fd.c} \
 		${addprefix exec/exec_builtin/, builtin_in_parent.c execute_builtin.c} \
 		${addprefix builtins/, env.c exit.c pwd.c echo.c unset.c} \
-		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c} \
+		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c concat.c} \
 		${addprefix builtins/cd/, cd.c go_back.c} \
 		${addprefix utils/, ft_error.c clean_minishell.c handle_signals.c}}
 

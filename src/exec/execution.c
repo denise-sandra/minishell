@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 17:30:02 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/29 09:01:31 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	close_exec(t_mini *mini)
 			close(mini->fd_out[i]);
 		i++;
 	}
-	if (mini->inv_fd != 0)
+	if (mini->inv_fd[0] != 0)
 		mini->exit_status = 1;
 }
 

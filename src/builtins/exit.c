@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/23 11:49:48 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 12:29:46 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ static void	process_exit_arg(t_mini *minishell, char *arg)
 
 	sign = 1;
 	i = 0;
+	if (arg[0] && arg[1] && (arg[0] == '-' || arg[0] == '+') \
+	&& (!ft_isdigit(arg[1])))
+		return (ft_error(minishell, \
+		"minishell: exit: numeric argument required", NULL));
 	while (arg[i])
 	{
 		if (arg[i] == '-')
@@ -112,8 +116,13 @@ void	exit_cmd(t_mini *minishell, char **cmd_tab)
 		return ;
 	}
 	if (cmd_tab[2])
+		return (ft_error(minishell, \
+		"minishell: exit: too many arguments", NULL));
+	if (cmd_tab[1][0] == '\0')
 	{
-		ft_error(minishell, "minishell: exit: too many arguments", NULL);
+		minishell->exit_status = 2;
+		minishell->should_exit = 1;
+		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		return ;
 	}
 	i = 0;
