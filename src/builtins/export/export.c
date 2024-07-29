@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 13:53:45 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:38:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	print_export(t_lst_env *env)
 
 static void	init_export(t_mini *mini)
 {
+	printf("entra a export\n");
 	mini->export = copy_list(mini->env);
 	if (!mini->export)
 	{

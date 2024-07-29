@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   concat.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 13:57:09 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:04:04 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*concat_env(t_mini *mini, char *name, char *new_value)
 }
 
 
-int 	add_env_helper(t_mini *mini, char **new_env)
+int	add_env_helper(t_mini *mini, char **new_env)
 {
 	t_lst_env	*new_node;
 
@@ -43,10 +43,6 @@ int 	add_env_helper(t_mini *mini, char **new_env)
 	ft_lstadd_back_env(&mini->env, new_node);
 	if (mini->mod_env == 1)
 		free_tab(mini->env_char);
-	// clean_env_exp(mini, 2);
-	// mini->export = copy_list(mini->env);
-	// if (mini->export == NULL)
-	// 	return (-1);
 	mini->env_char = list_to_tab(mini);
 	return (0);
 }

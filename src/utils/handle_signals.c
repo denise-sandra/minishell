@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 13:14:41 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/29 14:36:19 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	sigquit_handler(int sig)
 static void	sigterm_handler(int sig)
 {
 	(void) sig;
+	// sig = SIG_IGN;
 	exit(0);
 }
 
@@ -59,6 +60,7 @@ void	setup_signal_handlers(t_mini *mini)
 	sa.sa_handler = sigterm_handler;
 	if (sigaction(SIGTERM, &sa, NULL) == -1)
 	{
+		//sigign
 		ft_error(mini, "sigaction for SIGTERM", NULL);
 		exit(1);
 	}

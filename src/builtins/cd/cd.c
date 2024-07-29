@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/25 13:11:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 16:38:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,5 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	if (new_node == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
 	ft_lstadd_back_env(&mini->env, new_node);
+
 }

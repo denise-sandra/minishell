@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 14:34:32 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 15:44:14 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	**pars_path(t_mini *mini)
 		return (NULL);
 	if (path[0] == '\0')
 	{
+		free(path);
 		if (getcwd(cwd, 1024) == NULL)
 			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		path = ft_strdup(cwd);
