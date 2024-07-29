@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 13:18:19 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/29 14:30:00 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 		if (access(p, X_OK) == 0)
 		{
 			if (execve(p, tmp->cmd_tab, mini->env_char) == -1)
-				return (free(p), ft_error(mini, NULL, strerror(errno)), -1);
+				return (ft_error(mini, NULL, strerror(errno)), -1);
 			return (free(p), 0);
 		}
 		free(p);

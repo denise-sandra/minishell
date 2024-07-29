@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 11:51:44 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 13:57:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int 	add_env_helper(t_mini *mini, char **new_env)
 	ft_lstadd_back_env(&mini->env, new_node);
 	if (mini->mod_env == 1)
 		free_tab(mini->env_char);
-	clean_env_exp(mini, 2);
-	mini->export = copy_list(mini->env);
-	if (mini->export == NULL)
-		return (-1);
+	// clean_env_exp(mini, 2);
+	// mini->export = copy_list(mini->env);
+	// if (mini->export == NULL)
+	// 	return (-1);
 	mini->env_char = list_to_tab(mini);
 	return (0);
 }
