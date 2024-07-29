@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 12:29:46 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:33:47 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void	is_var_valid(t_mini *minishell, char *var_name)
 	}
 	else
 	{
+		if (check_signs(minishell, var_value) < 0)
+			return ;
 		if (var_value[i] == '-')
 			sign = -1;
 		if (var_value[i] == '-' || var_value[i] == '+')
@@ -80,10 +82,8 @@ static void	process_exit_arg(t_mini *minishell, char *arg)
 
 	sign = 1;
 	i = 0;
-	if (arg[0] && arg[1] && (arg[0] == '-' || arg[0] == '+') \
-	&& (!ft_isdigit(arg[1])))
-		return (ft_error(minishell, \
-		"minishell: exit: numeric argument required", NULL));
+	if (check_signs(minishell, arg) < 0)
+		return ;
 	while (arg[i])
 	{
 		if (arg[i] == '-')

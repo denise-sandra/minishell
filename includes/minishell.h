@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 16:51:13 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 17:26:12 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,17 @@ char		*get_dynamic_prompt(void);
 char		*get_name(t_token *tmp);
 char		*get_shebang(t_mini *ms, int script);
 
-//builtin fucntions
+//builtin functions
 void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		add_var_to_list(t_mini *mini, t_token *cur);
 int			add_env(t_mini *mini, char *new_var);
-int 		add_env_helper(t_mini *mini, char **new_env);
-char 		*concat_env(t_mini *mini, char *name, char *new_value);
+int			add_env_helper(t_mini *mini, char **new_env);
+char		*concat_env(t_mini *mini, char *name, char *new_value);
 char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell, t_token *cur);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
+int			check_signs(t_mini *mini, char *arg);
 // void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);

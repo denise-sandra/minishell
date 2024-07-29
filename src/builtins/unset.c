@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 14:14:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:14:33 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	free_tmp(t_lst_env	*tmp)
 	free(tmp);
 	tmp = NULL;
 }
+
 static int	update_export(t_mini *mini, t_token *cur, int i, int len)
 {
 	t_lst_env	*prev;

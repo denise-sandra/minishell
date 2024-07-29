@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   go_back.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 11:51:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:10:20 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*pwd_cmd_char(t_mini *mini)
 	if (cwd == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), NULL);
 	if (getcwd(cwd, size) == NULL)
-		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);		
+		return (free(cwd), ft_error(mini, NULL, strerror(errno)), NULL);
 	return (cwd);
 }
 

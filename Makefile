@@ -20,10 +20,11 @@ SRCS	:= ${addprefix src/, minishell.c\
 		${addprefix exec/child/, ft_dup.c dup_tubes.c cmd_exec.c cmd_exec_utils.c is_slash.c exec_in_child.c} \
 		${addprefix exec/fd/, init_fds.c fill_fds.c get_fds.c close_fd.c} \
 		${addprefix exec/exec_builtin/, builtin_in_parent.c execute_builtin.c} \
-		${addprefix builtins/, env.c exit.c pwd.c echo.c unset.c} \
+		${addprefix builtins/, env.c pwd.c echo.c unset.c} \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c concat.c} \
 		${addprefix builtins/cd/, cd.c go_back.c} \
-		${addprefix utils/, ft_error.c clean_minishell.c handle_signals.c}}
+		${addprefix builtins/exit/, exit.c exit_utils.c} \
+		${addprefix end_and_clean/, ft_error.c clean_minishell.c handle_signals.c}}
 
 OBJS     = $(SRCS:.c=.o)
 

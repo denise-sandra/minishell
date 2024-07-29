@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:06:47 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 17:10:47 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,4 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	if (new_node == NULL)
 		return (ft_error(mini, NULL, strerror(errno)));
 	ft_lstadd_back_env(&mini->env, new_node);
-
 }
