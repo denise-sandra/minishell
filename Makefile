@@ -9,7 +9,7 @@ RESET = \033[0m
 NAME	:= minishell
 
 SRCS	:= ${addprefix src/, minishell.c\
-		${addprefix environement/, split_env_vars.c fill_env_struct.c env_helpers.c copy_list.c free_env_node.c} \
+		${addprefix environement/, split_env_vars.c fill_env_struct.c env_helpers.c env_aux.c free_env_node.c} \
 		${addprefix lexer/, lexer.c tag_in_quotes.c remove_spaces.c} \
 		${addprefix parser/, parser.c} \
 		${addprefix parser/parse_toks/, parse_hd.c parse_cmd.c parse_errors.c parse_utils.c} \

@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 14:36:19 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 18:11:02 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,31 @@
 
 static void	sigint_handler(int sig)
 {
-	char	*prompt;
+	// char	*prompt;
 
 	(void) sig;
-	prompt = get_dynamic_prompt();
-	printf("%s ^C\n", prompt);
-	free(prompt);
+	printf("\n");
+	// prompt = get_dynamic_prompt();
+	// printf("%s ^C\n", prompt);
+	// free(prompt);
 }
 
-static void	sigquit_handler(int sig)
-{
-	char	*prompt;
+// static void	sigquit_handler(int sig)
+// {
+// 	// char	*prompt;
 
-	(void)sig;
-	prompt = get_dynamic_prompt();
-	printf("%s ^\\\n", prompt);
-	free(prompt);
-}
+// 	(void)sig;
+// 	printf("\n");
+// 	// prompt = get_dynamic_prompt();
+// 	// printf("%s ^\\\n", prompt);
+// 	// free(prompt);
+// }
 
 static void	sigterm_handler(int sig)
 {
 	(void) sig;
 	// sig = SIG_IGN;
-	exit(0);
+	// exit(0);
 }
 
 void	setup_signal_handlers(t_mini *mini)
@@ -51,7 +53,7 @@ void	setup_signal_handlers(t_mini *mini)
 		ft_error(mini, "sigaction for SIGINT", NULL);
 		exit(1);
 	}
-	sa.sa_handler = sigquit_handler;
+	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
 		ft_error(mini, "sigaction for SIGQUIT", NULL);

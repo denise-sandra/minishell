@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:26:12 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 18:01:08 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # include <sys/wait.h>
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
-
-// # define SIGNAL
 
 //clean & error
 void		ft_error(t_mini *minishell, char *msg, char *error_msg);

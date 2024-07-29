@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:15:27 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 17:46:08 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,6 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	if (check_path_null(mini, paths, tmp) != 0)
 		return (free_tab(paths), \
 		ft_error(mini, " : No such file or directory\n", NULL));
-	if (ft_strncmp(tmp->cmd_tab[0], "./minishell", \
-	longer_len(tmp->cmd_tab[0], "./minishell")) == 0)
-	{
-		if (handle_shlvl(mini) != 0)
-			return (free_tab(paths), \
-			ft_error(mini, "Can't update SHLVL\n", NULL));
-	}
 	exec_ret = cmd_exec_utils(mini, tmp, paths);
 	if (exec_ret < 0)
 		execve_failed(mini, tmp, paths, exec_ret);
