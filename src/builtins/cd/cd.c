@@ -6,24 +6,11 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 16:38:10 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/29 17:06:47 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	go_home(t_mini *mini)
-{
-	char	*path;
-
-	path = get_env_value(mini->env, "HOME");
-	if (path == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
-	if (chdir(path) != 0)
-		return (free(path), ft_error(mini, NULL, strerror(errno)));
-	else
-		free (path);
-}
 
 static int	count_args(t_mini *mini, t_token *cur)
 {
@@ -35,8 +22,36 @@ static int	count_args(t_mini *mini, t_token *cur)
 	while (cur->cmd_tab[count])
 		count++;
 	if (count >= 3)
-		return (ft_error(mini, "cd : Too many arguments", NULL), -1);
+		return (ft_error(mini, "cd: Too many arguments", NULL), -1);
 	return (count);
+}
+
+static void	go_home(t_mini *mini, t_token *cur, char **cmd_tab)
+{
+	char	*path;
+	char	*value;
+
+	value = NULL;
+	path = get_env_value(mini->env, "HOME");
+	if (path == NULL)
+		return (ft_error(mini, NULL, strerror(errno)));
+	if (count_args(mini, cur) == 1 && path[0] == '\0')
+		return (free(path), ft_error(mini, "cd: HOME not set", NULL));
+	if (ft_strncmp(cmd_tab[1], "~", longer_len((char *)cmd_tab[1], "~")) == 0)
+	{
+		free(path);
+		value = get_env_value(mini->env, "USER");
+		if (!value)
+			return (ft_error(mini, NULL, strerror(errno)));
+		path = ft_strjoin("/home/", value);
+		free(value);
+		if (!path)
+			return (ft_error(mini, NULL, strerror(errno)));
+	}
+	if (chdir(path) != 0)
+		return (free(path), ft_error(mini, NULL, strerror(errno)));
+	else
+		free (path);
 }
 
 static void	go_back_utils(t_mini *mini, const char *path)
@@ -77,7 +92,7 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	path = cur->cmd_tab[1];
 	if (count_args(mini, cur) == 1 || !path \
 		|| ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
-		go_home(mini);
+		go_home(mini, cur, cur->cmd_tab);
 	else if (ft_strncmp(path, "..", longer_len((char *)path, "..")) == 0 \
 		|| ft_strncmp(path, "../", 3) == 0)
 		go_back_utils(mini, path);
