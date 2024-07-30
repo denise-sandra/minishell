@@ -6,13 +6,13 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:03:30 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:13:06 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_directory(t_mini *mini, t_token *cur)
+int	is_accessible(t_mini *mini, t_token *cur)
 {
 	struct stat	statbuf;
 

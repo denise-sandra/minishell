@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:07:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:13:00 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_abs_or_relative(t_mini *mini, t_token *tmp, char **paths)
 	sh_argv[2] = NULL;
 	if (ft_strchr(tmp->cmd_tab[0], '/') || tmp->cmd_tab[0][0] == '.')
 	{
-		ret = is_directory(mini, tmp);
+		ret = is_accessible(mini, tmp);
 		if (ret == -4)
 			return (-4);
 		if (ret == -3)

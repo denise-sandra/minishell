@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:02:56 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:13:18 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void		fill_fd(t_mini *mini);
 int			get_infile(t_mini *mini, t_token *token, int i);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
-// int			is_directory_from_home(t_mini *mini, t_token *cur);
-int			is_directory(t_mini *mini, t_token *cur);
+int			is_accessible(t_mini *mini, t_token *cur);
 void		builtin_in_parent(t_mini *mini, int builtin);
 void		exec_in_child(t_mini *mini, t_token *tmp);
 void		close_fd_and_wait(t_mini *mini);
