@@ -6,13 +6,13 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 14:40:20 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:05:45 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_mini	*sig_mini = NULL;
+t_mini	*g_mini = NULL;
 
 static void	sigint_handler(int sig)
 {
@@ -21,19 +21,19 @@ static void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	if (sig_mini)
-		sig_mini->exit_status = 130;
+	if (g_mini)
+		g_mini->exit_status = 130;
 }
 
 static void	sigquit_handler(int sig)
 {
 	(void)sig;
-	if (sig_mini && sig_mini->pid)
+	if (g_mini && g_mini->pid)
 	{
 		ft_putstr_fd("Quit\n", 1);
-		kill(sig_mini->pid[0], SIGQUIT);
-		if (sig_mini)
-			sig_mini->exit_status = 131;
+		kill(g_mini->pid[0], SIGQUIT);
+		if (g_mini)
+			g_mini->exit_status = 131;
 	}
 	else
 	{

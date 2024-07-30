@@ -6,11 +6,22 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 13:04:52 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:05:43 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	sig_and_wait_helper(int *status, int *exit, int *quit)
+{
+	if (WTERMSIG(*status) == SIGQUIT && !*quit)
+	{
+		*exit = 131;
+		*quit = 1;
+	}
+	else if (WTERMSIG(*status) == SIGINT)
+		*exit = 130;
+}
 
 static void	handle_signals_and_wait(t_mini *mini)
 {
@@ -33,13 +44,7 @@ static void	handle_signals_and_wait(t_mini *mini)
 		else if (WIFSIGNALED(status))
 		{
 			signal_received = 1;
-			if (WTERMSIG(status) == SIGQUIT && !quit_printed)
-			{
-				last_exit_status = 131;
-				quit_printed = 1;
-			}
-			else if (WTERMSIG(status) == SIGINT)
-				last_exit_status = 130;
+			sig_and_wait_helper(&status, &last_exit_status, &quit_printed);
 		}
 		i++;
 	}

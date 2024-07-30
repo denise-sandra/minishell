@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 12:05:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 15:10:29 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	free_content(char **s)
 	}
 }
 
-int	is_absolute_or_relative_path(t_mini *mini, t_token *tmp, char **paths)
+int	is_abs_or_relative(t_mini *mini, t_token *tmp, char **paths)
 {
 	char	*sh_argv[3];
 	int		ret;
@@ -94,7 +94,7 @@ int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 	int		ret;
 
 	i = 0;
-	ret = is_absolute_or_relative_path(mini, tmp, paths);
+	ret = is_abs_or_relative(mini, tmp, paths);
 	if (ret != 1)
 		return (ret);
 	while (paths[i])

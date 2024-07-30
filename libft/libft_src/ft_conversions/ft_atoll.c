@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 12:19:25 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:56:35 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftv3.h"
 
-
-#include <stdio.h>
 static int	atoll_helper(const char *str, int *sign)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 14:31:46 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 15:10:11 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_lst_env	*copy_list(t_lst_env *lst);
 void		execution(t_mini *minishell);
 void		cmd_exec(t_mini *mini, t_token *tmp);
 int			cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths);
-int			is_absolute_or_relative_path(t_mini *mini, t_token *tmp, char **paths);
+int			is_abs_or_relative(t_mini *mini, t_token *tmp, char **paths);
 int			handle_shlvl(t_mini *mini);
 int			is_builtin(char *command);
 void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
