@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 12:48:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:05:08 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,17 @@ void	exec_in_child(t_mini *mini, t_token *cur)
 
 	pipe_token(mini, cur);
 	close_all_fd(mini);
+	k = 0;
+	while (k < mini->pipe_count)
+	{
+		if (mini->pid[k] == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			child_pid(mini, cur, k);
+		}
+		k++;
+	}
 	k = 0;
 	while (k < mini->pipe_count - 1)
 	{
