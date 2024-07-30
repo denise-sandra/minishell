@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 13:05:38 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 14:40:20 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,42 @@ static void	sigquit_handler(int sig)
 	}
 	else
 	{
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
 
-void	setup_signal_handlers(t_mini *mini)
+void	setup_sigquit_handler(void)
 {
 	struct sigaction	sa;
-	const char			*line;
 
-	sig_mini = mini;
+	sa.sa_handler = sigquit_handler;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	{
+		perror("sigaction for SIGQUIT");
+		exit(1);
+	}
+}
+
+void	setup_signal_handlers(void)
+{
+	struct sigaction	sa;
+
 	sa.sa_handler = sigint_handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{
-		ft_error(mini, "sigaction for SIGINT", strerror(errno));
+		perror("sigaction for SIGINT");
 		exit(1);
 	}
-	line = rl_line_buffer;
-	if (line && line[0] == '\0')
-	{
-		printf("entra a SIG_IGN\n");
-		sa.sa_handler = SIG_IGN;
-	}
-	else
-	{
-		printf("entra a funcion sigquit\n");
-		sa.sa_handler = sigquit_handler;
-	}
+	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
-		ft_error(mini, "sigaction for SIGQUIT", strerror(errno));
+		perror("sigaction for SIGQUIT");
 		exit(1);
 	}
 }
