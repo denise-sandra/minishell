@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:48:03 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 12:05:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,19 @@ static int	execute_command(t_mini *mini, char **cmd, char **sh_argv)
 	return (0);
 }
 
-int	is_absolute_or_relative_path(t_mini *mini, t_token *tmp)
+static void	free_content(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i++;
+	}
+}
+
+int	is_absolute_or_relative_path(t_mini *mini, t_token *tmp, char **paths)
 {
 	char	*sh_argv[3];
 	int		ret;
@@ -55,7 +67,7 @@ int	is_absolute_or_relative_path(t_mini *mini, t_token *tmp)
 		if (ret == 0)
 			return (execute_command(mini, tmp->cmd_tab, sh_argv));
 		else
-			return (-2);
+			return (free_content(paths), -2);
 	}
 	return (1);
 }
@@ -82,7 +94,7 @@ int	cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths)
 	int		ret;
 
 	i = 0;
-	ret = is_absolute_or_relative_path(mini, tmp);
+	ret = is_absolute_or_relative_path(mini, tmp, paths);
 	if (ret != 1)
 		return (ret);
 	while (paths[i])

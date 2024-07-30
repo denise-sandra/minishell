@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:22:09 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/30 11:09:10 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:45:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ static int	is_double_redir(t_type type, t_pretok **cur)
 	return (0);
 }
 
+static int	check_syn_error(t_mini *ms, t_pretok **cur, t_type type)
+{
+	if ((type == IN || type == OUT) && !(*cur)->next)
+	{
+		ms->exit_status = 2;
+		return (ft_error(ms, "Syntax error near token `newline'", NULL), 1);
+	}
+	return (0);
+}
+
 void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 {
 	t_type	type;
@@ -53,11 +63,8 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 		type = (*cur)->type;
 		str[0] = (*cur)->c;
 		str[1] = '\0';
-		if ((type == IN || type == OUT) && !(*cur)->next)
-		{
-			ms->exit_status = 2;
-			return (ft_error(ms, "Syntax error near token `newline'", NULL));
-		}
+		if (check_syn_error(ms, cur, type) != 0)
+			return ;
 		if ((type == IN && (*cur)->next->type != IN)
 			|| (type == OUT && (*cur)->next->type != OUT))
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:38:05 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:33:47 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 12:48:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,16 +115,16 @@ void	exit_cmd(t_mini *minishell, char **cmd_tab)
 		minishell->should_exit = 1;
 		return ;
 	}
-	if (cmd_tab[2])
-		return (ft_error(minishell, \
-		"minishell: exit: too many arguments", NULL));
-	if (cmd_tab[1][0] == '\0')
+	if (cmd_tab[1][0] == '\0' || is_nbr(cmd_tab[1]) != 1)
 	{
 		minishell->exit_status = 2;
 		minishell->should_exit = 1;
 		ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
 		return ;
 	}
+	if (cmd_tab[2])
+		return (ft_error(minishell, \
+		"minishell: exit: too many arguments", NULL));
 	i = 0;
 	if (cmd_tab[1][i] == '"' || cmd_tab[1][i] == '\'' )
 		i = verify_spaces(minishell, ++cmd_tab[1]);

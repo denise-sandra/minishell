@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:46:08 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 12:09:43 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ static int	check_path_null(t_mini *mini, char **paths, t_token *tmp)
 	return (0);
 }
 
-static int	check_if_empty(t_mini *mini, t_token *tmp)
+static int	check_particular_cases(t_mini *mini, t_token *tmp)
 {
-	if (!tmp->cmd_tab[0] || tmp->cmd_tab[0][0] == '\0')
+	if (!tmp->cmd_tab[0] || tmp->cmd_tab[0][0] == '\0' \
+		|| ft_strncmp(tmp->cmd_tab[0], "..", \
+		longer_len(tmp->cmd_tab[0], "..")) == 0)
 	{
 		mini->exit_status = 127;
 		ft_putstr_fd(tmp->cmd_tab[0], 2);
@@ -84,7 +86,7 @@ void	cmd_exec(t_mini *mini, t_token *tmp)
 	char	**paths;
 	int		exec_ret;
 
-	if (check_if_empty(mini, tmp) != 0)
+	if (check_particular_cases(mini, tmp) != 0)
 		return ;
 	paths = pars_path(mini);
 	if (!paths)

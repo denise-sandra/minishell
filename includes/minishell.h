@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 18:01:08 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 12:05:23 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_lst_env	*copy_list(t_lst_env *lst);
 void		execution(t_mini *minishell);
 void		cmd_exec(t_mini *mini, t_token *tmp);
 int			cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths);
-int			is_absolute_or_relative_path(t_mini *mini, t_token *tmp);
+int			is_absolute_or_relative_path(t_mini *mini, t_token *tmp, char **paths);
 int			handle_shlvl(t_mini *mini);
 int			is_builtin(char *command);
 void		execute_builtin(t_mini *mini, int builtin, t_token *cur);

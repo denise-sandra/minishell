@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 10:57:11 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:48:38 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	pipe_token(t_mini *mini, t_token *cur)
 
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
-	 int		k;
+	int	k;
 
 	pipe_token(mini, cur);
 	close_all_fd(mini);

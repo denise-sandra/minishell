@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 18:40:45 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/30 11:19:44 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ static int	expand_and_add(t_mini *mini, t_token *cur, t_token **new_list)
 
 static int	if_no_dollar(t_mini *mini, t_token *cur, t_token	**new_list)
 {
+	if (ft_strncmp(cur->value, "~", longer_len(cur->value, "~")) == 0)
+	{
+		free(cur->value);
+		cur->value = get_env_value(mini->env, "HOME");
+		if (!cur->value)
+			return (ft_error(mini, NULL, strerror(errno)), 1);
+	}
 	if (cur->type == D_Q || cur->type == S_Q)
 		cur->type = STRING;
 	if (tok_list(cur->value, cur->type, new_list) == 1)
