@@ -6,30 +6,34 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:16:30 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:13:00 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:41:42 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int	execute_command(t_mini *mini, char **cmd, char **sh_argv)
-// {
-// 	int		ret;
+static int	execute_command(t_mini *mini, char **cmd)
+{
+	int		ret;
+	char	*sh_argv[3];
 
-// 	ret = execve(cmd[0], cmd, mini->env_char);
-// 	if (ret == -1)
-// 	{
-// 		if (errno == ENOEXEC)
-// 		{
-// 			ret = execve("/bin/sh", sh_argv, mini->env_char);
-// 			if (ret == -1)
-// 				return (ft_error(mini, NULL, strerror(errno)), -1);
-// 		}
-// 		else
-// 			return (ft_error(mini, NULL, strerror(errno)), -1);
-// 	}
-// 	return (0);
-// }
+	sh_argv[0] = "/bin/sh";
+	sh_argv[1] = cmd[0];
+	sh_argv[2] = NULL;
+	ret = execve(cmd[0], cmd, mini->env_char);
+	if (ret == -1)
+	{
+		if (errno == ENOEXEC)
+		{
+			ret = execve(sh_argv[0], sh_argv, mini->env_char);
+			if (ret == -1)
+				return (ft_error(mini, NULL, strerror(errno)), -2);
+		}
+		else
+			return (ft_error(mini, NULL, strerror(errno)), -1);
+	}
+	return (0);
+}
 
 static void	free_content(char **s)
 {
@@ -45,13 +49,9 @@ static void	free_content(char **s)
 
 int	is_abs_or_relative(t_mini *mini, t_token *tmp, char **paths)
 {
-	char	*sh_argv[3];
 	int		ret;
 
 	ret = 0;
-	sh_argv[0] = "/bin/sh";
-	sh_argv[1] = tmp->cmd_tab[0];
-	sh_argv[2] = NULL;
 	if (ft_strchr(tmp->cmd_tab[0], '/') || tmp->cmd_tab[0][0] == '.')
 	{
 		ret = is_accessible(mini, tmp);
@@ -68,6 +68,8 @@ int	is_abs_or_relative(t_mini *mini, t_token *tmp, char **paths)
 			ft_putstr_fd(": Is a directory\n", 2);
 			return (-1);
 		}
+		if (ret == 1)
+			return (execute_command(mini, tmp->cmd_tab));
 	}
 	return (1);
 }

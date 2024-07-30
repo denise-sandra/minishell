@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_dir.c                                           :+:      :+:    :+:   */
+/*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:13:06 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/30 19:47:43 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	manage_ret_message(t_token *cur)
+{
+	if (cur->cmd_tab[0][0] == '/')
+		return (-3);
+	return (-2);
+}
 
 int	is_accessible(t_mini *mini, t_token *cur)
 {
@@ -26,12 +33,12 @@ int	is_accessible(t_mini *mini, t_token *cur)
 			return (-4);
 		}
 		else
-			return (-2);
+			return (manage_ret_message(cur));
 	}
 	if (stat(cur->cmd_tab[0], &statbuf) == 0)
 	{
 		if (S_ISDIR(statbuf.st_mode))
-			return (-3);
+			return (-1);
 	}
 	if (access(cur->cmd_tab[0], X_OK) == -1)
 		return (-2);
