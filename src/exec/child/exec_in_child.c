@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 08:54:19 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:57:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,14 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 
 static void	pipe_if_no_cmd(t_mini *mini, int i)
 {
+	int	status;
+
+	status = 0;
 	if ((i + 1) != mini->pipe_count && pipe(mini->tube[i]) == -1)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (i > 0)
 	{
+		waitpid(mini->pid[i - 1], &status, 0);
 		close(mini->tube[i - 1][0]);
 		close(mini->tube[i - 1][1]);
 	}
@@ -96,9 +100,10 @@ static void	pipe_token(t_mini *mini, t_token *cur)
 
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
-	int		k;
+	 int		k;
 
 	pipe_token(mini, cur);
+	close_all_fd(mini);
 	k = 0;
 	while (k < mini->pipe_count - 1)
 	{

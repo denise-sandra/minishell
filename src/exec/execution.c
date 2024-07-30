@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 09:01:31 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:53:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	execution(t_mini *mini)
 	fill_fd(mini);
 	if (mini->cmd_count <= 0)
 		return (close_exec(mini));
-	if (mini->cmd_count == 1 && tmp->type == COMMAND)
+	if (mini->pipe_count == 1 && tmp->type == COMMAND)
 		builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_redirs.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:22:09 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 15:24:08 by sandra           ###   ########.fr       */
+/*   Updated: 2024/07/30 11:09:10 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	tokenize_redirs(t_mini *ms, t_pretok **cur, t_token **list)
 		str[0] = (*cur)->c;
 		str[1] = '\0';
 		if ((type == IN || type == OUT) && !(*cur)->next)
+		{
+			ms->exit_status = 2;
 			return (ft_error(ms, "Syntax error near token `newline'", NULL));
+		}
 		if ((type == IN && (*cur)->next->type != IN)
 			|| (type == OUT && (*cur)->next->type != OUT))
 		{
