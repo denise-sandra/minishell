@@ -6,13 +6,13 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 09:49:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:04:53 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	add_with_nulll_value(t_mini *mini, char *new_var, char	***split)
+static int	add_with_null_value(t_mini *mini, char *new_var, char	***split)
 {
 	char	*value;
 
@@ -32,14 +32,23 @@ static int	add_with_nulll_value(t_mini *mini, char *new_var, char	***split)
 	return (0);
 }
 
-static void	add_exp(t_mini *mini, char *new_var)
+static void	add_exp(t_mini *mini, char *new_var, char *res)
 {
 	char		**split_new_exp;
 	t_lst_env	*new_node;
 
 	split_new_exp = NULL;
-	if (add_with_nulll_value(mini, new_var, &split_new_exp) == 1)
-		return ;
+	if (res == NULL)
+	{
+		if (add_with_null_value(mini, new_var, &split_new_exp) == 1)
+			return ;
+	}
+	else
+	{
+		split_new_exp = split_env_vars(new_var, '=');
+		if (split_new_exp == NULL)
+			return (ft_error(mini, NULL, strerror(errno)));
+	}
 	new_node = ft_lstnew_env(split_new_exp[0], split_new_exp[1]);
 	free_tab(split_new_exp);
 	if (new_node == NULL)
@@ -47,27 +56,26 @@ static void	add_exp(t_mini *mini, char *new_var)
 	ft_lstadd_back_env(&mini->export, new_node);
 }
 
-static int	add_env(t_mini *mini, char *new_var)
+int	add_env(t_mini *mini, char *new_var)
 {
 	char		**split_new_envp;
-	t_lst_env	*new_node;
+	char		*concat;
 
+	concat = NULL;
 	split_new_envp = split_env_vars(new_var, '=');
 	if (split_new_envp == NULL)
 		return (ft_error(mini, NULL, strerror(errno)), -1);
-	free_env_node(mini, mini->env, split_new_envp[0]);
-	new_node = ft_lstnew_env(split_new_envp[0], split_new_envp[1]);
-	free_tab(split_new_envp);
-	if (new_node == NULL)
+	if (split_new_envp[0][ft_strlen(split_new_envp[0]) - 1] == '+')
+	{
+		concat = concat_env(mini, split_new_envp[0], split_new_envp[1]);
+		if (!concat)
+			return (free_tab(split_new_envp), \
+			ft_error(mini, NULL, strerror(errno)), -1);
+		free(split_new_envp[1]);
+		split_new_envp[1] = concat;
+	}
+	if (add_env_helper(mini, split_new_envp) < 0)
 		return (ft_error(mini, NULL, strerror(errno)), -1);
-	ft_lstadd_back_env(&mini->env, new_node);
-	if (mini->mod_env == 1)
-		free_tab(mini->env_char);
-	clean_env_exp(mini, 2);
-	mini->export = copy_list(mini->env);
-	if (mini->export == NULL)
-		return (ft_error(mini, NULL, strerror(errno)), -1);
-	mini->env_char = list_to_tab(mini);
 	return (0);
 }
 
@@ -75,7 +83,7 @@ static int	check_syn_error(t_mini *mini, char	*new_var)
 {
 	int		i;
 
-	if (ft_isalpha(new_var[0]) == 0)
+	if (ft_isalpha(new_var[0]) == 0 && new_var[0] != '_')
 	{
 		mini->exit_status = 1;
 		return (ft_error(mini, " not a valid identifier", NULL), -1);
@@ -83,7 +91,8 @@ static int	check_syn_error(t_mini *mini, char	*new_var)
 	i = 1;
 	while (new_var[i] && new_var[i] != '=')
 	{
-		if (ft_isalnum(new_var[i]) == 0)
+		if (ft_isalnum(new_var[i]) == 0 && new_var[i] != '_' \
+			&& ft_strncmp(new_var + i, "+=", 2) != 0)
 		{
 			mini->exit_status = 1;
 			return (ft_error(mini, " not a valid identifier", NULL), -1);
@@ -114,8 +123,7 @@ void	add_var_to_list(t_mini *mini, t_token *cur)
 		}
 		else if (ft_strncmp(new_var, "=", ft_strlen(new_var)) == 0)
 			return (ft_error(mini, " not a valid identifier", NULL));
-		if (!res)
-			add_exp(mini, new_var);
+		add_exp(mini, new_var, res);
 		if (mini->error)
 			return ;
 		i++;

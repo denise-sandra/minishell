@@ -6,7 +6,7 @@
 /*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/09 14:34:57 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/26 17:42:43 by deniseerjav      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	remove_extra_empty(t_mini *mini)
 	while (cur)
 	{
 		next = cur->next;
-		if ((cur->type != WHITE || (cur->next->next && cur->next->next->type != WHITE)) \
+		if ((cur->type != WHITE || \
+			(cur->next->next && cur->next->next->type != WHITE)) \
 			&& next && next->type == EMPTY)
 		{
 			cur->next = next->next;
@@ -106,14 +107,9 @@ void	lexer(char *input, t_mini *mini)
 	remove_spaces(mini);
 	if (check_basic_errors(mini) != 0)
 	{
+		mini->exit_status = 1;
 		ft_error(mini, "Syntaxis error: special character not supported", NULL);
 		return ;
 	}
 	remove_extra_empty(mini);
-	// t_pretok *print = mini->pretok;
-	// while (print)
-	// {
-	// 	printf("pretok val: %c  type: %i\n", print->c, print->type);
-	// 	print = print->next;
-	// }
 }

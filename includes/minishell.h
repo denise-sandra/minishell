@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 14:29:30 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/30 14:31:46 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
 
-# define SIGNAL
-
 //clean & error
 void		ft_error(t_mini *minishell, char *msg, char *error_msg);
 void		error_cleanup(t_mini *minishell);
@@ -42,7 +40,6 @@ void		clean_pretokens(t_mini *minishell);
 void		clean_env_exp(t_mini *minishell, int id);
 void		clean_token_list(t_token **list);
 void		clean_minishell(t_mini *minishell);
-char		*ft_strjoin_free(char *s1, char *s2);
 void		clean_fd(t_mini *minishell);
 
 //env
@@ -61,8 +58,13 @@ void		remove_spaces(t_mini *mini);
 void		parser(t_mini *mini);
 void		tokenize_redirs(t_mini *mini, t_pretok **cur, t_token **list);
 int			prep_heredoc(t_mini *mini);
+void		update_cmd(t_mini *mini, t_token **c, t_token **p, t_token **new);
+void		tok_delone(t_token **lst, t_token **prev);
 int			expand_env_vars(t_mini *mini, t_token *token);
 char		*expand_var(t_mini *mini, char *temp_str, int *len);
+int			expand_inside_dq(t_mini *mini, char **str);
+int			expand_outside_dq(t_mini *mini, t_token **cur, t_token **new_list);
+int			split_and_add_to_list(char *before_var, t_token **new_list);
 int			order_tok_list(t_mini *mini);
 void		order_redirs(t_mini *mini);
 int			parse_commands(t_mini *mini);
@@ -70,13 +72,16 @@ int			last_error_checks(t_mini *mini);
 int			tok_list(char *s, int type, t_token **lst);
 t_token		*tok_new_node(char *content, int type);
 void		tok_addback(t_token **lst, t_token *new);
-char		*ft_strjoin_char(char *s, char c);
-char		*ft_strjoin_frees1(char *s1, char *s2);
 int			handle_before_var(char **before_var, char *env_value);
 int			check_white(t_mini *mini);
 int			check_slash(t_mini *mini);
 void		join_tok(t_mini *mini, t_token **tmp, t_token **prev);
-
+void		tokenize_strings(t_mini *mini, t_pretok **cur, t_token **list);
+void		tokenize_quotes(t_mini *ms, t_pretok **cur, \
+			t_token **lst, t_type q);
+void		tokenize_slash(t_mini *mini, t_pretok **cur, t_token **list);
+void		tokenize_pipes_n_empty(t_mini *mini, t_pretok **cur, \
+			t_token **list);
 
 //environement
 t_lst_env	*fill_env_struct(char **envp, t_mini *minishell);
@@ -90,6 +95,9 @@ t_lst_env	*copy_list(t_lst_env *lst);
 //exec
 void		execution(t_mini *minishell);
 void		cmd_exec(t_mini *mini, t_token *tmp);
+int			cmd_exec_utils(t_mini *mini, t_token *tmp, char **paths);
+int			is_absolute_or_relative_path(t_mini *mini, t_token *tmp, char **paths);
+int			handle_shlvl(t_mini *mini);
 int			is_builtin(char *command);
 void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
 int			malloc_fds(t_mini *mini);
@@ -99,28 +107,35 @@ void		fill_fd(t_mini *mini);
 int			get_infile(t_mini *mini, t_token *token, int i);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
-int			exec_script(t_mini *mini, t_token *tmp);
-int			is_slash(t_mini *mini, t_token *tmp);
+int			is_directory_from_home(t_mini *mini, t_token *cur);
 void		builtin_in_parent(t_mini *mini, int builtin);
 void		exec_in_child(t_mini *mini, t_token *tmp);
 void		close_fd_and_wait(t_mini *mini);
 void		close_all_fd(t_mini *mini);
 void		close_if_inv_fd(t_mini *mini, int j);
 char		*get_dynamic_prompt(void);
+char		*get_name(t_token *tmp);
+char		*get_shebang(t_mini *ms, int script);
 
-//builtin fucntions
+//builtin functions
 void		echo_command(t_mini *mini, t_token *cur);
 void		export_command(t_mini *mini, t_token *cur);
 void		add_var_to_list(t_mini *mini, t_token *cur);
+int			add_env(t_mini *mini, char *new_var);
+int			add_env_helper(t_mini *mini, char **new_env);
+char		*concat_env(t_mini *mini, char *name, char *new_value);
 char		**list_to_tab(t_mini *mini);
-void		env_command(t_mini *minishell);
+void		env_command(t_mini *minishell, t_token *cur);
 void		exit_cmd(t_mini *mini, char **cmd_tab);
-void		go_home(t_mini *mini);
+int			check_signs(t_mini *mini, char *arg);
+// void		go_home(t_mini *mini);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);
+void		go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 //signals
 void		setup_signal_handlers(void);
+void		setup_sigquit_handler(void);
 
 #endif

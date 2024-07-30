@@ -3,22 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: deniseerjavec <deniseerjavec@student.42    +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/10 17:24:12 by deniseerjav      ###   ########.fr       */
+/*   Updated: 2024/07/30 13:04:52 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	handle_signals_and_wait(t_mini *mini)
+{
+	int	i;
+	int	status;
+	int	last_exit_status;
+	int	signal_received;
+	int	quit_printed;
+
+	i = 0;
+	status = 0;
+	last_exit_status = 0;
+	signal_received = 0;
+	quit_printed = 0;
+	while (i < mini->pipe_count)
+	{
+		waitpid(mini->pid[i], &status, 0);
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			signal_received = 1;
+			if (WTERMSIG(status) == SIGQUIT && !quit_printed)
+			{
+				last_exit_status = 131;
+				quit_printed = 1;
+			}
+			else if (WTERMSIG(status) == SIGINT)
+				last_exit_status = 130;
+		}
+		i++;
+	}
+	if (signal_received)
+		mini->exit_status = last_exit_status;
+}
+
 static void	close_exec(t_mini *mini)
 {
-	if (mini->fd_in[0] > 0)
-		close(mini->fd_in[0]);
-	if (mini->fd_out[0] > 1)
-		close(mini->fd_out[0]);
-	if (mini->inv_fd[0] == 1)
+	int	i;
+
+	i = 0;
+	while (i < mini->pipe_count)
+	{
+		if (mini->fd_in[i] > 0)
+			close(mini->fd_in[i]);
+		if (mini->fd_out[i] > 1)
+			close(mini->fd_out[i]);
+		i++;
+	}
+	if (mini->inv_fd[0] != 0)
 		mini->exit_status = 1;
 }
 
@@ -34,7 +76,7 @@ void	execution(t_mini *mini)
 	fill_fd(mini);
 	if (mini->cmd_count <= 0)
 		return (close_exec(mini));
-	if (mini->cmd_count == 1 && tmp->type == COMMAND)
+	if (mini->pipe_count == 1 && tmp->type == COMMAND)
 		builtin = is_builtin(tmp->cmd_tab[0]);
 	if (mini->cmd_count == 1 && builtin > 0)
 	{
@@ -45,6 +87,5 @@ void	execution(t_mini *mini)
 	if (mini->error)
 		return ;
 	close_fd_and_wait(mini);
+	handle_signals_and_wait(mini);
 }
-
-// grep <Makefile -v >outfile1 'A'

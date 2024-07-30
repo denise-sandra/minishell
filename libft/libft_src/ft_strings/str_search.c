@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_search.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:02:03 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/17 13:30:42 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/25 11:23:05 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_strchr_int(const char *str, int c)
 	int	i;
 
 	i = 0;
-	while (str[i + 1])
+	while (str[i] && str[i + 1])
 	{
 		if (str[i] == (char)c)
 			return (i);

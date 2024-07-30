@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 08:39:03 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:40:19 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_mini	*init_minishell(char **envp)
 	}
 	ft_bzero(mini, sizeof(t_mini));
 	mini->env = fill_env_struct(envp, mini);
-	if (mini->error == 1)
+	if (handle_shlvl(mini) == 1)
 		exit(1);
 	return (mini);
 }
@@ -70,9 +70,9 @@ static void	minishell(t_mini *mini)
 	char	*input;
 	char	*prompt;
 
-	setup_signal_handlers();
 	while (!mini->should_exit)
 	{
+		setup_signal_handlers();
 		mini->error = 0;
 		prompt = get_dynamic_prompt();
 		if (!prompt)
@@ -92,6 +92,7 @@ static void	minishell(t_mini *mini)
 		if (*input)
 		{
 			add_history(input);
+			setup_sigquit_handler();
 			parse_and_execute(mini, input);
 		}
 		clean_token_list(&(mini->token));

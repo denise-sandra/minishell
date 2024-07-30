@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:37:04 by skanna            #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:14 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/26 19:08:27 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*copy_letters(char **tab, int word, char const *s, char c)
 	}
 	i = 0;
 	while (s[i] && i < letters)
-	{	
+	{
 		tab[word][i] = s[i];
 		i++;
 	}
