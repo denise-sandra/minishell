@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 12:09:43 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:09:39 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ char **paths, int exec_ret)
 		ft_putstr_fd(": command not found\n", 2);
 		free(paths);
 		close_all_fd(mini);
+	}
+	else if (exec_ret == -3)
+	{
+		mini->exit_status = 127;
+		ft_putstr_fd(tmp->cmd_tab[0], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		free_tab(paths);
 	}
 	else
 		free_tab(paths);
