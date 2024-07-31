@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 19:13:18 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/31 15:29:52 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <sys/wait.h>
 # include "structures.h"
 # include "../libft/Includes/libft_extended.h"
+
+extern int	g_sig;
 
 //clean & error
 void		ft_error(t_mini *minishell, char *msg, char *error_msg);
@@ -135,7 +137,9 @@ void		go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 //signals
-void		setup_signal_handlers(void);
-void		setup_sigquit_handler(void);
+void		setup_signal_handlers(int ignore);
+void		check_sigs(t_mini *mini);
+void	enable_sigquit(void);
+void	init_handlers(void);
 
 #endif

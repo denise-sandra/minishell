@@ -6,11 +6,13 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 15:06:20 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/31 16:46:27 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_sig = 0;
 
 static t_mini	*init_minishell(char **envp)
 {
@@ -72,7 +74,8 @@ static void	minishell(t_mini *mini)
 
 	while (!mini->should_exit)
 	{
-		setup_signal_handlers();
+		init_handlers();
+		g_sig = 0;
 		mini->error = 0;
 		prompt = get_dynamic_prompt();
 		if (!prompt)
@@ -89,10 +92,11 @@ static void	minishell(t_mini *mini)
 		free (prompt);
 		if (!input)
 			break ;
+		enable_sigquit();
+		check_sigs(mini);
 		if (*input)
 		{
-			add_history(input);
-			setup_sigquit_handler();
+			add_history(input);	
 			parse_and_execute(mini, input);
 		}
 		clean_token_list(&(mini->token));

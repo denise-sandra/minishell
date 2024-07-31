@@ -6,44 +6,60 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 15:05:45 by skanna           ###   ########.fr       */
+/*   Updated: 2024/07/31 16:48:26 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_mini	*g_mini = NULL;
-
 static void	sigint_handler(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	if (g_mini)
-		g_mini->exit_status = 130;
+	g_sig = SIGINT;
+	if (isatty(STDIN_FILENO))
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 static void	sigquit_handler(int sig)
 {
 	(void)sig;
-	if (g_mini && g_mini->pid)
+	g_sig = SIGQUIT;
+	ft_putstr_fd("Quit\n", 1);
+}
+
+void	check_sigs(t_mini *mini)
+{
+	// int	k;
+
+	// k = 0;
+	if (g_sig == SIGINT)
 	{
-		ft_putstr_fd("Quit\n", 1);
-		kill(g_mini->pid[0], SIGQUIT);
-		if (g_mini)
-			g_mini->exit_status = 131;
+		mini->exit_status = 130;
+		// ft_putstr_fd("\n", 1);
+		// rl_on_new_line();
+		// rl_replace_line("", 0);
+		// rl_redisplay();
+		g_sig = 0;
 	}
-	else
+	else if (g_sig == SIGQUIT)
 	{
-		ft_putstr_fd("\n", 1);
-		rl_on_new_line();
-		rl_redisplay();
+		if (mini && mini->pid)
+		{
+			// while (k < mini->pipe_count)
+			// 	kill(mini->pid[k++], SIGQUIT);
+			kill(mini->pid[0], SIGQUIT);
+			mini->exit_status = 131;
+		}
+		g_sig = 0;
 	}
 }
 
-void	setup_sigquit_handler(void)
+void	enable_sigquit(void)
 {
 	struct sigaction	sa;
 
@@ -57,7 +73,7 @@ void	setup_sigquit_handler(void)
 	}
 }
 
-void	setup_signal_handlers(void)
+void	init_handlers(void)
 {
 	struct sigaction	sa;
 
@@ -76,3 +92,27 @@ void	setup_signal_handlers(void)
 		exit(1);
 	}
 }
+
+// void	setup_signal_handlers(int ignore)
+// {
+// 	struct sigaction	sa;
+
+// 	sa.sa_handler = sigint_handler;
+// 	sigemptyset(&sa.sa_mask);
+// 	sa.sa_flags = 0;
+// 	if (sigaction(SIGINT, &sa, NULL) == -1)
+// 	{
+// 		perror("sigaction for SIGINT");
+// 		exit(1);
+// 	}
+// 	if (ignore)
+// 		sa.sa_handler = SIG_IGN;
+// 	else
+// 		sa.sa_handler = sigquit_handler;
+// 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+// 	{
+// 		perror("sigaction for SIGQUIT");
+// 		exit(1);
+// 	}
+// }
+
