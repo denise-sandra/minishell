@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 14:18:03 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:22:27 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ void	check_sigs(t_mini *mini)
 	if (g_sig == SIGINT)
 	{
 		mini->exit_status = 130;
-		// ft_putstr_fd("\n", 1);
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
 		g_sig = 0;
 	}
 	else if (g_sig == SIGQUIT)
