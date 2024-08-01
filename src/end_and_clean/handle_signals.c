@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 16:17:34 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:23:00 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,27 +88,3 @@ void	init_handlers(void)
 		exit(1);
 	}
 }
-
-// void	setup_signal_handlers(int ignore)
-// {
-// 	struct sigaction	sa;
-
-// 	sa.sa_handler = sigint_handler;
-// 	sigemptyset(&sa.sa_mask);
-// 	sa.sa_flags = 0;
-// 	if (sigaction(SIGINT, &sa, NULL) == -1)
-// 	{
-// 		perror("sigaction for SIGINT");
-// 		exit(1);
-// 	}
-// 	if (ignore)
-// 		sa.sa_handler = SIG_IGN;
-// 	else
-// 		sa.sa_handler = sigquit_handler;
-// 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-// 	{
-// 		perror("sigaction for SIGQUIT");
-// 		exit(1);
-// 	}
-// }
-

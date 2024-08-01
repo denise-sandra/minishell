@@ -6,33 +6,11 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 14:57:57 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:30:47 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	process_here_line(int *hd_pipe, char *line, const char *eof)
-{
-	size_t	line_len;
-	size_t	eof_len;
-
-	line_len = ft_strlen(line);
-	eof_len = ft_strlen(eof);
-	if (line_len > 0 && line[line_len - 1] == '\n')
-	{
-		line[line_len - 1] = '\0';
-		line_len--;
-	}
-	if (ft_strncmp(line, eof, eof_len) == 0 && line_len == eof_len)
-		return (free(line), 1);
-	line[line_len] = '\n';
-	line_len++;
-	if (write(hd_pipe[1], line, line_len) == -1)
-		return (free(line), -1);
-	free(line);
-	return (0);
-}
 
 static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
 {
@@ -41,6 +19,27 @@ static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
 	{
 		close(mini->here_fd[1]);
 		close(mini->here_fd[0]);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	check_signals(t_mini *mini, char *line)
+{
+	if (g_sig == SIGINT)
+	{
+		free(line);
+		close(mini->here_fd[1]);
+		close(mini->here_fd[0]);
+		mini->exit_status = 130;
+		return (-1);
+	}
+	else if (g_sig == SIGQUIT)
+	{
+		free(line);
+		close(mini->here_fd[1]);
+		close(mini->here_fd[0]);
+		mini->exit_status = 131;
 		return (-1);
 	}
 	return (0);
@@ -60,22 +59,8 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			if (g_sig == SIGINT)
-			{
-				free(line);
-				close(mini->here_fd[1]);
-				close(mini->here_fd[0]);
-				mini->exit_status = 130;
+			if (check_signals(mini, line) != 0)
 				return (-1);
-			}
-			else if (g_sig == SIGQUIT)
-			{
-				free(line);
-				close(mini->here_fd[1]);
-				close(mini->here_fd[0]);
-				mini->exit_status = 131;
-				return (-1);
-			}
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
 				return (-1);
 		}

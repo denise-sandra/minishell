@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 15:27:36 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:31:17 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int			malloc_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
 int			dup_tubes(t_mini *mini, int i);
 void		fill_fd(t_mini *mini);
+int			process_here_line(int *hd_pipe, char *line, const char *eof);
 int			get_infile(t_mini *mini, t_token *token, int i);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
@@ -141,6 +142,5 @@ void		setup_signal_handlers(int ignore);
 void		check_sigs(t_mini *mini);
 void		enable_sigquit(void);
 void		init_handlers(void);
-
 
 #endif

@@ -20,7 +20,7 @@ SRCS	:= ${addprefix src/, minishell.c\
 		${addprefix parser/tokenize/, token_ops.c tokenize_char.c tokenize_strings.c tokenize_redirs.c} \
 		${addprefix exec/, execution.c } \
 		${addprefix exec/child/, ft_dup.c dup_tubes.c cmd_exec.c cmd_exec_utils.c access.c exec_in_child.c} \
-		${addprefix exec/fd/, init_fds.c fill_fds.c get_fds.c close_fd.c} \
+		${addprefix exec/fd/, init_fds.c fill_fds.c get_fds.c heredoc_help.c close_fd.c} \
 		${addprefix exec/exec_builtin/, builtin_in_parent.c execute_builtin.c} \
 		${addprefix builtins/, env.c pwd.c echo.c unset.c} \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c concat.c} \
