@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 14:18:31 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:57:57 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,22 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			if (g_sig == SIGINT || g_sig == SIGQUIT)
-            {
-                free(line);
-                close(mini->here_fd[1]);
-                close(mini->here_fd[0]);
-                return (-1);
-            }
+			if (g_sig == SIGINT)
+			{
+				free(line);
+				close(mini->here_fd[1]);
+				close(mini->here_fd[0]);
+				mini->exit_status = 130;
+				return (-1);
+			}
+			else if (g_sig == SIGQUIT)
+			{
+				free(line);
+				close(mini->here_fd[1]);
+				close(mini->here_fd[0]);
+				mini->exit_status = 131;
+				return (-1);
+			}
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
 				return (-1);
 		}

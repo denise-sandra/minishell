@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/31 15:29:52 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/01 15:27:36 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,11 @@ void		cd_cmd(t_mini *mini, t_token *cur);
 void		go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
-//signals
+// //signals
 void		setup_signal_handlers(int ignore);
 void		check_sigs(t_mini *mini);
-void	enable_sigquit(void);
-void	init_handlers(void);
+void		enable_sigquit(void);
+void		init_handlers(void);
+
 
 #endif

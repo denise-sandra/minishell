@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/31 16:46:27 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/01 15:28:06 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,13 @@ static void	minishell(t_mini *mini)
 		if (!input)
 			break ;
 		enable_sigquit();
-		check_sigs(mini);
 		if (*input)
 		{
+			check_sigs(mini);
 			add_history(input);	
 			parse_and_execute(mini, input);
 		}
+		check_sigs(mini);
 		clean_token_list(&(mini->token));
 		clean_fd(mini);
 		mini->token = NULL;
