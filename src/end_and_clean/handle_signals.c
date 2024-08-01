@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/31 16:48:26 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:18:03 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ static void	sigquit_handler(int sig)
 
 void	check_sigs(t_mini *mini)
 {
-	// int	k;
-
-	// k = 0;
 	if (g_sig == SIGINT)
 	{
 		mini->exit_status = 130;
@@ -48,13 +45,7 @@ void	check_sigs(t_mini *mini)
 	}
 	else if (g_sig == SIGQUIT)
 	{
-		if (mini && mini->pid)
-		{
-			// while (k < mini->pipe_count)
-			// 	kill(mini->pid[k++], SIGQUIT);
-			kill(mini->pid[0], SIGQUIT);
-			mini->exit_status = 131;
-		}
+		mini->exit_status = 131;
 		g_sig = 0;
 	}
 }

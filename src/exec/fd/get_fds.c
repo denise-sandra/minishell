@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/31 16:45:50 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:18:31 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,27 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 	if (pipe(mini->here_fd) < 0)
 		return (-1);
 	is_eof = 0;
-	// mini->in_hd = 1;
 	while (is_eof == 0)
 	{
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
+			if (g_sig == SIGINT || g_sig == SIGQUIT)
+            {
+                free(line);
+                close(mini->here_fd[1]);
+                close(mini->here_fd[0]);
+                return (-1);
+            }
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
-			{
-				// mini->in_hd = 0;
 				return (-1);
-			}
 		}
 		else
 			is_eof = 1;
 	}
 	close(mini->here_fd[1]);
 	mini->fd_in[i] = mini->here_fd[0];
-	// mini->in_hd = 0;
 	return (0);
 }
 
