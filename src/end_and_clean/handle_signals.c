@@ -6,7 +6,7 @@
 /*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 15:28:06 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:17:34 by sandra           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,19 @@ static void	sigint_handler(int sig)
 	g_sig = SIGINT;
 	if (isatty(STDIN_FILENO))
 	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (rl_line_buffer && rl_line_buffer[0] == '\0')
+		{
+			rl_replace_line("", 0);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+		else
+		{
+			rl_replace_line("", 0);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+			rl_redisplay();
+		}
 	}
 }
 
