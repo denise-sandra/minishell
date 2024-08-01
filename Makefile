@@ -1,6 +1,8 @@
 CC 		= cc
-CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  #-fsanitize=address
-LDFLAGS = -lreadline
+CFLAGS = -Wall -Wextra -Werror -g3 -Iincludes  -fsanitize=address
+CPPFLAGS = -I/usr/local/opt/readline/include #para compilar con mac. En linux sacar todos los CPPFLAGS
+LDFLAGS = -L/usr/local/opt/readline/lib -lreadline #para compilar con mac. Con linux dejar el otro LDFLAG
+#LDFLAGS = -lreadline
 
 GREEN = \033[32m
 RED = \033[31m
@@ -32,7 +34,7 @@ LIBFT := libft/libft3.a
 LIBFT_DIR = ./libft
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 	@printf "."
 
 all: $(NAME)
