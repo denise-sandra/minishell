@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 16:30:47 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:03:00 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
 {
@@ -24,51 +25,34 @@ static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
 	return (0);
 }
 
-static int	check_signals(t_mini *mini, char *line)
-{
-	if (g_sig == SIGINT)
-	{
-		free(line);
-		close(mini->here_fd[1]);
-		close(mini->here_fd[0]);
-		mini->exit_status = 130;
-		return (-1);
-	}
-	else if (g_sig == SIGQUIT)
-	{
-		free(line);
-		close(mini->here_fd[1]);
-		close(mini->here_fd[0]);
-		mini->exit_status = 131;
-		return (-1);
-	}
-	return (0);
-}
-
 static int	read_here_doc(t_mini *mini, char *eof, int i)
 {
 	char	*line;
 	int		is_eof;
+	void (*prev_sigquit)(int);
 
 	if (pipe(mini->here_fd) < 0)
 		return (-1);
 	is_eof = 0;
 	while (is_eof == 0)
 	{
+		prev_sigquit = signal(SIGQUIT, SIG_IGN);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
-			if (check_signals(mini, line) != 0)
-				return (-1);
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
+			{
+				// signal(SIGQUIT, prev_sigquit);
 				return (-1);
+			}
 		}
 		else
 			is_eof = 1;
 	}
 	close(mini->here_fd[1]);
 	mini->fd_in[i] = mini->here_fd[0];
+	// signal(SIGQUIT, prev_sigquit);
 	return (0);
 }
 

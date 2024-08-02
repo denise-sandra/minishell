@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 16:23:00 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/02 13:00:28 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,10 @@ static void	sigint_handler(int sig)
 static void	sigquit_handler(int sig)
 {
 	(void)sig;
+    ft_putstr_fd("Quit\n", 1);
 	g_sig = SIGQUIT;
-	ft_putstr_fd("Quit\n", 1);
 }
 
-void	check_sigs(t_mini *mini)
-{
-	if (g_sig == SIGINT)
-	{
-		mini->exit_status = 130;
-		g_sig = 0;
-	}
-	else if (g_sig == SIGQUIT)
-	{
-		mini->exit_status = 131;
-		g_sig = 0;
-	}
-}
 
 void	enable_sigquit(void)
 {
@@ -68,6 +55,22 @@ void	enable_sigquit(void)
 		exit(1);
 	}
 }
+
+void	check_sigs(t_mini *mini)
+{
+
+	if (g_sig == SIGINT)
+	{
+		mini->exit_status = 130;
+		g_sig = 0;
+	}
+	else if (g_sig == SIGQUIT)
+	{
+		mini->exit_status = 131;
+		g_sig = 0;
+	}
+}
+
 
 void	init_handlers(void)
 {
