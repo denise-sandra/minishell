@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:10:47 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 11:43:23 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	go_home(t_mini *mini, t_token *cur, char **cmd_tab)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (count_args(mini, cur) == 1 && path[0] == '\0')
 		return (free(path), ft_error(mini, "cd: HOME not set", NULL));
-	if (ft_strncmp(cmd_tab[1], "~", longer_len((char *)cmd_tab[1], "~")) == 0)
+	if (cmd_tab[1] && ft_strncmp(cmd_tab[1], "~", longer_len((char *)cmd_tab[1], "~")) == 0)
 	{
 		free(path);
 		value = get_env_value(mini->env, "USER");

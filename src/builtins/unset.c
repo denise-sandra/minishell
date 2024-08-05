@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:14:33 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 11:41:38 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,11 @@ static int	unset_cmd_utils(t_mini *mini, t_token *cur, int i)
 	len = ft_strlen(cur->cmd_tab[i]);
 	if (len == 0)
 		return (0);
+	if (cur->cmd_tab[i][0] == '-')
+	{
+		mini->exit_status = 2;
+		return (ft_error(mini, " invalid option", NULL), -1);
+	}
 	if (update_env(mini, cur, i, len) != 0)
 		return (1);
 	if (update_export(mini, cur, i, len) != 0)
@@ -87,9 +92,12 @@ void	unset_cmd(t_mini *mini, t_token *cur)
 
 	i = 1;
 	changed = 0;
+	mini->exit_status = 0;
 	while (cur->cmd_tab[i])
 	{
 		changed = unset_cmd_utils(mini, cur, i);
+		if (changed == -1)
+			break ;
 		i++;
 	}
 	if (changed == 1)
@@ -97,5 +105,4 @@ void	unset_cmd(t_mini *mini, t_token *cur)
 		free_tab(mini->env_char);
 		mini->env_char = list_to_tab(mini);
 	}
-	mini->exit_status = 0;
 }
