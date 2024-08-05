@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_signals.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/02 13:00:28 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 12:52:15 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	sigint_handler(int sig)
 static void	sigquit_handler(int sig)
 {
 	(void)sig;
-    ft_putstr_fd("Quit\n", 1);
+	ft_putstr_fd("Quit\n", 1);
 	g_sig = SIGQUIT;
 }
 

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 14:04:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:00:14 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ static int	check_syn_error(t_mini *mini, char	*new_var)
 
 	if (ft_isalpha(new_var[0]) == 0 && new_var[0] != '_')
 	{
+		if (new_var[0] == '-')
+		{
+			mini->exit_status = 2;
+			return (ft_error(mini, " invalid option", NULL), -1);
+		}
 		mini->exit_status = 1;
 		return (ft_error(mini, " not a valid identifier", NULL), -1);
 	}

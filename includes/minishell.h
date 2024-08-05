@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/01 16:31:17 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/05 14:50:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void		execute_builtin(t_mini *mini, int builtin, t_token *cur);
 int			malloc_fds(t_mini *mini);
 int			ft_dup(t_mini *mini, int i);
 int			dup_tubes(t_mini *mini, int i);
-void		fill_fd(t_mini *mini);
+void		fill_fd(t_mini *mini, t_token *tmp);
 int			process_here_line(int *hd_pipe, char *line, const char *eof);
-int			get_infile(t_mini *mini, t_token *token, int i);
+char	*get_infile(t_mini *mini, t_token *token, int i, char *msg);
 void		get_outfile(t_mini *mini, t_token *token, int i);
 void		parse_and_execute(t_mini *mini, char *input);
 int			is_accessible(t_mini *mini, t_token *cur);

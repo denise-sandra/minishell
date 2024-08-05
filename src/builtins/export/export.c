@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/30 08:38:36 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 11:59:52 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	export_command(t_mini *mini, t_token *cur)
 		add_var_to_list(mini, cur);
 	else
 		print_export(mini->export);
-	if (mini->error)
+	if (mini->error && mini->exit_status == 0)
 		mini->exit_status = 1;
-	else
-		mini->exit_status = 0;
 }

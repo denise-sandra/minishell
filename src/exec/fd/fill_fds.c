@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/22 12:24:30 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:20:08 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,23 @@ static void	redir_out(t_mini *mini, int *out, t_token *tmp, int i)
 	}
 }
 
-static void	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
+static void	fill_fd_utils(t_mini *mini, int *in, int *out, char **msg)
 {
-	int	i;
+	int		i;
+	t_token	*tmp;
 
+	tmp = mini->token;
 	i = 0;
 	while (tmp)
 	{
 		i = check_pipes(tmp, i, in, out);
 		if (tmp->type == IN || tmp->type == HERE)
 		{
-			if (mini->inv_fd[i] != 1 && get_infile(mini, tmp, i) != 0)
+			msg[i] = get_infile(mini, tmp, i, msg[i]);
+			if (mini->inv_fd[i] != 0 || mini->error != 0)
 			{
 				(*in)--;
-				if (*in > 0 && mini->fd_in[i] > 1)
+				if (*in > 0 && mini->fd_in[i] > 2)
 					close (mini->fd_in[i]);
 			}
 		}
@@ -71,14 +74,30 @@ static void	fill_fd_utils(t_mini *mini, int *in, int *out, t_token *tmp)
 	return ;
 }
 
-void	fill_fd(t_mini *mini)
+void	fill_fd(t_mini *mini, t_token *tmp)
 {
-	t_token	*tmp;
 	int		in;
 	int		out;
+	int		i;
+	char	**msg;
 
-	tmp = mini->token;
+	msg = malloc((mini->pipe_count + 1) * sizeof(char *));
+	if (!msg)
+		return (ft_error(mini, NULL, strerror(errno)));
+	init_tab(msg, mini->pipe_count);
 	count_in_out(&in, &out, tmp);
-	tmp = mini->token;
-	fill_fd_utils(mini, &in, &out, tmp);
+	fill_fd_utils(mini, &in, &out, msg);
+	i = 0;
+	while (i < mini->pipe_count)
+	{
+		if (mini->inv_fd[i] != 0)
+		{
+			ft_putstr_fd("Error: ", 2);
+			ft_putstr_fd(msg[i], 2);
+			ft_putstr_fd("\n", 2);
+			free (msg[i]);
+		}
+		i++;
+	}
+	free(msg);
 }

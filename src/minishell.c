@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/02 12:57:11 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 12:53:35 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	parse_and_execute(t_mini *mini, char *input)
 		if (!mini->error)
 		{
 			execution(mini);
-			if (mini->error)
+			if (mini->error && mini->exit_status == 0)
 				mini->exit_status = 1;
 		}
 	}
@@ -92,6 +92,8 @@ static void	minishell(t_mini *mini)
 		free (prompt);
 		if (!input)
 			break ;
+		// enable_sigquit();
+		// check_sigs(mini);
 		if (*input)
 		{
 			enable_sigquit();
