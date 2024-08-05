@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/26 13:13:05 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/05 11:35:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ static void	is_cd(t_mini *mini, t_token *cur, int *i)
 {
 	char	*home;
 
-	if (!cur->cmd_tab[*i])
-		printf("cd");
+	printf("cd");
+	if (cur->cmd_tab[*i])
+		printf(" ");
 	if (cur->cmd_tab[*i] && ft_strncmp(cur->cmd_tab[*i], "~", \
 		longer_len(cur->cmd_tab[*i], "~")) == 0)
 	{
