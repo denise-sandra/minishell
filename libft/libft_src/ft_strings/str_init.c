@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:49:28 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 14:51:55 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:30:39 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return (ptr);
 }
 
-void init_tab(char **msg, int size)
+void	init_tab(char **msg, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)

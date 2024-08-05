@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libftv3.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 18:03:17 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 14:52:29 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:30:53 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 int			ft_strchr_order(const char *str, int c, int d);
 int			ft_strrchr_int(char *str, int c);
-void 	init_tab(char **msg, int size);
+void		init_tab(char **msg, int size);
 
 /*search in str*/
 int			ft_strchr_int(const char *str, int c);

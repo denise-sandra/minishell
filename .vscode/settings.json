@@ -43,6 +43,7 @@
         "string.h": "c",
         "algorithm": "c",
         "cmath": "c",
-        "compare": "c"
+        "compare": "c",
+        "limits.h": "c"
     }
 }
