@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/02 13:03:00 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 10:23:10 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,26 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 {
 	char	*line;
 	int		is_eof;
-	void (*prev_sigquit)(int);
+	void	(*ign)(int);
 
 	if (pipe(mini->here_fd) < 0)
 		return (-1);
 	is_eof = 0;
 	while (is_eof == 0)
 	{
-		prev_sigquit = signal(SIGQUIT, SIG_IGN);
+		ign = signal(SIGQUIT, SIG_IGN);
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
 		if (line)
 		{
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
-			{
-				// signal(SIGQUIT, prev_sigquit);
 				return (-1);
-			}
 		}
 		else
 			is_eof = 1;
 	}
 	close(mini->here_fd[1]);
 	mini->fd_in[i] = mini->here_fd[0];
-	// signal(SIGQUIT, prev_sigquit);
 	return (0);
 }
 
