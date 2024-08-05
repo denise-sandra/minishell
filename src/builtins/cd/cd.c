@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 11:43:23 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:38:28 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void	go_home(t_mini *mini, t_token *cur, char **cmd_tab)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (count_args(mini, cur) == 1 && path[0] == '\0')
 		return (free(path), ft_error(mini, "cd: HOME not set", NULL));
-	if (cmd_tab[1] && ft_strncmp(cmd_tab[1], "~", longer_len((char *)cmd_tab[1], "~")) == 0)
+	if (cmd_tab[1] && ft_strncmp(cmd_tab[1], "~", \
+		longer_len((char *)cmd_tab[1], "~")) == 0)
 	{
 		free(path);
 		value = get_env_value(mini->env, "USER");
@@ -90,6 +91,7 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	if (count_args(mini, cur) < 0)
 		return ;
 	path = cur->cmd_tab[1];
+	printf("path %s\n", path);
 	if (count_args(mini, cur) == 1 || !path \
 		|| ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
 		go_home(mini, cur, cur->cmd_tab);

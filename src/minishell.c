@@ -6,13 +6,37 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 12:53:35 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:20:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_sig = 0;
+
+static char **no_env(t_mini *mini)
+{
+char **envp;
+char cwd[1024];
+
+envp = malloc(4 * sizeof(char *));
+if (envp == NULL)
+	return (ft_error(mini, NULL, strerror(errno)), NULL);
+if (getcwd(cwd, 1024) == NULL)
+	return (ft_error(mini, NULL, strerror(errno)), NULL);
+envp[0] = ft_strjoin("PWD=", cwd);
+if (!envp[0])
+	return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+envp[1] = ft_strdup("SHLVL=1");
+if (!envp[1])
+	return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+envp[2] = ft_strdup("PATH=/usr/bin/");
+if (!envp[2])
+	return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+envp[3] = NULL;
+return (envp);
+
+}
 
 static t_mini	*init_minishell(char **envp)
 {
@@ -25,6 +49,8 @@ static t_mini	*init_minishell(char **envp)
 		exit(1);
 	}
 	ft_bzero(mini, sizeof(t_mini));
+	if (envp[0] == NULL)
+	envp = no_env(mini);
 	mini->env = fill_env_struct(envp, mini);
 	if (handle_shlvl(mini) == 1)
 		exit(1);
@@ -120,7 +146,7 @@ int	main(int argc, char **argv, char **envp)
 	int		final_status;
 
 	if (argc != 1 || argv[1])
-		return (0);
+		return (0);;
 	mini = init_minishell(envp);
 	minishell(mini);
 	final_status = mini->exit_status;

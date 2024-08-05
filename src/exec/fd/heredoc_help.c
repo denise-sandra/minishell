@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_help.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:25:43 by sandra            #+#    #+#             */
-/*   Updated: 2024/08/01 16:26:59 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/05 16:44:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,36 @@ int	process_here_line(int *hd_pipe, char *line, const char *eof)
 	if (write(hd_pipe[1], line, line_len) == -1)
 		return (free(line), -1);
 	free(line);
+	return (0);
+}
+
+void	close_here_fd(t_mini *mini)
+{
+	int	j;
+
+	close(mini->here_fd[1]);
+	if (mini->pipe_count > 1 && g_sig == SIGINT)
+	{
+		j = 0;
+		while (j < mini->pipe_count)
+		{
+			if (mini->fd_in[j] > 2)
+			{
+				close(mini->fd_in[j]);
+			}
+			j++;
+		}
+		close(mini->here_fd[0]);
+	}
+}
+
+int	handle_sig_int(t_mini *mini)
+{
+	if (g_sig == SIGINT)
+	{
+		close(mini->here_fd[0]);
+		close(mini->here_fd[1]);
+		return (-2);
+	}
 	return (0);
 }

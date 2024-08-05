@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 12:52:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:46:21 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	sigquit_handler(int sig)
 	g_sig = SIGQUIT;
 }
 
-
 void	enable_sigquit(void)
 {
 	struct sigaction	sa;
@@ -58,7 +57,6 @@ void	enable_sigquit(void)
 
 void	check_sigs(t_mini *mini)
 {
-
 	if (g_sig == SIGINT)
 	{
 		mini->exit_status = 130;
@@ -70,7 +68,6 @@ void	check_sigs(t_mini *mini)
 		g_sig = 0;
 	}
 }
-
 
 void	init_handlers(void)
 {

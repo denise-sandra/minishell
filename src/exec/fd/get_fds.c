@@ -6,12 +6,11 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 16:12:34 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:46:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	ft_eof(t_mini *mini, char *eof, char *line, int *is_eof)
 {
@@ -30,7 +29,6 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 	char	*line;
 	int		is_eof;
 	void	(*ign)(int);
-	int	j;
 
 	if (pipe(mini->here_fd) < 0)
 		return (-1);
@@ -38,15 +36,10 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 	while (is_eof == 0)
 	{
 		ign = signal(SIGQUIT, SIG_IGN);
-		if (g_sig == SIGINT)
-		{
-			close(mini->here_fd[0]);
-			close(mini->here_fd[1]);
+		if (handle_sig_int(mini) != 0)
 			return (-2);
-		}
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
-		
 		if (line)
 		{
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
@@ -55,27 +48,14 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 		else
 			is_eof = 1;
 	}
-	close(mini->here_fd[1]);
-	if (mini->pipe_count > 1 && g_sig == SIGINT)
-	{
-		j = 0;
-		while (j < mini->pipe_count)
-		{
-			if (mini->fd_in[j] > 2)
-			{
-				close(mini->fd_in[j]);
-			}
-			j++;
-		}
-		close(mini->here_fd[0]);
-	}
+	close_here_fd(mini);
 	mini->fd_in[i] = mini->here_fd[0];
 	return (0);
 }
 
 char	*get_infile(t_mini *mini, t_token *token, int i, char *msg)
 {
-	int res;
+	int	res;
 
 	if (token->type == IN && mini->inv_fd[i] == 1)
 		return (msg);

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 14:50:24 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:42:23 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,7 @@ void		setup_signal_handlers(int ignore);
 void		check_sigs(t_mini *mini);
 void		enable_sigquit(void);
 void		init_handlers(void);
+int		handle_sig_int(t_mini *mini);
+void		close_here_fd(t_mini *mini);
 
 #endif

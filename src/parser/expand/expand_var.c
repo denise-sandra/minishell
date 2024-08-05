@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 21:22:03 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/30 11:19:44 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:40:07 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	if_no_dollar(t_mini *mini, t_token *cur, t_token	**new_list)
 		cur->value = get_env_value(mini->env, "HOME");
 		if (!cur->value)
 			return (ft_error(mini, NULL, strerror(errno)), 1);
+		if (cur->value[0] == '\0')
+			cur->value = ft_strdup("~");
 	}
 	if (cur->type == D_Q || cur->type == S_Q)
 		cur->type = STRING;
