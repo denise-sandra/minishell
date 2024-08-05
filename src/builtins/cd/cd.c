@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 17:38:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:49:51 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 	if (count_args(mini, cur) < 0)
 		return ;
 	path = cur->cmd_tab[1];
-	printf("path %s\n", path);
 	if (count_args(mini, cur) == 1 || !path \
 		|| ft_strncmp(path, "~", longer_len((char *)path, "~")) == 0)
 		go_home(mini, cur, cur->cmd_tab);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_list.c                                        :+:      :+:    :+:   */
+/*   env_aux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:48:05 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/05 18:15:41 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,27 @@ int	handle_shlvl(t_mini *mini)
 	if (mini->env_char == NULL)
 		return (1);
 	return (0);
+}
+
+char	**no_env(t_mini *mini)
+{
+	char	**envp;
+	char	cwd[1024];
+
+	envp = malloc(4 * sizeof(char *));
+	if (envp == NULL)
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
+	if (getcwd(cwd, 1024) == NULL)
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
+	envp[0] = ft_strjoin("PWD=", cwd);
+	if (!envp[0])
+		return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+	envp[1] = ft_strdup("SHLVL=1");
+	if (!envp[1])
+		return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+	envp[2] = ft_strdup("PATH=/usr/bin/");
+	if (!envp[2])
+		return (free_tab(envp), ft_error(mini, NULL, strerror(errno)), NULL);
+	envp[3] = NULL;
+	return (envp);
 }
