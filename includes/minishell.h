@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 18:28:54 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:40:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,7 @@ void		enable_sigquit(void);
 void		init_handlers(void);
 int			handle_sig_int(t_mini *mini);
 void		close_here_fd(t_mini *mini);
+void		sigquit_handler(int sig);
+void		sigint_handler(int sig);
 
 #endif

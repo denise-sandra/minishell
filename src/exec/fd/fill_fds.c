@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 15:20:08 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:19:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void	count_in_out(int *in, int *out, t_token *tmp)
 	*out = 0;
 	while (tmp && tmp->type != PIPE)
 	{
-		if (tmp->type == IN)
+		if (tmp->type == IN || tmp->type == HERE)
 			(*in)++;
-		if (tmp->type == OUT)
+		if (tmp->type == OUT || tmp->type == APP)
 			(*out)++;
 		tmp = tmp->next;
 	}
@@ -60,12 +60,9 @@ static void	fill_fd_utils(t_mini *mini, int *in, int *out, char **msg)
 		if (tmp->type == IN || tmp->type == HERE)
 		{
 			msg[i] = get_infile(mini, tmp, i, msg[i]);
-			if (mini->inv_fd[i] != 0 || mini->error != 0)
-			{
 				(*in)--;
-				if (*in > 0 && mini->fd_in[i] > 2)
-					close (mini->fd_in[i]);
-			}
+			if (*in > 0 && mini->fd_in[i] > 2)
+				close (mini->fd_in[i]);
 		}
 		else if (tmp->type == OUT || tmp->type == APP)
 			redir_out(mini, out, tmp, i);

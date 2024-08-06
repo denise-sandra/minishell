@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 15:49:53 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:15:14 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->pid[i] == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		enable_sigquit();
+		//signal(SIGINT, sigint_handler);
+		//signal(SIGQUIT, sigquit_handler);
 		child_pid(mini, tmp, i);
 	}
 	if (i > 0)

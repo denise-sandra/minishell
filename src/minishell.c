@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 18:14:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:15:08 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*process_input(t_mini *mini, char *prompt, char *input)
 		return (NULL);
 	if (*input)
 	{
-		enable_sigquit();
+		//enable_sigquit();
 		check_sigs(mini);
 		add_history(input);
 		parse_and_execute(mini, input);
@@ -88,7 +88,9 @@ static void	minishell(t_mini *mini)
 		input = process_input(mini, prompt, input);
 		if (!input)
 			break ;
-		check_sigs(mini);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		//check_sigs(mini);
 		clean_token_list(&(mini->token));
 		clean_fd(mini);
 		mini->token = NULL;

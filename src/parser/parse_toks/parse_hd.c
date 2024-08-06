@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_redirs.c                                     :+:      :+:    :+:   */
+/*   parse_hd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sandra <sandra@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/26 15:23:26 by sandra           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:02:24 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	prep_lim(t_mini *mini, t_token	**cur, t_token	**prev)
 	else
 	{
 		(*cur)->type = LIM;
-		while ((*cur) && (*cur)->type != PIPE)
+		while ((*cur) && (*cur)->type != PIPE && (*cur)->type != HERE)
 			(*cur) = (*cur)->next;
 	}
 }
@@ -53,7 +53,7 @@ int	prep_heredoc(t_mini *mini)
 		if ((cur->type == STRING || cur->type == D_Q \
 			|| cur->type == S_Q || cur->type == LIM)
 			&& prev && prev->type == HERE)
-			prep_lim(mini, &cur, &prev);
+				prep_lim(mini, &cur, &prev);
 		else
 			update_token(&cur, &prev);
 		if (mini->error != 0)

@@ -6,19 +6,19 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 16:46:21 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:11:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
 	(void)sig;
 	g_sig = SIGINT;
 	if (isatty(STDIN_FILENO))
 	{
-		if (rl_line_buffer && rl_line_buffer[0] == '\0')
+		if (rl_line_buffer)
 		{
 			rl_replace_line("", 0);
 			ft_putstr_fd("\n", STDOUT_FILENO);
@@ -33,8 +33,7 @@ static void	sigint_handler(int sig)
 		}
 	}
 }
-
-static void	sigquit_handler(int sig)
+void	sigquit_handler(int sig)
 {
 	(void)sig;
 	ft_putstr_fd("Quit\n", 1);
