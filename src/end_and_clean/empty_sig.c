@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 14:35:49 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 15:03:55 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:39:57 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,28 @@ void	sigs_empty(void)
 	}
 }
 
+// static void	sigint_in_here(int sig)
+// {
+// 	(void)sig;
+// 	g_sig = SIGINT;
+// 	rl_replace_line("", 0);
+// 	ft_putstr_fd("\n", STDOUT_FILENO);
+// 	rl_redisplay();
+// }
+
+int	handle_sig_int(t_mini *mini)
+{
+	if (g_sig == SIGINT)
+	{
+		mini->exit_status = 130;
+		g_sig = 0;
+		close(mini->here_fd[0]);
+		close(mini->here_fd[1]);
+		return (-2);
+	}
+	return (0);
+}
+
 void	sigs_here(void)
 {
 	struct sigaction	sa;
@@ -54,6 +76,14 @@ void	sigs_here(void)
 		perror("sigaction for SIGQUIT");
 		exit(1);
 	}
+	// sa.sa_handler = sigint_in_here;
+	// sigemptyset(&sa.sa_mask);
+	// sa.sa_flags = 0;
+	// if (sigaction(SIGINT, &sa, NULL) == -1)
+	// {
+	// 	perror("sigaction for SIGQUIT");
+	// 	exit(1);
+	// }
 }
 
 

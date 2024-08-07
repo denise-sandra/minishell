@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 14:37:42 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:27:18 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	execution(t_mini *mini)
 	if (malloc_fds(mini) != 0)
 		return ;
 	fill_fd(mini, tmp);
+	// printf("err: %d exit: %d\n", mini->error, mini->exit_status);
 	if (mini->error != 0)
 		return ;
 	if (mini->cmd_count <= 0)

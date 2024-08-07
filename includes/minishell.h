@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 15:03:50 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:36:04 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void		unset_cmd(t_mini *mini, t_token *cur);
 
 // //signals
 void		close_here_fd(t_mini *mini);
+int			handle_sig_int(t_mini *mini);
 void		check_sigs(t_mini *mini);
 void		sigs_empty(void);
 void		sigs_in_line(void);

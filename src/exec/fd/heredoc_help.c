@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_help.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:25:43 by sandra            #+#    #+#             */
-/*   Updated: 2024/08/05 16:44:09 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:39:05 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,4 @@ void	close_here_fd(t_mini *mini)
 		}
 		close(mini->here_fd[0]);
 	}
-}
-
-int	handle_sig_int(t_mini *mini)
-{
-	if (g_sig == SIGINT)
-	{
-		close(mini->here_fd[0]);
-		close(mini->here_fd[1]);
-		return (-2);
-	}
-	return (0);
 }

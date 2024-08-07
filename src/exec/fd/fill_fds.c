@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 14:38:28 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:25:08 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void	fill_fd_utils(t_mini *mini, int *in, int *out, char **msg)
 		if (tmp->type == IN || tmp->type == HERE)
 		{
 			msg[i] = get_infile(mini, tmp, i, msg[i]);
+			if (mini->error)
+				return ;
 			(*in)--;
 			if (*in > 0 && mini->fd_in[i] > 2)
 				close (mini->fd_in[i]);
@@ -84,6 +86,9 @@ void	fill_fd(t_mini *mini, t_token *tmp)
 	init_tab(msg, mini->pipe_count);
 	count_in_out(&in, &out, tmp);
 	fill_fd_utils(mini, &in, &out, msg);
+	// printf("fillfd err: %d exit: %d\n", mini->error, mini->exit_status);
+	if (mini->error)
+		return (free_tab(msg));
 	i = 0;
 	while (i < mini->pipe_count)
 	{
