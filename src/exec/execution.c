@@ -3,54 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/06 19:09:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 10:20:52 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	sig_and_wait_helper(int *status, int *exit, int *quit)
-{
-	if (WTERMSIG(*status) == SIGQUIT && !*quit)
-	{
-		*exit = 131;
-		*quit = 1;
-	}
-	else if (WTERMSIG(*status) == SIGINT)
-		*exit = 130;
-}
+// static void	sig_and_wait_helper(int *status, int *exit, int *quit)
+// {
+// 	if (WTERMSIG(*status) == SIGQUIT && !*quit)
+// 	{
+// 		*exit = 131;
+// 		*quit = 1;
+// 	}
+// 	else if (WTERMSIG(*status) == SIGINT)
+// 		*exit = 130;
+// }
 
-static void	handle_signals_and_wait(t_mini *mini)
-{
-	int	i;
-	int	status;
-	int	last_exit_status;
-	int	signal_received;
-	int	quit_printed;
+// static void	handle_signals_and_wait(t_mini *mini)
+// {
+// 	int	i;
+// 	int	status;
+// 	int	last_exit_status;
+// 	int	signal_received;
+// 	int	quit_printed;
 
-	i = 0;
-	status = 0;
-	last_exit_status = 0;
-	signal_received = 0;
-	quit_printed = 0;
-	while (i < mini->pipe_count)
-	{
-		waitpid(mini->pid[i], &status, 0);
-		if (WIFEXITED(status))
-			last_exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{
-			signal_received = 1;
-			sig_and_wait_helper(&status, &last_exit_status, &quit_printed);
-		}
-		i++;
-	}
-	if (signal_received)
-		mini->exit_status = last_exit_status;
-}
+// 	i = 0;
+// 	status = 0;
+// 	last_exit_status = 0;
+// 	signal_received = 0;
+// 	quit_printed = 0;
+// 	while (i < mini->pipe_count)
+// 	{
+// 		waitpid(mini->pid[i], &status, 0);
+// 		if (WIFEXITED(status))
+// 			last_exit_status = WEXITSTATUS(status);
+// 		else if (WIFSIGNALED(status))
+// 		{
+// 			signal_received = 1;
+// 			sig_and_wait_helper(&status, &last_exit_status, &quit_printed);
+// 		}
+// 		i++;
+// 	}
+// 	if (signal_received)
+// 		mini->exit_status = last_exit_status;
+// }
 
 static void	close_exec(t_mini *mini)
 {
@@ -94,5 +94,5 @@ void	execution(t_mini *mini)
 	if (mini->error)
 		return ;
 	close_fd_and_wait(mini);
-	handle_signals_and_wait(mini);
+	// handle_signals_and_wait(mini);
 }

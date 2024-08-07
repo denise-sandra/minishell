@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:52:22 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->pid[i] == 0)
 	{
-		enable_sigquit();
-		//signal(SIGINT, sigint_handler);
-		//signal(SIGQUIT, sigquit_handler);
+		sigs_in_line();
+		check_sigs(mini);
 		child_pid(mini, tmp, i);
 	}
+	// signal(SIGINT, SIG_IGN);
+	// signal(SIGQUIT, SIG_IGN);
 	if (i > 0)
 	{
 		close(mini->tube[i - 1][0]);

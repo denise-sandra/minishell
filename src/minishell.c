@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:08 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:51:41 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*process_input(t_mini *mini, char *prompt, char *input)
 		return (NULL);
 	if (*input)
 	{
-		//enable_sigquit();
+		sigs_in_line();
 		check_sigs(mini);
 		add_history(input);
 		parse_and_execute(mini, input);
@@ -79,7 +79,7 @@ static void	minishell(t_mini *mini)
 	input = NULL;
 	while (!mini->should_exit)
 	{
-		init_handlers();
+		sigs_empty();
 		g_sig = 0;
 		mini->error = 0;
 		prompt = get_dynamic_prompt();
@@ -88,9 +88,7 @@ static void	minishell(t_mini *mini)
 		input = process_input(mini, prompt, input);
 		if (!input)
 			break ;
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-		//check_sigs(mini);
+		check_sigs(mini);
 		clean_token_list(&(mini->token));
 		clean_fd(mini);
 		mini->token = NULL;
