@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:35:38 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:49:28 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 	is_eof = 0;
 	while (is_eof == 0)
 	{
+		sigs_here();
 		ft_putstr_fd("> ", STDOUT_FILENO);
 		line = get_next_line(STDIN_FILENO);
-		sigs_here();
 		if (handle_sig_int(mini) != 0)
 			return (-2);
 		// check_sigs(mini);
