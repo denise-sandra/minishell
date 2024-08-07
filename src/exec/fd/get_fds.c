@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:49:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:21:51 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ static int	read_here_doc(t_mini *mini, char *eof, int i)
 		line = get_next_line(STDIN_FILENO);
 		if (handle_sig_int(mini) != 0)
 			return (-2);
-		// check_sigs(mini);
-		// printf("exit: %d\n", mini->exit_status);
-		// if (mini->exit_status == 130)
-		// 	return (-2);
 		if (line)
 		{
 			if (ft_eof(mini, eof, line, &is_eof) != 0)
@@ -74,9 +70,7 @@ char	*get_infile(t_mini *mini, t_token *token, int i, char *msg)
 		res = read_here_doc(mini, token->next->value, i);
 		if (res == -1)
 		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(strerror(errno), 2);
-			ft_putstr_fd("\n", 2);
+			print_custom(strerror(errno));
 			mini->inv_fd[i] = 1;
 		}
 		else if (res == -2)
@@ -100,9 +94,7 @@ void	get_outfile(t_mini *mini, t_token *token, int i)
 	if ((token->type == OUT || token->type == APP) && \
 		mini->fd_out[i] < 0)
 	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		print_custom(strerror(errno));
 		mini->inv_fd[i] = 1;
 	}
 }

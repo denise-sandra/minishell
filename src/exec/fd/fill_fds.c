@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:25:08 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 17:21:49 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,14 @@ void	fill_fd(t_mini *mini, t_token *tmp)
 	init_tab(msg, mini->pipe_count);
 	count_in_out(&in, &out, tmp);
 	fill_fd_utils(mini, &in, &out, msg);
-	// printf("fillfd err: %d exit: %d\n", mini->error, mini->exit_status);
 	if (mini->error)
 		return (free_tab(msg));
 	i = 0;
 	while (i < mini->pipe_count)
 	{
-		if (mini->inv_fd[i] != 0)
+		if (mini->inv_fd[i] != 0 && mini->error == 0)
 		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(msg[i], 2);
-			ft_putstr_fd("\n", 2);
+			print_custom(msg[i]);
 			free (msg[i]);
 		}
 		i++;

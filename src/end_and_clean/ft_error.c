@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 14:24:31 by derjavec          #+#    #+#             */
-/*   Updated: 2024/06/25 11:09:02 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:22:18 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ void	error_cleanup(t_mini *minishell)
 void	ft_error(t_mini *minishell, char *msg, char *error_msg)
 {
 	if (error_msg != NULL)
-	{
-		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(error_msg, 2);
-		ft_putstr_fd("\n", 2);
-	}
+		print_custom(error_msg);
 	else
 	{
 		ft_putstr_fd(msg, 2);
@@ -56,4 +52,11 @@ void	ft_error(t_mini *minishell, char *msg, char *error_msg)
 	if (minishell != NULL)
 		error_cleanup(minishell);
 	minishell->error = 1;
+}
+
+void	print_custom(char *msg)
+{
+	ft_putstr_fd("Error: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 }

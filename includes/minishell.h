@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:36:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 17:19:59 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_mini		*init_minishell(char **envp);
 
 //clean & error
 void		ft_error(t_mini *minishell, char *msg, char *error_msg);
+void		print_custom(char *msg);
 void		error_cleanup(t_mini *minishell);
 char		**split_env_vars(char const *s, char c);
 void		clean_pretokens(t_mini *minishell);

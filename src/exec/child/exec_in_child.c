@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 15:37:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 16:59:04 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	pipe_if_no_cmd(t_mini *mini, int i)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (i > 0)
 	{
-		// printf("entra a no cmd\n");
 		waitpid(mini->pid[i - 1], &status, 0);
 		sigs_empty();
 		check_sigs(mini);
@@ -67,7 +66,6 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->pid[i] == 0)
 	{
-		// printf("entra a  cmd\n");
 		sigs_in_line();
 		check_sigs(mini);
 		child_pid(mini, tmp, i);
