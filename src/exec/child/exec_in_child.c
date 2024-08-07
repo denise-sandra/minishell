@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 11:52:22 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 14:33:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 		check_sigs(mini);
 		child_pid(mini, tmp, i);
 	}
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
+	if (tmp->cmd_tab && ft_strncmp(tmp->cmd_tab[0], "./minishell", \
+		longer_len(tmp->value, "./minishell")) == 0)
+		sigs_ignore();
 	if (i > 0)
 	{
 		close(mini->tube[i - 1][0]);

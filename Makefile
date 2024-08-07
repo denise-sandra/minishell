@@ -26,7 +26,7 @@ SRCS	:= ${addprefix src/, minishell.c init_minishell.c \
 		${addprefix builtins/export/, export.c add_var_to_list.c list_to_tab.c concat.c} \
 		${addprefix builtins/cd/, cd.c go_back.c} \
 		${addprefix builtins/exit/, exit.c exit_utils.c} \
-		${addprefix end_and_clean/, ft_error.c clean_minishell.c handle_signals.c}}
+		${addprefix end_and_clean/, ft_error.c clean_minishell.c handle_signals.c empty_sig.c}}
 
 OBJS     = $(SRCS:.c=.o)
 

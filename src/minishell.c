@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 11:51:41 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 14:31:31 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,6 @@ static char	*process_input(t_mini *mini, char *prompt, char *input)
 		check_sigs(mini);
 		add_history(input);
 		parse_and_execute(mini, input);
-	}
-	else
-	{
-		if (g_sig == SIGQUIT)
-			g_sig = 0;
 	}
 	return (input);
 }

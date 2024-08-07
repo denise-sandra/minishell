@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 11:28:12 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/07 15:03:50 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,15 +136,11 @@ void		go_back(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 // //signals
-// void		setup_signal_handlers(int ignore);
-void		check_sigs(t_mini *mini);
-// void		enable_sigquit(void);
-// void		init_handlers(void);
-int			handle_sig_int(t_mini *mini);
 void		close_here_fd(t_mini *mini);
-// void		sigquit_handler(int sig);
-// void		sigint_handler(int sig);
-void	sigs_empty(void);
-void	sigs_in_line(void);
+void		check_sigs(t_mini *mini);
+void		sigs_empty(void);
+void		sigs_in_line(void);
+void		sigs_ignore(void);
+void		sigs_here(void);
 
 #endif

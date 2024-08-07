@@ -1,43 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   empty_sig.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 15:03:52 by skanna           ###   ########.fr       */
+/*   Created: 2024/08/07 14:35:49 by skanna            #+#    #+#             */
+/*   Updated: 2024/08/07 15:03:55 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_sigs(t_mini *mini)
+static void	sigint_empty(int sig)
 {
-	if (g_sig == SIGINT)
+	(void)sig;
+	g_sig = SIGINT;
+	rl_replace_line("", 0);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
+void	sigs_empty(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = sigint_empty;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{
-		mini->exit_status = 130;
-		g_sig = 0;
+		perror("sigaction for SIGINT");
+		exit(1);
 	}
-	else if (g_sig == SIGQUIT)
+	sa.sa_handler = SIG_IGN;
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
-		mini->exit_status = 131;
-		g_sig = 0;
+		perror("sigaction for SIGQUIT");
+		exit(1);
 	}
 }
 
-void	sigs_ignore(void)
+void	sigs_here(void)
 {
 	struct sigaction	sa;
 
 	sa.sa_handler = SIG_IGN;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		perror("sigaction for SIGINT");
-		exit(1);
-	}
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 	{
 		perror("sigaction for SIGQUIT");
@@ -45,38 +56,5 @@ void	sigs_ignore(void)
 	}
 }
 
-static void	sigquit_in_line(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("Quit\n", 1);
-	g_sig = SIGQUIT;
-}
 
-static void	sigint_in_line(int sig)
-{
-	(void)sig;
-	g_sig = SIGINT;
-	rl_replace_line("", 0);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_redisplay();
-}
 
-void	sigs_in_line(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = sigint_in_line;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		perror("sigaction for SIGINT");
-		exit(1);
-	}
-	sa.sa_handler = sigquit_in_line;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-	{
-		perror("sigaction for SIGQUIT");
-		exit(1);
-	}
-}

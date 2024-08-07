@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_hd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/09 12:04:54 by sandra            #+#    #+#             */
-/*   Updated: 2024/08/06 18:02:24 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:38:18 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	prep_heredoc(t_mini *mini)
 		if ((cur->type == STRING || cur->type == D_Q \
 			|| cur->type == S_Q || cur->type == LIM)
 			&& prev && prev->type == HERE)
-				prep_lim(mini, &cur, &prev);
+			prep_lim(mini, &cur, &prev);
 		else
 			update_token(&cur, &prev);
 		if (mini->error != 0)

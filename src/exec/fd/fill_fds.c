@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_fds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/06 18:19:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:38:28 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	fill_fd_utils(t_mini *mini, int *in, int *out, char **msg)
 		if (tmp->type == IN || tmp->type == HERE)
 		{
 			msg[i] = get_infile(mini, tmp, i, msg[i]);
-				(*in)--;
+			(*in)--;
 			if (*in > 0 && mini->fd_in[i] > 2)
 				close (mini->fd_in[i]);
 		}
