@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 16:02:52 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/08 12:19:32 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	free_env_node(t_mini *mini, t_lst_env *env, char *name)
 	temp = env;
 	prev = NULL;
 	next = NULL;
-	len = ft_strlen(name);
+	len = ft_strchr_int(name, '=');
+	if ((int)len == -1)
+		len = ft_strlen(name);
 	while (temp)
 	{
 		if (ft_strlen(temp->name) == len && \

@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:59:08 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/08 10:59:30 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	minishell(t_mini *mini)
 		input = process_input(mini, prompt, input);
 		if (!input)
 			break ;
-		check_sigs(mini);
+		// check_sigs(mini);
 		clean_token_list(&(mini->token));
 		clean_fd(mini);
 		mini->token = NULL;

@@ -3,33 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   add_var_to_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 12:00:14 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/08 12:18:30 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	add_with_null_value(t_mini *mini, char *new_var, char	***split)
+static char	**add_with_null_value(t_mini *mini, char *new_var)
 {
-	char	*value;
+	int		n;
+	char	**split;
 
-	value = get_env_value(mini->export, new_var);
-	if (!value)
-		return (ft_error(mini, NULL, strerror(errno)), 1);
-	if (value[0] != '\0')
-		return (free(value), 1);
-	free(value);
-	*split = malloc(2 * sizeof(char *));
+	n = find_name(mini->export, new_var);
+	if (n == 1)
+		return (NULL);
+	split = malloc(2 * sizeof(char *));
 	if (!split)
-		return (ft_error(mini, NULL, strerror(errno)), 1);
-	(*split)[0] = ft_strdup(new_var);
-	(*split)[1] = NULL;
-	if (!(*split)[0])
-		return (ft_error(mini, NULL, strerror(errno)), 1);
-	return (0);
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
+	split[0] = ft_strdup(new_var);
+	split[1] = NULL;
+	if (!split[0])
+		return (ft_error(mini, NULL, strerror(errno)), NULL);
+	return (split);
 }
 
 static void	add_exp(t_mini *mini, char *new_var, char *res)
@@ -37,14 +35,16 @@ static void	add_exp(t_mini *mini, char *new_var, char *res)
 	char		**split_new_exp;
 	t_lst_env	*new_node;
 
-	split_new_exp = NULL;
 	if (res == NULL)
 	{
-		if (add_with_null_value(mini, new_var, &split_new_exp) == 1)
+		split_new_exp = add_with_null_value(mini, new_var);
+		if (!split_new_exp)
 			return ;
 	}
 	else
 	{
+		if (find_name(mini->export, new_var) == 1)
+			free_env_node(mini, mini->export, new_var);
 		split_new_exp = split_env_vars(new_var, '=');
 		if (split_new_exp == NULL)
 			return (ft_error(mini, NULL, strerror(errno)));

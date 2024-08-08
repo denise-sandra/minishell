@@ -6,11 +6,27 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/07/29 17:11:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/08 12:16:04 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int find_name(t_lst_env *lst, char *name)
+{
+	int name_len;
+
+	name_len = ft_strchr_int(name, '=');
+	if (name_len == -1)
+		name_len = ft_strlen(name);
+	while (lst)
+	{
+		if (ft_strncmp(lst->name, name, name_len) == 0)
+			return (1);
+		lst = lst->next;
+	}
+	return (0);
+}
 
 char	*concat_env(t_mini *mini, char *name, char *new_value)
 {
