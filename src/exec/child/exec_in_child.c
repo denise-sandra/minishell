@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 12:12:46 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/08 16:48:40 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 	if (mini->pid[i] == 0)
 	{
 		sigs_in_line();
-		// check_sigs(mini);
-		child_pid(mini, tmp, i);
 		check_sigs(mini);
+		child_pid(mini, tmp, i);
 	}
+	check_sigs(mini);
 	if (tmp->cmd_tab && ft_strncmp(tmp->cmd_tab[0], "./minishell", \
 		longer_len(tmp->value, "./minishell")) == 0)
 		sigs_ignore();
@@ -110,16 +110,7 @@ static void	pipe_token(t_mini *mini, t_token *cur)
 
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
-	int	k;
-
 	pipe_token(mini, cur);
 	check_sigs(mini);
 	close_all_fd(mini);
-	k = 0;
-	while (k < mini->pipe_count - 1)
-	{
-		close(mini->tube[k][0]);
-		close(mini->tube[k][1]);
-		k++;
-	}
 }

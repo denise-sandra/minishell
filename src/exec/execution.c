@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/07 16:58:45 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/08 16:13:32 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ static void	close_exec(t_mini *mini)
 		if (mini->fd_in[i] > 0)
 			close(mini->fd_in[i]);
 		if (mini->fd_out[i] > 1)
+		{
+			printf("es close exec\n");
 			close(mini->fd_out[i]);
+		}
 		i++;
 	}
 	if (mini->inv_fd[0] != 0)

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 12:28:18 by sandra            #+#    #+#             */
-/*   Updated: 2024/07/22 12:04:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:33:55 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	handle_files(t_mini *mini, t_token **cur, t_token **next)
 		order->redir_head = *cur;
 		order->redir_tail = *cur;
 	}
-	if (*next && (*next)->type == STRING)
+	if (*next && ((*next)->type == STRING || (*next)->type == LIM))
 	{
 		order->redir_tail->next = *next;
 		order->redir_tail = *next;
@@ -107,7 +107,7 @@ void	order_redirs(t_mini *mini)
 		next = cur->next;
 		if (cur->type == PIPE)
 			handle_pipes(mini, &cur, &next);
-		else if (cur->type == IN || cur->type == OUT || cur->type == APP)
+		else if (cur->type == IN || cur->type == OUT || cur->type == APP || cur->type == HERE)
 			handle_files(mini, &cur, &next);
 		else
 			handle_string(mini, &cur, &next);

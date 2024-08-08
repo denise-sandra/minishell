@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 14:29:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:37:15 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	ft_dup_in(t_mini *mini, int i)
 		if (dup2(mini->fd_in[i], STDIN_FILENO) == -1)
 		{
 			close(mini->fd_in[i]);
-			close(mini->fd_out[i]);
+			if (mini->fd_out[i] != 1)
+				close(mini->fd_out[i]);
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 	}
@@ -42,7 +43,8 @@ static int	ft_dup_out(t_mini *mini, int i)
 		if (dup2(mini->fd_out[i], STDOUT_FILENO) == -1)
 		{
 			close(mini->fd_out[i]);
-			close(mini->fd_in[i]);
+			if (mini->fd_in[i] != 0)
+				close(mini->fd_in[i]);
 			return (ft_error(mini, NULL, strerror(errno)), 1);
 		}
 	}

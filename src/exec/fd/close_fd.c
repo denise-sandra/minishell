@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 14:27:38 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:50:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	close_fd_and_wait(t_mini *mini)
 {
 	int	i;
 	int	status;
-	int	last_exit_status;
 
 	i = 0;
-	last_exit_status = 0;
 	status = 0;
 	while (i < mini->pipe_count)
 	{
+		waitpid(mini->pid[i], &status, 0);
 		if (mini->fd_in && mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 			close(mini->fd_in[i]);
 		if (mini->fd_out && mini->fd_out[i] > 0 \
@@ -33,12 +32,13 @@ void	close_fd_and_wait(t_mini *mini)
 	i = 0;
 	while (i < mini->pipe_count)
 	{
+		mini->exit_status = 0;
 		waitpid(mini->pid[i], &status, 0);
 		if (WIFEXITED(status))
-			last_exit_status = WEXITSTATUS(status);
+			mini->exit_status = WEXITSTATUS(status);
+		check_sigs(mini);
 		i++;
 	}
-	mini->exit_status = last_exit_status;
 }
 
 void	close_all_fd(t_mini *mini)
