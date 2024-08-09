@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 17:19:20 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:28:30 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,10 @@ t_lst_env	*fill_env_struct(char **envp, t_mini *mini)
 		if (split_envp == NULL)
 			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		new_node = ft_lstnew_env(split_envp[0], split_envp[1]);
+		free_tab(split_envp);
 		if (new_node == NULL)
 			return (ft_error(mini, NULL, strerror(errno)), NULL);
 		ft_lstadd_back_env(&lst_env, new_node);
-		free_tab(split_envp);
 		i++;
 	}
 	return (lst_env);

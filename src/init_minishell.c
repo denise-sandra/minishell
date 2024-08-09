@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 13:59:42 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:29:49 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,14 @@ t_mini	*init_minishell(char **envp)
 		envp = no_env(mini);
 	mini->env = fill_env_struct(envp, mini);
 	if (!mini->env)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+		return (clean_minishell(mini), NULL);
 	mini->export = copy_list(mini->env);
 	if (!mini->export)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+	{
+		ft_error(mini, "Failed to copy envp", NULL);
+		return (clean_minishell(mini), NULL);
+	}
 	if (handle_shlvl(mini) == 1)
-		return (ft_error(mini, NULL, strerror(errno)), NULL);
+		return (clean_minishell(mini), NULL);
 	return (mini);
 }

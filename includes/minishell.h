@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 13:47:52 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:30:37 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int			check_signs(t_mini *mini, char *arg);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);
 void		go_back(t_mini *mini);
+void		update_env(t_mini *mini);
+void		update_export(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 // //signals

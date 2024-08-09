@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 14:00:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:33:26 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	export_command(t_mini *mini, t_token *cur)
 {
 	char	*new_var;
 
-	printf("export\n");
 	new_var = cur->cmd_tab[1];
 	if (new_var)
 		add_var_to_list(mini, cur);

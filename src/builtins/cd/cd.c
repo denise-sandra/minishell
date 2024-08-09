@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 14:13:28 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:01:19 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,52 +82,16 @@ static void	go_back_utils(t_mini *mini, const char *path)
 	}
 }
 
-void	update_env(t_mini *mini)
+static void	go_to_oldpwd(t_mini *mini)
 {
 	char		*old_pwd;
-	t_lst_env	*new_node;
-	char		cwd[1024];
 
-	old_pwd = get_env_value(mini->env, "PWD");
+	old_pwd = get_env_value(mini->env, "OLDPWD");
 	if (!old_pwd)
 		return (ft_error(mini, NULL, strerror(errno)));
-	free_env_node(mini, mini->env, "OLDPWD");
-	new_node = ft_lstnew_env("OLDPWD", old_pwd);
+	if (chdir(old_pwd) != 0)
+		return (free(old_pwd), ft_error(mini, NULL, strerror(errno)));
 	free(old_pwd);
-	if (!new_node)
-		return (ft_error(mini, NULL, strerror(errno)));
-	ft_lstadd_back_env(&mini->env, new_node);
-	free_env_node(mini, mini->env, "PWD");
-	if (getcwd(cwd, 1024) == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
-	new_node = ft_lstnew_env("PWD", cwd);
-	if (new_node == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
-	ft_lstadd_back_env(&mini->env, new_node);
-}
-
-void	update_export(t_mini *mini)
-{
-	char		*old_pwd;
-	t_lst_env	*new_node;
-	char		cwd[1024];
-
-	old_pwd = get_env_value(mini->export, "PWD");
-	if (!old_pwd)
-		return (ft_error(mini, NULL, strerror(errno)));
-	free_env_node(mini, mini->export, "OLDPWD");
-	new_node = ft_lstnew_env("OLDPWD", old_pwd);
-	free(old_pwd);
-	if (!new_node)
-		return (ft_error(mini, NULL, strerror(errno)));
-	ft_lstadd_back_env(&mini->export, new_node);
-	free_env_node(mini, mini->export, "PWD");
-	if (getcwd(cwd, 1024) == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
-	new_node = ft_lstnew_env("PWD", cwd);
-	if (new_node == NULL)
-		return (ft_error(mini, NULL, strerror(errno)));
-	ft_lstadd_back_env(&mini->export, new_node);
 }
 
 void	cd_cmd(t_mini *mini, t_token *cur)
@@ -144,12 +108,15 @@ void	cd_cmd(t_mini *mini, t_token *cur)
 		|| ft_strncmp(path, "../", 3) == 0)
 		go_back_utils(mini, path);
 	else if (ft_strncmp(path, "-", longer_len((char *)path, "-")) == 0)
-		
+		go_to_oldpwd(mini);
+	else if (ft_strncmp(path, "-", 1) == 0)
+	{
+		mini->exit_status = 2;
+		return (ft_error(mini, "cd : invalid option", NULL));
+	}
 	else if (chdir(path) != 0)
 		return (ft_error(mini, NULL, strerror(errno)));
 	update_env(mini);
-	if (mini->error == 0)
-		mini->exit_status = 0;
 	update_export(mini);
 	if (mini->error == 0)
 		mini->exit_status = 0;
