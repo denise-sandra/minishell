@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 16:08:32 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:29:42 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	get_outfile(t_mini *mini, t_token *token, int i)
 	{
 		mini->fd_out[i] = open(token->next->value, O_CREAT
 				| O_WRONLY | O_APPEND, 0644);
-		printf("get %d\n", mini->fd_out[i]);
 	}
 	if ((token->type == OUT || token->type == APP) && \
 		mini->fd_out[i] < 0)

@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 15:27:51 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:53:18 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 || argv[1])
 		return (0);
 	mini = init_minishell(envp);
+	if (!mini)
+		exit (1);
 	minishell(mini);
 	final_status = mini->exit_status;
 	clean_minishell(mini);

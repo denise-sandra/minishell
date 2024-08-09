@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:16 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/05 18:15:41 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:59:11 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_lst_env	*copy_list(t_lst_env *lst)
 		ft_lstadd_back_env(&new_lst, new);
 		lst = lst->next;
 	}
+	printf ("list : %p\n", new_lst);
 	return (new_lst);
 }
 

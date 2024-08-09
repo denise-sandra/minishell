@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 16:35:15 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 12:16:16 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char **paths, int exec_ret)
 		ft_putstr_fd(": command not found\n", 2);
 		free(paths);
 		close_all_fd(mini);
+		close_all_tubes(mini);
 	}
 	else if (exec_ret == -3)
 	{

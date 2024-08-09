@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 16:50:49 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:43:09 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	close_fd_and_wait(t_mini *mini)
 	status = 0;
 	while (i < mini->pipe_count)
 	{
-		waitpid(mini->pid[i], &status, 0);
 		if (mini->fd_in && mini->fd_in[i] > 0 && mini->fd_in[i] != STDIN_FILENO)
 			close(mini->fd_in[i]);
 		if (mini->fd_out && mini->fd_out[i] > 0 \
@@ -32,7 +31,6 @@ void	close_fd_and_wait(t_mini *mini)
 	i = 0;
 	while (i < mini->pipe_count)
 	{
-		mini->exit_status = 0;
 		waitpid(mini->pid[i], &status, 0);
 		if (WIFEXITED(status))
 			mini->exit_status = WEXITSTATUS(status);
@@ -48,6 +46,21 @@ void	close_all_fd(t_mini *mini)
 	i = 0;
 	while (i < mini->pipe_count)
 	{
+		if (mini->fd_in[i] > 2)
+			close(mini->fd_in[i]);
+		if (mini->fd_out[i] > 2)
+			close(mini->fd_out[i]);
+		i++;
+	}
+}
+
+void	close_all_tubes(t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	while (i < mini->pipe_count)
+	{
 		if (i < mini->pipe_count - 1)
 		{
 			if (mini->tube[i][1])
@@ -55,10 +68,6 @@ void	close_all_fd(t_mini *mini)
 			if (mini->tube[i][0])
 				close(mini->tube[i][0]);
 		}
-		if (mini->fd_in[i] > 0)
-			close(mini->fd_in[i]);
-		if (mini->fd_out[i] > 1)
-			close(mini->fd_out[i]);
 		i++;
 	}
 }
@@ -67,15 +76,18 @@ void	close_if_inv_fd(t_mini *mini, int j)
 {
 	int	i;
 
+	//i = 0;
+	// while (i < mini->pipe_count)
+	// {
+	// 	if (mini->inv_fd[i] == 1)
+	// 		close_all_fd(mini);
+	// 	i++;
+	// }
 	i = j;
-	while (i < mini->pipe_count)
-	{
-		if (mini->inv_fd[i] == 1)
-			close_all_fd(mini);
-		i++;
-	}
 	if (mini->inv_fd[j] == 1)
 	{
+		close_all_tubes(mini);
+		close_all_fd(mini);
 		clean_minishell(mini);
 		exit (1);
 	}

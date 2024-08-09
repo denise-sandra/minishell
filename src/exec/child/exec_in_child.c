@@ -6,7 +6,7 @@
 /*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 16:48:40 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 13:41:37 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	child_pid(t_mini *mini, t_token *tmp, int i)
 		exit (exit_code);
 	}
 	close_all_fd(mini);
+	close_all_tubes(mini);
 	exit_code = mini->exit_status;
 	clean_minishell(mini);
 	exit (exit_code);
@@ -51,7 +52,7 @@ static void	pipe_if_no_cmd(t_mini *mini, int i)
 	{
 		waitpid(mini->pid[i - 1], &status, 0);
 		sigs_empty();
-		check_sigs(mini);
+		//check_sigs(mini);
 		close(mini->tube[i - 1][0]);
 		close(mini->tube[i - 1][1]);
 	}
@@ -65,12 +66,7 @@ static void	pipe_if_cmd(t_mini *mini, t_token *tmp, int i)
 	if (mini->pid[i] < 0)
 		return (ft_error(mini, NULL, strerror(errno)));
 	if (mini->pid[i] == 0)
-	{
-		sigs_in_line();
-		check_sigs(mini);
 		child_pid(mini, tmp, i);
-	}
-	check_sigs(mini);
 	if (tmp->cmd_tab && ft_strncmp(tmp->cmd_tab[0], "./minishell", \
 		longer_len(tmp->value, "./minishell")) == 0)
 		sigs_ignore();
@@ -111,6 +107,6 @@ static void	pipe_token(t_mini *mini, t_token *cur)
 void	exec_in_child(t_mini *mini, t_token *cur)
 {
 	pipe_token(mini, cur);
-	check_sigs(mini);
 	close_all_fd(mini);
+	close_all_tubes(mini);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
+/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 12:16:28 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/09 13:47:52 by derjavec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char		*get_env_name(char *token);
 void		free_env_node(t_mini *mini, t_lst_env *env, char *name);
 t_lst_env	*copy_list(t_lst_env *lst);
 char		**no_env(t_mini *mini);
+void		init_export(t_mini *mini);
 
 //exec
 void		execution(t_mini *minishell);
@@ -115,6 +116,7 @@ void		builtin_in_parent(t_mini *mini, int builtin);
 void		exec_in_child(t_mini *mini, t_token *tmp);
 void		close_fd_and_wait(t_mini *mini);
 void		close_all_fd(t_mini *mini);
+void		close_all_tubes(t_mini *mini);
 void		close_if_inv_fd(t_mini *mini, int j);
 char		*get_dynamic_prompt(void);
 char		*get_name(t_token *tmp);
