@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 15:30:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:40:48 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void		add_var_to_list(t_mini *mini, t_token *cur);
 int			add_env(t_mini *mini, char *new_var);
 int			add_env_helper(t_mini *mini, char **new_env);
 char		*concat_env(t_mini *mini, char *name, char *new_value);
-int 		find_name(t_lst_env *lst, char *name);
+int			find_name(t_lst_env *lst, char *name);
 char		**list_to_tab(t_mini *mini);
 void		env_command(t_mini *minishell, t_token *cur);
 void		exit_cmd(t_mini *mini, char **cmd_tab);

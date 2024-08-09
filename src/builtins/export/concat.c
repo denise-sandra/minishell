@@ -6,15 +6,15 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/08 12:16:04 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/09 16:42:43 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int find_name(t_lst_env *lst, char *name)
+int	find_name(t_lst_env *lst, char *name)
 {
-	int name_len;
+	int	name_len;
 
 	name_len = ft_strchr_int(name, '=');
 	if (name_len == -1)

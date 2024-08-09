@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_fd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 13:43:09 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:43:21 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,6 @@ void	close_if_inv_fd(t_mini *mini, int j)
 {
 	int	i;
 
-	//i = 0;
-	// while (i < mini->pipe_count)
-	// {
-	// 	if (mini->inv_fd[i] == 1)
-	// 		close_all_fd(mini);
-	// 	i++;
-	// }
 	i = j;
 	if (mini->inv_fd[j] == 1)
 	{

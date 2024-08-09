@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_in_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:22 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 13:41:37 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:43:41 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	pipe_if_no_cmd(t_mini *mini, int i)
 	{
 		waitpid(mini->pid[i - 1], &status, 0);
 		sigs_empty();
-		//check_sigs(mini);
 		close(mini->tube[i - 1][0]);
 		close(mini->tube[i - 1][1]);
 	}
