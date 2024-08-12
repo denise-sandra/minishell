@@ -6,7 +6,7 @@
 /*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:03:55 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 16:40:48 by skanna           ###   ########.fr       */
+/*   Updated: 2024/08/12 09:19:07 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ int			check_signs(t_mini *mini, char *arg);
 void		pwd_cmd(t_mini *mini);
 void		cd_cmd(t_mini *mini, t_token *cur);
 void		go_back(t_mini *mini);
-void		update_env(t_mini *mini);
-void		update_export(t_mini *mini);
+void		update_env_cd(t_mini *mini);
+void		update_export_cd(t_mini *mini);
 void		unset_cmd(t_mini *mini, t_token *cur);
 
 // //signals

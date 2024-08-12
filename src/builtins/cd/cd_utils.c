@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: derjavec <derjavec@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skanna <skanna@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:52:38 by skanna            #+#    #+#             */
-/*   Updated: 2024/08/09 16:06:50 by derjavec         ###   ########.fr       */
+/*   Updated: 2024/08/12 09:19:12 by skanna           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	go_back(t_mini *mini)
 	free(new_path);
 }
 
-void	update_env(t_mini *mini)
+void	update_env_cd(t_mini *mini)
 {
 	char		*old_pwd;
 	t_lst_env	*new_node;
@@ -79,7 +79,7 @@ void	update_env(t_mini *mini)
 	ft_lstadd_back_env(&mini->env, new_node);
 }
 
-void	update_export(t_mini *mini)
+void	update_export_cd(t_mini *mini)
 {
 	char		*old_pwd;
 	t_lst_env	*new_node;
